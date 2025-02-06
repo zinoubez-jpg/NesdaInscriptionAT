@@ -1,0 +1,9 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@if (ViewData["Message"] != null)
+    @Html.Raw(ViewData["Message"])
+
+@if (TempData["Message"] != null)
+    @Html.Raw(TempData["Message"])

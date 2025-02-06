@@ -1,0 +1,269 @@
+﻿@model Anade.Khadamat.Domain.Inscription
+@{ Layout = "_LayoutEspacePromoteur"; }
+
+<style>
+    .badge {
+        font-family: 'Noto Kufi Arabic';
+        font-size: 14px;
+    }
+</style>
+<div class="container-fluid">
+    <div class="col-sm-12 box-col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>متابعة مسار الملف عبر الإنترنت</h4>
+                <br />
+                <p class="f-m-light mt-1">
+                    خدمة تتيح لصاحب المشروع متابعة حالة طلبه بسهولة عبر الإنترنت، مع تحديثات فورية حول مراحل المعالجة.
+                </p>
+            </div>
+            <div class="card-body">
+
+                <section class="cd-container" id="cd-timeline">
+                    <div class="cd-timeline-block">
+                        <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
+                        <div class="cd-timeline-content">
+                            <div class="timeline-wrapper">
+                                <div class="badge bg-primary">التسجيل</div>
+                            </div>
+                            <h5 class="f-w-500 m-0">لقد تمت عملية التسجيل بنجاح.</h5>
+                            <br />
+                            <audio controls="">
+                                <source src="~/AccountTemplette/assets/audio/1.ogg" type="audio/ogg">
+                            </audio>
+                            <span class="cd-date">@Model.DateInscription.ToShortDateString()</span>
+                        </div>
+                    </div>
+
+                    @if (Model.DateValidation == DateTime.Parse("01/01/0001"))
+                    {
+
+                        <div class="cd-timeline-block">
+                            <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
+                            <div class="cd-timeline-content">
+                                <div class="timeline-wrapper">
+                                    <div class="badge bg-warning">التحقق من الملف</div>
+                                </div>
+                                <h5 class="f-w-500 m-0">مراجعة المستندات المرفقة والتأكد من صحتها.</h5>
+                                <br />
+                                <audio controls="">
+                                    <source src="~/AccountTemplette/assets/audio/2.ogg" type="audio/ogg">
+                                </audio>
+                                <span class="cd-date">ملفك في هده المرحلة</span>
+                            </div>
+                        </div>
+                    }
+                    else if ((Model.DateValidation != DateTime.Parse("01/01/0001")))
+                    {
+                        <div class="cd-timeline-block">
+                            <div class="cd-timeline-img cd-picture bg-primary"><i class="icofont icofont-document-search"></i></div>
+                            <div class="cd-timeline-content">
+                                <div class="timeline-wrapper">
+                                    <div class="badge bg-primary">التحقق من الملف</div>
+                                </div>
+                                <h5 class="f-w-500 m-0">لقد تم مراجعة المستندات المرفقة.</h5>
+                                <br />
+                                <audio controls="">
+                                    <source src="~/AccountTemplette/assets/audio/3.ogg" type="audio/ogg">
+                                </audio>
+                                <span class="cd-date">@Model.DateValidation.ToShortDateString()</span>
+                            </div>
+                        </div>
+                        @if (Model.EvaluationProjets.LastOrDefault() == null)
+                        {
+                            <div class="cd-timeline-block">
+                                <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
+                                <div class="cd-timeline-content">
+                                    <div class="timeline-wrapper">
+                                        <div class="badge bg-warning">مرحلة تقييم المشروع</div>
+                                    </div>
+                                    <h5 class="f-w-500 m-0">سيتم تقييم مشروعك في الأيام القادمة ، وسيتم التواصل معك عبر الهاتف والبريد الإلكتروني لإعلامك بموعد التقييم .</h5>
+                                    <br />
+                                    <audio controls="">
+                                        <source src="~/AccountTemplette/assets/audio/6.ogg" type="audio/ogg">
+                                    </audio>
+                                    <span class="cd-date">ملفك في هده المرحلة</span>
+                                </div>
+                            </div>
+                        }
+                        else if (Model.EvaluationProjets.Last().DateEvaluation != DateTime.Parse("01/01/0001"))
+                        {
+                            if (Model.EvaluationProjets.Last().IsAdmis == false)
+                            {
+                                <div class="cd-timeline-block">
+                                    <div class="cd-timeline-img cd-picture bg-danger"><i class="icon-close"></i></div>
+                                    <div class="cd-timeline-content">
+                                        <div class="timeline-wrapper">
+                                            <div class="badge bg-danger">مرحلة تقييم المشروع</div>
+                                        </div>
+                                        <h5 class="f-w-500 m-0">لقد ثم تقييم مشروعك ، نعتدر لعدم إجتيازك هده المرحلة  .</h5>
+                                        <h5 class="f-w-500 m-0"> نتيجة التقيم = @Model.EvaluationProjets.Last().ScoreTotal.</h5>
+
+                                        <span class="cd-date">@Model.EvaluationProjets.Last().DateEvaluation.ToShortDateString()</span>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+
+                                <div class="cd-timeline-block">
+                                    <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
+                                    <div class="cd-timeline-content">
+                                        <div class="timeline-wrapper">
+                                            <div class="badge bg-primary">مرحلة تقييم المشروع</div>
+                                        </div>
+                                        <h5 class="f-w-500 m-0">لقد ثم تقييم مشروعك ، تهانينا لقد إجتزت هده المرحلة بنجاح .</h5>
+                                        <h5 class="f-w-500 m-0"> نتيجة التقيم = @Model.EvaluationProjets.Last().ScoreTotal.</h5>
+
+                                        <span class="cd-date">@Model.EvaluationProjets.Last().DateEvaluation.ToShortDateString()</span>
+                                    </div>
+                                </div>
+
+                                @if (Model.SessionFormations.LastOrDefault() == null)
+                                {
+                                    <div class="cd-timeline-block">
+                                        <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
+                                        <div class="cd-timeline-content">
+                                            <div class="timeline-wrapper">
+                                                <div class="badge bg-warning">مرحلة تكوين</div>
+                                            </div>
+                                            <h5 class="f-w-500 m-0">سيتم إدراجك في دورة التكوين ضمن برنامج التكوين الخاص بتوسيع وتنويع أنشطة المؤسسات المصغرة، وسيتم التواصل معك عبر الهاتف والبريد الإلكتروني لإعلامك بتاريخ ومكان الدورة. </h5>
+                                            <br />
+                                            <audio controls="">
+                                                <source src="~/AccountTemplette/assets/audio/4.ogg" type="audio/ogg">
+                                            </audio>
+                                            <span class="cd-date">ملفك في هده المرحلة</span>
+                                        </div>
+                                    </div>
+                                }
+
+                                else if (Model.SessionFormations.Last().IsFormee == true)
+                                {
+                                    <div class="cd-timeline-block">
+                                        <div class="cd-timeline-img cd-picture bg-primary"><i class="icofont icofont-graduate-alt"></i></div>
+                                        <div class="cd-timeline-content">
+                                            <div class="timeline-wrapper">
+                                                <div class="badge bg-primary">تحميل شهادة التكوين</div>
+                                            </div>
+                                            <h5 class="f-w-500 m-0">تهانينا! لقد أكملت بنجاح دورة التكوين بعنوان "كيفية إدارة مؤسستك"، ويمكنك الآن تحميل شهادة التكوين الخاصة بك.</h5>
+
+                                            <br />
+                                            <audio controls="">
+                                                <source src="~/AccountTemplette/assets/audio/5.ogg" type="audio/ogg">
+                                            </audio>
+                                            <BR />
+                                            <div class="time-content pt-2">
+                                                <a href="#">
+                                                    <i class="icofont icofont-file-pdf"></i>
+                                                    <h6>تحميل الشهادة   </h6>
+                                                </a>
+                                            </div>
+                                            <span class="cd-date">@Model.SessionFormations.Last().DateDebut.ToShortDateString()</span>
+                                        </div>
+                                    </div>
+                                    if (Model.CSVFs.LastOrDefault() == null)
+                                    {
+                                        <div class="cd-timeline-block">
+                                            <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
+                                            <div class="cd-timeline-content">
+                                                <div class="timeline-wrapper">
+                                                    <div class="badge bg-warning">مرحلة تقديم المشروع إلى اللجنة</div>
+                                                </div>
+                                                <h5 class="f-w-500 m-0">سيتم تقديم مشروعك في الأيام القادمة إلى اللجنة ، وسيتم التواصل معك عبر الهاتف والبريد الإلكتروني لإعلامك بموعد الدورة  .</h5>
+
+                                                <span class="cd-date">ملفك في هده المرحلة</span>
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        if (Model.CSVFs.Last().IsValide == false)
+                                        {
+                                            <div class="cd-timeline-block">
+                                                <div class="cd-timeline-img cd-picture bg-danger"><i class="icon-close"></i></div>
+                                                <div class="cd-timeline-content">
+                                                    <div class="timeline-wrapper">
+                                                        <div class="badge bg-danger">مرحلة تقديم المشروع إلى اللجنة</div>
+                                                    </div>
+                                                    <h5 class="f-w-500 m-0">لقد ثم تقديم مشروعك إلى اللجنة ، نعتدر لعدم إجتيازك هده المرحلة  .</h5>
+                                                    <h5 class="f-w-500 m-0"> نتيجة  = @Model.CSVFs.Last().ResultatCSVF.</h5>
+
+                                                    <span class="cd-date">@Model.CSVFs.Last().DateCSVF.ToShortDateString()</span>
+                                                </div>
+                                            </div> 
+                                        }
+                                        else
+                                        {
+
+                                       
+                                                <div class="cd-timeline-block">
+                                                    <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
+                                                    <div class="cd-timeline-content">
+                                                        <div class="timeline-wrapper">
+                                                            <div class="badge bg-primary">مرحلة تقديم المشروع إلى اللجنة</div>
+                                                        </div>
+                                                        <h5 class="f-w-500 m-0">لقد ثم تقديم مشروعك إلى اللجنة ، تهانينا لقد إجتزت هده المرحلة بنجاح .</h5>
+                                                        <h5 class="f-w-500 m-0"> نتيجة  = @Model.CSVFs.Last().ResultatCSVF.</h5>
+
+                                                        <span class="cd-date">@Model.CSVFs.Last().DateCSVF.ToShortDateString()</span>
+                                                    </div>
+                                                </div>
+
+                                                @if (Model.Decisions.LastOrDefault() == null)
+                                                {
+                                                    <div class="cd-timeline-block">
+                                                        <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
+                                                        <div class="cd-timeline-content">
+                                                            <div class="timeline-wrapper">
+                                                                <div class="badge bg-warning">مرحلة تحرير شهادة المطابقة</div>
+                                                            </div>
+                                                            <h5 class="f-w-500 m-0"> شهادة المطابقة في طور الإنجاز .</h5>
+                                                        
+
+                                                            <span class="cd-date">ملفك في هده المرحلة</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="cd-timeline-block">
+                                                        <div class="cd-timeline-img cd-picture bg-primary"><i class="icofont icofont-graduate-alt"></i></div>
+                                                        <div class="cd-timeline-content">
+                                                            <div class="timeline-wrapper">
+                                                                <div class="badge bg-primary">تحميل شهادة المطابقة</div>
+                                                            </div>
+                                                            <h5 class="f-w-500 m-0">تهانينا! ، يمكنك الآن تحميل شهادة المطابقة الخاصة بك.</h5>
+                                                            <div class="time-content pt-2">
+                                                                <a href="#">
+                                                                    <i class="icofont icofont-file-pdf"></i>
+                                                                    <h6>تحميل الشهادة المطابقة   </h6>
+                                                                </a>
+
+                                                            </div>
+                                                            <span class="cd-date">@Model.Decisions.Last().DateEtablissementAE.ToShortDateString()</span>
+                                                        </div>
+                                                    </div>
+
+                                                }
+
+                                            }
+
+                                        }
+                            }
+
+                        }
+                    }
+
+
+
+
+
+                    }
+
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>

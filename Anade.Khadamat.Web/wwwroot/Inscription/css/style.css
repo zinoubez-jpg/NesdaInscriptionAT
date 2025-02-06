@@ -1,0 +1,305 @@
+.section {
+	
+}
+
+.section .section-center {
+	
+}
+
+#booking {
+	font-family: 'Lato', sans-serif;
+	color: #191a1e;
+}
+
+.booking-form {
+	position: relative;
+	background: #fff;
+	
+	width: 100%;
+	margin: auto;
+	padding: 45px 25px 25px;
+	border-radius: 4px;
+	-webkit-box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
+	box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+.booking-form .form-group {
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.booking-form .form-control {
+	background-color: #fff;
+	height: 65px;
+	padding: 0px 15px;
+	padding-top: 24px;
+	color: #191a1e;
+	border: 2px solid #dfe5e9;
+	font-size: 16px;
+	font-weight: 700;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-radius: 4px;
+	-webkit-transition: 0.2s all;
+	transition: 0.2s all;
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+	color: #dfe5e9;
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+	color: #dfe5e9;
+}
+
+.booking-form .form-control::placeholder {
+	color: #dfe5e9;
+}
+
+.booking-form .form-control:focus {
+	background: #f9fafb;
+}
+
+.booking-form input[type="date"].form-control:invalid {
+	color: #dfe5e9;
+}
+
+	.booking-form select.form-control {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		
+	}
+
+.booking-form select.form-control+.select-arrow {
+	position: absolute;
+	right: 6px;
+	bottom: 6px;
+	width: 32px;
+	line-height: 32px;
+	height: 32px;
+	text-align: center;
+	pointer-events: none;
+	color: #dfe5e9;
+	font-size: 14px;
+}
+
+.booking-form select.form-control+.select-arrow:after {
+	content: '\279C';
+	display: block;
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+	.booking-form .form-label {
+		position: absolute;
+		top: 6px;
+		left: 20px;
+		font-weight: 700;
+		text-transform: uppercase;
+		line-height: 24px;
+		height: 24px;
+		font-size: 12px;
+		color: #06BBCC;
+		z-index: 2; /* Assure que l'étiquette est au premier plan */
+		padding-right: 5px; /* Facultatif : Pour ajouter de l'espace à droite de l'étiquette */
+	}
+
+.booking-form .form-checkbox input {
+	position: absolute !important;
+	margin-left: -9999px !important;
+	visibility: hidden !important;
+}
+
+.booking-form .form-checkbox label {
+	position: relative;
+	padding-top: 4px;
+	padding-left: 30px;
+	font-weight: 700;
+	color: #191a1e;
+}
+
+.booking-form .form-checkbox label+label {
+	margin-left: 15px;
+}
+
+.booking-form .form-checkbox input+span {
+	position: absolute;
+	left: 2px;
+	top: 4px;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	border: 2px solid #dfe5e9;
+	border-radius: 50%;
+}
+
+	.booking-form .form-checkbox input + span:after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 0px;
+		height: 0px;
+		border-radius: 50%;
+		background-color: #06BBCC;
+		-webkit-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+		-webkit-transition: 0.2s all;
+		transition: 0.2s all;
+	}
+
+.booking-form .form-checkbox input:not(:checked)+span:after {
+	opacity: 0;
+}
+
+.booking-form .form-checkbox input:checked+span:after {
+	opacity: 1;
+	width: 10px;
+	height: 10px;
+}
+
+	.booking-form .submit-btn {
+		color: #fff;
+		background-color: #06BBCC;
+		font-weight: 400;
+		height: 65px;
+		font-size: 18px;
+		border: none;
+		width: 100%;
+		border-radius: 4px;
+		text-transform: uppercase
+	}
+
+.booking-cta {
+	margin-top: 45px;
+}
+
+	.booking-cta h1 {
+		font-size: 52px;
+		text-transform: uppercase;
+		color: #06BBCC;
+		font-weight: 400;
+	}
+
+.booking-cta p {
+	font-size: 22px;
+	color: #191a1e;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Appliquer le style général au conteneur select2 */
+.select2-container--default .select2-selection--single {
+	background-color: #fff;
+	height: 65px;
+	padding: 0px 15px;
+	padding-top:24px;
+	color: #191a1e;
+	border: 2px solid #dfe5e9;
+	font-size: 16px;
+	font-weight: 700;
+	border-radius: 4px;
+	transition: 0.2s all;
+	display: flex;
+	align-items: center;
+}
+
+	/* Style pour le texte de placeholder */
+	.select2-container--default .select2-selection--single .select2-selection__placeholder {
+		color: #dfe5e9;
+	}
+
+	/* Style pour le texte sélectionné */
+	.select2-container--default .select2-selection--single .select2-selection__rendered {
+		color: #191a1e;
+	}
+
+		/* Appliquer le style de focus */
+		.select2-container--default .select2-selection--single:focus,
+		.select2-container--default .select2-selection--single .select2-selection__rendered:focus {
+			background: #f9fafb;
+		}
+
+	/* Appliquer le style général à la flèche du select */
+	.select2-container--default .select2-selection--single .select2-selection__arrow {
+		height: 100%;
+		right: 6px;
+		width: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		pointer-events: none;
+	}
+
+		/* Style de la flèche */
+		.select2-container--default .select2-selection--single .select2-selection__arrow b {
+			border-color: #dfe5e9 transparent transparent transparent;
+			border-width: 5px 5px 0 5px;
+			border-style: solid;
+			content: '';
+			height: 0;
+			width: 0;
+		}
+
+/* Style pour le dropdown */
+.select2-container--default .select2-dropdown {
+	border: 2px solid #dfe5e9;
+	border-radius: 4px;
+}
+
+/* Style pour les options dans le dropdown */
+.select2-container--default .select2-results__option {
+	padding: 10px 15px;
+}
+
+/* Changer la couleur des options au survol */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+	background-color: #06BBCC;
+	color: white;
+}
+
+.value-btn {
+	padding: 10px 20px;
+	margin: 5px;
+	border: 1px solid #f0f0f0;
+	background-color: #f0f0f0;
+	cursor: pointer;
+	font-family: 'Lato', sans-serif;
+	color: #191a1e;
+	font-weight: 700;
+	border-radius: 4px;
+	transition: 0.2s all;
+}
+
+	.value-btn.active {
+		background-color: #06BBCC;
+		color: white;
+	}
+
+.clignote {
+	animation: clignote 2s linear infinite;
+}
+
+@keyframes clignote {
+	50% {
+		opacity: 0;
+	}
+}
+
+
+

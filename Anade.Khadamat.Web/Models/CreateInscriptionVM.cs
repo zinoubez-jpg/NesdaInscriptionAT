@@ -1,0 +1,141 @@
+﻿using Anade.Khadamat.Domain;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Anade.Khadamat.Web.Models
+{
+    public class CreateInscriptionVM
+    {
+        public int TypeInscriptionId { get; set; }
+        public DateTime DateInscription { get; set; }
+
+        [Display(Name = "NIN")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل"), StringLength(18, ErrorMessage = "StringLengthMessage")]
+        [RegularExpression(@"^\d{18}$", ErrorMessage = "يجب أن يتكون الرقم التعريفي الوطني الوحيد من 18 رقم.")]
+        public string NIN { get; set; }
+        [Display(Name = "NomFr")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل"), StringLength(128, ErrorMessage = "StringLengthMessage")]
+        public string NomFr { get; set; }
+        [Display(Name = "PrenomFr")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل"), StringLength(128, ErrorMessage = "StringLengthMessage")]
+        public string PrenomFr { get; set; }
+        [Display(Name = "NomAr")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل"), StringLength(128, ErrorMessage = "StringLengthMessage")]
+        public string NomAr { get; set; }
+        [Display(Name = "PrenomAr")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل"), StringLength(128, ErrorMessage = "StringLengthMessage")]
+        public string PrenomAr { get; set; }
+        [Display(Name = "GenreId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int GenreId { get; set; }
+        [Display(Name = "DateNaissance"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public DateTime DateNaissance { get; set; }
+
+        [Display(Name = "WilayaNaissanceId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int WilayaNaissanceId { get; set; }
+        [Display(Name = "CommuneNaissanceId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int CommuneNaissanceId { get; set; }
+
+        [Display(Name = "SituationFamilialeId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int SituationFamilialeId { get; set; }
+        [Display(Name = "NomJeunneFille"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public string NomJeunneFille { get; set; }
+        [Display(Name = "NomJeunneFilleAr"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public string NomJeunneFilleAr { get; set; }
+        [Display(Name = "AdressAr")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل"), StringLength(128, ErrorMessage = "StringLengthMessage")]
+        public string AdressAr { get; set; }
+        public string AdressFr { get; set; }
+        [Display(Name = "WilayaResidenceId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int WilayaResidenceId { get; set; }
+        [Display(Name = "CommuneResidenceId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int CommuneResidenceId { get; set; }
+        [Display(Name = "NumTelephone")]
+        [RegularExpression(@"^0\s[567].*$", ErrorMessage = "يرجى التحقق من رقم الهاتف الذي أدخلته")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public string NumTelephone { get; set; }
+        [Display(Name = "Email")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "الرجاء إدخال عنوان بريد إلكتروني صحيح.")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public string Email { get; set; }
+        [Display(Name = "NiveauInstructionId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int NiveauInstructionId { get; set; }
+
+        public string EtablissementFormation { get; set; }
+
+        public string IntituleDiplome { get; set; }
+
+        public string Specialite { get; set; }
+
+        [Display(Name = "WilayaSeigeSocialId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int WilayaSeigeSocialId { get; set; }
+        [Display(Name = "CommuneSeigeSocialId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int CommuneSeigeSocialId { get; set; }
+        public string AddresseArSeigeSocial { get; set; }
+        public string AddresseFrSeigeSocial { get; set; }
+
+
+        public bool Validee { get; set; }
+        public string ValideePAR { get; set; }
+        public DateTime DateValidation { get; set; }
+        public bool Formee { get; set; }
+
+        public DateTime DateEtablissementATFormation { get; set; }
+        public string IntituleFormation { get; set; }
+        public DateTime DateEvaluationProjet { get; set; }
+        public string ResultatEvaluationProjet { get; set; }
+        public bool IsAdmis { get; set; }
+        public DateTime DateCSVF { get; set; }
+        public string ResultatCSVF { get; set; }
+        public bool IsValideCSVF { get; set; }
+        public DateTime DateAEligibilite { get; set; }
+        public bool IsEligible { get; set; }
+        public bool Annulee { get; set; }
+
+
+        public bool IsEmailVerified { get; set; }
+        public string EmailVerificationToken { get; set; }
+        public DateTime? EmailVerificationTokenExpiry { get; set; }
+
+        [Required(ErrorMessage = "يرجى التحقق من الكابتشا")]
+        [Display(Name = "ReCaptcha")]
+        public string RecaptchaResponse { get; set; }
+
+        [Required(ErrorMessage = "يجب اختيار ملف")]
+        public IFormFile CopieCNIPdf { get; set; }
+
+        [Required(ErrorMessage = "يجب اختيار ملف")]
+        public IFormFile CopieDiplomeRCCFCAPdf { get; set; }
+
+
+
+        public virtual Commune CommuneNaissance { get; set; }
+        public virtual Commune CommuneResidence { get; set; }
+        public virtual Commune CommuneSiegeSocial { get; set; }
+        public virtual Genre Genre { get; set; }
+        public virtual SituationFamiliale SituationFamiliale { get; set; }
+        public virtual NiveauInstruction NiveauInstruction { get; set; }
+        public virtual TypeInscription TypeInscription { get; set; }
+
+
+
+
+
+
+
+
+    }
+}

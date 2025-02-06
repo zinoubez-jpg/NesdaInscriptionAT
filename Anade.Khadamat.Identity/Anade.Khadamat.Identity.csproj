@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Anade.Khadamat.Business\Anade.Khadamat.Business.csproj" />
+    <ProjectReference Include="..\Anade.Khadamat.Domain\Anade.Khadamat.Domain.csproj" />
+  </ItemGroup>
+
+
+</Project>

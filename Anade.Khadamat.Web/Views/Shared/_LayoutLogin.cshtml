@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="rtl">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="pixelstrap">
+    <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+    <title>Espace Promoteur - NESDA</title>
+
+    <!-- Google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/AccountTemplette/assets/css/font-awesome.css">
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="~/AccountTemplette/assets/css/vendors/icofont.css">
+    <!-- Themify icon-->
+    <link rel="stylesheet" type="text/css" href="~/AccountTemplette/assets/css/vendors/themify.css">
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="~/AccountTemplette/assets/css/vendors/flag-icon.css">
+    <!-- Feather icon-->
+    <link rel="stylesheet" type="text/css" href="~/AccountTemplette/assets/css/vendors/feather-icon.css">
+   
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="~/AccountTemplette/assets/css/vendors/bootstrap.css">
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="~/AccountTemplette/assets/css/style.css">
+    <link id="color" rel="stylesheet" href="~/AccountTemplette/assets/css/color-1.css" media="screen">
+    <!-- Responsive css-->
+    <link rel="stylesheet" type="text/css" href="~/AccountTemplette/assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&display=swap" rel="stylesheet">
+
+    @RenderSection("head", false)
+
+</head>
+
+
+<body class="rtl" style="font-family:'Noto Kufi Arabic';">
+   
+    <!-- Page Sidebar Ends-->
+    <div class="page-body">
+        @RenderBody()
+    </div>
+    <!-- latest jquery-->
+    <script src="~/AccountTemplette/assets/js/jquery.min.js"></script>
+    <!-- Bootstrap js-->
+    <script src="~/AccountTemplette/assets/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <!-- feather icon js-->
+    <script src="~/AccountTemplette/assets/js/icons/feather-icon/feather.min.js"></script>
+    <script src="~/AccountTemplette/assets/js/icons/feather-icon/feather-icon.js"></script>
+
+    <!-- Sidebar jquery-->
+    <script src="~/AccountTemplette/assets/js/config.js"></script>
+   
+
+    <!-- Theme js-->
+    <script src="~/AccountTemplette/assets/js/script.js"></script>
+    @*<script src="~/AccountTemplette/assets/js/theme-customizer/customizer.js"></script>*@
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

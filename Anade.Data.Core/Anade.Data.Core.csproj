@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Linq.Dynamic" Version="1.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Anade.Data.Abstractions\Anade.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Anade.Domain.Core\Anade.Domain.Core.csproj" />
+  </ItemGroup>
+
+</Project>

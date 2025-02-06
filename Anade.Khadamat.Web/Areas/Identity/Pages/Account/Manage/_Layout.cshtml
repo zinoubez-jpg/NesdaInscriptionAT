@@ -1,0 +1,53 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout;
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<div class="container-fluid bg-primary py-2 mb-5 page-header">
+    <div class="container py-2">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-6 text-white animated slideInDown">Gestion de compte</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Gestion de commpte</li>
+                    </ol>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<div class="container">
+
+
+    <div>
+        <h4>
+            Modifier vos paramètres de compte
+        </h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_ManageNav" />
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

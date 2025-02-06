@@ -1,0 +1,99 @@
+﻿@model IEnumerable<UserStructure>
+
+
+@{ ViewData["Title"] = "Details structure"; }
+
+
+
+@section head{
+
+
+    <partial name="_datatables.style" />
+
+
+}
+<!-- breadcrumbs -->
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb my-breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+
+        <li class="breadcrumb-item active" aria-current="page">Structure</li>
+    </ol>
+</nav>
+<!-- //breadcrumbs -->
+
+<partial name="_Message" />
+<div class="card card_border p-lg-5 p-3 mb-4">
+    <div class="cards__heading">
+        <h3> @ViewData["Title"] <span></span></h3>
+        <hr />
+    </div>
+
+    <div class="card-body py-3 p-0">
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        UserName
+                    </th>
+
+                    <th>
+                        Date creation
+                    </th>
+
+                    <th>
+                        Type User
+                    </th>
+
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.DateCreation)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.TypeUser.Designation)
+                        </td>
+
+
+
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index" class="btn btn-style border-btn">Back to List</a>
+</div>
+
+@section scripts{
+
+    @{ /*TODO: Import unobtrusive ajax script*/}
+
+
+    <partial name="_datatables.script" />
+
+    <script>
+        $(function () {
+            $("table").DataTable();
+        });</script>
+
+
+
+
+}

@@ -1,0 +1,49 @@
+﻿@page
+@model LoginModel
+
+@{ ViewData["Title"] = "Authentification"; }
+
+<!-- login page start-->
+<div class="container-fluid p-0">
+    <div class="row m-0">
+        <div class="col-12 p-0">
+            <div class="login-card login-dark">
+                <div>
+                    <div><a class="logo" asp-controller="Home" asp-action="Index"><img class="img-fluid for-dark" src="~/images/logoNesda.png" alt="logoNesda"><img class="img-fluid for-light" src="~/images/logoNesda.png" alt="LogoNesda"></a></div>
+
+                    <div class="login-main">
+                        <form class="theme-form" id="account" method="post">
+                            <h4>تسجيل الدخول إلى الحساب </h4>
+                            <p>أدخل بريدك الإلكتروني وكلمة المرور لتسجيل الدخول</p>
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group">
+                                <label for="Input_UserName" class="col-form-label">بريدك الإلكتروني</label>
+                                <input asp-for="Input.UserName" id="Input_UserName" class="form-control" type="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Input_Password" class="col-form-label">كلمة السر </label>
+                                <div class="form-input position-relative">
+                                    <input asp-for="Input.Password" id="Input_Password" class="form-control" type="password" required>
+                                </div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <div class="checkbox p-0">
+                                    <input asp-for="Input.RememberMe" id="checkbox1" type="checkbox">
+                                    <label asp-for="Input.RememberMe" class="text-muted" for="checkbox1">احفظ بيانات التسجيل</label>
+                                </div>
+                                <div class="text-end mt-3">
+                                    <button class="btn btn-primary btn-block w-100" type="submit" name="submit-form">الدخول</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

@@ -1,0 +1,85 @@
+﻿@page
+@model RegisterModel
+@{ ViewData["Title"] = "Creer un Nouveau Utilisateur"; }
+
+
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-2 mb-5 page-header">
+    <div class="container py-2">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-6 text-white animated slideInDown">@ViewData["Title"]</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item"><a asp-controller="AccountGestion" asp-action="Index" class="text-white">Utilisateurs</a></li>
+
+                        <li class="breadcrumb-item text-white active" aria-current="page">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Header End -->
+<div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-2">
+                </div>
+                <div class="col-md-5 ">
+                    <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="was-validated">
+                        <div class="form-group">
+                            <label asp-for="Input.TypeUserId" class="control-label input__label"> Type Utilisateur</label>
+                            <select asp-for="Input.TypeUserId" asp-items="@ViewBag.TypeUserId as SelectList" class="form-select" required>
+                            </select>
+                            <span asp-validation-for="Input.TypeUserId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.StructureId" class="control-label input__label"> Structure</label>
+                            <select asp-for="Input.StructureId" asp-items="@ViewBag.StructureId as SelectList" class="form-select" required>
+                                <option value="">Sélectionné </option>
+
+                            </select>
+                            <span asp-validation-for="Input.StructureId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.Nom" class="control-label input__label"></label>
+                            <input asp-for="Input.Nom" class="form-control input-style" required />
+                            <span asp-validation-for="Input.StructureId" class="text-danger"></span>
+
+                            <div class="invalid-feedback"> Saisi le Nom</div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="Input.Prenom" class="control-label input__label"></label>
+                            <input asp-for="Input.Prenom" class="form-control input-style" required />
+                            <span asp-validation-for="Input.Prenom" class="text-danger"></span>
+                            <div class="invalid-feedback"> Saisi le Prenom</div>
+                        </div>
+                      
+                        <div class="form-group">
+                            <label asp-for="Input.Password" class="control-label input__label">Mot de Passe </label>
+                            <input asp-for="Input.Password" class="form-control input-style" required />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            <div class="invalid-feedback"> Saisi le Mot de passe</div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.ConfirmPassword" class="control-label input__label">Confirmé Mot de Passe</label>
+                            <input asp-for="Input.ConfirmPassword" class="form-control input-style" required />
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            <div class="invalid-feedback"> Confirme le mot de passe</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Creer</button>
+                    </form>
+
+
+                </div>
+            </div>
+      
+    
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

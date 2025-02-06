@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Anade.Khadamat.Identity
+
+@inject UserService Userservice
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await Userservice.GetUserEagerLoadedAsync(User);
+    <div class="user-profile-container">
+        <div class="user-profile-dropdown">
+            <!-- Avatar cliquable -->
+
+            <img src="~/images/profile.png" 
+            alt="User Photo"
+            class="user-profile-img dropdown-toggle"
+            id="userDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false" />
+
+            <!-- Contenu du menu déroulant -->
+            <div class="dropdown-menu user-profile-menu p-3" aria-labelledby="userDropdown">
+                <p class="email text-muted mb-1">@UserManager.GetUserName(User)</p>
+                <h5 class="username mb-3">مرحبا بك </h5>
+                <h5 class="username mb-3">@user.FullName</h5>
+                <a class="btn btn-outline-secondary" asp-controller="EspacePromoteur" asp-action="Index"> فضاء الخاص بك</a>
+                <a class="btn btn-outline-secondary mb-2" asp-area="Identity" asp-page="/Account/Manage/Index">الإعدادات</a>
+
+                <hr>
+                <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="btn btn-danger w-100">Déconnexion</button>
+                </form>
+            </div>
+        </div>
+    </div>
+  
+}
+else
+{
+    <a class="btn-style-one login-button" style="padding: 10px 30px; font-size: 18px; " id="login" asp-area="Identity" asp-page="/Account/Login">
+        <span class="txt">الدخول</span>
+    </a>
+}
+
+
+
+

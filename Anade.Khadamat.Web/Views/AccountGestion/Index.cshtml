@@ -1,0 +1,131 @@
+﻿@{ ViewData["Title"] = "Liste des Utilisateurs ";}
+
+@section head{
+    @*TODO:import datatables styles*@
+    <partial name="_datatables.style" />
+}
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-2 mb-5 page-header">
+    <div class="container py-2">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-6 text-white animated slideInDown">@ViewData["Title"]</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Header End -->
+
+<partial name="_Message" />
+
+<div class="container">
+    <div class="card">
+        <div class="card-body pl-0 pr-0">
+            <p class="text-right pr-1">
+                <a href="/Identity/Account/Register" class="btn btn-outline-dark"><i class="fa fa-plus-square"></i>&nbsp;Nouveau</a>
+            </p>
+            <table class="matable table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            id
+                        </th>
+
+                        <th>
+                            Utilisateur
+                        </th>
+                        <th>
+                            Date Creation
+                        </th>
+                        <th>
+                            Code Structure
+                        </th>
+                        <th>
+                            Structure
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section scripts{
+    @*TODO:import datatables scripts*@
+    <partial name="_datatables.script" />
+
+    @*TODO:apply the datatable plugin on table element*@
+    <script>
+
+        $(function () {
+            initDataTable("table","@Url.Action("USDataTable")")
+        });
+
+        function initDataTable(selector, url) {
+
+           var dtTable =  $(selector).DataTable({
+            "processing": true,
+            "serverSide": true,
+            "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            "ajax": {
+                url: url,
+                  type: 'POST'
+                },
+            "columns":
+            [
+                { "data": "id", "visible": false, "searchable": false },
+                    { "data": "user.userName", "visible": true, "searchable": false },
+                    { "data": "dateAffectation", "visible": true, "searchable": false },
+
+                    { "data": "structure.codeStructure", "visible": true, "searchable": false },
+                    { "data": "structure.designation", "visible": true, "searchable": false },
+                { "data": null, "searchable": false, "sortable": false,
+                  "render": function (data, type, row, meta){
+                      var markup =
+                          "<a class='btn btn-secondary btn-sm' href=" + '@Url.Action("EditUserStructure")/' + row.id + "><i class='fa fa-pencil-alt'></i></a>" + " " +
+                          "<a class='btn-danger btn-sm' href=" + '@Url.Action("Delete")/' + row.id +"><i class='fa fa-trash'></i></a>";
+                          return markup;
+                        }
+                    }
+                   ],
+               dom: 'Blfrtip',
+               buttons: [
+                   {
+                       extend: 'excelHtml5',
+                       title: 'Liste des utilisateurs',
+                       text: 'Export to excel',
+
+                       autoFilter: true,
+                       //Columns to export
+                       exportOptions: {
+                           columns: [1, 2, 3,4]
+                       },
+                       customize: function (xlsx) {
+                           var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                           // jQuery selector to add a border
+                           $('row c[r*="10"]', sheet).attr('s', '25');
+                       }
+
+                   }
+
+               ]
+            });
+        }
+
+    </script>
+
+}

@@ -1,0 +1,173 @@
+﻿@model Anade.Khadamat.Domain.Inscription
+@{ Layout = "_LayoutEspacePromoteur"; }
+
+<style>
+    .equal-height {
+        display: flex;
+        flex-wrap: wrap; /* Important for responsiveness */
+    }
+
+        .equal-height > .col-xl-4,
+        .equal-height > .col-xl-8 { /* Target the columns directly */
+            display: flex;
+            flex-direction: column; /* Align content vertically */
+        }
+
+            .equal-height > .col-xl-4 > .card,
+            .equal-height > .col-xl-8 > .card { /* Target the cards within the columns */
+                flex: 1 1 auto; /* Key: Allows cards to grow and fill available space */
+            }
+</style>
+
+<br />
+<br />
+<div class="container-fluid">
+    <div class="edit-profile">
+        <div class="row equal-height">
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">معلومات صاحب المشروع</h4>
+                        <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row mb-2">
+                            <div class="profile-title">
+                                <div class="media">
+                                    <img class="img-70 rounded-circle" alt="" src="~/images/profile2.png">
+                                    <div class="media-body">
+                                        <h5 class="mb-1"> @Model.NomAr  @Model.PrenomAr </h5>
+                                        <p>@Model.NomFr  @Model.PrenomFr</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">الرقم التعريفي الوطني الوحيد</label>
+                            <input class="form-control" readonly placeholder="@Model.NIN">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">تاريخ الميلاد</label>
+                            <input class="form-control" readonly placeholder="@Model.DateNaissance.ToShortDateString()">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">مكان الميلاد</label>
+                            <input class="form-control" readonly placeholder="@Model.CommuneNaissance.DesignationAr / @Model.CommuneNaissance.Wilaya.DesignationAr">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">العنوان الشخصي</label>
+                            <input class="form-control" readonly placeholder="@Model.AdressAr / @Model.CommuneResidence.DesignationAr / @Model.CommuneResidence.Wilaya.DesignationAr">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">رقم الهاثف المحمول</label>
+                            <input class="form-control" readonly placeholder="@Model.NumTelephone">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">البريد الإلكتروني</label>
+                            <input class="form-control" readonly placeholder="@Model.Email">
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-8">
+                <form class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">معلومات التسجيل</h4>
+                        <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="mb-3">
+                                    <label class="form-label">رقم التسجيل</label>
+                                    <input class="form-control" readonly placeholder="@Model.Id">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="mb-3">
+                                    <label class="form-label">تاريخ التسجيل</label>
+                                    <input class="form-control" type="text" readonly placeholder="@Model.DateInscription.ToShortDateString()">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label">نوع التسجيل</label>
+                                    <input class="form-control" type="text" readonly placeholder="@Model.TypeInscription.DesignationAr">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label">عنوان المقر الإجتماعي</label>
+                                    <input class="form-control" type="text" placeholder="@Model.AddresseArSeigeSocial / @Model.CommuneSiegeSocial.DesignationAr / @Model.CommuneSiegeSocial.Wilaya.DesignationAr">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4>قائمة التكوينات التي تم المشاركة فيها</h4>
+                    </div>
+                    @if (!Model.SessionFormations.Any())
+                    {
+        <p style="color: #C70039; margin-right:20px">لم تشارك في أي دورة تكوينية حتى الآن.</p> }
+    else
+    {
+<div class="table-responsive signal-table custom-scrollbar">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+
+                <th scope="col">رقم الدورة</th>
+                <th scope="col">إسم الدورة التدريبية	</th>
+                <th scope="col">تاريخ البداية</th>
+                <th scope="col">تاريخ نهاية الدورة</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SessionFormations)
+            {
+<tr>
+    <td>@item.CodeSession</td>
+    <td>@item.Formation.DesignationAr</td>
+    <td>@item.DateDebut.ToShortDateString()</td>
+    <td>@item.DateFin.ToShortDateString()</td>
+    <td>
+        <a asp-controller="Reporting" asp-action="PrintAtF" asp-route-Id="@Model.Id" asp-route-SessionId="@item.Id" class="btn btn-outline-primary btn-sm" title="تحميل الشهادة">
+            تحميل الشهادة
+        </a>
+    </td>
+
+</tr>}
+        </tbody>
+    </table>
+</div>}
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        
+    </script>
+}

@@ -1,0 +1,102 @@
+﻿
+
+@{ ViewData["Title"] = "Liste des Structures"; }
+
+@section head{
+    @*TODO:import datatables styles*@
+    <partial name="_datatables.style" />
+}
+
+<!-- Header Start -->
+<div class="container-fluid bg-primary py-2 mb-5 page-header">
+    <div class="container py-2">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-6 text-white animated slideInDown">@ViewData["Title"]</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Header End -->
+
+<partial name="_Message" />
+<div class="card card_border p-lg-5 p-3 mb-4">
+    
+    <div class="card-body py-3 p-0">
+        <p class="text-right pr-1">
+            <a asp-action="Create" class="btn btn-style btn-primary mr-2"><i class="fa fa-plus-square"></i>&nbsp;Nouveau</a>
+        </p>
+        <br />
+
+        <table class="table display compact">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        CodeStructure
+                    </th>
+                    <th>
+                        Designation
+                    </th>
+                    <th>
+                        Niveau
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    @*TODO:import datatables scripts*@
+    <partial name="_datatables.script" />
+
+    @*TODO:apply the datatable plugin on table element*@
+    <script>
+
+        $(function () {
+            initDataTable("table","@Url.Action("Datatable")")
+        });
+
+        function initDataTable(selector, url) {
+
+           var dtTable =  $(selector).DataTable({
+            "processing": true,
+            "serverSide": true,
+            "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+            "ajax": {
+                url: url,
+                  type: 'POST'
+                },
+            "columns":
+            [
+                { "data": "id", "visible": false, "searchable": false },
+                    { "data": "codeStructure", "visible": true, "searchable": false },
+                { "data": "designation", "visible": true, "searchable": false },
+                    { "data": "niveau.designation", "visible": true, "searchable": false },
+                { "data": null, "searchable": false, "sortable": false,
+                  "render": function (data, type, row, meta){
+                      var markup =
+                          "<a class='btn-outline-info btn-sm' href=" + '@Url.Action("Details")/' + row.id + "><i class='fas fa-edit'></i></a>" + " " +
+                        "<a class='btn-danger btn-sm' href=" + '@Url.Action("Delete")/' + row.id +"><i class='fa fa-trash'></i></a>";
+                          return markup;
+                        }
+                    }
+            ],
+            });
+        }
+
+    </script>
+    
+
+}

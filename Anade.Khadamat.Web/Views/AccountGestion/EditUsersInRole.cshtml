@@ -1,0 +1,81 @@
+﻿@model List<UserRoleViewModel>
+
+@{ ViewData["Title"] = "Modifier l'utilisateur dans le Role";
+                var roleId = ViewBag.roleId; }
+<!-- Header Start -->
+
+<div class="container-fluid bg-primary py-2 mb-5 page-header">
+    <div class="container py-2">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h1 class="display-6 text-white animated slideInDown">@ViewData["Title"]</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item"><a asp-controller="AccountGestion" asp-action="ListRoles" class="text-white">Liste des roles</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="_Message" />
+<!-- Header End -->
+
+<div class="card card_border p-lg-5 p-3 mb-4">
+  
+    <div class="card-body py-3 p-0">
+
+        <div class="container">
+
+            <form method="post">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>
+                            Ajouter ou supprimer des utilisateurs de ce rôle
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+            <div class="form-check m-1">
+                <input type="hidden" asp-for="@Model[i].UserId" />
+                <input type="hidden" asp-for="@Model[i].UserName" />
+                <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+                <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                    @Model[i].UserName
+                </label>
+            </div>}
+                    </div>
+                    <div class="card-footer">
+                        <input type="submit" value="Mettre Ajour" class="primary-btn second-bg"
+                               style="width:auto" />
+                        <a asp-action="EditRole" asp-route-id="@roleId"
+                           class="btn btn-style border-btn" style="width:auto">Annulé</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

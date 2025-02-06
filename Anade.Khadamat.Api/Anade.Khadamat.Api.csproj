@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Anade.Business.Core\Anade.Business.Core.csproj" />
+    <ProjectReference Include="..\Anade.Data.Abstractions\Anade.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Anade.Khadamat.Business\Anade.Khadamat.Business.csproj" />
+    <ProjectReference Include="..\Anade.Khadamat.Data\Anade.Khadamat.Data.csproj" />
+    <ProjectReference Include="..\Anade.Khadamat.Domain\Anade.Khadamat.Domain.csproj" />
+    <ProjectReference Include="..\Anade.Khadamat.Identity\Anade.Khadamat.Identity.csproj" />
+
+  </ItemGroup>
+
+</Project>

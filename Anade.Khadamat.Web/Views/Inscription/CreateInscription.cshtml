@@ -1,0 +1,730 @@
+﻿@model Anade.Khadamat.Web.Models.CreateInscriptionVM
+
+
+@{ ViewData["Title"] = "Inscription en ligne ";
+
+
+
+}
+
+@section head{
+    <partial name="_jqueryui.style" />
+    <partial name="_select2.style" />
+
+
+}
+
+
+
+<div class="page-wrapper">
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+
+
+    <!-- CTA Section Start -->
+    <div class="cta-section" data-bg-image="/images/background/cta-bg.jpg">
+        <div class="auto-container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <!-- CTA Content Start -->
+                    <div class="cta-content">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-6 col-sm-12 form-group">
+                                <h6 class="title center">هام جدا </h6>
+
+                                <div class="text">
+                                    <p style="text-align: justify;">
+                                        هل توافق على أننا سنقوم بمعالجة بياناتك الشخصية وفقًا لأحكام القانون رقم 18-07 المتعلق بحماية الأشخاص الطبيعيين في مجال معالجة البيانات الشخصية؟
+
+                                    </p>
+                                </div>
+
+                                <div class="col-lg-8 col-md-6 col-sm-12 form-group">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" id="customCheckbox">
+                                        <span class="checkmark"></span>
+                                        أوافق على الشروط والأحكام
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center align-items-center">
+                                <img style="width:36%; max-width:36%; opacity:0.92;" src="~/templettecde pf/images/logo-w-l.png" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- CTA Content End -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- CTA Section End -->
+    <!-- Reputation Section Two -->
+    <div class="reputation-section-two">
+        <div class="auto-container">
+            <div class="row clearfix disabled" id="contrat">
+                <div class="container">
+
+                    <partial name="_Message" />
+                </div>
+                <!-- Content Column -->
+                <div class="content-column col-lg-5 col-md-12 col-sm-12 ">
+                    <div class="inner-column">
+                        <div class="sec-title">
+                            <h2> إستمارت <span>التسجيل</span>  </h2>
+                        </div>
+                        <div class="text">
+
+                            @if (ViewBag.TypeInsId == 2)
+                            {
+                                <h5 style="color: darkslategrey; text-align: justify;">
+                                    هذه الاستمارة مخصصة للتسجيل عبر الإنترنت لطلب التمويل لإنشاء مشروع توسيعي.
+                                </h5>
+                                <br />
+
+                                <br />
+                                <h5 style="color: darkslategrey; text-align: justify;">
+                                    يستفيد من تمويل المشاريع التوسعية جميع أصحاب المشاريع، سواء كانوا مستفيدين سابقين من خدمات الوكالة الوطنية لدعم وتنمية المقاولاتية أو من أنشأوا مشاريعهم بشكل مستقل أو بدعم من أجهزة أخرى:
+                                </h5>
+                                <br />
+                                <ul class="list-style-one">
+                                    <li> أونجام  (ANGEM) .</li>
+                                    <li> كناك (CNAC) .</li>
+                                    <li>الفلاحون .</li>
+                                    <li>الحرفيون .</li>
+                                    <li>أصحاب السجلات التجارية .</li>
+                                    <li>أصحاب التراخيص .</li>
+                                  
+                                </ul>
+
+                            }
+                            else
+                            {
+                                <h5 style="color: darkslategrey; text-align: justify;">
+                                    هذه الاستمارة مخصصة للتسجيل عبر الإنترنت لطلب التمويل لإنشاء مشروع جديد.
+                                </h5>
+                                <br />
+
+                                <ul class="list-style-one">
+                                    <li style="text-align: justify;">
+                                        يستفيد من تمويل المشاريع الجديدة جميع الشباب حاملي أقكار المشاريع الدين استفادو من تكوين في مراكز تطوير المقاولاتية الخاصة بالجامعيين أو خرجي معاهد التكوين المهني .
+                                    </li>
+                                    <br />
+                                    <li style="text-align: justify;">
+                                        إذا كنت من الشباب الذين يمتلكون فكرة مشروع غير واضحة ويحتاجون إلى الدعم لتحويلها إلى واقع ملموس، ندعوك للانضمام إلى برنامجنا "أوجد فكرة مشروعك" . سنوفر لك الأدوات والمعرفة الضرورية لتطوير فكرتك وتحويلها إلى مشروع ناجح، بالإضافة إلى توجيهك نحو أقرب مركز لتطوير المقاولاتية حيث يمكنك اكتساب المهارات اللازمة لإنشاء مؤسستك المصغرة.
+                                    </li>
+
+                                </ul>
+
+
+
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Form Column -->
+                <div class="form-column col-lg-7 col-md-12 col-sm-12">
+                    <div class="inner-column">
+                        <h6>كل الحقول والخانات إلزامية.</h6>
+                        <br />
+                        <div class="form-boxed ">
+
+                            <div class="contact-form">
+                                <!-- Contact Form -->
+                                <form enctype="multipart/form-data" asp-action="CreateInscription" class="needs-validation" novalidate>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="NIN">الرقم التعريفي الوطني الوحيد (NIN)</label>
+                                            <input asp-for="NIN" class="required-input" required>
+                                            <span asp-validation-for="NIN" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="NomAr">اللقب بالعربية</label>
+                                            <input asp-for="NomAr" required>
+                                            <span asp-validation-for="NomAr" class="text-danger"></span>
+
+
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="PrenomAr">الإسم بالعربية</label>
+                                            <input asp-for="PrenomAr" required>
+                                            <span asp-validation-for="PrenomAr" class="text-danger"></span>
+
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="NomFr">اللقب بالأحرف اللاتينية</label>
+                                            <input asp-for="NomFr" style="direction:ltr" required>
+                                            <span asp-validation-for="NomFr" class="text-danger"></span>
+
+
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="PrenomFr">الإسم بالأحرف اللاتينية</label>
+                                            <input asp-for="PrenomFr" style="direction:ltr" required>
+                                            <span asp-validation-for="PrenomFr" class="text-danger"></span>
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="DateNaissance">تاريخ الميلاد</label>
+                                            <input asp-for="DateNaissance" type="date" required>
+                                            <span asp-validation-for="DateNaissance" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="WilayaNaissanceId">ولاية الميلاد</label>
+                                            <select asp-for="WilayaNaissanceId" asp-items="@ViewBag.WilayaResId as SelectList" class="form-control select2" id="wilayaN" required>
+                                                <option value="">إختيار ولاية الميلاد</option>
+                                            </select>
+                                            <span asp-validation-for="WilayaNaissanceId" class="text-danger"></span>
+
+
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="CommuneNaissanceId">بلدية الميلاد </label>
+                                            <select asp-for="CommuneNaissanceId" asp-items="@ViewBag.CommuneId" class="form-control select2" id="communeN" required>
+                                                <option value="">إختيار بلدية الميلاد</option>
+                                            </select>
+                                            <span asp-validation-for="CommuneNaissanceId" class="text-danger"></span>
+                                        </div>
+
+
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="GenreId">نوع الجنس</label>
+                                            <select asp-for="GenreId" asp-items="@ViewBag.GenreId as SelectList" class=" select2" required>
+                                                <option value="">إختيار نوع الجنس</option>
+                                            </select>
+                                            <span asp-validation-for="GenreId" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="SituationFamilialeId">الحالة العائلية</label>
+                                            <select asp-for="SituationFamilialeId" asp-items="@ViewBag.SituationFamilialeId as SelectList" class="form-control select2" required>
+                                                <option value="">إختيار الحالة العائلية</option>
+                                            </select>
+                                            <span asp-validation-for="SituationFamilialeId" class="text-danger"></span>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="AdressAr">العنوان</label>
+                                            <input asp-for="AdressAr" required>
+                                            <span asp-validation-for="AdressAr" class="text-danger"></span>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="WilayaResidenceId">ولاية الإقامة</label>
+                                            <select asp-for="WilayaResidenceId" asp-items="@ViewBag.WilayaResId as SelectList" class="form-control select2" id="wilayaR" required>
+                                                <option value="">إختيار ولاية الإقامة</option>
+                                            </select>
+                                            <span asp-validation-for="WilayaResidenceId" class="text-danger"></span>
+
+
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="CommuneResidenceId">بلدية الإقامة </label>
+                                            <select asp-for="CommuneResidenceId" asp-items="@ViewBag.CommuneId" class="form-control select2" id="communeR" required>
+                                                <option value="">إختيار بلدية الإقامة</option>
+                                            </select>
+                                            <span asp-validation-for="CommuneResidenceId" class="text-danger"></span>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="NiveauInstructionId">المستوى الدراسي</label>
+                                            <select asp-for="NiveauInstructionId" asp-items="@ViewBag.NiveauInstructionId as SelectList" class="form-control select2" required>
+                                                <option value="">إختيار المستوى الدراسي</option>
+                                            </select>
+                                            <span asp-validation-for="NiveauInstructionId" class="text-danger"></span>
+
+
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="row clearfix">
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="NumTelephone">رقم الهاثف</label>
+                                            <input asp-for="NumTelephone" required style="direction:ltr">
+                                            <span asp-validation-for="NumTelephone" class="text-danger"></span>
+
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="Email">البريد الإلكتروني </label>
+                                            <input asp-for="Email" style="direction:ltr" required>
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+
+                                        </div>
+                                         <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                             <label asp-for="WilayaSeigeSocialId">ولاية المقر الاجتماعي لمؤسستكم</label>
+                                            <select asp-for="WilayaSeigeSocialId" asp-items="@ViewBag.WilayaResId as SelectList" class="form-control select2" id="wilayaSS" required>
+                                                <option value="">إختيار ولاية </option>
+                                            </select>
+                                            <span asp-validation-for="WilayaSeigeSocialId" class="text-danger"></span>
+
+
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="CommuneSeigeSocialId">بلديةالمقر الاجتماعي لمؤسستكم </label>
+                                            <select asp-for="CommuneSeigeSocialId" asp-items="@ViewBag.CommuneId" class="form-control select2" id="communeSS" required>
+                                                <option value="">إختيار بلدية </option>
+                                            </select>
+                                            <span asp-validation-for="CommuneSeigeSocialId" class="text-danger"></span>
+
+
+                                        </div>
+
+
+
+                                        <div class="contact-form">
+                                            <div class="form-group row">
+                                                <label asp-for="CopieCNIPdf" class="col-lg-12 col-md-12 col-sm-12 col-form-label">
+                                                    نرجو منكم إرفاق نسخة واضحة من بطاقة التعريف البيوميترية (PDF)
+                                                </label>
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="custom-file">
+                                                        <input asp-for="CopieCNIPdf"
+                                                               id="fileInput"
+                                                               class="form-control custom-file-input"
+                                                               accept="application/pdf">
+                                                        <label class="custom-file-label" for="fileInput"></label>
+                                                        <span asp-validation-for="CopieCNIPdf" class="text-danger"></span>
+                                                    </div>
+                                                    <div id="loadingState" class="loading-state" style="display: none;">
+                                                        تحميل الملف ...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="contact-form">
+                                            <div class="form-group row">
+                                                @if (ViewBag.TypeInsId == 2)
+                                                {
+
+                                                    <label asp-for="CopieDiplomeRCCFCAPdf" class="col-lg-12 col-md-12 col-sm-12 col-form-label">
+                                                        نرجو منكم إرفاق نسخة واضحة من ( السجل التجاري / بطاقة فلاح / بطافة حرفي/ ترخيص) (PDF)
+                                                    </label>
+
+                                                }
+                                                else
+                                                {
+                                                    <label asp-for="CopieDiplomeRCCFCAPdf" class="col-lg-12 col-md-12 col-sm-12 col-form-label">
+                                                        نرجو منكم إرفاق نسخة واضحة من الشهادة (الجامعية / معهد التكوين المهني) (PDF)
+                                                    </label>
+                                                }
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="custom-file">
+                                                        <input asp-for="CopieDiplomeRCCFCAPdf"
+                                                               id="fileInput2"
+                                                               class="form-control custom-file-input"
+                                                               accept="application/pdf">
+                                                        <label class="custom-file-label" for="fileInput2"></label>
+                                                        <span asp-validation-for="CopieDiplomeRCCFCAPdf" class="text-danger"></span>
+                                                    </div>
+                                                    <div id="loadingState2" class="loading-state" style="display: none;">
+                                                        تحميل الملف ...
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="g-recaptcha"
+                                                 data-sitekey="6LcN3q4qAAAAAEFq86pRnXIr1ROxvFnB1PzCBdoB"
+                                                 data-callback="onRecaptchaComplete"></div>
+                                            <input type="hidden" asp-for="RecaptchaResponse" id="recaptchaResponse" required />
+                                            <span asp-validation-for="RecaptchaResponse" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 btn-box col-md-12 col-sm-12 text-center form-group">
+                                        <button class="theme-btn btn-style-one" type="submit" name="submit-form"><span class="txt">تسجيل</span></button>
+                                    </div>
+
+                                </form>
+                                <p class="form-messege"></p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- End Reputation Section -->
+
+
+</div>
+
+
+
+
+
+@section scripts{
+
+    <partial name="_ValidationScriptsPartial" />
+    <partial name="_jqueryui.script" />
+    <partial name="_select2.script" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+
+    @*<script>
+            $(function () {
+
+                datepicker.init("#DateNaissance", { changeYear: true, changeMonth: true, dateFormat: "dd/mm/yy", firstDay: 6, firstYear: 1950 });
+            });
+
+        </script>*@
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#communeN").prop("disabled", false); // Désactiver par défaut
+
+            $("#wilayaN").change(function () {
+                var wilayaNId = $(this).val();
+                var url = "/Inscription/GetCommuneList";
+
+                if (wilayaNId) {
+                    $.getJSON(url, { WilayaId: wilayaNId }, function (data) {
+                        var item = "<option value=''>إختيار بلدية الميلاد</option>";
+                        $.each(data, function (i, city) {
+                            item += '<option value="' + city.value + '">' + city.text + '</option>'
+                        });
+                        $("#communeN").html(item).prop("disabled", false); // Activer le champ
+                    });
+                } else {
+                    $("#communeN").html("<option value=''>إختيار بلدية الميلاد</option>").prop("disabled", true);
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $("#communeR").prop("disabled", false); // Désactiver par défaut
+
+            $("#wilayaR").change(function () {
+                var wilayaRId = $(this).val();
+                var url = "/Inscription/GetCommuneList";
+
+                if (wilayaRId) {
+                    $.getJSON(url, { WilayaId: wilayaRId }, function (data) {
+                        var item = "<option value=''>إختيار بلدية الإقامة</option>";
+                        $.each(data, function (i, city) {
+                            item += '<option value="' + city.value + '">' + city.text + '</option>'
+                        });
+                        $("#communeR").html(item).prop("disabled", false); // Activer le champ
+                    });
+                } else {
+                    $("#communeR").html("<option value=''>إختيار بلدية الإقامة</option>").prop("disabled", true);
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $("#communeSS").prop("disabled", false); // Désactiver par défaut
+
+            $("#wilayaSS").change(function () {
+                var wilayaSSId = $(this).val();
+                var url = "/Inscription/GetCommuneList";
+
+                if (wilayaSSId) {
+                    $.getJSON(url, { WilayaId: wilayaSSId }, function (data) {
+                        var item = "<option value=''>إختيار بلدية الإقامة</option>";
+                        $.each(data, function (i, city) {
+                            item += '<option value="' + city.value + '">' + city.text + '</option>'
+                        });
+                        $("#communeSS").html(item).prop("disabled", false); // Activer le champ
+                    });
+                } else {
+                    $("#communeSS").html("<option value=''>إختيار بلدية الإقامة</option>").prop("disabled", true);
+                }
+            });
+        });
+
+
+    </script>
+
+
+
+    <script>
+        const input = document.getElementById('NIN');
+
+        input.addEventListener('input', () => {
+            const regex = /[0-9]/;
+            const value = input.value;
+
+            for (let i = 0; i < value.length; i++) {
+                if (!regex.test(value[i])) {
+                    input.value = value.substring(0, i);
+                    break;
+                }
+            }
+        });
+
+
+
+    </script>
+    <script type="text/javascript">
+
+        function restrictInputOtherThanArabic($field) {
+            // Plage de caractères Unicode pour les caractères arabes, chiffres arabes, et chiffres occidentaux
+            var arabicCharUnicodeRange = /^[\u0600-\u06FF\u0660-\u0669\u0030-\u0039\s]+$/; // Ajout des chiffres occidentaux et des espaces
+
+            // Événement keypress pour empêcher les saisies autres que les caractères arabes et chiffres
+            $field.on("keypress", function (event) {
+                var key = event.which;
+                // Autoriser retour arrière (backspace), pavé numérique (0), et espace (32)
+                if (key == 8 || key == 0 || key === 32) {
+                    return true;
+                }
+
+                var str = String.fromCharCode(key);
+                if (arabicCharUnicodeRange.test(str)) {
+                    return true;
+                }
+
+                return false;
+            });
+
+            // Empêche coller (paste) si le texte contient des caractères autres qu'arabes ou chiffres
+            $field.on("paste", function (event) {
+                var clipboardData = (event.originalEvent || event).clipboardData || window.clipboardData;
+                var pastedData = clipboardData.getData('text'); // Récupère les données collées
+
+                // Bloque l'événement si le texte collé contient des caractères non autorisés
+                if (!arabicCharUnicodeRange.test(pastedData)) {
+                    event.preventDefault(); // Empêche le coller si du texte non autorisé est détecté
+                }
+            });
+
+            // Empêche déposer du texte (drag and drop) si non autorisé
+            $field.on("drop", function (event) {
+                var draggedData = event.originalEvent.dataTransfer.getData('text');
+
+                // Bloque le drop si le texte contient des caractères non autorisés
+                if (!arabicCharUnicodeRange.test(draggedData)) {
+                    event.preventDefault();
+                }
+            });
+        }
+
+        jQuery(document).ready(function () {
+            // Appliquer la restriction aux champs
+            restrictInputOtherThanArabic($('#AdresseDomicileAr'));
+            restrictInputOtherThanArabic($('#AdresseSiegeAr'));
+        });
+
+
+        jQuery(document).ready(function () {
+            // allow arabic characters only for following fields
+            restrictInputOtherThanArabic($('#NomAr'));
+            restrictInputOtherThanArabic($('#PrenomAr'));
+            restrictInputOtherThanArabic($('#AdressAr'));
+           
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2({
+                dir: "rtl",
+                width: '100%' // S'assure que la largeur correspond au champ d'entrée
+            });
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Appliquer un masque au champ de numéro de téléphone
+            $('#NumTelephone').inputmask({
+                mask: "0 9 99 99 99 99", // Le masque pour afficher 0x xx xx xx
+                placeholder: "0 _ __ __ __ __", // Affiche un espace réservé
+                showMaskOnHover: false, // Ne montre pas le masque lorsque l'utilisateur survole
+                showMaskOnFocus: true // Montre le masque uniquement lorsque le champ est actif
+            });
+        });
+
+    </script>
+
+    <script>
+        document.getElementById('NumTelephone').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\s+/g, ''); // Supprimer les espaces existants
+            if (value.length > 10) value = value.slice(0, 10); // Limiter à 10 chiffres
+            let formattedValue = '';
+
+            // Appliquer le format
+            for (let i = 0; i < value.length; i++) {
+                if (i === 1 || i === 3 || i === 5 || i === 7) {
+                    formattedValue += ' ';
+                }
+                formattedValue += value[i];
+            }
+
+            e.target.value = formattedValue; // Mettre à jour l'affichage
+        });
+
+
+
+
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Cibler la checkbox et le div
+            const checkbox = document.getElementById('customCheckbox');
+            const contratDiv = document.getElementById('contrat');
+            const inputs = document.querySelectorAll('.required-input'); // Sélectionner les inputs à vérifier
+
+            if (checkbox && contratDiv) {
+                // Ajouter un gestionnaire d'événement pour la checkbox
+                checkbox.addEventListener('change', function () {
+                    if (checkbox.checked) {
+                        // Si la checkbox est cochée, activer le div
+                        contratDiv.classList.remove('disabled');
+                    } else {
+                        // Sinon, désactiver le div
+                        contratDiv.classList.add('disabled');
+                    }
+                });
+
+                // Vérifier les inputs lors du chargement de la page
+                let inputFilled = Array.from(inputs).some(input => input.value.trim() !== '');
+                if (inputFilled) {
+                    checkbox.checked = true;
+                    contratDiv.classList.remove('disabled');
+                }
+
+                // Surveiller les changements dans les inputs pour activer uniquement le div
+                inputs.forEach(input => {
+                    input.addEventListener('input', function () {
+                        let inputFilled = Array.from(inputs).some(input => input.value.trim() !== '');
+                        if (inputFilled) {
+                            contratDiv.classList.remove('disabled');
+                        }
+                    });
+                });
+            } else {
+                console.error('Checkbox ou div non trouvé.');
+            }
+
+            document.addEventListener('click', function (event) {
+                const checkbox = document.querySelector('#customCheckbox'); // Sélectionner la checkbox par son ID
+                const label = document.querySelector('.custom-checkbox'); // Sélectionner le conteneur du label
+
+                if (checkbox) {
+                    // Vérifier si la checkbox est décochée et que le clic n'est pas sur la checkbox
+                    if (!checkbox.checked && event.target !== checkbox) {
+                        // Ajouter une classe d'erreur à la checkbox
+                        checkbox.classList.add('error');
+                        // Changer la couleur du texte du label en rouge
+                        label.style.color = 'red';
+
+                        // Défilement fluide en haut de la page
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        // Réinitialiser les styles si la checkbox est cochée
+                        checkbox.classList.remove('error');
+                        label.style.color = ''; // Réinitialiser la couleur par défaut
+                    }
+                }
+            });
+
+
+        });
+
+
+    </script>
+
+   
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fileInput = document.getElementById("fileInput");
+            const loadingState = document.getElementById("loadingState");
+
+            fileInput.addEventListener("change", function () {
+                if (fileInput.files && fileInput.files.length > 0) {
+                    // Afficher l'état de chargement
+                    loadingState.style.display = "block";
+
+                    // Simuler un délai pour le chargement (remplacez par une logique réelle si nécessaire)
+                    setTimeout(() => {
+                        loadingState.textContent = "تم تحميل الملف بنجاح: " + fileInput.files[0].name;
+                        loadingState.style.color = "#2c724f";
+                    }, 1000);
+                } else {
+                    // Masquer l'état si aucun fichier n'est sélectionné
+                    loadingState.style.display = "none";
+                }
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const fileInput = document.getElementById("fileInput2");
+            const loadingState = document.getElementById("loadingState2");
+
+            fileInput.addEventListener("change", function () {
+                if (fileInput.files && fileInput.files.length > 0) {
+                    // Afficher l'état de chargement
+                    loadingState.style.display = "block";
+
+                    // Simuler un délai pour le chargement (remplacez par une logique réelle si nécessaire)
+                    setTimeout(() => {
+                        loadingState.textContent = "تم تحميل الملف بنجاح: " + fileInput.files[0].name;
+                        loadingState.style.color = "#2c724f";
+                    }, 1000);
+                } else {
+                    // Masquer l'état si aucun fichier n'est sélectionné
+                    loadingState.style.display = "none";
+                }
+            });
+        });
+
+    </script>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        function onRecaptchaComplete(token) {
+            document.getElementById('recaptchaResponse').value = token;
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+
+
+}
+
+
+

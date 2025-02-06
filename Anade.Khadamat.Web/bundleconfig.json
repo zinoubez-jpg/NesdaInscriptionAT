@@ -1,0 +1,111 @@
+[
+  /* datatables component   */
+  /**************************/
+  // datatables styles
+  {
+    "outputFileName": "wwwroot/css/datatables.min.css",
+    "inputFiles": [
+      "wwwroot/lib/datatables/css/jquery.dataTables.min.css",
+      "wwwroot/lib/datatables/css/dataTables.bootstrap4.min.css"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  // datatables scripts
+  {
+    "outputFileName": "wwwroot/js/datatables.min.js",
+    "inputFiles": [
+      "wwwroot/lib/datatables/js/jquery.dataTables.min.js",
+      "wwwroot/lib/datatables/js/dataTables.bootstrap4.min.js"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/css/font-awesome.min.css",
+    "inputFiles": [
+      "wwwroot/lib/font-awesome/css/all.css"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  /* select2 component   */
+  /**************************/
+  // select2 styles
+  {
+    "outputFileName": "wwwroot/css/select2.min.css",
+    "inputFiles": [
+      "wwwroot/lib/select2/css/select2.css",
+      "wwwroot/lib/select2/css/select2-bootstrap.css"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  // select2 script
+  {
+    "outputFileName": "wwwroot/js/select2.min.js",
+    "inputFiles": [
+      "wwwroot/lib/select2/js/select2.js"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  /* jqueryui component   */
+  /**************************/
+  // jqueryui styles
+  {
+    "outputFileName": "wwwroot/css/jquery-ui.min.css",
+    "inputFiles": [
+      "wwwroot/lib/jqueryui/themes/base/jquery-ui.css"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  // jqueryui scripts
+  {
+    "outputFileName": "wwwroot/js/jquery-ui.min.js",
+    "inputFiles": [
+      "wwwroot/lib/jqueryui/jquery-ui.js",
+      "wwwroot/lib/jqueryui/datepicker-default.js"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  // jquery ajax unobtrusive
+  {
+    "outputFileName": "wwwroot/js/jquery.ajax.unobtrusive.min.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery-ajax-unobtrusive/jquery.ajax.unobtrusive.js"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  // sweet alert2 css
+  {
+    "outputFileName": "wwwroot/css/sweetalert2.css",
+    "inputFiles": [
+      "wwwroot/lib/sweetalert2/sweetalert2.css"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  // sweet alert2 script
+  {
+    "outputFileName": "wwwroot/js/sweetalert2.min.js",
+    "inputFiles": [
+      "wwwroot/lib/sweetalert2/sweetalert2.min.js"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  }
+]

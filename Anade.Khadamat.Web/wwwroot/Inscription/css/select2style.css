@@ -1,0 +1,69 @@
+
+/* Appliquer le style général au conteneur select2 */
+.select2-container--default .select2-selection--single {
+	background-color: #fff;
+	height: 40px;
+	padding: 0px 15px;
+	color: #191a1e;
+	border: 2px solid #dfe5e9;
+	font-size: 16px;
+	font-weight: 700;
+	border-radius: 4px;
+	transition: 0.2s all;
+	display: flex;
+	align-items: center;
+}
+
+	/* Style pour le texte de placeholder */
+	.select2-container--default .select2-selection--single .select2-selection__placeholder {
+		color: #dfe5e9;
+	}
+
+	/* Style pour le texte sélectionné */
+	.select2-container--default .select2-selection--single .select2-selection__rendered {
+		color: #191a1e;
+	}
+
+		/* Appliquer le style de focus */
+		.select2-container--default .select2-selection--single:focus,
+		.select2-container--default .select2-selection--single .select2-selection__rendered:focus {
+			background: #f9fafb;
+		}
+
+	/* Appliquer le style général à la flèche du select */
+	.select2-container--default .select2-selection--single .select2-selection__arrow {
+		height: 100%;
+		right: 6px;
+		width: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		pointer-events: none;
+	}
+
+		/* Style de la flèche */
+		.select2-container--default .select2-selection--single .select2-selection__arrow b {
+			border-color: #dfe5e9 transparent transparent transparent;
+			border-width: 5px 5px 0 5px;
+			border-style: solid;
+			content: '';
+			height: 0;
+			width: 0;
+		}
+
+/* Style pour le dropdown */
+.select2-container--default .select2-dropdown {
+	border: 2px solid #dfe5e9;
+	border-radius: 4px;
+}
+
+/* Style pour les options dans le dropdown */
+.select2-container--default .select2-results__option {
+	padding: 10px 15px;
+}
+
+/* Changer la couleur des options au survol */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+	background-color: #06BBCC;
+	color: white;
+}

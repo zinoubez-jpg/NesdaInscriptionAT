@@ -1,0 +1,74 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "datatables@1.10.19",
+      "destination": "wwwroot/lib/datatables",
+      "files": [
+        "css/jquery.dataTables.min.css",
+        "css/dataTables.bootstrap4.min.css",
+        "images/sort_asc.png",
+        "images/sort_asc_disabled.png",
+        "images/sort_both.png",
+        "images/sort_desc.png",
+        "images/sort_desc_disabled.png",
+        "js/dataTables.bootstrap4.js",
+        "js/jquery.dataTables.min.js"
+      ]
+    },
+    {
+      "library": "font-awesome@5.11.2",
+      "destination": "wwwroot/lib/font-awesome",
+      "files": [
+        "css/all.css",
+        "webfonts/fa-brands-400.eot",
+        "webfonts/fa-brands-400.ttf",
+        "webfonts/fa-brands-400.svg",
+        "webfonts/fa-brands-400.woff",
+        "webfonts/fa-brands-400.woff2",
+        "webfonts/fa-regular-400.eot",
+        "webfonts/fa-regular-400.svg",
+        "webfonts/fa-regular-400.ttf",
+        "webfonts/fa-regular-400.woff",
+        "webfonts/fa-regular-400.woff2",
+        "webfonts/fa-solid-900.eot",
+        "webfonts/fa-solid-900.svg",
+        "webfonts/fa-solid-900.ttf",
+        "webfonts/fa-solid-900.woff",
+        "webfonts/fa-solid-900.woff2"
+      ]
+    },
+    {
+      "library": "select2@4.0.12",
+      "destination": "wwwroot/lib/select2/",
+      "files": [
+        "js/select2.js",
+        "css/select2.css"
+      ]
+    },
+    {
+      "library": "jqueryui@1.12.1",
+      "destination": "wwwroot/lib/jqueryui/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css",
+      "destination": "wwwroot/lib/buttons.dataTables.min/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js",
+      "destination": "wwwroot/lib/dataTables.buttons.min/"
+    },
+    {
+      "library": "sweetalert2@11.12.3",
+      "destination": "wwwroot/lib/sweetalert2/",
+      "files": [
+        "sweetalert2.min.js",
+        "sweetalert2.all.min.js",
+        "sweetalert2.css"
+      ]
+    }
+  ]
+}

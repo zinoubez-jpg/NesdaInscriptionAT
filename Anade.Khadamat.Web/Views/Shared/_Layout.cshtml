@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Nesda-CDE PF -</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+
+    <!-- Stylesheets -->
+    <link href="~/TempletteCDE PF/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/TempletteCDE PF/css/main.css" rel="stylesheet">
+    <link href="~/TempletteCDE PF/css/responsive.css" rel="stylesheet">
+
+
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@100;500;600;700;900&family=Libre+Baskerville:wght@400;700&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&display=swap" rel="stylesheet">
+
+
+
+    <!-- Add site Favicon -->
+    <link rel="shortcut icon" href="~/TempletteCDE PF/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="~/TempletteCDE PF/images/favicon.png" type="image/x-icon">
+    <meta name="msapplication-TileImage" content="~/TempletteCDE PF/images/favicon.png" />
+
+
+    @RenderSection("head", false)
+</head>
+
+<body>
+
+
+    <!-- Navbar Start -->
+    @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Home" &&
+   ViewContext.RouteData.Values["action"]?.ToString() == "Index")
+    {
+        <!-- Navbar Start -->
+        <header>
+            @await Component.InvokeAsync("Menu")
+        </header>
+        <!-- Navbar End -->
+    }
+    else if (ViewContext.HttpContext.Request.Path.StartsWithSegments("/Identity/Account/Login", StringComparison.OrdinalIgnoreCase))
+    {
+        <!-- Aucun header ne sera affiché -->
+    }
+    else if (ViewContext.RouteData.Values["controller"]?.ToString() == "EspacePromoteur" &&
+    ViewContext.RouteData.Values["action"]?.ToString() == "Index")
+    {
+        <!-- Aucun header ne sera affiché -->
+    }
+    else
+    {
+        <header class="fixed-header">
+            @await Component.InvokeAsync("Menu2")
+        </header>
+    }
+
+
+
+
+    <!-- Navbar End -->
+    <div>
+        @RenderBody()
+    </div>
+
+    <!-- Main Footer -->
+    <footer class="main-footer style-two">
+        <div class="auto-container">
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="auto-container">
+                    <div class="bottom-inner">
+                        <div class="row clearfix">
+
+                            <div class="col-lg-8 col-md-12 col-sm-12">
+                                <div class="copyright">
+                                    Copyright ©
+                                    <script>document.write(new Date().getFullYear());</script> NESDA |
+                                    الوكالة الوطنية لدعم وتنمية
+                                    المقاولاتية
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+
+    <!-- End Header Search -->
+    <!-- Scroll To Top -->
+    <div class="scroll-to-top scroll-to-target" data-target="html"><span class="fa fa-arrow-circle-up"></span></div>
+
+
+    <script src="~/TempletteCDE PF/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="~/TempletteCDE PF/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="~/TempletteCDE PF/js/vendor/jquery-migrate-3.3.2.min.js"></script>
+
+    <script src="~/TempletteCDE PF/js/bootstrap.min.js"></script>
+    <script src="~/TempletteCDE PF/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/TempletteCDE PF/js/jquery.fancybox.js"></script>
+    <script src="~/TempletteCDE PF/js/appear.js"></script>
+    <script src="~/TempletteCDE PF/js/owl.js"></script>
+    <script src="~/TempletteCDE PF/js/wow.js"></script>
+    <script src="~/TempletteCDE PF/js/parallax.min.js"></script>
+    <script src="~/TempletteCDE PF/js/tilt.jquery.min.js"></script>
+    <script src="~/TempletteCDE PF/js/jquery.paroller.min.js"></script>
+    <script src="~/TempletteCDE PF/js/jquery-ui.js"></script>
+    <script src="~/TempletteCDE PF/js/script.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
