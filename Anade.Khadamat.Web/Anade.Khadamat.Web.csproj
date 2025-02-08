@@ -690,6 +690,9 @@
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>EspacePromoteurDataSet.Designer.cs</LastGenOutput>
     </None>
+    <None Update="Reports\ATConformite.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Reports\Attestation.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

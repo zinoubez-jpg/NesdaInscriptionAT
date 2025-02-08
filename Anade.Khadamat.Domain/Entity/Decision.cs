@@ -18,6 +18,7 @@ namespace Anade.Khadamat.Domain
         public int InscriptionId { get; set; }
 
         public virtual TypeDecision TypeDecision { get; set; }
+        public virtual Inscription Inscription { get; set; }
 
     }
 }

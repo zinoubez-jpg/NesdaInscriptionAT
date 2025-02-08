@@ -153,7 +153,7 @@
                                             </audio>
                                             <BR />
                                             <div class="time-content pt-2">
-                                                <a href="#">
+                                                <a asp-controller="Reporting" asp-action="PrintAtF" asp-route-Id="@Model.Id" asp-route-SessionId="@Model.SessionFormations.LastOrDefault().Id">
                                                     <i class="icofont icofont-file-pdf"></i>
                                                     <h6>تحميل الشهادة   </h6>
                                                 </a>
@@ -235,8 +235,8 @@
                                                             </div>
                                                             <h5 class="f-w-500 m-0">تهانينا! ، يمكنك الآن تحميل شهادة المطابقة الخاصة بك.</h5>
                                                             <div class="time-content pt-2">
-                                                                <a href="#">
-                                                                    <i class="icofont icofont-file-pdf"></i>
+                                                            <a asp-controller="Reporting" asp-action="PrintAtFormitee" asp-route-Id="@Model.Id" asp-route-DecisionId="@Model.Decisions.LastOrDefault().Id">
+                                                                <i class="icofont icofont-file-pdf"></i>
                                                                     <h6>تحميل الشهادة المطابقة   </h6>
                                                                 </a>
 

@@ -44,10 +44,15 @@ namespace Anade.Khadamat.Web
             services.AddTransient<InscriptionBusinessService>();
             services.AddTransient<CommuneBusinessService>();
             services.AddTransient<SessionFormationBusinessService>();
+            services.AddTransient<DecisionBusinessService>();
 
             
+
+
+
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<ILoadProperties<SessionFormation, int>, LoadProperties<SessionFormation, int>>();
+            services.AddScoped<ILoadProperties<Decision, int>, LoadProperties<Decision, int>>();
 
             services.AddScoped<IPromoteurEligibiliteSettings, PromoteurEligibiliteSettings>();
             services.Configure<PromoteurEligibiliteSettings>(Configuration.GetSection("PromoteurEligibiliteSettings"));
