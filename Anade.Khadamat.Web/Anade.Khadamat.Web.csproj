@@ -667,10 +667,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="EspacePromoteurDataSet.Designer.cs">
+    <Compile Update="DBNesdaInscription4DataSet.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>EspacePromoteurDataSet.xsd</DependentUpon>
+      <DependentUpon>DBNesdaInscription4DataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="DBNesdaInscription5DataSet.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DBNesdaInscription5DataSet.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -686,9 +691,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="EspacePromoteurDataSet.xsd">
+    <None Update="DBNesdaInscription4DataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>EspacePromoteurDataSet.Designer.cs</LastGenOutput>
+      <LastGenOutput>DBNesdaInscription4DataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="DBNesdaInscription5DataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DBNesdaInscription5DataSet.Designer.cs</LastGenOutput>
     </None>
     <None Update="Reports\ATConformite.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

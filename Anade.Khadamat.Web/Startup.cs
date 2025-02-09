@@ -45,9 +45,7 @@ namespace Anade.Khadamat.Web
             services.AddTransient<CommuneBusinessService>();
             services.AddTransient<SessionFormationBusinessService>();
             services.AddTransient<DecisionBusinessService>();
-
-            
-
+            services.AddTransient<CirconscriptionBusinessService>();
 
 
             services.AddScoped<IReportService, ReportService>();

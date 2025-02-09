@@ -11,6 +11,7 @@ namespace Anade.Khadamat.Web.Models
     public class CreateInscriptionVM
     {
         public int TypeInscriptionId { get; set; }
+        public int CategorieId { get; set; }
         public DateTime DateInscription { get; set; }
 
         [Display(Name = "NIN")]
@@ -87,7 +88,12 @@ namespace Anade.Khadamat.Web.Models
         public string AddresseArSeigeSocial { get; set; }
         public string AddresseFrSeigeSocial { get; set; }
 
+        public string RaisonSociale { get; set; }
+        public string RaisonSocialeAr { get; set; }
 
+        public int AntenneId { get; set; }
+        public string CodeAnntenne { get; set; }
+        public string CodeAgence { get; set; }
         public bool Validee { get; set; }
         public string ValideePAR { get; set; }
         public DateTime DateValidation { get; set; }

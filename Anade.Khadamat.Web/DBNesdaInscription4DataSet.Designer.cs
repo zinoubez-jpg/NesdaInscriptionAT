@@ -20,9 +20,15 @@ namespace Anade.Khadamat.Web {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("EspacePromoteurDataSet")]
+    [global::System.Xml.Serialization.XmlRootAttribute("DBNesdaInscription4DataSet")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class EspacePromoteurDataSet : global::System.Data.DataSet {
+    public partial class DBNesdaInscription4DataSet : global::System.Data.DataSet {
+        
+        private AgencesDataTable tableAgences;
+        
+        private AntennesDataTable tableAntennes;
+        
+        private CirconscriptionsDataTable tableCirconscriptions;
         
         private CommunesDataTable tableCommunes;
         
@@ -50,6 +56,8 @@ namespace Anade.Khadamat.Web {
         
         private WilayasDataTable tableWilayas;
         
+        private global::System.Data.DataRelation relationFK_Antennes_Agences_AgenceId;
+        
         private global::System.Data.DataRelation relationFK_Communes_Wilayas_WilayaId;
         
         private global::System.Data.DataRelation relationFK_CSVFs_Inscriptions_InscriptionId;
@@ -59,6 +67,8 @@ namespace Anade.Khadamat.Web {
         private global::System.Data.DataRelation relationFK_Decisions_TypeDecisions_TypeDecisionId;
         
         private global::System.Data.DataRelation relationFK_EvaluationProjets_Inscriptions_InscriptionId;
+        
+        private global::System.Data.DataRelation relationFK_Inscriptions_Antennes_AntenneId;
         
         private global::System.Data.DataRelation relationFK_Inscriptions_Communes_CommuneNaissanceId;
         
@@ -82,7 +92,7 @@ namespace Anade.Khadamat.Web {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public EspacePromoteurDataSet() {
+        public DBNesdaInscription4DataSet() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -93,7 +103,7 @@ namespace Anade.Khadamat.Web {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        protected EspacePromoteurDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected DBNesdaInscription4DataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -106,6 +116,15 @@ namespace Anade.Khadamat.Web {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
+                if ((ds.Tables["Agences"] != null)) {
+                    base.Tables.Add(new AgencesDataTable(ds.Tables["Agences"]));
+                }
+                if ((ds.Tables["Antennes"] != null)) {
+                    base.Tables.Add(new AntennesDataTable(ds.Tables["Antennes"]));
+                }
+                if ((ds.Tables["Circonscriptions"] != null)) {
+                    base.Tables.Add(new CirconscriptionsDataTable(ds.Tables["Circonscriptions"]));
+                }
                 if ((ds.Tables["Communes"] != null)) {
                     base.Tables.Add(new CommunesDataTable(ds.Tables["Communes"]));
                 }
@@ -161,6 +180,36 @@ namespace Anade.Khadamat.Web {
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
             base.Tables.CollectionChanged += schemaChangedHandler;
             this.Relations.CollectionChanged += schemaChangedHandler;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public AgencesDataTable Agences {
+            get {
+                return this.tableAgences;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public AntennesDataTable Antennes {
+            get {
+                return this.tableAntennes;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public CirconscriptionsDataTable Circonscriptions {
+            get {
+                return this.tableCirconscriptions;
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -335,7 +384,7 @@ namespace Anade.Khadamat.Web {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            EspacePromoteurDataSet cln = ((EspacePromoteurDataSet)(base.Clone()));
+            DBNesdaInscription4DataSet cln = ((DBNesdaInscription4DataSet)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -360,6 +409,15 @@ namespace Anade.Khadamat.Web {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
+                if ((ds.Tables["Agences"] != null)) {
+                    base.Tables.Add(new AgencesDataTable(ds.Tables["Agences"]));
+                }
+                if ((ds.Tables["Antennes"] != null)) {
+                    base.Tables.Add(new AntennesDataTable(ds.Tables["Antennes"]));
+                }
+                if ((ds.Tables["Circonscriptions"] != null)) {
+                    base.Tables.Add(new CirconscriptionsDataTable(ds.Tables["Circonscriptions"]));
+                }
                 if ((ds.Tables["Communes"] != null)) {
                     base.Tables.Add(new CommunesDataTable(ds.Tables["Communes"]));
                 }
@@ -432,6 +490,24 @@ namespace Anade.Khadamat.Web {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         internal void InitVars(bool initTable) {
+            this.tableAgences = ((AgencesDataTable)(base.Tables["Agences"]));
+            if ((initTable == true)) {
+                if ((this.tableAgences != null)) {
+                    this.tableAgences.InitVars();
+                }
+            }
+            this.tableAntennes = ((AntennesDataTable)(base.Tables["Antennes"]));
+            if ((initTable == true)) {
+                if ((this.tableAntennes != null)) {
+                    this.tableAntennes.InitVars();
+                }
+            }
+            this.tableCirconscriptions = ((CirconscriptionsDataTable)(base.Tables["Circonscriptions"]));
+            if ((initTable == true)) {
+                if ((this.tableCirconscriptions != null)) {
+                    this.tableCirconscriptions.InitVars();
+                }
+            }
             this.tableCommunes = ((CommunesDataTable)(base.Tables["Communes"]));
             if ((initTable == true)) {
                 if ((this.tableCommunes != null)) {
@@ -510,11 +586,13 @@ namespace Anade.Khadamat.Web {
                     this.tableWilayas.InitVars();
                 }
             }
+            this.relationFK_Antennes_Agences_AgenceId = this.Relations["FK_Antennes_Agences_AgenceId"];
             this.relationFK_Communes_Wilayas_WilayaId = this.Relations["FK_Communes_Wilayas_WilayaId"];
             this.relationFK_CSVFs_Inscriptions_InscriptionId = this.Relations["FK_CSVFs_Inscriptions_InscriptionId"];
             this.relationFK_Decisions_Inscriptions_InscriptionId = this.Relations["FK_Decisions_Inscriptions_InscriptionId"];
             this.relationFK_Decisions_TypeDecisions_TypeDecisionId = this.Relations["FK_Decisions_TypeDecisions_TypeDecisionId"];
             this.relationFK_EvaluationProjets_Inscriptions_InscriptionId = this.Relations["FK_EvaluationProjets_Inscriptions_InscriptionId"];
+            this.relationFK_Inscriptions_Antennes_AntenneId = this.Relations["FK_Inscriptions_Antennes_AntenneId"];
             this.relationFK_Inscriptions_Communes_CommuneNaissanceId = this.Relations["FK_Inscriptions_Communes_CommuneNaissanceId"];
             this.relationFK_Inscriptions_Communes_CommuneResidenceId = this.Relations["FK_Inscriptions_Communes_CommuneResidenceId"];
             this.relationFK_Inscriptions_Communes_CommuneSeigeSocialId = this.Relations["FK_Inscriptions_Communes_CommuneSeigeSocialId"];
@@ -529,11 +607,17 @@ namespace Anade.Khadamat.Web {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "EspacePromoteurDataSet";
+            this.DataSetName = "DBNesdaInscription4DataSet";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/EspacePromoteurDataSet.xsd";
+            this.Namespace = "http://tempuri.org/DBNesdaInscription4DataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
+            this.tableAgences = new AgencesDataTable();
+            base.Tables.Add(this.tableAgences);
+            this.tableAntennes = new AntennesDataTable();
+            base.Tables.Add(this.tableAntennes);
+            this.tableCirconscriptions = new CirconscriptionsDataTable();
+            base.Tables.Add(this.tableCirconscriptions);
             this.tableCommunes = new CommunesDataTable();
             base.Tables.Add(this.tableCommunes);
             this.tableCSVFs = new CSVFsDataTable();
@@ -560,6 +644,10 @@ namespace Anade.Khadamat.Web {
             base.Tables.Add(this.tableTypesInscription);
             this.tableWilayas = new WilayasDataTable();
             base.Tables.Add(this.tableWilayas);
+            this.relationFK_Antennes_Agences_AgenceId = new global::System.Data.DataRelation("FK_Antennes_Agences_AgenceId", new global::System.Data.DataColumn[] {
+                        this.tableAgences.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableAntennes.AgenceIdColumn}, false);
+            this.Relations.Add(this.relationFK_Antennes_Agences_AgenceId);
             this.relationFK_Communes_Wilayas_WilayaId = new global::System.Data.DataRelation("FK_Communes_Wilayas_WilayaId", new global::System.Data.DataColumn[] {
                         this.tableWilayas.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableCommunes.WilayaIdColumn}, false);
@@ -580,6 +668,10 @@ namespace Anade.Khadamat.Web {
                         this.tableInscriptions.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableEvaluationProjets.InscriptionIdColumn}, false);
             this.Relations.Add(this.relationFK_EvaluationProjets_Inscriptions_InscriptionId);
+            this.relationFK_Inscriptions_Antennes_AntenneId = new global::System.Data.DataRelation("FK_Inscriptions_Antennes_AntenneId", new global::System.Data.DataColumn[] {
+                        this.tableAntennes.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableInscriptions.AntenneIdColumn}, false);
+            this.Relations.Add(this.relationFK_Inscriptions_Antennes_AntenneId);
             this.relationFK_Inscriptions_Communes_CommuneNaissanceId = new global::System.Data.DataRelation("FK_Inscriptions_Communes_CommuneNaissanceId", new global::System.Data.DataColumn[] {
                         this.tableCommunes.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableInscriptions.CommuneNaissanceIdColumn}, false);
@@ -616,6 +708,24 @@ namespace Anade.Khadamat.Web {
                         this.tableInscriptions.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableSessionFormations.InscriptionIdColumn}, false);
             this.Relations.Add(this.relationFK_SessionFormations_Inscriptions_InscriptionId);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private bool ShouldSerializeAgences() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private bool ShouldSerializeAntennes() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private bool ShouldSerializeCirconscriptions() {
+            return false;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -707,7 +817,7 @@ namespace Anade.Khadamat.Web {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+            DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -752,6 +862,15 @@ namespace Anade.Khadamat.Web {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public delegate void AgencesRowChangeEventHandler(object sender, AgencesRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public delegate void AntennesRowChangeEventHandler(object sender, AntennesRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public delegate void CirconscriptionsRowChangeEventHandler(object sender, CirconscriptionsRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public delegate void CommunesRowChangeEventHandler(object sender, CommunesRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -789,6 +908,934 @@ namespace Anade.Khadamat.Web {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public delegate void WilayasRowChangeEventHandler(object sender, WilayasRowChangeEvent e);
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class AgencesDataTable : global::System.Data.TypedTableBase<AgencesRow> {
+            
+            private global::System.Data.DataColumn columnId;
+            
+            private global::System.Data.DataColumn columnCode;
+            
+            private global::System.Data.DataColumn columnDesignationFr;
+            
+            private global::System.Data.DataColumn columnDesignationAr;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AgencesDataTable() {
+                this.TableName = "Agences";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal AgencesDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected AgencesDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn IdColumn {
+                get {
+                    return this.columnId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CodeColumn {
+                get {
+                    return this.columnCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DesignationFrColumn {
+                get {
+                    return this.columnDesignationFr;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DesignationArColumn {
+                get {
+                    return this.columnDesignationAr;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AgencesRow this[int index] {
+                get {
+                    return ((AgencesRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event AgencesRowChangeEventHandler AgencesRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event AgencesRowChangeEventHandler AgencesRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event AgencesRowChangeEventHandler AgencesRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event AgencesRowChangeEventHandler AgencesRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void AddAgencesRow(AgencesRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AgencesRow AddAgencesRow(string Code, string DesignationFr, string DesignationAr) {
+                AgencesRow rowAgencesRow = ((AgencesRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        Code,
+                        DesignationFr,
+                        DesignationAr};
+                rowAgencesRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowAgencesRow);
+                return rowAgencesRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AgencesRow FindById(int Id) {
+                return ((AgencesRow)(this.Rows.Find(new object[] {
+                            Id})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                AgencesDataTable cln = ((AgencesDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new AgencesDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal void InitVars() {
+                this.columnId = base.Columns["Id"];
+                this.columnCode = base.Columns["Code"];
+                this.columnDesignationFr = base.Columns["DesignationFr"];
+                this.columnDesignationAr = base.Columns["DesignationAr"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            private void InitClass() {
+                this.columnId = new global::System.Data.DataColumn("Id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnId);
+                this.columnCode = new global::System.Data.DataColumn("Code", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCode);
+                this.columnDesignationFr = new global::System.Data.DataColumn("DesignationFr", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDesignationFr);
+                this.columnDesignationAr = new global::System.Data.DataColumn("DesignationAr", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDesignationAr);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnId}, true));
+                this.columnId.AutoIncrement = true;
+                this.columnId.AutoIncrementSeed = -1;
+                this.columnId.AutoIncrementStep = -1;
+                this.columnId.AllowDBNull = false;
+                this.columnId.ReadOnly = true;
+                this.columnId.Unique = true;
+                this.columnCode.AllowDBNull = false;
+                this.columnCode.MaxLength = 10;
+                this.columnDesignationFr.AllowDBNull = false;
+                this.columnDesignationFr.MaxLength = 256;
+                this.columnDesignationAr.MaxLength = 256;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AgencesRow NewAgencesRow() {
+                return ((AgencesRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new AgencesRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(AgencesRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.AgencesRowChanged != null)) {
+                    this.AgencesRowChanged(this, new AgencesRowChangeEvent(((AgencesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.AgencesRowChanging != null)) {
+                    this.AgencesRowChanging(this, new AgencesRowChangeEvent(((AgencesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.AgencesRowDeleted != null)) {
+                    this.AgencesRowDeleted(this, new AgencesRowChangeEvent(((AgencesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.AgencesRowDeleting != null)) {
+                    this.AgencesRowDeleting(this, new AgencesRowChangeEvent(((AgencesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void RemoveAgencesRow(AgencesRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "AgencesDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class AntennesDataTable : global::System.Data.TypedTableBase<AntennesRow> {
+            
+            private global::System.Data.DataColumn columnId;
+            
+            private global::System.Data.DataColumn columnAgenceId;
+            
+            private global::System.Data.DataColumn columnCode;
+            
+            private global::System.Data.DataColumn columnDesignationFr;
+            
+            private global::System.Data.DataColumn columnDesignationAr;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AntennesDataTable() {
+                this.TableName = "Antennes";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal AntennesDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected AntennesDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn IdColumn {
+                get {
+                    return this.columnId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn AgenceIdColumn {
+                get {
+                    return this.columnAgenceId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CodeColumn {
+                get {
+                    return this.columnCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DesignationFrColumn {
+                get {
+                    return this.columnDesignationFr;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn DesignationArColumn {
+                get {
+                    return this.columnDesignationAr;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AntennesRow this[int index] {
+                get {
+                    return ((AntennesRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event AntennesRowChangeEventHandler AntennesRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event AntennesRowChangeEventHandler AntennesRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event AntennesRowChangeEventHandler AntennesRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event AntennesRowChangeEventHandler AntennesRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void AddAntennesRow(AntennesRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AntennesRow AddAntennesRow(AgencesRow parentAgencesRowByFK_Antennes_Agences_AgenceId, string Code, string DesignationFr, string DesignationAr) {
+                AntennesRow rowAntennesRow = ((AntennesRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        null,
+                        Code,
+                        DesignationFr,
+                        DesignationAr};
+                if ((parentAgencesRowByFK_Antennes_Agences_AgenceId != null)) {
+                    columnValuesArray[1] = parentAgencesRowByFK_Antennes_Agences_AgenceId[0];
+                }
+                rowAntennesRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowAntennesRow);
+                return rowAntennesRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AntennesRow FindById(int Id) {
+                return ((AntennesRow)(this.Rows.Find(new object[] {
+                            Id})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                AntennesDataTable cln = ((AntennesDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new AntennesDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal void InitVars() {
+                this.columnId = base.Columns["Id"];
+                this.columnAgenceId = base.Columns["AgenceId"];
+                this.columnCode = base.Columns["Code"];
+                this.columnDesignationFr = base.Columns["DesignationFr"];
+                this.columnDesignationAr = base.Columns["DesignationAr"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            private void InitClass() {
+                this.columnId = new global::System.Data.DataColumn("Id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnId);
+                this.columnAgenceId = new global::System.Data.DataColumn("AgenceId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAgenceId);
+                this.columnCode = new global::System.Data.DataColumn("Code", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCode);
+                this.columnDesignationFr = new global::System.Data.DataColumn("DesignationFr", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDesignationFr);
+                this.columnDesignationAr = new global::System.Data.DataColumn("DesignationAr", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDesignationAr);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnId}, true));
+                this.columnId.AutoIncrement = true;
+                this.columnId.AutoIncrementSeed = -1;
+                this.columnId.AutoIncrementStep = -1;
+                this.columnId.AllowDBNull = false;
+                this.columnId.ReadOnly = true;
+                this.columnId.Unique = true;
+                this.columnAgenceId.AllowDBNull = false;
+                this.columnCode.AllowDBNull = false;
+                this.columnCode.MaxLength = 10;
+                this.columnDesignationFr.AllowDBNull = false;
+                this.columnDesignationFr.MaxLength = 256;
+                this.columnDesignationAr.MaxLength = 256;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AntennesRow NewAntennesRow() {
+                return ((AntennesRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new AntennesRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(AntennesRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.AntennesRowChanged != null)) {
+                    this.AntennesRowChanged(this, new AntennesRowChangeEvent(((AntennesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.AntennesRowChanging != null)) {
+                    this.AntennesRowChanging(this, new AntennesRowChangeEvent(((AntennesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.AntennesRowDeleted != null)) {
+                    this.AntennesRowDeleted(this, new AntennesRowChangeEvent(((AntennesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.AntennesRowDeleting != null)) {
+                    this.AntennesRowDeleting(this, new AntennesRowChangeEvent(((AntennesRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void RemoveAntennesRow(AntennesRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "AntennesDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class CirconscriptionsDataTable : global::System.Data.TypedTableBase<CirconscriptionsRow> {
+            
+            private global::System.Data.DataColumn columnId;
+            
+            private global::System.Data.DataColumn columnCodeAntenne;
+            
+            private global::System.Data.DataColumn columnCodeCommune;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public CirconscriptionsDataTable() {
+                this.TableName = "Circonscriptions";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal CirconscriptionsDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected CirconscriptionsDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn IdColumn {
+                get {
+                    return this.columnId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CodeAntenneColumn {
+                get {
+                    return this.columnCodeAntenne;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn CodeCommuneColumn {
+                get {
+                    return this.columnCodeCommune;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public CirconscriptionsRow this[int index] {
+                get {
+                    return ((CirconscriptionsRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event CirconscriptionsRowChangeEventHandler CirconscriptionsRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event CirconscriptionsRowChangeEventHandler CirconscriptionsRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event CirconscriptionsRowChangeEventHandler CirconscriptionsRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public event CirconscriptionsRowChangeEventHandler CirconscriptionsRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void AddCirconscriptionsRow(CirconscriptionsRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public CirconscriptionsRow AddCirconscriptionsRow(string CodeAntenne, string CodeCommune) {
+                CirconscriptionsRow rowCirconscriptionsRow = ((CirconscriptionsRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        CodeAntenne,
+                        CodeCommune};
+                rowCirconscriptionsRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowCirconscriptionsRow);
+                return rowCirconscriptionsRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public CirconscriptionsRow FindById(int Id) {
+                return ((CirconscriptionsRow)(this.Rows.Find(new object[] {
+                            Id})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                CirconscriptionsDataTable cln = ((CirconscriptionsDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new CirconscriptionsDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal void InitVars() {
+                this.columnId = base.Columns["Id"];
+                this.columnCodeAntenne = base.Columns["CodeAntenne"];
+                this.columnCodeCommune = base.Columns["CodeCommune"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            private void InitClass() {
+                this.columnId = new global::System.Data.DataColumn("Id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnId);
+                this.columnCodeAntenne = new global::System.Data.DataColumn("CodeAntenne", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCodeAntenne);
+                this.columnCodeCommune = new global::System.Data.DataColumn("CodeCommune", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCodeCommune);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnId}, true));
+                this.columnId.AutoIncrement = true;
+                this.columnId.AutoIncrementSeed = -1;
+                this.columnId.AutoIncrementStep = -1;
+                this.columnId.AllowDBNull = false;
+                this.columnId.ReadOnly = true;
+                this.columnId.Unique = true;
+                this.columnCodeAntenne.MaxLength = 2147483647;
+                this.columnCodeCommune.MaxLength = 2147483647;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public CirconscriptionsRow NewCirconscriptionsRow() {
+                return ((CirconscriptionsRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new CirconscriptionsRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(CirconscriptionsRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.CirconscriptionsRowChanged != null)) {
+                    this.CirconscriptionsRowChanged(this, new CirconscriptionsRowChangeEvent(((CirconscriptionsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.CirconscriptionsRowChanging != null)) {
+                    this.CirconscriptionsRowChanging(this, new CirconscriptionsRowChangeEvent(((CirconscriptionsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.CirconscriptionsRowDeleted != null)) {
+                    this.CirconscriptionsRowDeleted(this, new CirconscriptionsRowChangeEvent(((CirconscriptionsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.CirconscriptionsRowDeleting != null)) {
+                    this.CirconscriptionsRowDeleting(this, new CirconscriptionsRowChangeEvent(((CirconscriptionsRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void RemoveCirconscriptionsRow(CirconscriptionsRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "CirconscriptionsDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -1058,7 +2105,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -1398,7 +2445,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -1741,7 +2788,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -2081,7 +3128,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -2390,7 +3437,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -2699,7 +3746,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -2842,6 +3889,8 @@ namespace Anade.Khadamat.Web {
             private global::System.Data.DataColumn columnCopieCNIPath;
             
             private global::System.Data.DataColumn columnCopieDiplomeRCCFCAPath;
+            
+            private global::System.Data.DataColumn columnAntenneId;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -3190,6 +4239,14 @@ namespace Anade.Khadamat.Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn AntenneIdColumn {
+                get {
+                    return this.columnAntenneId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -3263,7 +4320,8 @@ namespace Anade.Khadamat.Web {
                         System.DateTime EmailVerificationTokenExpiry, 
                         string RecaptchaResponse, 
                         string CopieCNIPath, 
-                        string CopieDiplomeRCCFCAPath) {
+                        string CopieDiplomeRCCFCAPath, 
+                        AntennesRow parentAntennesRowByFK_Inscriptions_Antennes_AntenneId) {
                 InscriptionsRow rowInscriptionsRow = ((InscriptionsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -3304,7 +4362,8 @@ namespace Anade.Khadamat.Web {
                         EmailVerificationTokenExpiry,
                         RecaptchaResponse,
                         CopieCNIPath,
-                        CopieDiplomeRCCFCAPath};
+                        CopieDiplomeRCCFCAPath,
+                        null};
                 if ((parentTypesInscriptionRowByFK_Inscriptions_TypesInscription_TypeInscriptionId != null)) {
                     columnValuesArray[1] = parentTypesInscriptionRowByFK_Inscriptions_TypesInscription_TypeInscriptionId[0];
                 }
@@ -3325,6 +4384,9 @@ namespace Anade.Khadamat.Web {
                 }
                 if ((parentCommunesRowByFK_Inscriptions_Communes_CommuneSeigeSocialId != null)) {
                     columnValuesArray[26] = parentCommunesRowByFK_Inscriptions_Communes_CommuneSeigeSocialId[0];
+                }
+                if ((parentAntennesRowByFK_Inscriptions_Antennes_AntenneId != null)) {
+                    columnValuesArray[39] = parentAntennesRowByFK_Inscriptions_Antennes_AntenneId[0];
                 }
                 rowInscriptionsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowInscriptionsRow);
@@ -3394,6 +4456,7 @@ namespace Anade.Khadamat.Web {
                 this.columnRecaptchaResponse = base.Columns["RecaptchaResponse"];
                 this.columnCopieCNIPath = base.Columns["CopieCNIPath"];
                 this.columnCopieDiplomeRCCFCAPath = base.Columns["CopieDiplomeRCCFCAPath"];
+                this.columnAntenneId = base.Columns["AntenneId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3477,6 +4540,8 @@ namespace Anade.Khadamat.Web {
                 base.Columns.Add(this.columnCopieCNIPath);
                 this.columnCopieDiplomeRCCFCAPath = new global::System.Data.DataColumn("CopieDiplomeRCCFCAPath", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCopieDiplomeRCCFCAPath);
+                this.columnAntenneId = new global::System.Data.DataColumn("AntenneId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAntenneId);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AutoIncrement = true;
@@ -3598,7 +4663,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -3907,7 +4972,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -4265,7 +5330,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -4574,7 +5639,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -4883,7 +5948,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -5192,7 +6257,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -5501,7 +6566,7 @@ namespace Anade.Khadamat.Web {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                EspacePromoteurDataSet ds = new EspacePromoteurDataSet();
+                DBNesdaInscription4DataSet ds = new DBNesdaInscription4DataSet();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -5557,6 +6622,284 @@ namespace Anade.Khadamat.Web {
                 }
                 xs.Add(dsSchema);
                 return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class AgencesRow : global::System.Data.DataRow {
+            
+            private AgencesDataTable tableAgences;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal AgencesRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableAgences = ((AgencesDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int Id {
+                get {
+                    return ((int)(this[this.tableAgences.IdColumn]));
+                }
+                set {
+                    this[this.tableAgences.IdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Code {
+                get {
+                    return ((string)(this[this.tableAgences.CodeColumn]));
+                }
+                set {
+                    this[this.tableAgences.CodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string DesignationFr {
+                get {
+                    return ((string)(this[this.tableAgences.DesignationFrColumn]));
+                }
+                set {
+                    this[this.tableAgences.DesignationFrColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string DesignationAr {
+                get {
+                    try {
+                        return ((string)(this[this.tableAgences.DesignationArColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DesignationAr\' in table \'Agences\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAgences.DesignationArColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsDesignationArNull() {
+                return this.IsNull(this.tableAgences.DesignationArColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetDesignationArNull() {
+                this[this.tableAgences.DesignationArColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AntennesRow[] GetAntennesRows() {
+                if ((this.Table.ChildRelations["FK_Antennes_Agences_AgenceId"] == null)) {
+                    return new AntennesRow[0];
+                }
+                else {
+                    return ((AntennesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Antennes_Agences_AgenceId"])));
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class AntennesRow : global::System.Data.DataRow {
+            
+            private AntennesDataTable tableAntennes;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal AntennesRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableAntennes = ((AntennesDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int Id {
+                get {
+                    return ((int)(this[this.tableAntennes.IdColumn]));
+                }
+                set {
+                    this[this.tableAntennes.IdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int AgenceId {
+                get {
+                    return ((int)(this[this.tableAntennes.AgenceIdColumn]));
+                }
+                set {
+                    this[this.tableAntennes.AgenceIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Code {
+                get {
+                    return ((string)(this[this.tableAntennes.CodeColumn]));
+                }
+                set {
+                    this[this.tableAntennes.CodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string DesignationFr {
+                get {
+                    return ((string)(this[this.tableAntennes.DesignationFrColumn]));
+                }
+                set {
+                    this[this.tableAntennes.DesignationFrColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string DesignationAr {
+                get {
+                    try {
+                        return ((string)(this[this.tableAntennes.DesignationArColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DesignationAr\' in table \'Antennes\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAntennes.DesignationArColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AgencesRow AgencesRow {
+                get {
+                    return ((AgencesRow)(this.GetParentRow(this.Table.ParentRelations["FK_Antennes_Agences_AgenceId"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Antennes_Agences_AgenceId"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsDesignationArNull() {
+                return this.IsNull(this.tableAntennes.DesignationArColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetDesignationArNull() {
+                this[this.tableAntennes.DesignationArColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public InscriptionsRow[] GetInscriptionsRows() {
+                if ((this.Table.ChildRelations["FK_Inscriptions_Antennes_AntenneId"] == null)) {
+                    return new InscriptionsRow[0];
+                }
+                else {
+                    return ((InscriptionsRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Inscriptions_Antennes_AntenneId"])));
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class CirconscriptionsRow : global::System.Data.DataRow {
+            
+            private CirconscriptionsDataTable tableCirconscriptions;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            internal CirconscriptionsRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableCirconscriptions = ((CirconscriptionsDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int Id {
+                get {
+                    return ((int)(this[this.tableCirconscriptions.IdColumn]));
+                }
+                set {
+                    this[this.tableCirconscriptions.IdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CodeAntenne {
+                get {
+                    try {
+                        return ((string)(this[this.tableCirconscriptions.CodeAntenneColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CodeAntenne\' in table \'Circonscriptions\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCirconscriptions.CodeAntenneColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string CodeCommune {
+                get {
+                    try {
+                        return ((string)(this[this.tableCirconscriptions.CodeCommuneColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'CodeCommune\' in table \'Circonscriptions\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCirconscriptions.CodeCommuneColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCodeAntenneNull() {
+                return this.IsNull(this.tableCirconscriptions.CodeAntenneColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCodeAntenneNull() {
+                this[this.tableCirconscriptions.CodeAntenneColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsCodeCommuneNull() {
+                return this.IsNull(this.tableCirconscriptions.CodeCommuneColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetCodeCommuneNull() {
+                this[this.tableCirconscriptions.CodeCommuneColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -6748,6 +8091,33 @@ namespace Anade.Khadamat.Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int AntenneId {
+                get {
+                    try {
+                        return ((int)(this[this.tableInscriptions.AntenneIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AntenneId\' in table \'Inscriptions\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableInscriptions.AntenneIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AntennesRow AntennesRow {
+                get {
+                    return ((AntennesRow)(this.GetParentRow(this.Table.ParentRelations["FK_Inscriptions_Antennes_AntenneId"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Inscriptions_Antennes_AntenneId"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public CommunesRow CommunesRowByFK_Inscriptions_Communes_CommuneNaissanceId {
                 get {
                     return ((CommunesRow)(this.GetParentRow(this.Table.ParentRelations["FK_Inscriptions_Communes_CommuneNaissanceId"])));
@@ -6977,6 +8347,18 @@ namespace Anade.Khadamat.Web {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetCopieDiplomeRCCFCAPathNull() {
                 this[this.tableInscriptions.CopieDiplomeRCCFCAPathColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsAntenneIdNull() {
+                return this.IsNull(this.tableInscriptions.AntenneIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetAntenneIdNull() {
+                this[this.tableInscriptions.AntenneIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7594,6 +8976,108 @@ namespace Anade.Khadamat.Web {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public class AgencesRowChangeEvent : global::System.EventArgs {
+            
+            private AgencesRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AgencesRowChangeEvent(AgencesRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AgencesRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public class AntennesRowChangeEvent : global::System.EventArgs {
+            
+            private AntennesRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AntennesRowChangeEvent(AntennesRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public AntennesRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public class CirconscriptionsRowChangeEvent : global::System.EventArgs {
+            
+            private CirconscriptionsRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public CirconscriptionsRowChangeEvent(CirconscriptionsRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public CirconscriptionsRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         public class CommunesRowChangeEvent : global::System.EventArgs {
             
             private CommunesRow eventRow;
@@ -8033,8 +9517,1105 @@ namespace Anade.Khadamat.Web {
         }
     }
 }
-namespace Anade.Khadamat.Web.EspacePromoteurDataSetTableAdapters {
+namespace Anade.Khadamat.Web.DBNesdaInscription4DataSetTableAdapters {
     
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class AgencesTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public AgencesTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "Agences";
+            tableMapping.ColumnMappings.Add("Id", "Id");
+            tableMapping.ColumnMappings.Add("Code", "Code");
+            tableMapping.ColumnMappings.Add("DesignationFr", "DesignationFr");
+            tableMapping.ColumnMappings.Add("DesignationAr", "DesignationAr");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Agences] WHERE (([Id] = @Original_Id) AND ([Code] = @Original_" +
+                "Code) AND ([DesignationFr] = @Original_DesignationFr) AND ((@IsNull_DesignationA" +
+                "r = 1 AND [DesignationAr] IS NULL) OR ([DesignationAr] = @Original_DesignationAr" +
+                ")))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Code", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Code", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DesignationFr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationFr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DesignationAr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DesignationAr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Agences] ([Code], [DesignationFr], [DesignationAr]) VALUES (@C" +
+                "ode, @DesignationFr, @DesignationAr);\r\nSELECT Id, Code, DesignationFr, Designati" +
+                "onAr FROM Agences WHERE (Id = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Code", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Code", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DesignationFr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationFr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DesignationAr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Agences] SET [Code] = @Code, [DesignationFr] = @DesignationFr, [DesignationAr] = @DesignationAr WHERE (([Id] = @Original_Id) AND ([Code] = @Original_Code) AND ([DesignationFr] = @Original_DesignationFr) AND ((@IsNull_DesignationAr = 1 AND [DesignationAr] IS NULL) OR ([DesignationAr] = @Original_DesignationAr)));
+SELECT Id, Code, DesignationFr, DesignationAr FROM Agences WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Code", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Code", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DesignationFr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationFr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DesignationAr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Code", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Code", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DesignationFr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationFr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DesignationAr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DesignationAr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = "Data Source=SYSTEMMANAGER;Initial Catalog=DBNesdaInscription4;User ID=sa;Password" +
+                "=SmartMana_2017_ANSEJ";
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT Id, Code, DesignationFr, DesignationAr FROM dbo.Agences";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(DBNesdaInscription4DataSet.AgencesDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual DBNesdaInscription4DataSet.AgencesDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            DBNesdaInscription4DataSet.AgencesDataTable dataTable = new DBNesdaInscription4DataSet.AgencesDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(DBNesdaInscription4DataSet.AgencesDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
+            return this.Adapter.Update(dataSet, "Agences");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(int Original_Id, string Original_Code, string Original_DesignationFr, string Original_DesignationAr) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
+            if ((Original_Code == null)) {
+                throw new global::System.ArgumentNullException("Original_Code");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_Code));
+            }
+            if ((Original_DesignationFr == null)) {
+                throw new global::System.ArgumentNullException("Original_DesignationFr");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_DesignationFr));
+            }
+            if ((Original_DesignationAr == null)) {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_DesignationAr));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(string Code, string DesignationFr, string DesignationAr) {
+            if ((Code == null)) {
+                throw new global::System.ArgumentNullException("Code");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(Code));
+            }
+            if ((DesignationFr == null)) {
+                throw new global::System.ArgumentNullException("DesignationFr");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(DesignationFr));
+            }
+            if ((DesignationAr == null)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(DesignationAr));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(string Code, string DesignationFr, string DesignationAr, int Original_Id, string Original_Code, string Original_DesignationFr, string Original_DesignationAr, int Id) {
+            if ((Code == null)) {
+                throw new global::System.ArgumentNullException("Code");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(Code));
+            }
+            if ((DesignationFr == null)) {
+                throw new global::System.ArgumentNullException("DesignationFr");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(DesignationFr));
+            }
+            if ((DesignationAr == null)) {
+                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(DesignationAr));
+            }
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_Id));
+            if ((Original_Code == null)) {
+                throw new global::System.ArgumentNullException("Original_Code");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_Code));
+            }
+            if ((Original_DesignationFr == null)) {
+                throw new global::System.ArgumentNullException("Original_DesignationFr");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(Original_DesignationFr));
+            }
+            if ((Original_DesignationAr == null)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_DesignationAr));
+            }
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(Id));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(string Code, string DesignationFr, string DesignationAr, int Original_Id, string Original_Code, string Original_DesignationFr, string Original_DesignationAr) {
+            return this.Update(Code, DesignationFr, DesignationAr, Original_Id, Original_Code, Original_DesignationFr, Original_DesignationAr, Original_Id);
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class AntennesTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public AntennesTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "Antennes";
+            tableMapping.ColumnMappings.Add("Id", "Id");
+            tableMapping.ColumnMappings.Add("AgenceId", "AgenceId");
+            tableMapping.ColumnMappings.Add("Code", "Code");
+            tableMapping.ColumnMappings.Add("DesignationFr", "DesignationFr");
+            tableMapping.ColumnMappings.Add("DesignationAr", "DesignationAr");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Antennes] WHERE (([Id] = @Original_Id) AND ([AgenceId] = @Original_AgenceId) AND ([Code] = @Original_Code) AND ([DesignationFr] = @Original_DesignationFr) AND ((@IsNull_DesignationAr = 1 AND [DesignationAr] IS NULL) OR ([DesignationAr] = @Original_DesignationAr)))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AgenceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AgenceId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Code", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Code", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DesignationFr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationFr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DesignationAr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DesignationAr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Antennes] ([AgenceId], [Code], [DesignationFr], [DesignationAr" +
+                "]) VALUES (@AgenceId, @Code, @DesignationFr, @DesignationAr);\r\nSELECT Id, Agence" +
+                "Id, Code, DesignationFr, DesignationAr FROM Antennes WHERE (Id = SCOPE_IDENTITY(" +
+                "))";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AgenceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AgenceId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Code", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Code", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DesignationFr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationFr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DesignationAr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Antennes] SET [AgenceId] = @AgenceId, [Code] = @Code, [DesignationFr] = @DesignationFr, [DesignationAr] = @DesignationAr WHERE (([Id] = @Original_Id) AND ([AgenceId] = @Original_AgenceId) AND ([Code] = @Original_Code) AND ([DesignationFr] = @Original_DesignationFr) AND ((@IsNull_DesignationAr = 1 AND [DesignationAr] IS NULL) OR ([DesignationAr] = @Original_DesignationAr)));
+SELECT Id, AgenceId, Code, DesignationFr, DesignationAr FROM Antennes WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AgenceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AgenceId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Code", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Code", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DesignationFr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationFr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DesignationAr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AgenceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AgenceId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Code", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Code", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DesignationFr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationFr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_DesignationAr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DesignationAr", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DesignationAr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = "Data Source=SYSTEMMANAGER;Initial Catalog=DBNesdaInscription4;User ID=sa;Password" +
+                "=SmartMana_2017_ANSEJ";
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT Id, AgenceId, Code, DesignationFr, DesignationAr FROM dbo.Antennes";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(DBNesdaInscription4DataSet.AntennesDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual DBNesdaInscription4DataSet.AntennesDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            DBNesdaInscription4DataSet.AntennesDataTable dataTable = new DBNesdaInscription4DataSet.AntennesDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(DBNesdaInscription4DataSet.AntennesDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
+            return this.Adapter.Update(dataSet, "Antennes");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(int Original_Id, int Original_AgenceId, string Original_Code, string Original_DesignationFr, string Original_DesignationAr) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_AgenceId));
+            if ((Original_Code == null)) {
+                throw new global::System.ArgumentNullException("Original_Code");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_Code));
+            }
+            if ((Original_DesignationFr == null)) {
+                throw new global::System.ArgumentNullException("Original_DesignationFr");
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_DesignationFr));
+            }
+            if ((Original_DesignationAr == null)) {
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((string)(Original_DesignationAr));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(int AgenceId, string Code, string DesignationFr, string DesignationAr) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(AgenceId));
+            if ((Code == null)) {
+                throw new global::System.ArgumentNullException("Code");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(Code));
+            }
+            if ((DesignationFr == null)) {
+                throw new global::System.ArgumentNullException("DesignationFr");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(DesignationFr));
+            }
+            if ((DesignationAr == null)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(DesignationAr));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(int AgenceId, string Code, string DesignationFr, string DesignationAr, int Original_Id, int Original_AgenceId, string Original_Code, string Original_DesignationFr, string Original_DesignationAr, int Id) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(AgenceId));
+            if ((Code == null)) {
+                throw new global::System.ArgumentNullException("Code");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(Code));
+            }
+            if ((DesignationFr == null)) {
+                throw new global::System.ArgumentNullException("DesignationFr");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(DesignationFr));
+            }
+            if ((DesignationAr == null)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(DesignationAr));
+            }
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_Id));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_AgenceId));
+            if ((Original_Code == null)) {
+                throw new global::System.ArgumentNullException("Original_Code");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_Code));
+            }
+            if ((Original_DesignationFr == null)) {
+                throw new global::System.ArgumentNullException("Original_DesignationFr");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_DesignationFr));
+            }
+            if ((Original_DesignationAr == null)) {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Original_DesignationAr));
+            }
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Id));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(int AgenceId, string Code, string DesignationFr, string DesignationAr, int Original_Id, int Original_AgenceId, string Original_Code, string Original_DesignationFr, string Original_DesignationAr) {
+            return this.Update(AgenceId, Code, DesignationFr, DesignationAr, Original_Id, Original_AgenceId, Original_Code, Original_DesignationFr, Original_DesignationAr, Original_Id);
+        }
+    }
+    
+    /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class CirconscriptionsTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public CirconscriptionsTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "Circonscriptions";
+            tableMapping.ColumnMappings.Add("Id", "Id");
+            tableMapping.ColumnMappings.Add("CodeAntenne", "CodeAntenne");
+            tableMapping.ColumnMappings.Add("CodeCommune", "CodeCommune");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Circonscriptions] WHERE (([Id] = @Original_Id))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Circonscriptions] ([CodeAntenne], [CodeCommune]) VALUES (@Code" +
+                "Antenne, @CodeCommune);\r\nSELECT Id, CodeAntenne, CodeCommune FROM Circonscriptio" +
+                "ns WHERE (Id = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CodeAntenne", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CodeAntenne", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CodeCommune", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CodeCommune", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Circonscriptions] SET [CodeAntenne] = @CodeAntenne, [CodeCommune] =" +
+                " @CodeCommune WHERE (([Id] = @Original_Id));\r\nSELECT Id, CodeAntenne, CodeCommun" +
+                "e FROM Circonscriptions WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CodeAntenne", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CodeAntenne", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CodeCommune", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CodeCommune", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = "Data Source=SYSTEMMANAGER;Initial Catalog=DBNesdaInscription4;User ID=sa;Password" +
+                "=SmartMana_2017_ANSEJ";
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT Id, CodeAntenne, CodeCommune FROM dbo.Circonscriptions";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(DBNesdaInscription4DataSet.CirconscriptionsDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual DBNesdaInscription4DataSet.CirconscriptionsDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            DBNesdaInscription4DataSet.CirconscriptionsDataTable dataTable = new DBNesdaInscription4DataSet.CirconscriptionsDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(DBNesdaInscription4DataSet.CirconscriptionsDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
+            return this.Adapter.Update(dataSet, "Circonscriptions");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(int Original_Id) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(string CodeAntenne, string CodeCommune) {
+            if ((CodeAntenne == null)) {
+                this.Adapter.InsertCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(CodeAntenne));
+            }
+            if ((CodeCommune == null)) {
+                this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(CodeCommune));
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(string CodeAntenne, string CodeCommune, int Original_Id, int Id) {
+            if ((CodeAntenne == null)) {
+                this.Adapter.UpdateCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(CodeAntenne));
+            }
+            if ((CodeCommune == null)) {
+                this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(CodeCommune));
+            }
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Original_Id));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Id));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(string CodeAntenne, string CodeCommune, int Original_Id) {
+            return this.Update(CodeAntenne, CodeCommune, Original_Id, Original_Id);
+        }
+    }
     
     /// <summary>
     ///Represents the connection and commands used to retrieve and save data.
@@ -8224,7 +10805,7 @@ SELECT Id, WilayaId, Code, DesignationFr, DesignationAr FROM Communes WHERE (Id 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.CommunesDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.CommunesDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -8237,9 +10818,9 @@ SELECT Id, WilayaId, Code, DesignationFr, DesignationAr FROM Communes WHERE (Id 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.CommunesDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.CommunesDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.CommunesDataTable dataTable = new EspacePromoteurDataSet.CommunesDataTable();
+            DBNesdaInscription4DataSet.CommunesDataTable dataTable = new DBNesdaInscription4DataSet.CommunesDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -8247,14 +10828,14 @@ SELECT Id, WilayaId, Code, DesignationFr, DesignationAr FROM Communes WHERE (Id 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.CommunesDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.CommunesDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "Communes");
         }
         
@@ -8616,7 +11197,7 @@ SELECT Id, CodeSession, ResultatCSVF, DateCSVF, IsValide, InscriptionId FROM CSV
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.CSVFsDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.CSVFsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -8629,9 +11210,9 @@ SELECT Id, CodeSession, ResultatCSVF, DateCSVF, IsValide, InscriptionId FROM CSV
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.CSVFsDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.CSVFsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.CSVFsDataTable dataTable = new EspacePromoteurDataSet.CSVFsDataTable();
+            DBNesdaInscription4DataSet.CSVFsDataTable dataTable = new DBNesdaInscription4DataSet.CSVFsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -8639,14 +11220,14 @@ SELECT Id, CodeSession, ResultatCSVF, DateCSVF, IsValide, InscriptionId FROM CSV
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.CSVFsDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.CSVFsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "CSVFs");
         }
         
@@ -8964,7 +11545,7 @@ SELECT Id, CodeDecision, TypeDecisionId, IsEligible, DateEtablissementAE, Inscri
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.DecisionsDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.DecisionsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -8977,9 +11558,9 @@ SELECT Id, CodeDecision, TypeDecisionId, IsEligible, DateEtablissementAE, Inscri
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.DecisionsDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.DecisionsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.DecisionsDataTable dataTable = new EspacePromoteurDataSet.DecisionsDataTable();
+            DBNesdaInscription4DataSet.DecisionsDataTable dataTable = new DBNesdaInscription4DataSet.DecisionsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -8987,14 +11568,14 @@ SELECT Id, CodeDecision, TypeDecisionId, IsEligible, DateEtablissementAE, Inscri
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.DecisionsDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.DecisionsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "Decisions");
         }
         
@@ -9304,7 +11885,7 @@ SELECT Id, CodeFiche, ScoreTotal, IsAdmis, DateEvaluation, InscriptionId FROM Ev
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.EvaluationProjetsDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.EvaluationProjetsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -9317,9 +11898,9 @@ SELECT Id, CodeFiche, ScoreTotal, IsAdmis, DateEvaluation, InscriptionId FROM Ev
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.EvaluationProjetsDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.EvaluationProjetsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.EvaluationProjetsDataTable dataTable = new EspacePromoteurDataSet.EvaluationProjetsDataTable();
+            DBNesdaInscription4DataSet.EvaluationProjetsDataTable dataTable = new DBNesdaInscription4DataSet.EvaluationProjetsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -9327,14 +11908,14 @@ SELECT Id, CodeFiche, ScoreTotal, IsAdmis, DateEvaluation, InscriptionId FROM Ev
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.EvaluationProjetsDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.EvaluationProjetsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "EvaluationProjets");
         }
         
@@ -9649,7 +12230,7 @@ SELECT Id, Code, DesignationAr, DesignationFr FROM Formations WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.FormationsDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.FormationsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -9662,9 +12243,9 @@ SELECT Id, Code, DesignationAr, DesignationFr FROM Formations WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.FormationsDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.FormationsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.FormationsDataTable dataTable = new EspacePromoteurDataSet.FormationsDataTable();
+            DBNesdaInscription4DataSet.FormationsDataTable dataTable = new DBNesdaInscription4DataSet.FormationsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -9672,14 +12253,14 @@ SELECT Id, Code, DesignationAr, DesignationFr FROM Formations WHERE (Id = @Id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.FormationsDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.FormationsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "Formations");
         }
         
@@ -10034,7 +12615,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.GenresDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.GenresDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -10047,9 +12628,9 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.GenresDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.GenresDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.GenresDataTable dataTable = new EspacePromoteurDataSet.GenresDataTable();
+            DBNesdaInscription4DataSet.GenresDataTable dataTable = new DBNesdaInscription4DataSet.GenresDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -10057,14 +12638,14 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.GenresDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.GenresDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "Genres");
         }
         
@@ -10394,10 +12975,11 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
             tableMapping.ColumnMappings.Add("RecaptchaResponse", "RecaptchaResponse");
             tableMapping.ColumnMappings.Add("CopieCNIPath", "CopieCNIPath");
             tableMapping.ColumnMappings.Add("CopieDiplomeRCCFCAPath", "CopieDiplomeRCCFCAPath");
+            tableMapping.ColumnMappings.Add("AntenneId", "AntenneId");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Inscriptions] WHERE (([Id] = @Original_Id) AND ([TypeInscriptionId] = @Original_TypeInscriptionId) AND ([DateInscription] = @Original_DateInscription) AND ([NIN] = @Original_NIN) AND ([NomFr] = @Original_NomFr) AND ([PrenomFr] = @Original_PrenomFr) AND ([NomAr] = @Original_NomAr) AND ([PrenomAr] = @Original_PrenomAr) AND ([GenreId] = @Original_GenreId) AND ([DateNaissance] = @Original_DateNaissance) AND ([WilayaNaissanceId] = @Original_WilayaNaissanceId) AND ([CommuneNaissanceId] = @Original_CommuneNaissanceId) AND ([SituationFamilialeId] = @Original_SituationFamilialeId) AND ([AdressAr] = @Original_AdressAr) AND ([WilayaResidenceId] = @Original_WilayaResidenceId) AND ([CommuneResidenceId] = @Original_CommuneResidenceId) AND ([NiveauInstructionId] = @Original_NiveauInstructionId) AND ([WilayaSeigeSocialId] = @Original_WilayaSeigeSocialId) AND ([CommuneSeigeSocialId] = @Original_CommuneSeigeSocialId) AND ([Validee] = @Original_Validee) AND ([DateValidation] = @Original_DateValidation) AND ([Annulee] = @Original_Annulee) AND ([IsEmailVerified] = @Original_IsEmailVerified) AND ((@IsNull_EmailVerificationTokenExpiry = 1 AND [EmailVerificationTokenExpiry] IS NULL) OR ([EmailVerificationTokenExpiry] = @Original_EmailVerificationTokenExpiry)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Inscriptions] WHERE (([Id] = @Original_Id) AND ([TypeInscriptionId] = @Original_TypeInscriptionId) AND ([DateInscription] = @Original_DateInscription) AND ([NIN] = @Original_NIN) AND ([NomFr] = @Original_NomFr) AND ([PrenomFr] = @Original_PrenomFr) AND ([NomAr] = @Original_NomAr) AND ([PrenomAr] = @Original_PrenomAr) AND ([GenreId] = @Original_GenreId) AND ([DateNaissance] = @Original_DateNaissance) AND ([WilayaNaissanceId] = @Original_WilayaNaissanceId) AND ([CommuneNaissanceId] = @Original_CommuneNaissanceId) AND ([SituationFamilialeId] = @Original_SituationFamilialeId) AND ([AdressAr] = @Original_AdressAr) AND ([WilayaResidenceId] = @Original_WilayaResidenceId) AND ([CommuneResidenceId] = @Original_CommuneResidenceId) AND ([NiveauInstructionId] = @Original_NiveauInstructionId) AND ([WilayaSeigeSocialId] = @Original_WilayaSeigeSocialId) AND ([CommuneSeigeSocialId] = @Original_CommuneSeigeSocialId) AND ([Validee] = @Original_Validee) AND ([DateValidation] = @Original_DateValidation) AND ([Annulee] = @Original_Annulee) AND ([IsEmailVerified] = @Original_IsEmailVerified) AND ((@IsNull_EmailVerificationTokenExpiry = 1 AND [EmailVerificationTokenExpiry] IS NULL) OR ([EmailVerificationTokenExpiry] = @Original_EmailVerificationTokenExpiry)) AND ((@IsNull_AntenneId = 1 AND [AntenneId] IS NULL) OR ([AntenneId] = @Original_AntenneId)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_TypeInscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TypeInscriptionId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -10424,6 +13006,8 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IsEmailVerified", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IsEmailVerified", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_EmailVerificationTokenExpiry", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EmailVerificationTokenExpiry", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EmailVerificationTokenExpiry", global::System.Data.SqlDbType.DateTime2, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EmailVerificationTokenExpiry", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_AntenneId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AntenneId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AntenneId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AntenneId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Inscriptions] ([TypeInscriptionId], [DateInscription], [NIN], " +
@@ -10434,24 +13018,25 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
                 "ituleDiplome], [Specialite], [WilayaSeigeSocialId], [CommuneSeigeSocialId], [Add" +
                 "resseArSeigeSocial], [AddresseFrSeigeSocial], [Validee], [ValideePAR], [DateVali" +
                 "dation], [Annulee], [IsEmailVerified], [EmailVerificationToken], [EmailVerificat" +
-                "ionTokenExpiry], [RecaptchaResponse], [CopieCNIPath], [CopieDiplomeRCCFCAPath]) " +
-                "VALUES (@TypeInscriptionId, @DateInscription, @NIN, @NomFr, @PrenomFr, @NomAr, @" +
-                "PrenomAr, @GenreId, @DateNaissance, @WilayaNaissanceId, @CommuneNaissanceId, @Si" +
-                "tuationFamilialeId, @NomJeunneFille, @NomJeunneFilleAr, @AdressAr, @AdressFr, @W" +
-                "ilayaResidenceId, @CommuneResidenceId, @NumTelephone, @Email, @NiveauInstruction" +
-                "Id, @EtablissementFormation, @IntituleDiplome, @Specialite, @WilayaSeigeSocialId" +
-                ", @CommuneSeigeSocialId, @AddresseArSeigeSocial, @AddresseFrSeigeSocial, @Valide" +
-                "e, @ValideePAR, @DateValidation, @Annulee, @IsEmailVerified, @EmailVerificationT" +
-                "oken, @EmailVerificationTokenExpiry, @RecaptchaResponse, @CopieCNIPath, @CopieDi" +
-                "plomeRCCFCAPath);\r\nSELECT Id, TypeInscriptionId, DateInscription, NIN, NomFr, Pr" +
-                "enomFr, NomAr, PrenomAr, GenreId, DateNaissance, WilayaNaissanceId, CommuneNaiss" +
-                "anceId, SituationFamilialeId, NomJeunneFille, NomJeunneFilleAr, AdressAr, Adress" +
-                "Fr, WilayaResidenceId, CommuneResidenceId, NumTelephone, Email, NiveauInstructio" +
-                "nId, EtablissementFormation, IntituleDiplome, Specialite, WilayaSeigeSocialId, C" +
-                "ommuneSeigeSocialId, AddresseArSeigeSocial, AddresseFrSeigeSocial, Validee, Vali" +
-                "deePAR, DateValidation, Annulee, IsEmailVerified, EmailVerificationToken, EmailV" +
-                "erificationTokenExpiry, RecaptchaResponse, CopieCNIPath, CopieDiplomeRCCFCAPath " +
-                "FROM Inscriptions WHERE (Id = SCOPE_IDENTITY())";
+                "ionTokenExpiry], [RecaptchaResponse], [CopieCNIPath], [CopieDiplomeRCCFCAPath], " +
+                "[AntenneId]) VALUES (@TypeInscriptionId, @DateInscription, @NIN, @NomFr, @Prenom" +
+                "Fr, @NomAr, @PrenomAr, @GenreId, @DateNaissance, @WilayaNaissanceId, @CommuneNai" +
+                "ssanceId, @SituationFamilialeId, @NomJeunneFille, @NomJeunneFilleAr, @AdressAr, " +
+                "@AdressFr, @WilayaResidenceId, @CommuneResidenceId, @NumTelephone, @Email, @Nive" +
+                "auInstructionId, @EtablissementFormation, @IntituleDiplome, @Specialite, @Wilaya" +
+                "SeigeSocialId, @CommuneSeigeSocialId, @AddresseArSeigeSocial, @AddresseFrSeigeSo" +
+                "cial, @Validee, @ValideePAR, @DateValidation, @Annulee, @IsEmailVerified, @Email" +
+                "VerificationToken, @EmailVerificationTokenExpiry, @RecaptchaResponse, @CopieCNIP" +
+                "ath, @CopieDiplomeRCCFCAPath, @AntenneId);\r\nSELECT Id, TypeInscriptionId, DateIn" +
+                "scription, NIN, NomFr, PrenomFr, NomAr, PrenomAr, GenreId, DateNaissance, Wilaya" +
+                "NaissanceId, CommuneNaissanceId, SituationFamilialeId, NomJeunneFille, NomJeunne" +
+                "FilleAr, AdressAr, AdressFr, WilayaResidenceId, CommuneResidenceId, NumTelephone" +
+                ", Email, NiveauInstructionId, EtablissementFormation, IntituleDiplome, Specialit" +
+                "e, WilayaSeigeSocialId, CommuneSeigeSocialId, AddresseArSeigeSocial, AddresseFrS" +
+                "eigeSocial, Validee, ValideePAR, DateValidation, Annulee, IsEmailVerified, Email" +
+                "VerificationToken, EmailVerificationTokenExpiry, RecaptchaResponse, CopieCNIPath" +
+                ", CopieDiplomeRCCFCAPath, AntenneId FROM Inscriptions WHERE (Id = SCOPE_IDENTITY" +
+                "())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TypeInscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TypeInscriptionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateInscription", global::System.Data.SqlDbType.DateTime2, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateInscription", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -10491,6 +13076,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RecaptchaResponse", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecaptchaResponse", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CopieCNIPath", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CopieCNIPath", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CopieDiplomeRCCFCAPath", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CopieDiplomeRCCFCAPath", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AntenneId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AntenneId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Inscriptions] SET [TypeInscriptionId] = @TypeInscriptionId, [DateIn" +
@@ -10510,31 +13096,32 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
                 "lee, [IsEmailVerified] = @IsEmailVerified, [EmailVerificationToken] = @EmailVeri" +
                 "ficationToken, [EmailVerificationTokenExpiry] = @EmailVerificationTokenExpiry, [" +
                 "RecaptchaResponse] = @RecaptchaResponse, [CopieCNIPath] = @CopieCNIPath, [CopieD" +
-                "iplomeRCCFCAPath] = @CopieDiplomeRCCFCAPath WHERE (([Id] = @Original_Id) AND ([T" +
-                "ypeInscriptionId] = @Original_TypeInscriptionId) AND ([DateInscription] = @Origi" +
-                "nal_DateInscription) AND ([NIN] = @Original_NIN) AND ([NomFr] = @Original_NomFr)" +
-                " AND ([PrenomFr] = @Original_PrenomFr) AND ([NomAr] = @Original_NomAr) AND ([Pre" +
-                "nomAr] = @Original_PrenomAr) AND ([GenreId] = @Original_GenreId) AND ([DateNaiss" +
-                "ance] = @Original_DateNaissance) AND ([WilayaNaissanceId] = @Original_WilayaNais" +
-                "sanceId) AND ([CommuneNaissanceId] = @Original_CommuneNaissanceId) AND ([Situati" +
-                "onFamilialeId] = @Original_SituationFamilialeId) AND ([AdressAr] = @Original_Adr" +
-                "essAr) AND ([WilayaResidenceId] = @Original_WilayaResidenceId) AND ([CommuneResi" +
-                "denceId] = @Original_CommuneResidenceId) AND ([NiveauInstructionId] = @Original_" +
-                "NiveauInstructionId) AND ([WilayaSeigeSocialId] = @Original_WilayaSeigeSocialId)" +
-                " AND ([CommuneSeigeSocialId] = @Original_CommuneSeigeSocialId) AND ([Validee] = " +
-                "@Original_Validee) AND ([DateValidation] = @Original_DateValidation) AND ([Annul" +
-                "ee] = @Original_Annulee) AND ([IsEmailVerified] = @Original_IsEmailVerified) AND" +
-                " ((@IsNull_EmailVerificationTokenExpiry = 1 AND [EmailVerificationTokenExpiry] I" +
-                "S NULL) OR ([EmailVerificationTokenExpiry] = @Original_EmailVerificationTokenExp" +
-                "iry)));\r\nSELECT Id, TypeInscriptionId, DateInscription, NIN, NomFr, PrenomFr, No" +
-                "mAr, PrenomAr, GenreId, DateNaissance, WilayaNaissanceId, CommuneNaissanceId, Si" +
-                "tuationFamilialeId, NomJeunneFille, NomJeunneFilleAr, AdressAr, AdressFr, Wilaya" +
-                "ResidenceId, CommuneResidenceId, NumTelephone, Email, NiveauInstructionId, Etabl" +
-                "issementFormation, IntituleDiplome, Specialite, WilayaSeigeSocialId, CommuneSeig" +
-                "eSocialId, AddresseArSeigeSocial, AddresseFrSeigeSocial, Validee, ValideePAR, Da" +
-                "teValidation, Annulee, IsEmailVerified, EmailVerificationToken, EmailVerificatio" +
-                "nTokenExpiry, RecaptchaResponse, CopieCNIPath, CopieDiplomeRCCFCAPath FROM Inscr" +
-                "iptions WHERE (Id = @Id)";
+                "iplomeRCCFCAPath] = @CopieDiplomeRCCFCAPath, [AntenneId] = @AntenneId WHERE (([I" +
+                "d] = @Original_Id) AND ([TypeInscriptionId] = @Original_TypeInscriptionId) AND (" +
+                "[DateInscription] = @Original_DateInscription) AND ([NIN] = @Original_NIN) AND (" +
+                "[NomFr] = @Original_NomFr) AND ([PrenomFr] = @Original_PrenomFr) AND ([NomAr] = " +
+                "@Original_NomAr) AND ([PrenomAr] = @Original_PrenomAr) AND ([GenreId] = @Origina" +
+                "l_GenreId) AND ([DateNaissance] = @Original_DateNaissance) AND ([WilayaNaissance" +
+                "Id] = @Original_WilayaNaissanceId) AND ([CommuneNaissanceId] = @Original_Commune" +
+                "NaissanceId) AND ([SituationFamilialeId] = @Original_SituationFamilialeId) AND (" +
+                "[AdressAr] = @Original_AdressAr) AND ([WilayaResidenceId] = @Original_WilayaResi" +
+                "denceId) AND ([CommuneResidenceId] = @Original_CommuneResidenceId) AND ([NiveauI" +
+                "nstructionId] = @Original_NiveauInstructionId) AND ([WilayaSeigeSocialId] = @Ori" +
+                "ginal_WilayaSeigeSocialId) AND ([CommuneSeigeSocialId] = @Original_CommuneSeigeS" +
+                "ocialId) AND ([Validee] = @Original_Validee) AND ([DateValidation] = @Original_D" +
+                "ateValidation) AND ([Annulee] = @Original_Annulee) AND ([IsEmailVerified] = @Ori" +
+                "ginal_IsEmailVerified) AND ((@IsNull_EmailVerificationTokenExpiry = 1 AND [Email" +
+                "VerificationTokenExpiry] IS NULL) OR ([EmailVerificationTokenExpiry] = @Original" +
+                "_EmailVerificationTokenExpiry)) AND ((@IsNull_AntenneId = 1 AND [AntenneId] IS N" +
+                "ULL) OR ([AntenneId] = @Original_AntenneId)));\r\nSELECT Id, TypeInscriptionId, Da" +
+                "teInscription, NIN, NomFr, PrenomFr, NomAr, PrenomAr, GenreId, DateNaissance, Wi" +
+                "layaNaissanceId, CommuneNaissanceId, SituationFamilialeId, NomJeunneFille, NomJe" +
+                "unneFilleAr, AdressAr, AdressFr, WilayaResidenceId, CommuneResidenceId, NumTelep" +
+                "hone, Email, NiveauInstructionId, EtablissementFormation, IntituleDiplome, Speci" +
+                "alite, WilayaSeigeSocialId, CommuneSeigeSocialId, AddresseArSeigeSocial, Address" +
+                "eFrSeigeSocial, Validee, ValideePAR, DateValidation, Annulee, IsEmailVerified, E" +
+                "mailVerificationToken, EmailVerificationTokenExpiry, RecaptchaResponse, CopieCNI" +
+                "Path, CopieDiplomeRCCFCAPath, AntenneId FROM Inscriptions WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TypeInscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TypeInscriptionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateInscription", global::System.Data.SqlDbType.DateTime2, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateInscription", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -10574,6 +13161,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RecaptchaResponse", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RecaptchaResponse", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CopieCNIPath", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CopieCNIPath", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@CopieDiplomeRCCFCAPath", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "CopieDiplomeRCCFCAPath", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AntenneId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AntenneId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_TypeInscriptionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TypeInscriptionId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateInscription", global::System.Data.SqlDbType.DateTime2, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateInscription", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -10599,6 +13187,8 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IsEmailVerified", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IsEmailVerified", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_EmailVerificationTokenExpiry", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EmailVerificationTokenExpiry", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EmailVerificationTokenExpiry", global::System.Data.SqlDbType.DateTime2, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EmailVerificationTokenExpiry", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_AntenneId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AntenneId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AntenneId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AntenneId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -10616,7 +13206,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT Id, TypeInscriptionId, DateInscription, NIN, NomFr, PrenomFr, NomAr, PrenomAr, GenreId, DateNaissance, WilayaNaissanceId, CommuneNaissanceId, SituationFamilialeId, NomJeunneFille, NomJeunneFilleAr, AdressAr, AdressFr, WilayaResidenceId, CommuneResidenceId, NumTelephone, Email, NiveauInstructionId, EtablissementFormation, IntituleDiplome, Specialite, WilayaSeigeSocialId, CommuneSeigeSocialId, AddresseArSeigeSocial, AddresseFrSeigeSocial, Validee, ValideePAR, DateValidation, Annulee, IsEmailVerified, EmailVerificationToken, EmailVerificationTokenExpiry, RecaptchaResponse, CopieCNIPath, CopieDiplomeRCCFCAPath FROM dbo.Inscriptions";
+            this._commandCollection[0].CommandText = @"SELECT Id, TypeInscriptionId, DateInscription, NIN, NomFr, PrenomFr, NomAr, PrenomAr, GenreId, DateNaissance, WilayaNaissanceId, CommuneNaissanceId, SituationFamilialeId, NomJeunneFille, NomJeunneFilleAr, AdressAr, AdressFr, WilayaResidenceId, CommuneResidenceId, NumTelephone, Email, NiveauInstructionId, EtablissementFormation, IntituleDiplome, Specialite, WilayaSeigeSocialId, CommuneSeigeSocialId, AddresseArSeigeSocial, AddresseFrSeigeSocial, Validee, ValideePAR, DateValidation, Annulee, IsEmailVerified, EmailVerificationToken, EmailVerificationTokenExpiry, RecaptchaResponse, CopieCNIPath, CopieDiplomeRCCFCAPath, AntenneId FROM dbo.Inscriptions";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -10624,7 +13214,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.InscriptionsDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.InscriptionsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -10637,9 +13227,9 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.InscriptionsDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.InscriptionsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.InscriptionsDataTable dataTable = new EspacePromoteurDataSet.InscriptionsDataTable();
+            DBNesdaInscription4DataSet.InscriptionsDataTable dataTable = new DBNesdaInscription4DataSet.InscriptionsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -10647,14 +13237,14 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.InscriptionsDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.InscriptionsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "Inscriptions");
         }
         
@@ -10701,7 +13291,8 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
                     System.DateTime Original_DateValidation, 
                     bool Original_Annulee, 
                     bool Original_IsEmailVerified, 
-                    global::System.Nullable<global::System.DateTime> Original_EmailVerificationTokenExpiry) {
+                    global::System.Nullable<global::System.DateTime> Original_EmailVerificationTokenExpiry, 
+                    global::System.Nullable<int> Original_AntenneId) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_TypeInscriptionId));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((System.DateTime)(Original_DateInscription));
@@ -10763,6 +13354,14 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
                 this.Adapter.DeleteCommand.Parameters[23].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[24].Value = global::System.DBNull.Value;
             }
+            if ((Original_AntenneId.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[25].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[26].Value = ((int)(Original_AntenneId.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[25].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[26].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -10821,7 +13420,8 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
                     global::System.Nullable<global::System.DateTime> EmailVerificationTokenExpiry, 
                     string RecaptchaResponse, 
                     string CopieCNIPath, 
-                    string CopieDiplomeRCCFCAPath) {
+                    string CopieDiplomeRCCFCAPath, 
+                    global::System.Nullable<int> AntenneId) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(TypeInscriptionId));
             this.Adapter.InsertCommand.Parameters[1].Value = ((System.DateTime)(DateInscription));
             if ((NIN == null)) {
@@ -10970,6 +13570,12 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
             else {
                 this.Adapter.InsertCommand.Parameters[37].Value = ((string)(CopieDiplomeRCCFCAPath));
             }
+            if ((AntenneId.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[38].Value = ((int)(AntenneId.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[38].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -11029,6 +13635,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
                     string RecaptchaResponse, 
                     string CopieCNIPath, 
                     string CopieDiplomeRCCFCAPath, 
+                    global::System.Nullable<int> AntenneId, 
                     int Original_Id, 
                     int Original_TypeInscriptionId, 
                     System.DateTime Original_DateInscription, 
@@ -11053,6 +13660,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
                     bool Original_Annulee, 
                     bool Original_IsEmailVerified, 
                     global::System.Nullable<global::System.DateTime> Original_EmailVerificationTokenExpiry, 
+                    global::System.Nullable<int> Original_AntenneId, 
                     int Id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(TypeInscriptionId));
             this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTime)(DateInscription));
@@ -11202,68 +13810,82 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
             else {
                 this.Adapter.UpdateCommand.Parameters[37].Value = ((string)(CopieDiplomeRCCFCAPath));
             }
-            this.Adapter.UpdateCommand.Parameters[38].Value = ((int)(Original_Id));
-            this.Adapter.UpdateCommand.Parameters[39].Value = ((int)(Original_TypeInscriptionId));
-            this.Adapter.UpdateCommand.Parameters[40].Value = ((System.DateTime)(Original_DateInscription));
+            if ((AntenneId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[38].Value = ((int)(AntenneId.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[38].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[39].Value = ((int)(Original_Id));
+            this.Adapter.UpdateCommand.Parameters[40].Value = ((int)(Original_TypeInscriptionId));
+            this.Adapter.UpdateCommand.Parameters[41].Value = ((System.DateTime)(Original_DateInscription));
             if ((Original_NIN == null)) {
                 throw new global::System.ArgumentNullException("Original_NIN");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[41].Value = ((string)(Original_NIN));
+                this.Adapter.UpdateCommand.Parameters[42].Value = ((string)(Original_NIN));
             }
             if ((Original_NomFr == null)) {
                 throw new global::System.ArgumentNullException("Original_NomFr");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[42].Value = ((string)(Original_NomFr));
+                this.Adapter.UpdateCommand.Parameters[43].Value = ((string)(Original_NomFr));
             }
             if ((Original_PrenomFr == null)) {
                 throw new global::System.ArgumentNullException("Original_PrenomFr");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[43].Value = ((string)(Original_PrenomFr));
+                this.Adapter.UpdateCommand.Parameters[44].Value = ((string)(Original_PrenomFr));
             }
             if ((Original_NomAr == null)) {
                 throw new global::System.ArgumentNullException("Original_NomAr");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[44].Value = ((string)(Original_NomAr));
+                this.Adapter.UpdateCommand.Parameters[45].Value = ((string)(Original_NomAr));
             }
             if ((Original_PrenomAr == null)) {
                 throw new global::System.ArgumentNullException("Original_PrenomAr");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[45].Value = ((string)(Original_PrenomAr));
+                this.Adapter.UpdateCommand.Parameters[46].Value = ((string)(Original_PrenomAr));
             }
-            this.Adapter.UpdateCommand.Parameters[46].Value = ((int)(Original_GenreId));
-            this.Adapter.UpdateCommand.Parameters[47].Value = ((System.DateTime)(Original_DateNaissance));
-            this.Adapter.UpdateCommand.Parameters[48].Value = ((int)(Original_WilayaNaissanceId));
-            this.Adapter.UpdateCommand.Parameters[49].Value = ((int)(Original_CommuneNaissanceId));
-            this.Adapter.UpdateCommand.Parameters[50].Value = ((int)(Original_SituationFamilialeId));
+            this.Adapter.UpdateCommand.Parameters[47].Value = ((int)(Original_GenreId));
+            this.Adapter.UpdateCommand.Parameters[48].Value = ((System.DateTime)(Original_DateNaissance));
+            this.Adapter.UpdateCommand.Parameters[49].Value = ((int)(Original_WilayaNaissanceId));
+            this.Adapter.UpdateCommand.Parameters[50].Value = ((int)(Original_CommuneNaissanceId));
+            this.Adapter.UpdateCommand.Parameters[51].Value = ((int)(Original_SituationFamilialeId));
             if ((Original_AdressAr == null)) {
                 throw new global::System.ArgumentNullException("Original_AdressAr");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[51].Value = ((string)(Original_AdressAr));
+                this.Adapter.UpdateCommand.Parameters[52].Value = ((string)(Original_AdressAr));
             }
-            this.Adapter.UpdateCommand.Parameters[52].Value = ((int)(Original_WilayaResidenceId));
-            this.Adapter.UpdateCommand.Parameters[53].Value = ((int)(Original_CommuneResidenceId));
-            this.Adapter.UpdateCommand.Parameters[54].Value = ((int)(Original_NiveauInstructionId));
-            this.Adapter.UpdateCommand.Parameters[55].Value = ((int)(Original_WilayaSeigeSocialId));
-            this.Adapter.UpdateCommand.Parameters[56].Value = ((int)(Original_CommuneSeigeSocialId));
-            this.Adapter.UpdateCommand.Parameters[57].Value = ((bool)(Original_Validee));
-            this.Adapter.UpdateCommand.Parameters[58].Value = ((System.DateTime)(Original_DateValidation));
-            this.Adapter.UpdateCommand.Parameters[59].Value = ((bool)(Original_Annulee));
-            this.Adapter.UpdateCommand.Parameters[60].Value = ((bool)(Original_IsEmailVerified));
+            this.Adapter.UpdateCommand.Parameters[53].Value = ((int)(Original_WilayaResidenceId));
+            this.Adapter.UpdateCommand.Parameters[54].Value = ((int)(Original_CommuneResidenceId));
+            this.Adapter.UpdateCommand.Parameters[55].Value = ((int)(Original_NiveauInstructionId));
+            this.Adapter.UpdateCommand.Parameters[56].Value = ((int)(Original_WilayaSeigeSocialId));
+            this.Adapter.UpdateCommand.Parameters[57].Value = ((int)(Original_CommuneSeigeSocialId));
+            this.Adapter.UpdateCommand.Parameters[58].Value = ((bool)(Original_Validee));
+            this.Adapter.UpdateCommand.Parameters[59].Value = ((System.DateTime)(Original_DateValidation));
+            this.Adapter.UpdateCommand.Parameters[60].Value = ((bool)(Original_Annulee));
+            this.Adapter.UpdateCommand.Parameters[61].Value = ((bool)(Original_IsEmailVerified));
             if ((Original_EmailVerificationTokenExpiry.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[61].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[62].Value = ((System.DateTime)(Original_EmailVerificationTokenExpiry.Value));
+                this.Adapter.UpdateCommand.Parameters[62].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[63].Value = ((System.DateTime)(Original_EmailVerificationTokenExpiry.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[61].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[62].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[62].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[63].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[63].Value = ((int)(Id));
+            if ((Original_AntenneId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[64].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[65].Value = ((int)(Original_AntenneId.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[64].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[65].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[66].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -11323,6 +13945,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
                     string RecaptchaResponse, 
                     string CopieCNIPath, 
                     string CopieDiplomeRCCFCAPath, 
+                    global::System.Nullable<int> AntenneId, 
                     int Original_Id, 
                     int Original_TypeInscriptionId, 
                     System.DateTime Original_DateInscription, 
@@ -11346,8 +13969,9 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Genres WHERE (Id = @Id)";
                     System.DateTime Original_DateValidation, 
                     bool Original_Annulee, 
                     bool Original_IsEmailVerified, 
-                    global::System.Nullable<global::System.DateTime> Original_EmailVerificationTokenExpiry) {
-            return this.Update(TypeInscriptionId, DateInscription, NIN, NomFr, PrenomFr, NomAr, PrenomAr, GenreId, DateNaissance, WilayaNaissanceId, CommuneNaissanceId, SituationFamilialeId, NomJeunneFille, NomJeunneFilleAr, AdressAr, AdressFr, WilayaResidenceId, CommuneResidenceId, NumTelephone, Email, NiveauInstructionId, EtablissementFormation, IntituleDiplome, Specialite, WilayaSeigeSocialId, CommuneSeigeSocialId, AddresseArSeigeSocial, AddresseFrSeigeSocial, Validee, ValideePAR, DateValidation, Annulee, IsEmailVerified, EmailVerificationToken, EmailVerificationTokenExpiry, RecaptchaResponse, CopieCNIPath, CopieDiplomeRCCFCAPath, Original_Id, Original_TypeInscriptionId, Original_DateInscription, Original_NIN, Original_NomFr, Original_PrenomFr, Original_NomAr, Original_PrenomAr, Original_GenreId, Original_DateNaissance, Original_WilayaNaissanceId, Original_CommuneNaissanceId, Original_SituationFamilialeId, Original_AdressAr, Original_WilayaResidenceId, Original_CommuneResidenceId, Original_NiveauInstructionId, Original_WilayaSeigeSocialId, Original_CommuneSeigeSocialId, Original_Validee, Original_DateValidation, Original_Annulee, Original_IsEmailVerified, Original_EmailVerificationTokenExpiry, Original_Id);
+                    global::System.Nullable<global::System.DateTime> Original_EmailVerificationTokenExpiry, 
+                    global::System.Nullable<int> Original_AntenneId) {
+            return this.Update(TypeInscriptionId, DateInscription, NIN, NomFr, PrenomFr, NomAr, PrenomAr, GenreId, DateNaissance, WilayaNaissanceId, CommuneNaissanceId, SituationFamilialeId, NomJeunneFille, NomJeunneFilleAr, AdressAr, AdressFr, WilayaResidenceId, CommuneResidenceId, NumTelephone, Email, NiveauInstructionId, EtablissementFormation, IntituleDiplome, Specialite, WilayaSeigeSocialId, CommuneSeigeSocialId, AddresseArSeigeSocial, AddresseFrSeigeSocial, Validee, ValideePAR, DateValidation, Annulee, IsEmailVerified, EmailVerificationToken, EmailVerificationTokenExpiry, RecaptchaResponse, CopieCNIPath, CopieDiplomeRCCFCAPath, AntenneId, Original_Id, Original_TypeInscriptionId, Original_DateInscription, Original_NIN, Original_NomFr, Original_PrenomFr, Original_NomAr, Original_PrenomAr, Original_GenreId, Original_DateNaissance, Original_WilayaNaissanceId, Original_CommuneNaissanceId, Original_SituationFamilialeId, Original_AdressAr, Original_WilayaResidenceId, Original_CommuneResidenceId, Original_NiveauInstructionId, Original_WilayaSeigeSocialId, Original_CommuneSeigeSocialId, Original_Validee, Original_DateValidation, Original_Annulee, Original_IsEmailVerified, Original_EmailVerificationTokenExpiry, Original_AntenneId, Original_Id);
         }
     }
     
@@ -11536,7 +14160,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM NiveauInstruction WHERE (Id =
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.NiveauInstructionDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.NiveauInstructionDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -11549,9 +14173,9 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM NiveauInstruction WHERE (Id =
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.NiveauInstructionDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.NiveauInstructionDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.NiveauInstructionDataTable dataTable = new EspacePromoteurDataSet.NiveauInstructionDataTable();
+            DBNesdaInscription4DataSet.NiveauInstructionDataTable dataTable = new DBNesdaInscription4DataSet.NiveauInstructionDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -11559,14 +14183,14 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM NiveauInstruction WHERE (Id =
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.NiveauInstructionDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.NiveauInstructionDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "NiveauInstruction");
         }
         
@@ -11929,7 +14553,7 @@ SELECT Id, CodeSession, FormationId, DateDebut, DateFin, IsFormee, InscriptionId
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.SessionFormationsDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.SessionFormationsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -11942,9 +14566,9 @@ SELECT Id, CodeSession, FormationId, DateDebut, DateFin, IsFormee, InscriptionId
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.SessionFormationsDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.SessionFormationsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.SessionFormationsDataTable dataTable = new EspacePromoteurDataSet.SessionFormationsDataTable();
+            DBNesdaInscription4DataSet.SessionFormationsDataTable dataTable = new DBNesdaInscription4DataSet.SessionFormationsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -11952,14 +14576,14 @@ SELECT Id, CodeSession, FormationId, DateDebut, DateFin, IsFormee, InscriptionId
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.SessionFormationsDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.SessionFormationsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "SessionFormations");
         }
         
@@ -12267,7 +14891,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM SituationFamiliales WHERE (Id
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.SituationFamilialesDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.SituationFamilialesDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -12280,9 +14904,9 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM SituationFamiliales WHERE (Id
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.SituationFamilialesDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.SituationFamilialesDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.SituationFamilialesDataTable dataTable = new EspacePromoteurDataSet.SituationFamilialesDataTable();
+            DBNesdaInscription4DataSet.SituationFamilialesDataTable dataTable = new DBNesdaInscription4DataSet.SituationFamilialesDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -12290,14 +14914,14 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM SituationFamiliales WHERE (Id
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.SituationFamilialesDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.SituationFamilialesDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "SituationFamiliales");
         }
         
@@ -12652,7 +15276,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM TypeDecisions WHERE (Id = @Id
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.TypeDecisionsDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.TypeDecisionsDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -12665,9 +15289,9 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM TypeDecisions WHERE (Id = @Id
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.TypeDecisionsDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.TypeDecisionsDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.TypeDecisionsDataTable dataTable = new EspacePromoteurDataSet.TypeDecisionsDataTable();
+            DBNesdaInscription4DataSet.TypeDecisionsDataTable dataTable = new DBNesdaInscription4DataSet.TypeDecisionsDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -12675,14 +15299,14 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM TypeDecisions WHERE (Id = @Id
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.TypeDecisionsDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.TypeDecisionsDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "TypeDecisions");
         }
         
@@ -13037,7 +15661,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM TypesInscription WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.TypesInscriptionDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.TypesInscriptionDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -13050,9 +15674,9 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM TypesInscription WHERE (Id = 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.TypesInscriptionDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.TypesInscriptionDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.TypesInscriptionDataTable dataTable = new EspacePromoteurDataSet.TypesInscriptionDataTable();
+            DBNesdaInscription4DataSet.TypesInscriptionDataTable dataTable = new DBNesdaInscription4DataSet.TypesInscriptionDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -13060,14 +15684,14 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM TypesInscription WHERE (Id = 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.TypesInscriptionDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.TypesInscriptionDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "TypesInscription");
         }
         
@@ -13422,7 +16046,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(EspacePromoteurDataSet.WilayasDataTable dataTable) {
+        public virtual int Fill(DBNesdaInscription4DataSet.WilayasDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -13435,9 +16059,9 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual EspacePromoteurDataSet.WilayasDataTable GetData() {
+        public virtual DBNesdaInscription4DataSet.WilayasDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            EspacePromoteurDataSet.WilayasDataTable dataTable = new EspacePromoteurDataSet.WilayasDataTable();
+            DBNesdaInscription4DataSet.WilayasDataTable dataTable = new DBNesdaInscription4DataSet.WilayasDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -13445,14 +16069,14 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet.WilayasDataTable dataTable) {
+        public virtual int Update(DBNesdaInscription4DataSet.WilayasDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(EspacePromoteurDataSet dataSet) {
+        public virtual int Update(DBNesdaInscription4DataSet dataSet) {
             return this.Adapter.Update(dataSet, "Wilayas");
         }
         
@@ -13634,6 +16258,12 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
         
         private UpdateOrderOption _updateOrder;
         
+        private AgencesTableAdapter _agencesTableAdapter;
+        
+        private AntennesTableAdapter _antennesTableAdapter;
+        
+        private CirconscriptionsTableAdapter _circonscriptionsTableAdapter;
+        
         private CommunesTableAdapter _communesTableAdapter;
         
         private CSVFsTableAdapter _cSVFsTableAdapter;
@@ -13672,6 +16302,48 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
             }
             set {
                 this._updateOrder = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+            "a", "System.Drawing.Design.UITypeEditor")]
+        public AgencesTableAdapter AgencesTableAdapter {
+            get {
+                return this._agencesTableAdapter;
+            }
+            set {
+                this._agencesTableAdapter = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+            "a", "System.Drawing.Design.UITypeEditor")]
+        public AntennesTableAdapter AntennesTableAdapter {
+            get {
+                return this._antennesTableAdapter;
+            }
+            set {
+                this._antennesTableAdapter = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+            "a", "System.Drawing.Design.UITypeEditor")]
+        public CirconscriptionsTableAdapter CirconscriptionsTableAdapter {
+            get {
+                return this._circonscriptionsTableAdapter;
+            }
+            set {
+                this._circonscriptionsTableAdapter = value;
             }
         }
         
@@ -13876,6 +16548,18 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
                 if ((this._connection != null)) {
                     return this._connection;
                 }
+                if (((this._agencesTableAdapter != null) 
+                            && (this._agencesTableAdapter.Connection != null))) {
+                    return this._agencesTableAdapter.Connection;
+                }
+                if (((this._antennesTableAdapter != null) 
+                            && (this._antennesTableAdapter.Connection != null))) {
+                    return this._antennesTableAdapter.Connection;
+                }
+                if (((this._circonscriptionsTableAdapter != null) 
+                            && (this._circonscriptionsTableAdapter.Connection != null))) {
+                    return this._circonscriptionsTableAdapter.Connection;
+                }
                 if (((this._communesTableAdapter != null) 
                             && (this._communesTableAdapter.Connection != null))) {
                     return this._communesTableAdapter.Connection;
@@ -13941,6 +16625,15 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
         public int TableAdapterInstanceCount {
             get {
                 int count = 0;
+                if ((this._agencesTableAdapter != null)) {
+                    count = (count + 1);
+                }
+                if ((this._antennesTableAdapter != null)) {
+                    count = (count + 1);
+                }
+                if ((this._circonscriptionsTableAdapter != null)) {
+                    count = (count + 1);
+                }
                 if ((this._communesTableAdapter != null)) {
                     count = (count + 1);
                 }
@@ -13989,14 +16682,32 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateUpdatedRows(EspacePromoteurDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(DBNesdaInscription4DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._agencesTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Agences.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._agencesTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._wilayasTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Wilayas.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._wilayasTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._antennesTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Antennes.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._antennesTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -14072,6 +16783,15 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
                     allChangedRows.AddRange(updatedRows);
                 }
             }
+            if ((this._circonscriptionsTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Circonscriptions.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._circonscriptionsTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._cSVFsTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.CSVFs.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -14116,13 +16836,29 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateInsertedRows(EspacePromoteurDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(DBNesdaInscription4DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._agencesTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Agences.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._agencesTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             if ((this._wilayasTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Wilayas.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._wilayasTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._antennesTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Antennes.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._antennesTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -14190,6 +16926,14 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
                     allAddedRows.AddRange(addedRows);
                 }
             }
+            if ((this._circonscriptionsTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Circonscriptions.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._circonscriptionsTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             if ((this._cSVFsTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.CSVFs.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -14230,7 +16974,7 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        private int UpdateDeletedRows(EspacePromoteurDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(DBNesdaInscription4DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             if ((this._sessionFormationsTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.SessionFormations.Select(null, null, global::System.Data.DataViewRowState.Deleted);
@@ -14261,6 +17005,14 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._cSVFsTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._circonscriptionsTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Circonscriptions.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._circonscriptionsTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -14328,11 +17080,27 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
                     allChangedRows.AddRange(deletedRows);
                 }
             }
+            if ((this._antennesTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Antennes.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._antennesTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
             if ((this._wilayasTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.Wilayas.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._wilayasTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._agencesTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Agences.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._agencesTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -14368,12 +17136,27 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        public virtual int UpdateAll(EspacePromoteurDataSet dataSet) {
+        public virtual int UpdateAll(DBNesdaInscription4DataSet dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }
             if ((dataSet.HasChanges() == false)) {
                 return 0;
+            }
+            if (((this._agencesTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._agencesTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
+                        "tring.");
+            }
+            if (((this._antennesTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._antennesTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
+                        "tring.");
+            }
+            if (((this._circonscriptionsTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._circonscriptionsTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
+                        "tring.");
             }
             if (((this._communesTableAdapter != null) 
                         && (this.MatchTableAdapterConnection(this._communesTableAdapter.Connection) == false))) {
@@ -14472,6 +17255,33 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
             try {
                 // ---- Prepare for update -----------
                 //
+                if ((this._agencesTableAdapter != null)) {
+                    revertConnections.Add(this._agencesTableAdapter, this._agencesTableAdapter.Connection);
+                    this._agencesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._agencesTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._agencesTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._agencesTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._agencesTableAdapter.Adapter);
+                    }
+                }
+                if ((this._antennesTableAdapter != null)) {
+                    revertConnections.Add(this._antennesTableAdapter, this._antennesTableAdapter.Connection);
+                    this._antennesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._antennesTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._antennesTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._antennesTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._antennesTableAdapter.Adapter);
+                    }
+                }
+                if ((this._circonscriptionsTableAdapter != null)) {
+                    revertConnections.Add(this._circonscriptionsTableAdapter, this._circonscriptionsTableAdapter.Connection);
+                    this._circonscriptionsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._circonscriptionsTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._circonscriptionsTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._circonscriptionsTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._circonscriptionsTableAdapter.Adapter);
+                    }
+                }
                 if ((this._communesTableAdapter != null)) {
                     revertConnections.Add(this._communesTableAdapter, this._communesTableAdapter.Connection);
                     this._communesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
@@ -14646,6 +17456,18 @@ SELECT Id, Code, DesignationFr, DesignationAr FROM Wilayas WHERE (Id = @Id)";
             finally {
                 if (workConnOpened) {
                     workConnection.Close();
+                }
+                if ((this._agencesTableAdapter != null)) {
+                    this._agencesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._agencesTableAdapter]));
+                    this._agencesTableAdapter.Transaction = null;
+                }
+                if ((this._antennesTableAdapter != null)) {
+                    this._antennesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._antennesTableAdapter]));
+                    this._antennesTableAdapter.Transaction = null;
+                }
+                if ((this._circonscriptionsTableAdapter != null)) {
+                    this._circonscriptionsTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._circonscriptionsTableAdapter]));
+                    this._circonscriptionsTableAdapter.Transaction = null;
                 }
                 if ((this._communesTableAdapter != null)) {
                     this._communesTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._communesTableAdapter]));

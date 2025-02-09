@@ -50,7 +50,10 @@ namespace Anade.Khadamat.Data
         public virtual DbSet<SessionFormation> SessionFormations { get; set; }
         public virtual DbSet<TypeDecision> TypeDecisions { get; set; }
         public virtual DbSet<Formation> Formations { get; set; }
-
+        public virtual DbSet<Agence> Agences { get; set; }
+        public virtual DbSet<Antenne> Antennes { get; set; }
+        public virtual DbSet<Circonscription> Circonscriptions { get; set; }
+        public virtual DbSet<Categorie> Categories { get; set; }
 
 
 

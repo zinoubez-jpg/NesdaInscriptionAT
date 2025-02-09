@@ -24,6 +24,8 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly DecisionBusinessService _decisionBusinessService;
         private readonly ILoadProperties<Decision, int> _loadDecisionProperties;
 
+        private readonly ReferentielBusinessService<Antenne, int> _antenneBusinessService;
+        private readonly ReferentielBusinessService<Agence, int> _agenceBusinessService;
 
 
         public ReportingController(ILoadProperties<SessionFormation, int> loadSessionFormationProperties,
@@ -33,7 +35,9 @@ namespace Anade.Khadamat.Web.Controllers
                                    ReferentielBusinessService<Wilaya, int> wilayaBusinessService,
                                    SessionFormationBusinessService sessionFormationBusinessService,
                                    DecisionBusinessService decisionBusinessService,
-                                   ILoadProperties<Decision, int> loadDecisionProperties
+                                   ILoadProperties<Decision, int> loadDecisionProperties,
+                                   ReferentielBusinessService<Antenne, int> antenneBusinessService,
+                                   ReferentielBusinessService<Agence, int> agenceBusinessService
                                    )
 
         {
@@ -45,6 +49,8 @@ namespace Anade.Khadamat.Web.Controllers
             _sessionFormationBusinessService = sessionFormationBusinessService;
             _decisionBusinessService = decisionBusinessService;
             _loadDecisionProperties = loadDecisionProperties;
+            _antenneBusinessService = antenneBusinessService;
+            _agenceBusinessService = agenceBusinessService;
         }
 
         //[Route("{id}")]
@@ -93,9 +99,6 @@ namespace Anade.Khadamat.Web.Controllers
             Dictionary<string, object> navWithList = new();
             string reportPrintName = "";
             string reportName = "Attestation";
-
-
-
             Type ConventionPropriete = typeof(SessionFormation);
 
             reportName = "Attestation";
@@ -124,37 +127,31 @@ namespace Anade.Khadamat.Web.Controllers
         }
 
         [Route("{id}/{DecisionId}")]
-        public IActionResult PrintAtFormitee(int id, int decisionId)
+        public IActionResult PrintAtConformitee(int id, int decisionId)
         {
 
             Dictionary<string, string> parameters = new();
             Dictionary<string, object> navWithList = new();
             string reportPrintName = "";
             string reportName = "ATConformite";
-
-
-
             Type ConventionPropriete = typeof(Decision);
-
             reportName = "ATConformite";
-
             var decision = _decisionBusinessService.GetSingle(x => x.InscriptionId == id && x.Id == decisionId, _decisionBusinessService.GetDefaultLoadProperties());
             var wilayas = _wilayaBusinessService.GetAll();
-
-            reportPrintName = "AT_" + decision.Inscription.NomFr;
-
+            var antennes = _antenneBusinessService.GetAll();
+            var agences = _agenceBusinessService.GetAll();
+            reportPrintName = "ATConfirmite_" + decision.Inscription.NomFr;
             navWithList = _loadDecisionProperties.GetAllNavProp(decision);
+  
             navWithList.Add("Wilaya", (object)wilayas);
+            navWithList.Add("Antenne", (object)antennes);
+            navWithList.Add("Agence", (object)agences);
 
             //var formation = _formationBusinessService.GetAllFiltered(x => x.Id == inscription.SessionFormation.FormationId);
             //navWithList.Add("Formation", (object)formation);
-
             //var agence = _agenceBusinessService.GetAllFiltered(x => x.Id == inscription.SessionFormation.AgenceId);
             //navWithList.Add("Agence", (object)agence);
-
-
             //navWithList.Add("Baos", fiche.First());
-
 
             var returnReport = _reportService.GenerateReportAsync(reportName, "pdf", navWithList, parameters);
             return File(returnReport, System.Net.Mime.MediaTypeNames.Application.Octet, reportPrintName + ".pdf");

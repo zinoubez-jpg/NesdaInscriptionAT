@@ -11,6 +11,7 @@ namespace Anade.Khadamat.Domain
         [Required(ErrorMessage = "يجب ملء هذا الحقل")]
         public int Id { get; set; }
         public int TypeInscriptionId { get; set; }
+        public int CategorieId { get; set; }
         public DateTime DateInscription { get; set; }
 
         [Display(Name = "NIN")]
@@ -86,8 +87,12 @@ namespace Anade.Khadamat.Domain
         public int CommuneSeigeSocialId { get; set; }
         public string AddresseArSeigeSocial { get; set; }
         public string AddresseFrSeigeSocial { get; set; }
+        public string RaisonSociale { get; set; }
+        public string RaisonSocialeAr { get; set; }
 
-
+        public int AntenneId { get; set; }
+        public string CodeAnntenne { get; set; }
+        public string CodeAgence { get; set; }
         public bool Validee { get; set; }
         public string ValideePAR { get; set; }
         public DateTime DateValidation { get; set; }
@@ -107,6 +112,9 @@ namespace Anade.Khadamat.Domain
 
         [Display(Name = "CopieDiplomeRCCFCAPath")]
         public string CopieDiplomeRCCFCAPath { get; set; }
+        public string NumeroSiejeV3 { get; set; }
+
+
 
 
 
@@ -122,6 +130,8 @@ namespace Anade.Khadamat.Domain
         public virtual SituationFamiliale SituationFamiliale { get; set; }
         public virtual NiveauInstruction NiveauInstruction { get; set; }
         public virtual TypeInscription TypeInscription { get; set; }
+        public virtual Antenne Antenne { get; set; }
+        public virtual Categorie Categorie { get; set; }
 
 
     }

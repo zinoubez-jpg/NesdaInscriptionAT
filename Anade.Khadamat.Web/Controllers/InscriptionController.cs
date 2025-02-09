@@ -27,6 +27,9 @@ namespace Anade.Khadamat.Web.Controllers
     {
 
         public readonly ReferentielBusinessService<Commune, int> _communeBusinessService;
+        public readonly ReferentielBusinessService<Categorie, int> _categorieBusinessService;
+        public readonly ReferentielBusinessService<Antenne, int> _antenneBusinessService;
+
         public readonly ReferentielBusinessService<Wilaya, int> _wilayaBusinessService;
         public readonly ReferentielBusinessService<Genre, int> _genreBusinessService;
         public readonly ReferentielBusinessService<SituationFamiliale, int> _situationFamilialeBusinessService;
@@ -37,6 +40,10 @@ namespace Anade.Khadamat.Web.Controllers
         public readonly ReferentielBusinessService<TypeInscription, int> _typeInscriptionBusinessService;
         private readonly IRecaptchaService _recaptchaService;
         private readonly IHostingEnvironment _hostingEnvironment;
+
+        public readonly CirconscriptionBusinessService _circonscriptionBusinessService;
+
+        
 
 
         private readonly RoleManager<Role> _roleManager;
@@ -57,13 +64,16 @@ namespace Anade.Khadamat.Web.Controllers
                                       ReferentielBusinessService<TypeInscription, int> typeInscriptionBusinessService,
                                       IRecaptchaService recaptchaService,
                                       IHostingEnvironment hostingEnvironment,
+                                      ReferentielBusinessService<Antenne, int> antenneBusinessService,
 
                                       UserManager<User> userManager,
                                       RoleManager<Role> roleManager,
                                       UserService userService,
                                       UserStructureService userStructureService,
                                       TypeUserServices typeUserServices,
-                                      StructureService structureService
+                                      StructureService structureService,
+                                      ReferentielBusinessService<Categorie, int> categorieBusinessService,
+                                      CirconscriptionBusinessService circonscriptionBusinessService
                                    )
         {
             _communeBusinessService = communeBusinessService;
@@ -77,6 +87,9 @@ namespace Anade.Khadamat.Web.Controllers
             _typeInscriptionBusinessService = typeInscriptionBusinessService;
             _recaptchaService = recaptchaService;
             _hostingEnvironment = hostingEnvironment;
+            _categorieBusinessService = categorieBusinessService;
+            _circonscriptionBusinessService = circonscriptionBusinessService;
+            _antenneBusinessService = antenneBusinessService;
 
 
             _roleManager = roleManager;
@@ -216,39 +229,42 @@ namespace Anade.Khadamat.Web.Controllers
 
                 }
                 string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
-
-
+                var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
+                var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
+                var antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
                 Inscription NewInscription = new Inscription
                 {
-                  
-                    TypeInscriptionId= typeInscriptionId,
-                    DateInscription= DateTime.Now,
+
+                    TypeInscriptionId = typeInscriptionId,
+                    CategorieId = model.CategorieId,
+                    DateInscription = DateTime.Now,
                     NIN = model.NIN,
                     NomAr = model.NomAr,
                     PrenomAr = model.PrenomAr,
-                    NomFr= model.NomFr,
-                    PrenomFr=model.PrenomFr,
+                    NomFr = model.NomFr,
+                    PrenomFr = model.PrenomFr,
                     DateNaissance = model.DateNaissance,
-                    GenreId=model.GenreId,
-                    SituationFamilialeId= model.SituationFamilialeId,
-                    NomJeunneFille=model.NomJeunneFille,
-                    NomJeunneFilleAr=model.NomJeunneFilleAr,
+                    GenreId = model.GenreId,
+                    SituationFamilialeId = model.SituationFamilialeId,
+                    NomJeunneFille = model.NomJeunneFille,
+                    NomJeunneFilleAr = model.NomJeunneFilleAr,
                     AdressAr = model.AdressAr,
-                    WilayaResidenceId =model.WilayaResidenceId,
-                    CommuneResidenceId=model.CommuneResidenceId,
+                    WilayaResidenceId = model.WilayaResidenceId,
+                    CommuneResidenceId = model.CommuneResidenceId,
                     WilayaNaissanceId = model.WilayaNaissanceId,
                     CommuneNaissanceId = model.CommuneNaissanceId,
                     WilayaSeigeSocialId = model.WilayaSeigeSocialId,
                     CommuneSeigeSocialId = model.CommuneSeigeSocialId,
                     NumTelephone = model.NumTelephone?.Replace(" ", ""),
-                    Email=model.Email,
-                    NiveauInstructionId=model.NiveauInstructionId,
-                 
+                    Email = model.Email,
+                    NiveauInstructionId = model.NiveauInstructionId,
+
                     EmailVerificationToken = Guid.NewGuid().ToString("N"),
                     EmailVerificationTokenExpiry = DateTime.UtcNow.AddHours(24),
-                    RecaptchaResponse=model.RecaptchaResponse,
+                    RecaptchaResponse = model.RecaptchaResponse,
                     CopieCNIPath = copieCNIPdfPath,
-                    CopieDiplomeRCCFCAPath= copieDiplomeRCCFCAPdfPath
+                    CopieDiplomeRCCFCAPath = copieDiplomeRCCFCAPdfPath,
+                    AntenneId = antenne.Id,
 
 
                 };
@@ -324,6 +340,8 @@ namespace Anade.Khadamat.Web.Controllers
             var wilayas = _wilayaBusinessService.GetAll();
             var niveauInstructions = _niveauInstructionBusinessService.GetAll();
             var typeInscription = _typeInscriptionBusinessService.GetAll();
+            var categories = _categorieBusinessService.GetAllFiltered(x=>x.Id!=1);
+
 
             ViewBag.GenreId = new SelectList(genres, nameof(Genre.Id), nameof(Genre.DesignationAr));
             ViewBag.SituationFamilialeId = new SelectList(situationFamiliales, nameof(SituationFamiliale.Id), nameof(SituationFamiliale.DesignationAr));
@@ -331,6 +349,7 @@ namespace Anade.Khadamat.Web.Controllers
             ViewBag.WilayaResId = new SelectList(wilayas, nameof(Wilaya.Id), nameof(Wilaya.DisplayNameAr));
             ViewBag.NiveauInstructionId = new SelectList(niveauInstructions, nameof(NiveauInstruction.Id), nameof(NiveauInstruction.DesignationAr));
             ViewBag.TypeInscriptionId = new SelectList(typeInscription, nameof(TypeInscription.Id), nameof(TypeInscription.DesignationAr));
+            ViewBag.CategorieId = new SelectList(categories, nameof(Categorie.Id), nameof(Categorie.DesignationAr));
         }
 
 

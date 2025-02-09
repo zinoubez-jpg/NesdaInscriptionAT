@@ -17,5 +17,6 @@ namespace Anade.Khadamat.Domain
         public bool IsValide { get; set; }
         public int InscriptionId { get; set; }
 
+
     }
 }
