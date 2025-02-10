@@ -26,24 +26,25 @@ namespace Anade.Khadamat.Web.Controllers
     public class InscriptionController : Controller
     {
 
-        public readonly ReferentielBusinessService<Commune, int> _communeBusinessService;
-        public readonly ReferentielBusinessService<Categorie, int> _categorieBusinessService;
-        public readonly ReferentielBusinessService<Antenne, int> _antenneBusinessService;
+        private readonly ReferentielBusinessService<Commune, int> _communeBusinessService;
+        private readonly ReferentielBusinessService<Categorie, int> _categorieBusinessService;
+        private readonly ReferentielBusinessService<Antenne, int> _antenneBusinessService;
 
-        public readonly ReferentielBusinessService<Wilaya, int> _wilayaBusinessService;
-        public readonly ReferentielBusinessService<Genre, int> _genreBusinessService;
-        public readonly ReferentielBusinessService<SituationFamiliale, int> _situationFamilialeBusinessService;
-        public readonly InscriptionBusinessService _inscriptionBusinessService;
-        public readonly ReferentielBusinessService<NiveauInstruction, int> _niveauInstructionBusinessService;
+        private readonly ReferentielBusinessService<Wilaya, int> _wilayaBusinessService;
+        private readonly ReferentielBusinessService<Genre, int> _genreBusinessService;
+        private readonly ReferentielBusinessService<SituationFamiliale, int> _situationFamilialeBusinessService;
+        private readonly InscriptionBusinessService _inscriptionBusinessService;
+        private readonly ReferentielBusinessService<NiveauInstruction, int> _niveauInstructionBusinessService;
         private readonly KhadamtDbContext _context;
         private readonly IEmailVerificationService _emailVerificationService;
-        public readonly ReferentielBusinessService<TypeInscription, int> _typeInscriptionBusinessService;
+        private readonly ReferentielBusinessService<TypeInscription, int> _typeInscriptionBusinessService;
         private readonly IRecaptchaService _recaptchaService;
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public readonly CirconscriptionBusinessService _circonscriptionBusinessService;
+        private readonly CirconscriptionBusinessService _circonscriptionBusinessService;
+        private readonly ReferentielBusinessService<Activite, int> _activiteBusinessService;
 
-        
+
 
 
         private readonly RoleManager<Role> _roleManager;
@@ -73,7 +74,8 @@ namespace Anade.Khadamat.Web.Controllers
                                       TypeUserServices typeUserServices,
                                       StructureService structureService,
                                       ReferentielBusinessService<Categorie, int> categorieBusinessService,
-                                      CirconscriptionBusinessService circonscriptionBusinessService
+                                      CirconscriptionBusinessService circonscriptionBusinessService,
+                                      ReferentielBusinessService<Activite, int> activiteBusinessService
                                    )
         {
             _communeBusinessService = communeBusinessService;
@@ -90,6 +92,7 @@ namespace Anade.Khadamat.Web.Controllers
             _categorieBusinessService = categorieBusinessService;
             _circonscriptionBusinessService = circonscriptionBusinessService;
             _antenneBusinessService = antenneBusinessService;
+            _activiteBusinessService = activiteBusinessService;
 
 
             _roleManager = roleManager;
@@ -265,6 +268,7 @@ namespace Anade.Khadamat.Web.Controllers
                     CopieCNIPath = copieCNIPdfPath,
                     CopieDiplomeRCCFCAPath = copieDiplomeRCCFCAPdfPath,
                     AntenneId = antenne.Id,
+                    ActiviteId = 1,
 
 
                 };

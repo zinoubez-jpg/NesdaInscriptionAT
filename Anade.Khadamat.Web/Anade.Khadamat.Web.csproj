@@ -677,6 +677,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DBNesdaInscription5DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Update="DBNesdaInscription5FDataSet1.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DBNesdaInscription5FDataSet1.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -698,6 +703,10 @@
     <None Update="DBNesdaInscription5DataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DBNesdaInscription5DataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="DBNesdaInscription5FDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DBNesdaInscription5FDataSet1.Designer.cs</LastGenOutput>
     </None>
     <None Update="Reports\ATConformite.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

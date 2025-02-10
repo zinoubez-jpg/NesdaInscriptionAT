@@ -129,7 +129,6 @@ namespace Anade.Khadamat.Web.Controllers
         [Route("{id}/{DecisionId}")]
         public IActionResult PrintAtConformitee(int id, int decisionId)
         {
-
             Dictionary<string, string> parameters = new();
             Dictionary<string, object> navWithList = new();
             string reportPrintName = "";

@@ -91,8 +91,8 @@ namespace Anade.Khadamat.Domain
         public string RaisonSocialeAr { get; set; }
 
         public int AntenneId { get; set; }
-        public string CodeAnntenne { get; set; }
-        public string CodeAgence { get; set; }
+        public string Anntenne { get; set; }
+        public string Agence { get; set; }
         public bool Validee { get; set; }
         public string ValideePAR { get; set; }
         public DateTime DateValidation { get; set; }
@@ -113,6 +113,16 @@ namespace Anade.Khadamat.Domain
         [Display(Name = "CopieDiplomeRCCFCAPath")]
         public string CopieDiplomeRCCFCAPath { get; set; }
         public string NumeroSiejeV3 { get; set; }
+        public bool FormJuridique { get; set; }
+        public bool RegimFiscal { get; set; }
+        public bool FrnchisseTVA { get; set; }
+        public string Banque { get; set; }
+       
+        public string NumComtBancaire { get; set; }
+        public string RCAGCFCA { get; set; }
+        public string NIF { get; set; }
+        public double MontantPNR { get; set; }
+        public int ActiviteId { get; set; }
 
 
 
@@ -132,6 +142,7 @@ namespace Anade.Khadamat.Domain
         public virtual TypeInscription TypeInscription { get; set; }
         public virtual Antenne Antenne { get; set; }
         public virtual Categorie Categorie { get; set; }
+        public virtual Activite Activite { get; set; }
 
 
     }

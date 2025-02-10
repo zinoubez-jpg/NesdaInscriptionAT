@@ -16,6 +16,8 @@ namespace Anade.Khadamat.Domain
         public DateTime DateCSVF { get; set; }
         public bool IsValide { get; set; }
         public int InscriptionId { get; set; }
+        public string Banque { get; set; }
+        public string AgenceBancaire { get; set; }
 
 
     }
