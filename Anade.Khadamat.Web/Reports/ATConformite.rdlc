@@ -184,7 +184,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>4.92305cm</Top>
+        <Top>5.53688cm</Top>
         <Left>4.16338cm</Left>
         <Height>3.37315cm</Height>
         <Width>8.93972cm</Width>
@@ -231,8 +231,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>7.66092cm</Top>
-        <Left>15.12217cm</Left>
+        <Top>9.56592cm</Top>
+        <Left>14.80467cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
         <ZIndex>5</ZIndex>
@@ -269,10 +269,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>8.60588cm</Top>
-        <Left>12.18026cm</Left>
+        <Top>10.34231cm</Top>
+        <Left>12.85759cm</Left>
         <Height>0.6cm</Height>
-        <Width>4.24624cm</Width>
+        <Width>3.99224cm</Width>
         <ZIndex>6</ZIndex>
         <Style>
           <Border />
@@ -305,10 +305,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>9.27644cm</Top>
-        <Left>10.69859cm</Left>
+        <Top>11.1187cm</Top>
+        <Left>11.75691cm</Left>
         <Height>0.6cm</Height>
-        <Width>5.7279cm</Width>
+        <Width>5.09292cm</Width>
         <ZIndex>7</ZIndex>
         <Style>
           <Border>
@@ -353,10 +353,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>9.94699cm</Top>
-        <Left>14.31455cm</Left>
+        <Top>11.82453cm</Top>
+        <Left>15.54551cm</Left>
         <Height>0.6cm</Height>
-        <Width>2.11194cm</Width>
+        <Width>1.30432cm</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -401,10 +401,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>9.94699cm</Top>
-        <Left>7.33838cm</Left>
+        <Top>11.82453cm</Top>
+        <Left>10.32938cm</Left>
         <Height>0.6cm</Height>
-        <Width>2.07666cm</Width>
+        <Width>1.25114cm</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -450,8 +450,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>10.61755cm</Top>
-        <Left>13.69719cm</Left>
+        <Top>12.60092cm</Top>
+        <Left>14.06101cm</Left>
         <Height>0.75875cm</Height>
         <Width>2.7293cm</Width>
         <ZIndex>10</ZIndex>
@@ -489,8 +489,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>11.44685cm</Top>
-        <Left>13.69719cm</Left>
+        <Top>13.43022cm</Top>
+        <Left>14.06101cm</Left>
         <Height>0.75875cm</Height>
         <Width>2.7293cm</Width>
         <ZIndex>11</ZIndex>
@@ -538,8 +538,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>12.27616cm</Top>
-        <Left>6.61517cm</Left>
+        <Top>14.58333cm</Top>
+        <Left>7.03851cm</Left>
         <Height>0.75875cm</Height>
         <Width>9.81132cm</Width>
         <ZIndex>12</ZIndex>
@@ -587,10 +587,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>13.2113cm</Top>
-        <Left>14.31455cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>2.11194cm</Width>
+        <Top>15.51847cm</Top>
+        <Left>15.54551cm</Left>
+        <Height>0.6cm</Height>
+        <Width>1.30432cm</Width>
         <ZIndex>13</ZIndex>
         <Style>
           <Border>
@@ -625,10 +625,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>14.14644cm</Top>
-        <Left>11.75691cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>4.66958cm</Width>
+        <Top>16.29485cm</Top>
+        <Left>13.96177cm</Left>
+        <Height>0.58942cm</Height>
+        <Width>2.88806cm</Width>
         <ZIndex>14</ZIndex>
         <Style>
           <Border>
@@ -663,10 +663,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>15.08157cm</Top>
-        <Left>11.75691cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>4.66958cm</Width>
+        <Top>17.07124cm</Top>
+        <Left>14.80467cm</Left>
+        <Height>0.54708cm</Height>
+        <Width>2.04516cm</Width>
         <ZIndex>15</ZIndex>
         <Style>
           <Border>
@@ -701,10 +701,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>16.01671cm</Top>
-        <Left>11.75691cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>4.66958cm</Width>
+        <Top>17.79472cm</Top>
+        <Left>11.75692cm</Left>
+        <Height>0.56825cm</Height>
+        <Width>5.09291cm</Width>
         <ZIndex>16</ZIndex>
         <Style>
           <Border>
@@ -739,10 +739,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>16.95185cm</Top>
-        <Left>11.75692cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>4.66958cm</Width>
+        <Top>18.53935cm</Top>
+        <Left>13.64075cm</Left>
+        <Height>0.63175cm</Height>
+        <Width>3.20908cm</Width>
         <ZIndex>17</ZIndex>
         <Style>
           <Border>
@@ -777,10 +777,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>17.88699cm</Top>
-        <Left>11.75691cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>4.66958cm</Width>
+        <Top>19.34749cm</Top>
+        <Left>14.80467cm</Left>
+        <Height>0.50475cm</Height>
+        <Width>2.04516cm</Width>
         <ZIndex>18</ZIndex>
         <Style>
           <Border>
@@ -815,8 +815,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>19.08449cm</Top>
-        <Left>13.11134cm</Left>
+        <Top>20.41799cm</Top>
+        <Left>12.79384cm</Left>
         <Height>0.6cm</Height>
         <Width>4.51083cm</Width>
         <ZIndex>19</ZIndex>
@@ -853,7 +853,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>19.86087cm</Top>
+        <Top>21.13087cm</Top>
         <Left>5.28754cm</Left>
         <Height>0.75875cm</Height>
         <Width>11.13895cm</Width>
@@ -891,7 +891,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>19.86087cm</Top>
+        <Top>21.13087cm</Top>
         <Left>2.36421cm</Left>
         <Height>0.75875cm</Height>
         <Width>1.30055cm</Width>
@@ -929,9 +929,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>20.79601cm</Top>
+        <Top>22.06601cm</Top>
         <Left>13.96177cm</Left>
-        <Height>0.75875cm</Height>
+        <Height>0.6cm</Height>
         <Width>2.46472cm</Width>
         <ZIndex>22</ZIndex>
         <Style>
@@ -967,7 +967,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>21.73115cm</Top>
+        <Top>23.00115cm</Top>
         <Left>8.8799cm</Left>
         <Height>0.75875cm</Height>
         <Width>7.5466cm</Width>
@@ -1005,7 +1005,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>21.73115cm</Top>
+        <Top>23.00115cm</Top>
         <Left>5.66267cm</Left>
         <Height>0.75875cm</Height>
         <Width>1.30055cm</Width>
@@ -1043,8 +1043,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>22.95193cm</Top>
-        <Left>13.11134cm</Left>
+        <Top>24.22193cm</Top>
+        <Left>12.79384cm</Left>
         <Height>0.6cm</Height>
         <Width>4.51083cm</Width>
         <ZIndex>25</ZIndex>
@@ -1065,7 +1065,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>اللقب</Value>
+                <Value>: اللقب</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontFamily>Traditional Arabic</FontFamily>
@@ -1081,10 +1081,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>23.88707cm</Top>
-        <Left>15.12217cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>1.30432cm</Width>
+        <Top>25.15707cm</Top>
+        <Left>15.4987cm</Left>
+        <Height>0.6cm</Height>
+        <Width>0.96306cm</Width>
         <ZIndex>26</ZIndex>
         <Style>
           <Border>
@@ -1103,7 +1103,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>الاسم</Value>
+                <Value>: الاسم</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontFamily>Traditional Arabic</FontFamily>
@@ -1119,10 +1119,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>23.88707cm</Top>
-        <Left>8.8799cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>1.30432cm</Width>
+        <Top>25.15707cm</Top>
+        <Left>10.96785cm</Left>
+        <Height>0.6cm</Height>
+        <Width>1.10802cm</Width>
         <ZIndex>27</ZIndex>
         <Style>
           <Border>
@@ -1141,7 +1141,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>اللقب الأصلي للمرأة</Value>
+                <Value>: اللقب الأصلي للمرأة</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontFamily>Traditional Arabic</FontFamily>
@@ -1157,10 +1157,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>24.76346cm</Top>
-        <Left>14.06101cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>2.46472cm</Width>
+        <Top>26.03346cm</Top>
+        <Left>13.64075cm</Left>
+        <Height>0.5cm</Height>
+        <Width>2.88498cm</Width>
         <ZIndex>28</ZIndex>
         <Style>
           <Border>
@@ -1179,7 +1179,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>تاريخ الازدياد</Value>
+                <Value>: تاريخ الازدياد</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontFamily>Traditional Arabic</FontFamily>
@@ -1195,9 +1195,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>25.6986cm</Top>
+        <Top>27.12735cm</Top>
         <Left>14.06101cm</Left>
-        <Height>0.75875cm</Height>
+        <Height>0.6cm</Height>
         <Width>2.46472cm</Width>
         <ZIndex>29</ZIndex>
         <Style>
@@ -1217,7 +1217,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>مكان الازدياد</Value>
+                <Value>: مكان الازدياد</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontFamily>Traditional Arabic</FontFamily>
@@ -1253,10 +1253,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>25.6986cm</Top>
-        <Left>7.81874cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>2.46472cm</Width>
+        <Top>27.12735cm</Top>
+        <Left>8.17152cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.93744cm</Width>
         <ZIndex>30</ZIndex>
         <Style>
           <Border>
@@ -1275,7 +1275,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>الولاية</Value>
+                <Value>: الولاية</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontFamily>Traditional Arabic</FontFamily>
@@ -1291,10 +1291,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>25.6986cm</Top>
-        <Left>3.00144cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>1.03597cm</Width>
+        <Top>27.12735cm</Top>
+        <Left>3.63644cm</Left>
+        <Height>0.6cm</Height>
+        <Width>1.20957cm</Width>
         <ZIndex>31</ZIndex>
         <Style>
           <Border>
@@ -1313,7 +1313,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>العنوان</Value>
+                <Value>: العنوان</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontFamily>Traditional Arabic</FontFamily>
@@ -1329,10 +1329,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>26.63373cm</Top>
-        <Left>14.06101cm</Left>
-        <Height>0.75875cm</Height>
-        <Width>2.46472cm</Width>
+        <Top>27.90374cm</Top>
+        <Left>15.12217cm</Left>
+        <Height>0.6cm</Height>
+        <Width>1.43884cm</Width>
         <ZIndex>32</ZIndex>
         <Style>
           <Border>
@@ -1457,10 +1457,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>RaisonSocialeAr</rd:DefaultName>
-        <Top>8.60588cm</Top>
-        <Left>5.66267cm</Left>
+        <Top>10.34231cm</Top>
+        <Left>4.16338cm</Left>
         <Height>0.6cm</Height>
-        <Width>6.0237cm</Width>
+        <Width>8.47549cm</Width>
         <ZIndex>36</ZIndex>
         <Style>
           <Border>
@@ -1489,10 +1489,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>AddresseArSeigeSocial</rd:DefaultName>
-        <Top>9.34699cm</Top>
-        <Left>5.66267cm</Left>
+        <Top>11.1187cm</Top>
+        <Left>4.16338cm</Left>
         <Height>0.6cm</Height>
-        <Width>5.03592cm</Width>
+        <Width>7.41714cm</Width>
         <ZIndex>37</ZIndex>
         <Style>
           <Border>
@@ -1521,10 +1521,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>FormJuridique</rd:DefaultName>
-        <Top>10.61755cm</Top>
-        <Left>11.0208cm</Left>
+        <Top>12.60092cm</Top>
+        <Left>4.16338cm</Left>
         <Height>0.75875cm</Height>
-        <Width>2.5cm</Width>
+        <Width>9.72124cm</Width>
         <ZIndex>38</ZIndex>
         <Style>
           <Border>
@@ -1553,10 +1553,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>RegimFiscal</rd:DefaultName>
-        <Top>11.55269cm</Top>
-        <Left>11.0208cm</Left>
+        <Top>13.53606cm</Top>
+        <Left>4.16338cm</Left>
         <Height>0.6cm</Height>
-        <Width>2.5cm</Width>
+        <Width>9.72124cm</Width>
         <ZIndex>39</ZIndex>
         <Style>
           <Border>
@@ -1579,14 +1579,16 @@
                 <Style />
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Banque</rd:DefaultName>
-        <Top>13.37005cm</Top>
-        <Left>8.8799cm</Left>
+        <Top>15.51847cm</Top>
+        <Left>7.03851cm</Left>
         <Height>0.6cm</Height>
-        <Width>5.25826cm</Width>
+        <Width>8.47549cm</Width>
         <ZIndex>40</ZIndex>
         <Style>
           <Border>
@@ -1609,14 +1611,16 @@
                 <Style />
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>NumComtBancaire</rd:DefaultName>
-        <Top>14.30519cm</Top>
-        <Left>6.61517cm</Left>
+        <Top>16.29485cm</Top>
+        <Left>7.10907cm</Left>
         <Height>0.6cm</Height>
-        <Width>4.96535cm</Width>
+        <Width>6.77555cm</Width>
         <ZIndex>41</ZIndex>
         <Style>
           <Border>
@@ -1640,13 +1644,13 @@
               </TextRun>
             </TextRuns>
             <Style>
-              <TextAlign>Right</TextAlign>
+              <TextAlign>Center</TextAlign>
             </Style>
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>RCAGCFCA</rd:DefaultName>
-        <Top>16.17546cm</Top>
-        <Left>6.61517cm</Left>
+        <Top>17.79472cm</Top>
+        <Left>6.72101cm</Left>
         <Height>0.6cm</Height>
         <Width>4.96535cm</Width>
         <ZIndex>42</ZIndex>
@@ -1677,10 +1681,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>NIF</rd:DefaultName>
-        <Top>17.1106cm</Top>
-        <Left>6.61517cm</Left>
+        <Top>18.5711cm</Top>
+        <Left>6.72101cm</Left>
         <Height>0.6cm</Height>
-        <Width>5.14175cm</Width>
+        <Width>6.74335cm</Width>
         <ZIndex>43</ZIndex>
         <Style>
           <Border>
@@ -1692,8 +1696,460 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Textbox Name="DesignationAr">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Lookup(First(Fields!WilayaSeigeSocialId.Value,"Inscription"), Fields!Id.Value,  Fields!DesignationAr.Value, "Wilaya")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>DesignationAr</rd:DefaultName>
+        <Top>11.82453cm</Top>
+        <Left>4.16338cm</Left>
+        <Height>0.6cm</Height>
+        <Width>5.98961cm</Width>
+        <ZIndex>44</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="DesignationAr1">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Lookup(First(Fields!CommuneSeigeSocialId.Value,"Inscription"), Fields!Id.Value,  Fields!DesignationAr.Value, "Commune")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>DesignationAr1</rd:DefaultName>
+        <Top>11.82453cm</Top>
+        <Left>11.75692cm</Left>
+        <Height>0.6cm</Height>
+        <Width>3.60067cm</Width>
+        <ZIndex>45</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="MontantPNR">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!MontantPNR.Value, "Inscription")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Left</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>MontantPNR</rd:DefaultName>
+        <Top>22.06601cm</Top>
+        <Left>11.45518cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.3302cm</Width>
+        <ZIndex>46</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="NomAr">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!NomAr.Value, "Inscription")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>NomAr</rd:DefaultName>
+        <Top>25.15707cm</Top>
+        <Left>12.25226cm</Left>
+        <Height>0.6cm</Height>
+        <Width>3.10533cm</Width>
+        <ZIndex>47</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="PrenomAr">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!PrenomAr.Value, "Inscription")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>PrenomAr</rd:DefaultName>
+        <Top>25.15707cm</Top>
+        <Left>8.29146cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.5cm</Width>
+        <ZIndex>48</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="NomJeunneFilleAr">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!NomJeunneFilleAr.Value, "Inscription")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>NomJeunneFilleAr</rd:DefaultName>
+        <Top>26.03346cm</Top>
+        <Left>8.8799cm</Left>
+        <Height>0.6cm</Height>
+        <Width>4.72558cm</Width>
+        <ZIndex>49</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="DateNaissance">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Format(First(Fields!DateNaissance.Value, "Inscription"), "yyyy/MM/dd")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>DateNaissance</rd:DefaultName>
+        <Top>27.12735cm</Top>
+        <Left>11.45518cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.5cm</Width>
+        <ZIndex>50</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="DesignationAr2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Lookup(First(Fields!CommuneNaissanceId.Value, "Inscription"), Fields!Id.Value, Fields!DesignationAr.Value, "Commune")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>DesignationAr1</rd:DefaultName>
+        <Top>27.12735cm</Top>
+        <Left>4.98713cm</Left>
+        <Height>0.6cm</Height>
+        <Width>3.008cm</Width>
+        <ZIndex>51</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="DesignationAr3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Lookup(First(Fields!WilayaNaissanceId.Value, "Inscription"), Fields!Id.Value, Fields!DesignationAr.Value, "Wilaya")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>DesignationAr</rd:DefaultName>
+        <Top>27.12735cm</Top>
+        <Left>0.589cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.94161cm</Width>
+        <ZIndex>52</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="AdressAr">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=First(Fields!AdressAr.Value, "Inscription")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>AdressAr</rd:DefaultName>
+        <Top>27.90374cm</Top>
+        <Left>5.98355cm</Left>
+        <Height>0.6cm</Height>
+        <Width>8.04218cm</Width>
+        <ZIndex>53</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="CommuneResidenceId">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Lookup(First(Fields!CommuneResidenceId.Value, "Inscription"), Fields!Id.Value, Fields!DesignationAr.Value, "Commune")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>CommuneResidenceId</rd:DefaultName>
+        <Top>27.90374cm</Top>
+        <Left>3.19483cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.5cm</Width>
+        <ZIndex>54</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="WilayaResidenceId">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Lookup(First(Fields!WilayaResidenceId.Value, "Inscription"), Fields!Id.Value, Fields!DesignationAr.Value, "Wilaya")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>WilayaResidenceId</rd:DefaultName>
+        <Top>27.86846cm</Top>
+        <Left>0.51844cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.5cm</Width>
+        <ZIndex>55</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="DesignationAr4">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Lookup(First(Fields!ActiviteId.Value, "Inscription"), Fields!Id.Value, Fields!DesignationAr.Value, "Activite")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>DesignationAr4</rd:DefaultName>
+        <Top>17.1577cm</Top>
+        <Left>2.36421cm</Left>
+        <Height>0.46063cm</Height>
+        <Width>12.26407cm</Width>
+        <ZIndex>56</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox36">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>دج </Value>
+                <Style>
+                  <FontStyle>Normal</FontStyle>
+                  <FontFamily>Traditional Arabic</FontFamily>
+                  <FontWeight>Normal</FontWeight>
+                  <TextDecoration>None</TextDecoration>
+                  <Color>#000000</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>22.06601cm</Top>
+        <Left>10.77155cm</Left>
+        <Height>0.6cm</Height>
+        <Width>0.68672cm</Width>
+        <ZIndex>57</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>11.90944in</Height>
+    <Height>12.53444in</Height>
     <Style>
       <Border>
         <Style>None</Style>
@@ -1995,6 +2451,106 @@
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
         <rd:TableAdapterName>InscriptionsTableAdapter</rd:TableAdapterName>
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="Wilaya">
+      <Query>
+        <DataSourceName>DBNesdaInscription5FDataSet1</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Id">
+          <DataField>Id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Code">
+          <DataField>Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DesignationFr">
+          <DataField>DesignationFr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DesignationAr">
+          <DataField>DesignationAr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>DBNesdaInscription5FDataSet1</rd:DataSetName>
+        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription5FDataSet1.xsd</rd:SchemaPath>
+        <rd:TableName>Wilayas</rd:TableName>
+        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
+        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
+        <rd:TableAdapterName>WilayasTableAdapter</rd:TableAdapterName>
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="Commune">
+      <Query>
+        <DataSourceName>DBNesdaInscription5FDataSet1</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Id">
+          <DataField>Id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="WilayaId">
+          <DataField>WilayaId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Code">
+          <DataField>Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DesignationFr">
+          <DataField>DesignationFr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DesignationAr">
+          <DataField>DesignationAr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>DBNesdaInscription5FDataSet1</rd:DataSetName>
+        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription5FDataSet1.xsd</rd:SchemaPath>
+        <rd:TableName>Communes</rd:TableName>
+        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
+        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
+        <rd:TableAdapterName>CommunesTableAdapter</rd:TableAdapterName>
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="Activite">
+      <Query>
+        <DataSourceName>DBNesdaInscription5FDataSet1</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Id">
+          <DataField>Id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Code">
+          <DataField>Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DesignationFr">
+          <DataField>DesignationFr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DesignationAr">
+          <DataField>DesignationAr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>DBNesdaInscription5FDataSet1</rd:DataSetName>
+        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription5FDataSet1.xsd</rd:SchemaPath>
+        <rd:TableName>Activites</rd:TableName>
+        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
+        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
+        <rd:TableAdapterName>ActivitesTableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

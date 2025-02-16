@@ -26,7 +26,8 @@ namespace Anade.Khadamat.Web.Controllers
 
         private readonly ReferentielBusinessService<Antenne, int> _antenneBusinessService;
         private readonly ReferentielBusinessService<Agence, int> _agenceBusinessService;
-
+        private readonly ReferentielBusinessService<Commune, int> _communeBusinessService;
+        private readonly ReferentielBusinessService<Activite, int> _activiteeBusinessService;
 
         public ReportingController(ILoadProperties<SessionFormation, int> loadSessionFormationProperties,
                                    IReportService reportService,
@@ -37,8 +38,12 @@ namespace Anade.Khadamat.Web.Controllers
                                    DecisionBusinessService decisionBusinessService,
                                    ILoadProperties<Decision, int> loadDecisionProperties,
                                    ReferentielBusinessService<Antenne, int> antenneBusinessService,
-                                   ReferentielBusinessService<Agence, int> agenceBusinessService
-                                   )
+                                   ReferentielBusinessService<Commune, int> communeBusinessService,
+
+                                   ReferentielBusinessService<Agence, int> agenceBusinessService,
+                                   ReferentielBusinessService<Activite, int> activiteeBusinessService
+
+            )
 
         {
             _loadSessionFormationProperties = loadSessionFormationProperties;
@@ -51,6 +56,8 @@ namespace Anade.Khadamat.Web.Controllers
             _loadDecisionProperties = loadDecisionProperties;
             _antenneBusinessService = antenneBusinessService;
             _agenceBusinessService = agenceBusinessService;
+            _communeBusinessService = communeBusinessService;
+            _activiteeBusinessService = activiteeBusinessService;
         }
 
         //[Route("{id}")]
@@ -137,14 +144,16 @@ namespace Anade.Khadamat.Web.Controllers
             reportName = "ATConformite";
             var decision = _decisionBusinessService.GetSingle(x => x.InscriptionId == id && x.Id == decisionId, _decisionBusinessService.GetDefaultLoadProperties());
             var wilayas = _wilayaBusinessService.GetAll();
-            var antennes = _antenneBusinessService.GetAll();
-            var agences = _agenceBusinessService.GetAll();
+            var communes = _communeBusinessService.GetAll();
+            var activites = _activiteeBusinessService.GetAll();
+
             reportPrintName = "ATConfirmite_" + decision.Inscription.NomFr;
             navWithList = _loadDecisionProperties.GetAllNavProp(decision);
   
             navWithList.Add("Wilaya", (object)wilayas);
-            navWithList.Add("Antenne", (object)antennes);
-            navWithList.Add("Agence", (object)agences);
+            navWithList.Add("Commune", (object)communes);
+            navWithList.Add("Activite", (object)activites);
+
 
             //var formation = _formationBusinessService.GetAllFiltered(x => x.Id == inscription.SessionFormation.FormationId);
             //navWithList.Add("Formation", (object)formation);

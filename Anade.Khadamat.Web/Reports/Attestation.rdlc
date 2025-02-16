@@ -6,7 +6,7 @@
         <Source>Embedded</Source>
         <Value>AtParticipation1</Value>
         <Sizing>FitProportional</Sizing>
-        <Left>0.35983cm</Left>
+        <Left>0.35985cm</Left>
         <Height>18.74308cm</Height>
         <Width>26.9769cm</Width>
         <Style>
@@ -130,9 +130,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>DesignationAr</rd:DefaultName>
-        <Top>10.78653cm</Top>
+        <Top>10.63836cm</Top>
         <Left>3.6957cm</Left>
-        <Height>0.6cm</Height>
+        <Height>0.55767cm</Height>
         <Width>12.44833cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
@@ -197,9 +197,9 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>NIN</rd:DefaultName>
-        <Top>8.25387cm</Top>
+        <Top>8.3597cm</Top>
         <Left>6.89187cm</Left>
-        <Height>0.6cm</Height>
+        <Height>0.55767cm</Height>
         <Width>4.99767cm</Width>
         <ZIndex>6</ZIndex>
         <Style>
@@ -273,8 +273,8 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>EspacePromoteurDataSet</rd:DataSetName>
-        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\EspacePromoteurDataSet.xsd</rd:SchemaPath>
+        <rd:DataSetName>DBNesdaInscription5FDataSet1</rd:DataSetName>
+        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription5FDataSet1.xsd</rd:SchemaPath>
         <rd:TableName>SessionFormations</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
@@ -403,6 +403,26 @@
           <DataField>AddresseFrSeigeSocial</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="RaisonSociale">
+          <DataField>RaisonSociale</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RaisonSocialeAr">
+          <DataField>RaisonSocialeAr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AntenneId">
+          <DataField>AntenneId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Anntenne">
+          <DataField>Anntenne</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Agence">
+          <DataField>Agence</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Validee">
           <DataField>Validee</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
@@ -443,10 +463,54 @@
           <DataField>CopieDiplomeRCCFCAPath</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="CategorieId">
+          <DataField>CategorieId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="NumeroSiejeV3">
+          <DataField>NumeroSiejeV3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ActiviteId">
+          <DataField>ActiviteId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Banque">
+          <DataField>Banque</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FormJuridique">
+          <DataField>FormJuridique</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="FrnchisseTVA">
+          <DataField>FrnchisseTVA</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="MontantPNR">
+          <DataField>MontantPNR</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="NIF">
+          <DataField>NIF</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NumComtBancaire">
+          <DataField>NumComtBancaire</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RCAGCFCA">
+          <DataField>RCAGCFCA</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RegimFiscal">
+          <DataField>RegimFiscal</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>EspacePromoteurDataSet</rd:DataSetName>
-        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\EspacePromoteurDataSet.xsd</rd:SchemaPath>
+        <rd:DataSetName>DBNesdaInscription5FDataSet1</rd:DataSetName>
+        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription5FDataSet1.xsd</rd:SchemaPath>
         <rd:TableName>Inscriptions</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
@@ -467,18 +531,18 @@
           <DataField>Code</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="DesignationAr">
-          <DataField>DesignationAr</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="DesignationFr">
           <DataField>DesignationFr</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="DesignationAr">
+          <DataField>DesignationAr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>EspacePromoteurDataSet</rd:DataSetName>
-        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\EspacePromoteurDataSet.xsd</rd:SchemaPath>
+        <rd:DataSetName>DBNesdaInscription5FDataSet1</rd:DataSetName>
+        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription5FDataSet1.xsd</rd:SchemaPath>
         <rd:TableName>Formations</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
