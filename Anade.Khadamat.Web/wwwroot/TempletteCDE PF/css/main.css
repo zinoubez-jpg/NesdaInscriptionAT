@@ -852,7 +852,7 @@ img {
 
 .main-header .nav-outer {
     position: relative;
-    padding-left: 100px;
+   /* padding-left: 100px;*/
     transition: all 500ms ease;
     -moz-transition: all 500ms ease;
     -webkit-transition: all 500ms ease;

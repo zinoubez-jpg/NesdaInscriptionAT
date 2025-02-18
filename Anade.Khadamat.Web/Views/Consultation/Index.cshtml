@@ -1,0 +1,165 @@
+﻿
+@section head{
+
+
+    <style>
+        .consultation-list {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+           /* background: #f9fdfa;*/
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .consultation-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            transition: background 0.3s ease-in-out;
+        }
+
+            .consultation-item:hover {
+                background: #eefaf1;
+            }
+
+        .consultation-text {
+            flex-grow: 1;
+            padding: 0 15px;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .consultation-date {
+            font-size: 14px;
+            color: #666;
+            padding: 0 10px;
+        }
+
+        .download-btn {
+            position: relative;
+            display: inline-block;
+            font-size: 16px;
+            line-height: 1;
+            color: #ffffff;
+            padding: 12px 20px;
+            font-weight: 600;
+            overflow: hidden;
+            border-radius: 4px;
+            background-color: #2c724f;
+            text-transform: uppercase;
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            transition: all 0.4s ease-in-out;
+            text-decoration: none;
+            border: none;
+            text-align: center;
+            width: 180px; /* Largeur fixe */
+            height: 50px; /* Hauteur fixe */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .download-btn:before {
+                position: absolute;
+                content: '';
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                opacity: 0;
+                background-color: #262626;
+                transition: all 0.4s ease-in-out;
+                transform: scale(0.2, 1);
+            }
+
+            .download-btn i {
+                position: relative;
+                top: 1px;
+                margin-left: 8px;
+            }
+
+            .download-btn .txt {
+                position: relative;
+                z-index: 1;
+            }
+
+            .download-btn:hover::before {
+                opacity: 1;
+                transform: scale(1, 1);
+            }
+
+            .download-btn:hover {
+                color: #ffffff;
+            }
+
+    </style>
+
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<!-- CTA Section Start -->
+<div class="cta-section" data-bg-image="/images/background/cta-bg.jpg">
+    <div class="auto-container">
+        <div class="row align-items-center">
+            <div class="col-lg-12">
+                <!-- CTA Content Start -->
+                <div class="cta-content" style=" text-align: center;">
+                    <h2 class="title center" style="font-size: 40px">أحدث مستجدات إعلانات الاستشارة </h2>
+                </div>
+                <!-- CTA Content End -->
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- CTA Section End -->
+<!-- Page Title Section -->
+
+<!-- End Page Title Section -->
+<div class="container mt-5">
+    <h2 class="text-end">المديرية العامة</h2>
+    <hr class="custom-hr">
+    <div class="consultation-list">
+        <div class="consultation-item">
+            <a href="document1.pdf" class="download-btn" download> <span class="txt"> تحميل </span> <i class="fa fa-file-pdf-o"></i></a>
+            <span class="consultation-text">Consultation N°05/DG/DAG/NESDA/2025 «Mise à niveau des outils de GRH de Nesda»</span>
+            <span class="consultation-date">09.02.2025</span>
+        </div>
+
+        <div class="consultation-item">
+            <a href="document1.pdf" class="download-btn" download> <span class="txt"> تحميل </span> <i class="fa fa-file-pdf-o"></i></a>
+            <span class="consultation-text">Consultation N°05/DG/DAG/NESDA/2025 «Mise à niveau des outils de GRH de Nesda»</span>
+            <span class="consultation-date">09.02.2025</span>
+        </div>
+        <div class="consultation-item">
+            <a href="document1.pdf" class="download-btn" download> <span class="txt"> تحميل </span> <i class="fa fa-file-pdf-o"></i></a>
+            <span class="consultation-text">Consultation N°05/DG/DAG/NESDA/2025 «Mise à niveau des outils de GRH de Nesda»</span>
+            <span class="consultation-date">09.02.2025</span>
+        </div>
+    </div>
+
+</div>
+<div class="container mt-5">
+    <h2 class="text-end">الوكالات الولائية</h2>
+    <hr class="custom-hr">
+    <div class="consultation-list">
+        <div class="consultation-item">
+            <a href="document1.pdf" class="download-btn" download> <span class="txt"> تحميل </span> <i class="fa fa-file-pdf-o"></i></a>
+            <span class="consultation-text">Consultation n°01/AWAE/NESDA/2025</span>
+            <span class="consultation-date">الجزائر شرق</span>
+            <span class="consultation-date">02.02.2025</span>
+        </div>
+
+       
+    </div>
+
+</div>
