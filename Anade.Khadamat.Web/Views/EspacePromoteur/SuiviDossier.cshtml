@@ -1,12 +1,23 @@
 ﻿@model Anade.Khadamat.Domain.Inscription
 @{ Layout = "_LayoutEspacePromoteur"; }
 
-<style>
-    .badge {
-        font-family: 'Noto Kufi Arabic';
-        font-size: 14px;
-    }
-</style>
+@section head{
+    <style>
+        .badge {
+            font-family: 'Noto Kufi Arabic';
+            font-size: 14px;
+        }
+
+        #cd-timeline {
+            display: none;
+      
+        }
+    </style>
+    <link href="~/AccountTemplette/timeLine.css" rel="stylesheet" />
+
+
+}
+
 <div class="container-fluid">
     <div class="col-sm-12 box-col-12">
         <div class="card">
@@ -18,7 +29,46 @@
                 </p>
             </div>
             <div class="card-body">
+                <div class="timeline-container">
+                    <div class="timeline" style="direction:ltr;">
+                        <div class="progress-line">
+                            <div class="progress-line-filled"></div>
+                        </div>
 
+                        <div class="step-container">
+                            <div class="step completed"><span class="step-icon">01</span></div>
+                            <div class="step-title">التسجيل الإلكتروني</div>
+                        </div>
+
+                        <div class="step-container">
+                            <div class="step completed"><span class="step-icon">02</span></div>
+                            <div class="step-title">مراجعة المستندات</div>
+                        </div>
+
+                        <div class="step-container">
+                            <div class="step active"><span class="step-icon">03</span></div>
+                            <div class="step-title">تقييم المشروع </div>
+                        </div>
+
+                        <div class="step-container">
+                            <div class="step"><span class="step-icon">04</span></div>
+                            <div class="step-title">التكوين  </div>
+                        </div>
+
+                        <div class="step-container">
+                            <div class="step"><span class="step-icon">05</span></div>
+
+                            <div class="step-title">(CSVF)اللجنة</div>
+                        </div>
+
+                        <div class="step-container">
+                            <div class="step"><span class="step-icon">06</span></div>
+
+                            <div class="step-title">إصدار شهادة </div>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="afficherTimeline()" class="btn btn-outline-primary" type="button" title="btn btn-outline-primary">إضهار المزيد</button>
                 <section class="cd-container" id="cd-timeline">
                     <div class="cd-timeline-block">
                         <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
@@ -191,69 +241,69 @@
 
                                                     <span class="cd-date">@Model.CSVFs.Last().DateCSVF.ToShortDateString()</span>
                                                 </div>
-                                            </div> 
+                                            </div>
                                         }
                                         else
                                         {
 
-                                       
+
+                                            <div class="cd-timeline-block">
+                                                <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
+                                                <div class="cd-timeline-content">
+                                                    <div class="timeline-wrapper">
+                                                        <div class="badge bg-primary">مرحلة تقديم المشروع إلى اللجنة</div>
+                                                    </div>
+                                                    <h5 class="f-w-500 m-0">لقد ثم تقديم مشروعك إلى اللجنة ، تهانينا لقد إجتزت هده المرحلة بنجاح .</h5>
+                                                    <h5 class="f-w-500 m-0"> نتيجة  = @Model.CSVFs.Last().ResultatCSVF.</h5>
+
+                                                    <span class="cd-date">@Model.CSVFs.Last().DateCSVF.ToShortDateString()</span>
+                                                </div>
+                                            </div>
+
+                                            @if (Model.Decisions.LastOrDefault() == null)
+                                            {
                                                 <div class="cd-timeline-block">
-                                                    <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
+                                                    <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
                                                     <div class="cd-timeline-content">
                                                         <div class="timeline-wrapper">
-                                                            <div class="badge bg-primary">مرحلة تقديم المشروع إلى اللجنة</div>
+                                                            <div class="badge bg-warning">مرحلة تحرير شهادة المطابقة</div>
                                                         </div>
-                                                        <h5 class="f-w-500 m-0">لقد ثم تقديم مشروعك إلى اللجنة ، تهانينا لقد إجتزت هده المرحلة بنجاح .</h5>
-                                                        <h5 class="f-w-500 m-0"> نتيجة  = @Model.CSVFs.Last().ResultatCSVF.</h5>
+                                                        <h5 class="f-w-500 m-0"> شهادة المطابقة في طور الإنجاز .</h5>
 
-                                                        <span class="cd-date">@Model.CSVFs.Last().DateCSVF.ToShortDateString()</span>
+
+                                                        <span class="cd-date">ملفك في هده المرحلة</span>
                                                     </div>
                                                 </div>
-
-                                                @if (Model.Decisions.LastOrDefault() == null)
-                                                {
-                                                    <div class="cd-timeline-block">
-                                                        <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
-                                                        <div class="cd-timeline-content">
-                                                            <div class="timeline-wrapper">
-                                                                <div class="badge bg-warning">مرحلة تحرير شهادة المطابقة</div>
-                                                            </div>
-                                                            <h5 class="f-w-500 m-0"> شهادة المطابقة في طور الإنجاز .</h5>
-                                                        
-
-                                                            <span class="cd-date">ملفك في هده المرحلة</span>
+                                            }
+                                            else
+                                            {
+                                                <div class="cd-timeline-block">
+                                                    <div class="cd-timeline-img cd-picture bg-primary"><i class="icofont icofont-graduate-alt"></i></div>
+                                                    <div class="cd-timeline-content">
+                                                        <div class="timeline-wrapper">
+                                                            <div class="badge bg-primary">تحميل شهادة المطابقة</div>
                                                         </div>
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <div class="cd-timeline-block">
-                                                        <div class="cd-timeline-img cd-picture bg-primary"><i class="icofont icofont-graduate-alt"></i></div>
-                                                        <div class="cd-timeline-content">
-                                                            <div class="timeline-wrapper">
-                                                                <div class="badge bg-primary">تحميل شهادة المطابقة</div>
-                                                            </div>
-                                                            <h5 class="f-w-500 m-0">تهانينا! ، يمكنك الآن تحميل شهادة المطابقة الخاصة بك.</h5>
-                                                            <div class="time-content pt-2">
+                                                        <h5 class="f-w-500 m-0">تهانينا! ، يمكنك الآن تحميل شهادة المطابقة الخاصة بك.</h5>
+                                                        <div class="time-content pt-2">
                                                             <a asp-controller="Reporting" asp-action="PrintAtConformitee" asp-route-Id="@Model.Id" asp-route-DecisionId="@Model.Decisions.LastOrDefault().Id">
                                                                 <i class="icofont icofont-file-pdf"></i>
-                                                                    <h6>تحميل الشهادة المطابقة   </h6>
-                                                                </a>
+                                                                <h6>تحميل الشهادة المطابقة   </h6>
+                                                            </a>
 
-                                                            </div>
-                                                            <span class="cd-date">@Model.Decisions.Last().DateEtablissementAE.ToShortDateString()</span>
                                                         </div>
+                                                        <span class="cd-date">@Model.Decisions.Last().DateEtablissementAE.ToShortDateString()</span>
                                                     </div>
-
-                                                }
+                                                </div>
 
                                             }
 
                                         }
-                            }
 
+                                    }
+                                }
+
+                            }
                         }
-                    }
 
 
 
@@ -267,3 +317,66 @@
         </div>
     </div>
 </div>
+
+
+
+
+@section scripts{
+
+
+    <script>
+        let currentStep = 3;
+        const totalSteps = 6;
+
+        function updateProgress() {
+            const steps = document.querySelectorAll('.step');
+            const progressLine = document.querySelector('.progress-line-filled');
+            const progressPercentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
+
+            progressLine.style.width = `${progressPercentage}%`;
+
+            steps.forEach((step, index) => {
+                const stepNumber = index + 1;
+                step.classList.remove('completed', 'active');
+
+                if (stepNumber < currentStep) {
+                    step.classList.add('completed');
+                } else if (stepNumber === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateProgress();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateProgress();
+            }
+        }
+
+        // Initialize progress
+        updateProgress();
+    </script>
+    <script>
+        function afficherTimeline() {
+            let section = document.getElementById("cd-timeline");
+            let btn = document.querySelector("button[onclick='afficherTimeline()']");
+
+            if (section.style.display === "none" || section.style.display === "") {
+                section.style.display = "block"; // Afficher la section
+                btn.textContent = "إخفاء";
+            } else {
+                section.style.display = "none"; // Cacher la section
+                btn.textContent = "إظهار المزيد";
+            }
+        }
+
+    </script>
+}
