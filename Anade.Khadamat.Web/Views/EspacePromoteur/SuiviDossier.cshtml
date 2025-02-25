@@ -88,7 +88,7 @@
                     @if (Model.DateValidation == DateTime.Parse("01/01/0001"))
                     {
 
-                        <div class="cd-timeline-block">
+                        <div class="cd-timeline-block etape" data-value="2">
                             <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
                             <div class="cd-timeline-content">
                                 <div class="timeline-wrapper">
@@ -105,7 +105,7 @@
                     }
                     else if ((Model.DateValidation != DateTime.Parse("01/01/0001")))
                     {
-                        <div class="cd-timeline-block">
+                        <div class="cd-timeline-block etape" data-value="3">
                             <div class="cd-timeline-img cd-picture bg-primary"><i class="icofont icofont-document-search"></i></div>
                             <div class="cd-timeline-content">
                                 <div class="timeline-wrapper">
@@ -121,7 +121,7 @@
                         </div>
                         @if (Model.EvaluationProjets.LastOrDefault() == null)
                         {
-                            <div class="cd-timeline-block">
+                            <div class="cd-timeline-block" >
                                 <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
                                 <div class="cd-timeline-content">
                                     <div class="timeline-wrapper">
@@ -140,7 +140,7 @@
                         {
                             if (Model.EvaluationProjets.Last().IsAdmis == false)
                             {
-                                <div class="cd-timeline-block">
+                                <div class="cd-timeline-block etape" data-value="3">
                                     <div class="cd-timeline-img cd-picture bg-danger"><i class="icon-close"></i></div>
                                     <div class="cd-timeline-content">
                                         <div class="timeline-wrapper">
@@ -156,7 +156,7 @@
                             else
                             {
 
-                                <div class="cd-timeline-block">
+                                <div class="cd-timeline-block etape" data-value="4">
                                     <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
                                     <div class="cd-timeline-content">
                                         <div class="timeline-wrapper">
@@ -189,7 +189,7 @@
 
                                 else if (Model.SessionFormations.Last().IsFormee == true)
                                 {
-                                    <div class="cd-timeline-block">
+                                    <div class="cd-timeline-block etape" data-value="5">
                                         <div class="cd-timeline-img cd-picture bg-primary"><i class="icofont icofont-graduate-alt"></i></div>
                                         <div class="cd-timeline-content">
                                             <div class="timeline-wrapper">
@@ -230,7 +230,7 @@
                                     {
                                         if (Model.CSVFs.Last().IsValide == false)
                                         {
-                                            <div class="cd-timeline-block">
+                                            <div class="cd-timeline-block etape" data-value="5">
                                                 <div class="cd-timeline-img cd-picture bg-danger"><i class="icon-close"></i></div>
                                                 <div class="cd-timeline-content">
                                                     <div class="timeline-wrapper">
@@ -247,7 +247,7 @@
                                         {
 
 
-                                            <div class="cd-timeline-block">
+                                            <div class="cd-timeline-block etape" data-value="5">
                                                 <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
                                                 <div class="cd-timeline-content">
                                                     <div class="timeline-wrapper">
@@ -262,7 +262,7 @@
 
                                             @if (Model.Decisions.LastOrDefault() == null)
                                             {
-                                                <div class="cd-timeline-block">
+                                                <div class="cd-timeline-block etape" data-value="6">
                                                     <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
                                                     <div class="cd-timeline-content">
                                                         <div class="timeline-wrapper">
@@ -277,7 +277,7 @@
                                             }
                                             else
                                             {
-                                                <div class="cd-timeline-block">
+                                                <div class="cd-timeline-block etape" data-value="6">
                                                     <div class="cd-timeline-img cd-picture bg-primary"><i class="icofont icofont-graduate-alt"></i></div>
                                                     <div class="cd-timeline-content">
                                                         <div class="timeline-wrapper">
@@ -325,7 +325,14 @@
 
 
     <script>
-        let currentStep = 3;
+
+        // Récupérer tous les éléments avec la classe "etape"
+        let etapes = document.querySelectorAll(".etape");
+        let derniereEtape = etapes[etapes.length - 1];
+        let valeurEtape = derniereEtape.getAttribute("data-value");
+
+        let currentStep = Number(valeurEtape);
+     
         const totalSteps = 6;
 
         function updateProgress() {
@@ -347,19 +354,7 @@
             });
         }
 
-        function nextStep() {
-            if (currentStep < totalSteps) {
-                currentStep++;
-                updateProgress();
-            }
-        }
-
-        function previousStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                updateProgress();
-            }
-        }
+       
 
         // Initialize progress
         updateProgress();
