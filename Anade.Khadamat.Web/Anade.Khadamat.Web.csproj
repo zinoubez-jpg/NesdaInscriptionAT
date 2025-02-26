@@ -708,9 +708,6 @@
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DBNesdaInscription5FDataSet1.Designer.cs</LastGenOutput>
     </None>
-    <None Update="Reports\ATConformite.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Reports\Attestation.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

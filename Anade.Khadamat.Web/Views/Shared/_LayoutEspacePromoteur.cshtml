@@ -115,10 +115,26 @@
                                     </svg><span>صاحب المشروع</span><div class="according-menu"><i class="fa fa-angle-down"></i></div>
                                 </a>
                                 <ul class="sidebar-submenu" style="display: block;">
-                                    <li><a asp-controller="EspacePromoteur" asp-action="Index" class="active">البيانات الشخصية</a></li>
-                                    <li><a asp-controller="EspacePromoteur" asp-action="SuiviDossier">تتبع طلبك</a></li>
+                                    <li><a asp-controller="EspacePromoteur" asp-action="SuiviDossier" class="active"> تتبع طلبك</a></li>
+                                    <li><a asp-controller="EspacePromoteur" asp-action="DetailsPromoteur">البيانات الشخصية</a></li>
+                                    <li><a asp-controller="EspacePromoteur" asp-action="ATFormation"> شهادات التكوين</a></li>
+
 
                                 </ul>
+                            </li>
+                            <li class="sidebar-list">
+                                <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
+                                    <svg class="stroke-icon">
+                                        <use href="AccountTemplette/assets/svg/icon-sprite.svg#stroke-widget"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="AccountTemplette/assets/svg/icon-sprite.svg#fill-widget"></use>
+                                    </svg><span>الأدوات</span><div class="according-menu"><i class="fa fa-angle-right"></i></div>
+                                </a>
+                                                                <ul class="sidebar-submenu" style="display: none;">
+                                                                    <li><a asp-controller="EspacePromoteur" asp-action="SimulBPlan">محاكي خطة الأعمال</a></li>
+
+                                                                </ul>
                             </li>
                             <li class="sidebar-list">
                                 <i class="fa fa-thumb-tack"></i><a class="sidebar-link sidebar-title" href="#">
@@ -135,7 +151,7 @@
                                 </ul>
                             </li>
 
-                    </div>
+</div>
             </div>
         </div>
     </div><div class="simplebar-placeholder" style="width: auto; height: 2173px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar simplebar-visible" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 68px; transform: translate3d(0px, 0px, 0px); display: block;"></div></div></ul>

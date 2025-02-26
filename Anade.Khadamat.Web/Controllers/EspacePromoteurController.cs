@@ -59,7 +59,7 @@ namespace Anade.Khadamat.Web.Controllers
             _structureService = structureService;
 
         }
-        public IActionResult Index()
+        public IActionResult DetailsPromoteur()
         {
             var user =  _userService.GetUserEagerLoadedAsync(User).Result;
             var inscrit = _inscriptionBusinessService.GetSingle(x => x.Email == user.Email,_inscriptionBusinessService.GetDefaultLoadProperties());
@@ -90,5 +90,23 @@ namespace Anade.Khadamat.Web.Controllers
             return View(inscrit);
         }
 
+        public IActionResult ATFormation()
+        {
+            var user = _userService.GetUserEagerLoadedAsync(User).Result;
+            var inscrit = _inscriptionBusinessService.GetSingle(x => x.Email == user.Email, _inscriptionBusinessService.GetDefaultLoadProperties());
+            foreach (var item in inscrit.SessionFormations)
+            {
+                item.Formation = _formationBusinessService.GetById(item.FormationId);
+            }
+
+            return View(inscrit);
+        }
+        public IActionResult SimulBPlan()
+        {
+            
+
+            return View();
+        }
+        
     }
 }

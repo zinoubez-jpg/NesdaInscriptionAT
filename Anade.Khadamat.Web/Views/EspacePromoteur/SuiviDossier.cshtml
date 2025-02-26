@@ -121,7 +121,7 @@
                         </div>
                         @if (Model.EvaluationProjets.LastOrDefault() == null)
                         {
-                            <div class="cd-timeline-block" >
+                            <div class="cd-timeline-block">
                                 <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
                                 <div class="cd-timeline-content">
                                     <div class="timeline-wrapper">
@@ -259,43 +259,20 @@
                                                     <span class="cd-date">@Model.CSVFs.Last().DateCSVF.ToShortDateString()</span>
                                                 </div>
                                             </div>
-
-                                            @if (Model.Decisions.LastOrDefault() == null)
-                                            {
-                                                <div class="cd-timeline-block etape" data-value="6">
-                                                    <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
-                                                    <div class="cd-timeline-content">
-                                                        <div class="timeline-wrapper">
-                                                            <div class="badge bg-warning">مرحلة تحرير شهادة المطابقة</div>
-                                                        </div>
-                                                        <h5 class="f-w-500 m-0"> شهادة المطابقة في طور الإنجاز .</h5>
-
-
-                                                        <span class="cd-date">ملفك في هده المرحلة</span>
+                                            <div class="cd-timeline-block etape" data-value="6">
+                                                <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
+                                                <div class="cd-timeline-content">
+                                                    <div class="timeline-wrapper">
+                                                        <div class="badge bg-warning">مرحلة تحرير شهادة المطابقة</div>
                                                     </div>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <div class="cd-timeline-block etape" data-value="6">
-                                                    <div class="cd-timeline-img cd-picture bg-primary"><i class="icofont icofont-graduate-alt"></i></div>
-                                                    <div class="cd-timeline-content">
-                                                        <div class="timeline-wrapper">
-                                                            <div class="badge bg-primary">تحميل شهادة المطابقة</div>
-                                                        </div>
-                                                        <h5 class="f-w-500 m-0">تهانينا! ، يمكنك الآن تحميل شهادة المطابقة الخاصة بك.</h5>
-                                                        <div class="time-content pt-2">
-                                                            <a asp-controller="Reporting" asp-action="PrintAtConformitee" asp-route-Id="@Model.Id" asp-route-DecisionId="@Model.Decisions.LastOrDefault().Id">
-                                                                <i class="icofont icofont-file-pdf"></i>
-                                                                <h6>تحميل الشهادة المطابقة   </h6>
-                                                            </a>
+                                                    <h5 class="f-w-500 m-0"> نحيطكم علمًا بأن شهادة المطابقة الخاصة بمشروعكم قيد الإنجاز. يُرجى التفضل  لاستلامها في أقرب وقت ممكن. .</h5>
 
-                                                        </div>
-                                                        <span class="cd-date">@Model.Decisions.Last().DateEtablissementAE.ToShortDateString()</span>
-                                                    </div>
-                                                </div>
 
-                                            }
+                                                    <span class="cd-date">ملفك في هده المرحلة</span>
+                                                </div>
+                                            </div>
+
+
 
                                         }
 

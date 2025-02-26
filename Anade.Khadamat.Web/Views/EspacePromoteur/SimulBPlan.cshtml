@@ -1,0 +1,380 @@
+﻿@{ Layout = "_LayoutEspacePromoteur"; }
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card riho-card">
+                <div class="card-header riho-card-header">
+                    <h4 class="riho-title">محاكي خطة الأعمال</h4>
+                    <p class="riho-subtitle mt-1">
+                        هذا نموذج تقديري لتمويل مرحلة التوسع، وقد تختلف النتائج بناءً على مجموعة من العوامل المالية، والاستراتيجية، وظروف السوق، ونموذج الأعمال المعتمد.
+                    </p>
+                </div>
+                <div class="card-body riho-card-body">
+                    <div class="card-wrapper border rounded-3 p-4">
+                        <form id="simulationForm" class="row g-3">
+                            <div class="col-md-6">
+                                <label for="typeFinancement" class="form-label riho-label">اختر نوع التمويل :</label>
+                                <select class="form-select riho-select" id="typeFinancement">
+                                    <option value="triangulaire">تمويل ثلاثي </option>
+                                    <option value="mixte">تمويل تنائي </option>
+                                    <option value="autofinancement">التمويل الذاتي</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="investissement" class="form-label riho-label">قيمة الإجمالية للإستثمار بالدينار الجزائري (الحد الأقصى 10,000,000)</label>
+                                <input type="number" id="investissement" class="form-control riho-input"  min="1" max="10000000" required>
+                                <div id="investissement-error" class="riho-error-message"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cout" class="form-label riho-label">قيمة التكلفة الشهرية بالدينار الجزائري</label>
+                                <input type="number" id="cout" class="form-control riho-input"  min="1" required>
+                                <div id="cout-error" class="riho-error-message"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="revenu" class="form-label riho-label">قيمة الدخل الشهري بالدينار الجزائري</label>
+                                <input type="number" id="revenu" class="form-control riho-input"  min="1" required>
+                                <div id="revenu-error" class="riho-error-message"></div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="button" id="calculButton" class="btn btn-outline-primary">محاكاة</button>
+                            </div>
+                        </form>
+
+                        <div class="result-container mt-4">
+                            <div id="resultat" class="riho-result p-3 rounded-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialiser le simulateur
+        const simulateur = {
+            // Constantes
+            MAX_INVESTISSEMENT: 10000000,
+
+            // Éléments DOM
+            elements: {
+                form: document.getElementById('simulationForm'),
+                typeFinancement: document.getElementById('typeFinancement'),
+                investissement: document.getElementById('investissement'),
+                cout: document.getElementById('cout'),
+                revenu: document.getElementById('revenu'),
+                resultat: document.getElementById('resultat'),
+                calculButton: document.getElementById('calculButton'),
+                investissementError: document.getElementById('investissement-error'),
+                coutError: document.getElementById('cout-error'),
+                revenuError: document.getElementById('revenu-error')
+            },
+
+            // Initialisation des événements
+            init: function () {
+                // Événement pour le bouton de calcul
+                this.elements.calculButton.addEventListener('click', this.calculer.bind(this));
+
+                // Événements pour valider les inputs pendant la saisie
+                this.elements.investissement.addEventListener('input', this.validerInvestissement.bind(this));
+                this.elements.cout.addEventListener('input', this.validerCout.bind(this));
+                this.elements.revenu.addEventListener('input', this.validerRevenu.bind(this));
+
+                // Vider les résultats au chargement
+                this.elements.resultat.innerHTML = '';
+            },
+
+            // Valider le montant d'investissement
+            validerInvestissement: function () {
+                const investissement = parseFloat(this.elements.investissement.value);
+                this.elements.investissementError.textContent = '';
+
+                if (isNaN(investissement) || investissement <= 0) {
+                    this.elements.investissementError.textContent = 'يجب إدخال قيمة موجبة';
+                    return false;
+                }
+
+                if (investissement > this.MAX_INVESTISSEMENT) {
+                    this.elements.investissementError.textContent = `يجب أن لا تتجاوز القيمة ${this.MAX_INVESTISSEMENT.toLocaleString('ar-DZ')} دج`;
+                    this.elements.investissement.value = this.MAX_INVESTISSEMENT;
+                    return false;
+                }
+
+                return true;
+            },
+
+            // Valider le coût mensuel
+            validerCout: function () {
+                const cout = parseFloat(this.elements.cout.value);
+                const investissement = parseFloat(this.elements.investissement.value);
+                this.elements.coutError.textContent = '';
+
+                if (isNaN(cout) || cout <= 0) {
+                    this.elements.coutError.textContent = 'يجب إدخال قيمة موجبة';
+                    return false;
+                }
+
+                if (cout > investissement) {
+                    this.elements.coutError.textContent = 'يجب أن لا تتجاوز التكلفة قيمة الاستثمار';
+                    this.elements.cout.value = investissement;
+                    return false;
+                }
+
+                return true;
+            },
+
+            // Valider le revenu mensuel
+            validerRevenu: function () {
+                const revenu = parseFloat(this.elements.revenu.value);
+                const investissement = parseFloat(this.elements.investissement.value);
+                this.elements.revenuError.textContent = '';
+
+                if (isNaN(revenu) || revenu <= 0) {
+                    this.elements.revenuError.textContent = 'يجب إدخال قيمة موجبة';
+                    return false;
+                }
+
+                if (revenu > investissement) {
+                    this.elements.revenuError.textContent = 'يجب أن لا يتجاوز الدخل قيمة الاستثمار';
+                    this.elements.revenu.value = investissement;
+                    return false;
+                }
+
+                return true;
+            },
+
+            // Valider tous les champs avant calcul
+            validerFormulaire: function () {
+                const investissementValide = this.validerInvestissement();
+                const coutValide = this.validerCout();
+                const revenuValide = this.validerRevenu();
+
+                return investissementValide && coutValide && revenuValide;
+            },
+
+            // Fonction de calcul
+            calculer: function () {
+                // Valider le formulaire avant de procéder
+                if (!this.validerFormulaire()) {
+                    return;
+                }
+
+                const investissement = Math.round(parseFloat(this.elements.investissement.value) || 0);
+                const cout = Math.round(parseFloat(this.elements.cout.value) || 0);
+                const revenu = Math.round(parseFloat(this.elements.revenu.value) || 0);
+                const typeFinancement = this.elements.typeFinancement.value;
+
+                // Calculer les montants de financement
+                const financement = this.calculerFinancement(investissement, typeFinancement);
+
+                // Calculer les bénéfices et le délai de récupération
+                const benefice_annuel = this.calculerBeneficeAnnuel(revenu, cout);
+                const statut = this.determinerStatut(benefice_annuel);
+                const delais_recuperation = this.calculerDelaisRecuperation(investissement, benefice_annuel, typeFinancement);
+
+                // Afficher les résultats
+                this.afficherResultats(financement, benefice_annuel, statut, delais_recuperation, typeFinancement);
+            },
+
+            // Calculer les montants de financement selon le type
+            calculerFinancement: function (investissement, typeFinancement) {
+                let credit1 = 0, credit2 = 0, apport = 0;
+
+                switch (typeFinancement) {
+                    case "triangulaire":
+                        credit1 = Math.round(investissement * 0.70);
+                        credit2 = Math.round(investissement * 0.25);
+                        apport = Math.round(investissement * 0.15);
+                        break;
+                    case "mixte":
+                        credit2 = Math.round(investissement * 0.50);
+                        apport = Math.round(investissement * 0.50);
+                        break;
+                    case "autofinancement":
+                        apport = investissement;
+                        break;
+                }
+
+                return { credit1, credit2, apport };
+            },
+
+            // Calculer le bénéfice annuel
+            calculerBeneficeAnnuel: function (revenu, cout) {
+                return Math.round((revenu - cout) * 12);
+            },
+
+            // Déterminer le statut du bénéfice
+            determinerStatut: function (benefice_annuel) {
+                if (benefice_annuel > 0) return "إيجابي";
+                if (benefice_annuel < 0) return "سلبي";
+                return "مساوٍ للصفر";
+            },
+
+            // Calculer le délai de récupération
+            calculerDelaisRecuperation: function (investissement, benefice_annuel, typeFinancement) {
+                if (benefice_annuel <= 0) {
+                    return "غير قابل للاسترداد";
+                }
+
+                // Calculate apport based on the financing type
+                let apport = 0;
+                switch (typeFinancement) {
+                    case "triangulaire":
+                        apport = Math.round(investissement * 0.15);
+                        break;
+                    case "mixte":
+                        apport = Math.round(investissement * 0.50);
+                        break;
+                    case "autofinancement":
+                        apport = investissement;
+                        break;
+                }
+
+                // Calculate recovery period using (investment - personal contribution)/annual profit
+                const montantARecuperer = investissement - apport;
+
+                // For self-financing, the amount to recover is 0
+                if (typeFinancement === "autofinancement") {
+                    return "0";
+                }
+
+                return Math.ceil(montantARecuperer / benefice_annuel);
+            },
+            // Afficher les résultats dans l'interface
+            afficherResultats: function (financement, benefice_annuel, statut, delais_recuperation, typeFinancement) {
+                const { credit1, credit2, apport } = financement;
+
+                // Formatter les nombres pour un affichage plus lisible
+                const formatNombre = (nombre) => nombre.toLocaleString('ar-DZ');
+
+                let resultatHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="riho-info-card">
+                            <h5 class="riho-info-title">معلومات التمويل</h5>
+                            <p>قيمة القرض البنكي  : <span class="riho-highlight">${formatNombre(credit1)} دج</span></p>
+                            <p>قيمة القرض الغير المكافئ (Nesda) : <span class="riho-highlight">${formatNombre(credit2)} دج</span></p>
+                            <p>المساهمة الشخصية : <span class="riho-highlight">${formatNombre(apport)} دج</span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="riho-info-card">
+                            <h5 class="riho-info-title">معلومات الربحية</h5>
+                            <p>صافي الربح السنوي : <span class="riho-highlight ${statut === 'إيجابي' ? 'riho-positive' : statut === 'سلبي' ? 'riho-negative' : ''}">${formatNombre(benefice_annuel)} دج</span> (${statut})</p>
+                            ${typeFinancement !== "autofinancement" ? `<p>مدة استرداد الاستثمار : <span class="riho-highlight">${delais_recuperation} سنوات</span></p>` : ""}
+                        </div>
+                    </div>
+                </div>`;
+
+                this.elements.resultat.innerHTML = resultatHTML;
+            }
+        };
+
+        // Initialiser le simulateur
+        simulateur.init();
+    });
+</script>
+
+<!-- Styles spécifiques pour Admin Riho -->
+<style>
+    .riho-card {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+
+    .riho-card-header {
+        background-color: #f8f9fa;
+        border-bottom: 2px solid #e9ecef;
+        padding: 1.2rem;
+    }
+
+    .riho-title {
+        color: #2c3e50;
+        font-weight: bold;
+    }
+
+    .riho-subtitle {
+        color: #7f8c8d;
+    }
+
+    .riho-card-body {
+        padding: 1.5rem;
+    }
+
+    .riho-label {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .riho-input, .riho-select {
+        border: 1px solid #ddd;
+        border-radius: 0.375rem;
+        padding: 0.6rem 0.75rem;
+        transition: border-color 0.2s ease-in-out;
+    }
+
+        .riho-input:focus, .riho-select:focus {
+            border-color: #006d6a;
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+    .riho-btn-primary {
+        background-color: #006d6a;
+        border-color: #006d6a;
+        color: white;
+        font-weight: 600;
+        padding: 0.6rem 1.2rem;
+        border-radius: 0.375rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .riho-btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+
+    .riho-result {
+        background-color: #f8f9fa;
+        border-left: 4px solid #006d6a;
+    }
+
+    .riho-info-card {
+        background-color: #fff;
+        border-radius: 0.375rem;
+        padding: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1rem;
+    }
+
+    .riho-info-title {
+        color: #006d6a;
+        font-weight: 600;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .riho-highlight {
+        font-weight: 600;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        background-color: #f1f8fe;
+    }
+
+    .riho-positive {
+        color: #27ae60;
+    }
+
+    .riho-negative {
+        color: #e74c3c;
+    }
+
+    .riho-error-message {
+        color: #e74c3c;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+</style>

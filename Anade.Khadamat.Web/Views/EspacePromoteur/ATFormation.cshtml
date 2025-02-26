@@ -1,0 +1,44 @@
+﻿@model Anade.Khadamat.Domain.Inscription
+@{ Layout = "_LayoutEspacePromoteur"; }
+
+<div class="card">
+    <div class="card-header">
+        <h4>قائمة التكوينات التي تم المشاركة فيها</h4>
+    </div>
+    @if (!Model.SessionFormations.Any())
+    {
+<p style="color: #C70039; margin-right:20px">لم تشارك في أي دورة تكوينية حتى الآن.</p> }
+else
+{
+<div class="table-responsive signal-table custom-scrollbar">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+
+                <th scope="col">رقم الدورة</th>
+                <th scope="col">إسم الدورة التدريبية	</th>
+                <th scope="col">تاريخ البداية</th>
+                <th scope="col">تاريخ نهاية الدورة</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SessionFormations)
+            {
+<tr>
+    <td>@item.CodeSession</td>
+    <td>@item.Formation.DesignationAr</td>
+    <td>@item.DateDebut.ToShortDateString()</td>
+    <td>@item.DateFin.ToShortDateString()</td>
+    <td>
+        <a asp-controller="Reporting" asp-action="PrintAtF" asp-route-Id="@Model.Id" asp-route-SessionId="@item.Id" class="btn btn-outline-primary btn-sm" title="تحميل الشهادة">
+            تحميل الشهادة
+        </a>
+    </td>
+
+</tr>}
+        </tbody>
+    </table>
+</div>}
+</div>

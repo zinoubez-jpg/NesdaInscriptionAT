@@ -25,8 +25,7 @@
                 <p class="email text-muted mb-1">@UserManager.GetUserName(User)</p>
                 <h5 class="username mb-3">مرحبا بك </h5>
                 <h5 class="username mb-3">@user.FullName</h5>
-                <a class="btn btn-outline-secondary" asp-controller="EspacePromoteur" asp-action="Index"> فضاء الخاص بك</a>
-                <a class="btn btn-outline-secondary mb-2" asp-area="Identity" asp-page="/Account/Manage/Index">الإعدادات</a>
+                <a class="btn btn-outline-secondary" asp-controller="EspacePromoteur" asp-action="SuiviDossier"> فضاء الخاص بك</a>
 
                 <hr>
                 <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
