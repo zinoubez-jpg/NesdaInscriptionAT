@@ -3,10 +3,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Anade.Khadamat.Data.Migrations
 {
-    public partial class Initialmigration : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Activites",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    DesignationFr = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    DesignationAr = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Activites", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Agences",
                 columns: table => new
@@ -20,6 +35,21 @@ namespace Anade.Khadamat.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Agences", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    DesignationFr = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    DesignationAr = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,21 +127,6 @@ namespace Anade.Khadamat.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TypeDecisions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    DesignationFr = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    DesignationAr = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TypeDecisions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TypesInscription",
                 columns: table => new
                 {
@@ -160,7 +175,7 @@ namespace Anade.Khadamat.Data.Migrations
                         column: x => x.AgenceId,
                         principalTable: "Agences",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -182,7 +197,7 @@ namespace Anade.Khadamat.Data.Migrations
                         column: x => x.WilayaId,
                         principalTable: "Wilayas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,6 +207,7 @@ namespace Anade.Khadamat.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TypeInscriptionId = table.Column<int>(type: "int", nullable: false),
+                    CategorieId = table.Column<int>(type: "int", nullable: false),
                     DateInscription = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NIN = table.Column<string>(type: "nvarchar(18)", maxLength: 18, nullable: false),
                     NomFr = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
@@ -222,8 +238,8 @@ namespace Anade.Khadamat.Data.Migrations
                     RaisonSociale = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RaisonSocialeAr = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AntenneId = table.Column<int>(type: "int", nullable: false),
-                    CodeAnntenne = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CodeAgence = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Anntenne = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Agence = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Validee = table.Column<bool>(type: "bit", nullable: false),
                     ValideePAR = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateValidation = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -233,15 +249,29 @@ namespace Anade.Khadamat.Data.Migrations
                     EmailVerificationTokenExpiry = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RecaptchaResponse = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CopieCNIPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CopieDiplomeRCCFCAPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CopieDiplomeRCCFCAPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumeroSiejeV3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ActiviteId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Inscriptions", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Inscriptions_Activites_ActiviteId",
+                        column: x => x.ActiviteId,
+                        principalTable: "Activites",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
                         name: "FK_Inscriptions_Antennes_AntenneId",
                         column: x => x.AntenneId,
                         principalTable: "Antennes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Inscriptions_Categories_CategorieId",
+                        column: x => x.CategorieId,
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -295,7 +325,9 @@ namespace Anade.Khadamat.Data.Migrations
                     ResultatCSVF = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCSVF = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsValide = table.Column<bool>(type: "bit", nullable: false),
-                    InscriptionId = table.Column<int>(type: "int", nullable: false)
+                    InscriptionId = table.Column<int>(type: "int", nullable: false),
+                    Banque = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AgenceBancaire = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -304,35 +336,6 @@ namespace Anade.Khadamat.Data.Migrations
                         name: "FK_CSVFs_Inscriptions_InscriptionId",
                         column: x => x.InscriptionId,
                         principalTable: "Inscriptions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Decisions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CodeDecision = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TypeDecisionId = table.Column<int>(type: "int", nullable: false),
-                    IsEligible = table.Column<bool>(type: "bit", nullable: false),
-                    DateEtablissementAE = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    InscriptionId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Decisions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Decisions_Inscriptions_InscriptionId",
-                        column: x => x.InscriptionId,
-                        principalTable: "Inscriptions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_Decisions_TypeDecisions_TypeDecisionId",
-                        column: x => x.TypeDecisionId,
-                        principalTable: "TypeDecisions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                 });
@@ -406,24 +409,24 @@ namespace Anade.Khadamat.Data.Migrations
                 column: "InscriptionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Decisions_InscriptionId",
-                table: "Decisions",
-                column: "InscriptionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Decisions_TypeDecisionId",
-                table: "Decisions",
-                column: "TypeDecisionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_EvaluationProjets_InscriptionId",
                 table: "EvaluationProjets",
                 column: "InscriptionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Inscriptions_ActiviteId",
+                table: "Inscriptions",
+                column: "ActiviteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Inscriptions_AntenneId",
                 table: "Inscriptions",
                 column: "AntenneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Inscriptions_CategorieId",
+                table: "Inscriptions",
+                column: "CategorieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inscriptions_CommuneNaissanceId",
@@ -480,16 +483,10 @@ namespace Anade.Khadamat.Data.Migrations
                 name: "CSVFs");
 
             migrationBuilder.DropTable(
-                name: "Decisions");
-
-            migrationBuilder.DropTable(
                 name: "EvaluationProjets");
 
             migrationBuilder.DropTable(
                 name: "SessionFormations");
-
-            migrationBuilder.DropTable(
-                name: "TypeDecisions");
 
             migrationBuilder.DropTable(
                 name: "Formations");
@@ -498,7 +495,13 @@ namespace Anade.Khadamat.Data.Migrations
                 name: "Inscriptions");
 
             migrationBuilder.DropTable(
+                name: "Activites");
+
+            migrationBuilder.DropTable(
                 name: "Antennes");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Communes");

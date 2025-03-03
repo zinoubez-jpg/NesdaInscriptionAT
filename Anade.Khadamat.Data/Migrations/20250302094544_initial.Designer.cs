@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Anade.Khadamat.Data.Migrations
 {
     [DbContext(typeof(KhadamtDbContext))]
-    [Migration("20250209080852_add categorie")]
-    partial class addcategorie
+    [Migration("20250302094544_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,32 @@ namespace Anade.Khadamat.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Anade.Khadamat.Domain.Activite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("DesignationAr")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("DesignationFr")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Activites");
+                });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.Agence", b =>
                 {
@@ -84,6 +110,12 @@ namespace Anade.Khadamat.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AgenceBancaire")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Banque")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CodeSession")
                         .HasColumnType("nvarchar(max)");
@@ -182,37 +214,6 @@ namespace Anade.Khadamat.Data.Migrations
                     b.ToTable("Communes");
                 });
 
-            modelBuilder.Entity("Anade.Khadamat.Domain.Decision", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CodeDecision")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateEtablissementAE")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("InscriptionId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsEligible")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("TypeDecisionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InscriptionId");
-
-                    b.HasIndex("TypeDecisionId");
-
-                    b.ToTable("Decisions");
-                });
-
             modelBuilder.Entity("Anade.Khadamat.Domain.EvaluationProjet", b =>
                 {
                     b.Property<int>("Id")
@@ -301,6 +302,9 @@ namespace Anade.Khadamat.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ActiviteId")
+                        .HasColumnType("int");
+
                     b.Property<string>("AddresseArSeigeSocial")
                         .HasColumnType("nvarchar(max)");
 
@@ -315,6 +319,12 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Property<string>("AdressFr")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Agence")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Anntenne")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Annulee")
                         .HasColumnType("bit");
 
@@ -323,12 +333,6 @@ namespace Anade.Khadamat.Data.Migrations
 
                     b.Property<int>("CategorieId")
                         .HasColumnType("int");
-
-                    b.Property<string>("CodeAgence")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CodeAnntenne")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CommuneNaissanceId")
                         .HasColumnType("int");
@@ -404,6 +408,9 @@ namespace Anade.Khadamat.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NumeroSiejeV3")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PrenomAr")
                         .IsRequired()
                         .HasMaxLength(128)
@@ -449,6 +456,8 @@ namespace Anade.Khadamat.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ActiviteId");
 
                     b.HasIndex("AntenneId");
 
@@ -557,32 +566,6 @@ namespace Anade.Khadamat.Data.Migrations
                     b.ToTable("SituationFamiliales");
                 });
 
-            modelBuilder.Entity("Anade.Khadamat.Domain.TypeDecision", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("DesignationAr")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("DesignationFr")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TypeDecisions");
-                });
-
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeInscription", b =>
                 {
                     b.Property<int>("Id")
@@ -666,25 +649,6 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Navigation("Wilaya");
                 });
 
-            modelBuilder.Entity("Anade.Khadamat.Domain.Decision", b =>
-                {
-                    b.HasOne("Anade.Khadamat.Domain.Inscription", "Inscription")
-                        .WithMany("Decisions")
-                        .HasForeignKey("InscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Anade.Khadamat.Domain.TypeDecision", "TypeDecision")
-                        .WithMany("Decisions")
-                        .HasForeignKey("TypeDecisionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Inscription");
-
-                    b.Navigation("TypeDecision");
-                });
-
             modelBuilder.Entity("Anade.Khadamat.Domain.EvaluationProjet", b =>
                 {
                     b.HasOne("Anade.Khadamat.Domain.Inscription", null)
@@ -696,6 +660,12 @@ namespace Anade.Khadamat.Data.Migrations
 
             modelBuilder.Entity("Anade.Khadamat.Domain.Inscription", b =>
                 {
+                    b.HasOne("Anade.Khadamat.Domain.Activite", "Activite")
+                        .WithMany("Inscriptions")
+                        .HasForeignKey("ActiviteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Anade.Khadamat.Domain.Antenne", "Antenne")
                         .WithMany("Inscriptions")
                         .HasForeignKey("AntenneId")
@@ -750,6 +720,8 @@ namespace Anade.Khadamat.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Activite");
+
                     b.Navigation("Antenne");
 
                     b.Navigation("Categorie");
@@ -788,6 +760,11 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Navigation("Inscription");
                 });
 
+            modelBuilder.Entity("Anade.Khadamat.Domain.Activite", b =>
+                {
+                    b.Navigation("Inscriptions");
+                });
+
             modelBuilder.Entity("Anade.Khadamat.Domain.Antenne", b =>
                 {
                     b.Navigation("Inscriptions");
@@ -816,8 +793,6 @@ namespace Anade.Khadamat.Data.Migrations
                 {
                     b.Navigation("CSVFs");
 
-                    b.Navigation("Decisions");
-
                     b.Navigation("EvaluationProjets");
 
                     b.Navigation("SessionFormations");
@@ -831,11 +806,6 @@ namespace Anade.Khadamat.Data.Migrations
             modelBuilder.Entity("Anade.Khadamat.Domain.SituationFamiliale", b =>
                 {
                     b.Navigation("Inscriptions");
-                });
-
-            modelBuilder.Entity("Anade.Khadamat.Domain.TypeDecision", b =>
-                {
-                    b.Navigation("Decisions");
                 });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeInscription", b =>

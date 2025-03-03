@@ -1,0 +1,363 @@
+﻿@{ Layout = "_LayoutEspacePromoteur"; }
+
+
+<style>
+        body {
+           
+            line-height: 1.6;
+            color: #333;
+           
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            text-align: right;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .calculator-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: right;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .result-container {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border-right: 4px solid #3498db;
+        }
+
+        .result-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+
+        .result-interpretation {
+            background-color: #e8f4fd;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .cash-flows-container {
+            margin-top: 20px;
+        }
+
+        .cash-flow-inputs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .cash-flow-inputs input {
+            flex: 1;
+        }
+
+        .add-flow-btn {
+            background-color: #2ecc71;
+            margin-bottom: 20px;
+        }
+
+        .add-flow-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .remove-flow-btn {
+            background-color: #e74c3c;
+            margin-top: 0;
+            padding: 10px;
+            width: auto;
+        }
+
+        .remove-flow-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .explanation {
+            margin-top: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .explanation h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #f5f5f5;
+            padding-bottom: 10px;
+        }
+
+        .formula {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 15px 0;
+            direction: ltr;
+            text-align: center;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        @*@media (max-width: 600px) {
+            input[type="number"] {
+                font-size: 14px;
+            }
+
+            .result-value {
+                font-size: 20px;
+            }
+        }*@
+</style>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card riho-card">
+                <div class="card-header riho-card-header">
+                    <h4 class="riho-title">حاسبة صافي القيمة الحالية (VAN)</h4>
+                    <p class="riho-subtitle mt-1">
+                        هذا نموذج تقديري لتمويل مرحلة التوسع، وقد تختلف النتائج بناءً على مجموعة من العوامل المالية، والاستراتيجية، وظروف السوق، ونموذج الأعمال المعتمد.
+                    </p>
+                </div>
+              
+                  
+                        <div class="calculator-container">
+                            <div class="input-group">
+                                <label for="investment">الاستثمار الأولي (دج)</label>
+                                <input type="number" id="investment" placeholder="أدخل الاستثمار الأولي (قيمة سالبة)" step="any">
+                                <div id="investment-error" class="error"></div>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="discount-rate">معدل الخصم (%)</label>
+                                <input type="number" id="discount-rate" placeholder="أدخل معدل الخصم" step="any" min="0" max="100">
+                                <div id="rate-error" class="error"></div>
+                            </div>
+
+                            <div class="cash-flows-container">
+                                <h3>التدفقات النقدية</h3>
+                                <div id="cash-flows">
+                                    <div class="cash-flow-inputs">
+                                        <input type="number" class="year-input" placeholder="السنة" min="1" step="1">
+                                        <input type="number" class="amount-input" placeholder="المبلغ (دج)" step="any">
+                                        <button class="remove-flow-btn">X</button>
+                                    </div>
+                                </div>
+                                <button id="add-flow" class="add-flow-btn">+ إضافة تدفق</button>
+                            </div>
+
+                            <button id="calculate">حساب صافي القيمة الحالية</button>
+
+                            <div class="result-container" id="result-container" style="display: none;">
+                                <h3>النتائج</h3>
+                                <div>
+                                    <label>صافي القيمة الحالية (VAN):</label>
+                                    <div class="result-value" id="npv-result">0.00 دج</div>
+                                </div>
+                                <div class="result-interpretation" id="interpretation">
+                                    سيتم عرض تفسير النتيجة هنا.
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="explanation">
+                            <h2>ما هو صافي القيمة الحالية (VAN)؟</h2>
+                            <p>صافي القيمة الحالية (VAN) هو مؤشر مالي يسمح بتقييم ربحية الاستثمار من خلال حساب الفرق بين التدفقات النقدية المستقبلية المخصومة والاستثمار الأولي.</p>
+
+                            <h3>كيف يتم حساب صافي القيمة الحالية؟</h3>
+                            <p>صيغة صافي القيمة الحالية هي:</p>
+                            <div class="formula">
+                                VAN = -الاستثمار الأولي + Σ (التدفق النقدي / (1 + معدل الخصم)^السنة)
+                            </div>
+
+                            <h3>كيف نفسر صافي القيمة الحالية؟</h3>
+                            <ul>
+                                <li><strong>VAN &gt; 0</strong>: الاستثمار مربح، فهو يولد قيمة أكثر مما يكلف.</li>
+                                <li><strong>VAN = 0</strong>: الاستثمار محايد، فهو يولد قيمة تساوي تماماً ما يكلف.</li>
+                                <li><strong>VAN &lt; 0</strong>: الاستثمار غير مربح، فهو يولد قيمة أقل مما يكلف.</li>
+                            </ul>
+
+                            <h3>مثال</h3>
+                            <p>لنفترض استثماراً أولياً بقيمة 1,000,000 دج يولد التدفقات النقدية التالية:</p>
+                            <ul>
+                                <li>السنة 1: 300,000 دج</li>
+                                <li>السنة 2: 400,000 دج</li>
+                                <li>السنة 3: 500,000 دج</li>
+                            </ul>
+                            <p>مع معدل خصم 10%، سيكون صافي القيمة الحالية:</p>
+                            <div class="formula">
+                                VAN = -1,000,000 + 300,000/(1+0.1)^1 + 400,000/(1+0.1)^2 + 500,000/(1+0.1)^3 = -1,000,000 + 272,727.27 + 330,578.51 + 375,657.04 = -21,037.18 دج
+                            </div>
+                            <p>في هذا المثال، صافي القيمة الحالية سالب، مما يعني أن الاستثمار غير مربح مالياً بمعدل خصم 10%.</p>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // اختيار العناصر
+            const addFlowBtn = document.getElementById('add-flow');
+            const cashFlowsContainer = document.getElementById('cash-flows');
+            const calculateBtn = document.getElementById('calculate');
+            const resultContainer = document.getElementById('result-container');
+            const npvResult = document.getElementById('npv-result');
+            const interpretation = document.getElementById('interpretation');
+            const investmentInput = document.getElementById('investment');
+            const discountRateInput = document.getElementById('discount-rate');
+            const investmentError = document.getElementById('investment-error');
+            const rateError = document.getElementById('rate-error');
+
+            // إضافة معالج أحداث لزر "إضافة تدفق"
+            addFlowBtn.addEventListener('click', function() {
+                addCashFlowInput();
+            });
+
+            // إضافة معالج أحداث لزر "حساب"
+            calculateBtn.addEventListener('click', calculateNPV);
+
+            // معالج أحداث لأزرار حذف التدفق
+            cashFlowsContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-flow-btn')) {
+                    if (document.querySelectorAll('.cash-flow-inputs').length > 1) {
+                        e.target.closest('.cash-flow-inputs').remove();
+                    }
+                }
+            });
+
+            // وظيفة لإضافة مدخل تدفق نقدي
+            function addCashFlowInput() {
+                const newFlow = document.createElement('div');
+                newFlow.className = 'cash-flow-inputs';
+                newFlow.innerHTML = `
+                    <input type="number" class="year-input" placeholder="السنة" min="1" step="1">
+                    <input type="number" class="amount-input" placeholder="المبلغ (دج)" step="any">
+                    <button class="remove-flow-btn">X</button>
+                `;
+                cashFlowsContainer.appendChild(newFlow);
+            }
+
+            // وظيفة لحساب صافي القيمة الحالية
+            function calculateNPV() {
+                // إعادة تعيين الأخطاء
+                investmentError.textContent = '';
+                rateError.textContent = '';
+
+                // استرجاع القيم
+                const investment = parseFloat(investmentInput.value);
+                const discountRate = parseFloat(discountRateInput.value) / 100;
+
+                // التحقق من صحة البيانات
+                let isValid = true;
+
+                if (isNaN(investment)) {
+                    investmentError.textContent = 'الرجاء إدخال مبلغ استثمار صالح';
+                    isValid = false;
+                }
+
+                if (isNaN(discountRate) || discountRate < 0) {
+                    rateError.textContent = 'الرجاء إدخال معدل خصم صالح';
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    resultContainer.style.display = 'none';
+                    return;
+                }
+
+                // استرجاع التدفقات النقدية
+                const cashFlows = [];
+                const cashFlowInputs = document.querySelectorAll('.cash-flow-inputs');
+
+                cashFlowInputs.forEach(function(input) {
+                    const year = parseInt(input.querySelector('.year-input').value);
+                    const amount = parseFloat(input.querySelector('.amount-input').value);
+
+                    if (!isNaN(year) && !isNaN(amount)) {
+                        cashFlows.push({ year, amount });
+                    }
+                });
+
+                // حساب صافي القيمة الحالية
+                let npv = -investment; // نبدأ من الاستثمار الأولي
+
+                cashFlows.forEach(function(flow) {
+                    npv += flow.amount / Math.pow(1 + discountRate, flow.year);
+                });
+
+                // عرض النتيجة
+                npvResult.textContent = npv.toLocaleString('ar-DZ', {
+                    style: 'currency',
+                    currency: 'DZD',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }).replace(/\s*DZD/, ' دج');
+
+                // تفسير النتيجة
+                if (npv > 0) {
+                    interpretation.textContent = "هذا المشروع مربح مالياً. صافي القيمة الحالية الإيجابي يشير إلى أن الاستثمار سيولد قيمة أكثر مما يكلف.";
+                } else if (npv < 0) {
+                    interpretation.textContent = "هذا المشروع غير مربح مالياً. صافي القيمة الحالية السالب يشير إلى أن الاستثمار لا يولد تدفقات نقدية كافية لتعويض تكلفته الأولية.";
+                } else {
+                    interpretation.textContent = "هذا المشروع محايد مالياً. صافي القيمة الحالية المساوي للصفر يشير إلى أن الاستثمار يولد قيمة تساوي تماماً ما يكلف.";
+                }
+
+                resultContainer.style.display = 'block';
+            }
+
+            // إضافة تدفق نقدي افتراضي
+            addCashFlowInput();
+        });
+</script>

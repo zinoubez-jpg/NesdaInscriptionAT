@@ -113,26 +113,10 @@ namespace Anade.Khadamat.Domain
         [Display(Name = "CopieDiplomeRCCFCAPath")]
         public string CopieDiplomeRCCFCAPath { get; set; }
         public string NumeroSiejeV3 { get; set; }
-        public bool FormJuridique { get; set; }
-        public bool RegimFiscal { get; set; }
-        public bool FrnchisseTVA { get; set; }
-        public string Banque { get; set; }
-       
-        public string NumComtBancaire { get; set; }
-        public string RCAGCFCA { get; set; }
-        public string NIF { get; set; }
-        public double MontantPNR { get; set; }
         public int ActiviteId { get; set; }
-
-
-
-
-
         public virtual ICollection<SessionFormation> SessionFormations { get; set; }
         public virtual ICollection<EvaluationProjet> EvaluationProjets { get; set; }
         public virtual ICollection<CSVF> CSVFs { get; set; }
-        public virtual ICollection<Decision> Decisions { get; set; }
-
         public virtual Commune CommuneNaissance { get; set; }
         public virtual Commune CommuneResidence { get; set; }
         public virtual Commune CommuneSiegeSocial { get; set; }

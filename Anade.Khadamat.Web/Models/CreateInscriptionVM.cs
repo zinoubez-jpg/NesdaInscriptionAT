@@ -10,6 +10,10 @@ namespace Anade.Khadamat.Web.Models
 {
     public class CreateInscriptionVM
     {
+
+        [Display(Name = "Id")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int Id { get; set; }
         public int TypeInscriptionId { get; set; }
         public int CategorieId { get; set; }
         public DateTime DateInscription { get; set; }
@@ -87,28 +91,15 @@ namespace Anade.Khadamat.Web.Models
         public int CommuneSeigeSocialId { get; set; }
         public string AddresseArSeigeSocial { get; set; }
         public string AddresseFrSeigeSocial { get; set; }
-
         public string RaisonSociale { get; set; }
         public string RaisonSocialeAr { get; set; }
 
         public int AntenneId { get; set; }
-        public string CodeAnntenne { get; set; }
-        public string CodeAgence { get; set; }
+        public string Anntenne { get; set; }
+        public string Agence { get; set; }
         public bool Validee { get; set; }
         public string ValideePAR { get; set; }
         public DateTime DateValidation { get; set; }
-        public bool Formee { get; set; }
-
-        public DateTime DateEtablissementATFormation { get; set; }
-        public string IntituleFormation { get; set; }
-        public DateTime DateEvaluationProjet { get; set; }
-        public string ResultatEvaluationProjet { get; set; }
-        public bool IsAdmis { get; set; }
-        public DateTime DateCSVF { get; set; }
-        public string ResultatCSVF { get; set; }
-        public bool IsValideCSVF { get; set; }
-        public DateTime DateAEligibilite { get; set; }
-        public bool IsEligible { get; set; }
         public bool Annulee { get; set; }
 
 
@@ -125,9 +116,11 @@ namespace Anade.Khadamat.Web.Models
 
         [Required(ErrorMessage = "يجب اختيار ملف")]
         public IFormFile CopieDiplomeRCCFCAPdf { get; set; }
-
-
-
+        public string NumeroSiejeV3 { get; set; }
+        public int ActiviteId { get; set; }
+        public virtual ICollection<SessionFormation> SessionFormations { get; set; }
+        public virtual ICollection<EvaluationProjet> EvaluationProjets { get; set; }
+        public virtual ICollection<CSVF> CSVFs { get; set; }
         public virtual Commune CommuneNaissance { get; set; }
         public virtual Commune CommuneResidence { get; set; }
         public virtual Commune CommuneSiegeSocial { get; set; }
@@ -135,6 +128,9 @@ namespace Anade.Khadamat.Web.Models
         public virtual SituationFamiliale SituationFamiliale { get; set; }
         public virtual NiveauInstruction NiveauInstruction { get; set; }
         public virtual TypeInscription TypeInscription { get; set; }
+        public virtual Antenne Antenne { get; set; }
+        public virtual Categorie Categorie { get; set; }
+        public virtual Activite Activite { get; set; }
 
 
 
@@ -142,6 +138,9 @@ namespace Anade.Khadamat.Web.Models
 
 
 
+
+
+       
 
     }
 }

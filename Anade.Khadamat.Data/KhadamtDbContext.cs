@@ -45,10 +45,10 @@ namespace Anade.Khadamat.Data
         public virtual DbSet<SituationFamiliale> SituationFamiliales { get; set; }
         public virtual DbSet<TypeInscription> TypesInscription { get; set; }
         public virtual DbSet<CSVF> CSVFs { get; set; }
-        public virtual DbSet<Decision> Decisions { get; set; }
+ 
         public virtual DbSet<EvaluationProjet> EvaluationProjets { get; set; }
         public virtual DbSet<SessionFormation> SessionFormations { get; set; }
-        public virtual DbSet<TypeDecision> TypeDecisions { get; set; }
+
         public virtual DbSet<Formation> Formations { get; set; }
         public virtual DbSet<Agence> Agences { get; set; }
         public virtual DbSet<Antenne> Antennes { get; set; }

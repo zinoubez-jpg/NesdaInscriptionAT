@@ -212,37 +212,6 @@ namespace Anade.Khadamat.Data.Migrations
                     b.ToTable("Communes");
                 });
 
-            modelBuilder.Entity("Anade.Khadamat.Domain.Decision", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CodeDecision")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateEtablissementAE")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("InscriptionId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsEligible")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("TypeDecisionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InscriptionId");
-
-                    b.HasIndex("TypeDecisionId");
-
-                    b.ToTable("Decisions");
-                });
-
             modelBuilder.Entity("Anade.Khadamat.Domain.EvaluationProjet", b =>
                 {
                     b.Property<int>("Id")
@@ -360,9 +329,6 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Property<int>("AntenneId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Banque")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("CategorieId")
                         .HasColumnType("int");
 
@@ -403,12 +369,6 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Property<string>("EtablissementFormation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("FormJuridique")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("FrnchisseTVA")
-                        .HasColumnType("bit");
-
                     b.Property<int>("GenreId")
                         .HasColumnType("int");
 
@@ -417,12 +377,6 @@ namespace Anade.Khadamat.Data.Migrations
 
                     b.Property<bool>("IsEmailVerified")
                         .HasColumnType("bit");
-
-                    b.Property<double>("MontantPNR")
-                        .HasColumnType("float");
-
-                    b.Property<string>("NIF")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NIN")
                         .IsRequired()
@@ -448,9 +402,6 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Property<string>("NomJeunneFilleAr")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NumComtBancaire")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("NumTelephone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -468,9 +419,6 @@ namespace Anade.Khadamat.Data.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<string>("RCAGCFCA")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("RaisonSociale")
                         .HasColumnType("nvarchar(max)");
 
@@ -480,9 +428,6 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Property<string>("RecaptchaResponse")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("RegimFiscal")
-                        .HasColumnType("bit");
 
                     b.Property<int>("SituationFamilialeId")
                         .HasColumnType("int");
@@ -619,32 +564,6 @@ namespace Anade.Khadamat.Data.Migrations
                     b.ToTable("SituationFamiliales");
                 });
 
-            modelBuilder.Entity("Anade.Khadamat.Domain.TypeDecision", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("DesignationAr")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("DesignationFr")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TypeDecisions");
-                });
-
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeInscription", b =>
                 {
                     b.Property<int>("Id")
@@ -726,25 +645,6 @@ namespace Anade.Khadamat.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Wilaya");
-                });
-
-            modelBuilder.Entity("Anade.Khadamat.Domain.Decision", b =>
-                {
-                    b.HasOne("Anade.Khadamat.Domain.Inscription", "Inscription")
-                        .WithMany("Decisions")
-                        .HasForeignKey("InscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Anade.Khadamat.Domain.TypeDecision", "TypeDecision")
-                        .WithMany("Decisions")
-                        .HasForeignKey("TypeDecisionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Inscription");
-
-                    b.Navigation("TypeDecision");
                 });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.EvaluationProjet", b =>
@@ -891,8 +791,6 @@ namespace Anade.Khadamat.Data.Migrations
                 {
                     b.Navigation("CSVFs");
 
-                    b.Navigation("Decisions");
-
                     b.Navigation("EvaluationProjets");
 
                     b.Navigation("SessionFormations");
@@ -906,11 +804,6 @@ namespace Anade.Khadamat.Data.Migrations
             modelBuilder.Entity("Anade.Khadamat.Domain.SituationFamiliale", b =>
                 {
                     b.Navigation("Inscriptions");
-                });
-
-            modelBuilder.Entity("Anade.Khadamat.Domain.TypeDecision", b =>
-                {
-                    b.Navigation("Decisions");
                 });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeInscription", b =>

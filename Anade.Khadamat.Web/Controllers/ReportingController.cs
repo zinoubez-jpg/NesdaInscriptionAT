@@ -21,8 +21,6 @@ namespace Anade.Khadamat.Web.Controllers
 
         private readonly SessionFormationBusinessService _sessionFormationBusinessService;
 
-        private readonly DecisionBusinessService _decisionBusinessService;
-        private readonly ILoadProperties<Decision, int> _loadDecisionProperties;
 
         private readonly ReferentielBusinessService<Antenne, int> _antenneBusinessService;
         private readonly ReferentielBusinessService<Agence, int> _agenceBusinessService;
@@ -35,8 +33,6 @@ namespace Anade.Khadamat.Web.Controllers
                                    ReferentielBusinessService<Formation, int> formationBusinessService,
                                    ReferentielBusinessService<Wilaya, int> wilayaBusinessService,
                                    SessionFormationBusinessService sessionFormationBusinessService,
-                                   DecisionBusinessService decisionBusinessService,
-                                   ILoadProperties<Decision, int> loadDecisionProperties,
                                    ReferentielBusinessService<Antenne, int> antenneBusinessService,
                                    ReferentielBusinessService<Commune, int> communeBusinessService,
 
@@ -52,8 +48,6 @@ namespace Anade.Khadamat.Web.Controllers
             _formationBusinessService = formationBusinessService;
             _wilayaBusinessService = wilayaBusinessService;
             _sessionFormationBusinessService = sessionFormationBusinessService;
-            _decisionBusinessService = decisionBusinessService;
-            _loadDecisionProperties = loadDecisionProperties;
             _antenneBusinessService = antenneBusinessService;
             _agenceBusinessService = agenceBusinessService;
             _communeBusinessService = communeBusinessService;
