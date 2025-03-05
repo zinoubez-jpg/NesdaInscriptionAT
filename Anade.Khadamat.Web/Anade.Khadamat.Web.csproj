@@ -672,6 +672,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DBNesdaInscription4DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Update="DBNesdaInscription4DataSet1.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DBNesdaInscription4DataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Update="DBNesdaInscription5DataSet.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -681,6 +686,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DBNesdaInscription5FDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="DBNesdaInscription6DataSet.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DBNesdaInscription6DataSet.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -700,6 +710,10 @@
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DBNesdaInscription4DataSet.Designer.cs</LastGenOutput>
     </None>
+    <None Update="DBNesdaInscription4DataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DBNesdaInscription4DataSet1.Designer.cs</LastGenOutput>
+    </None>
     <None Update="DBNesdaInscription5DataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DBNesdaInscription5DataSet.Designer.cs</LastGenOutput>
@@ -707,6 +721,10 @@
     <None Update="DBNesdaInscription5FDataSet1.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DBNesdaInscription5FDataSet1.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="DBNesdaInscription6DataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DBNesdaInscription6DataSet.Designer.cs</LastGenOutput>
     </None>
     <None Update="Reports\Attestation.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

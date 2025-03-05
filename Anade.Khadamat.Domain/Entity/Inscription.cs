@@ -114,7 +114,7 @@ namespace Anade.Khadamat.Domain
         public string CopieDiplomeRCCFCAPath { get; set; }
         public string NumeroSiejeV3 { get; set; }
         public int ActiviteId { get; set; }
-        public virtual ICollection<SessionFormation> SessionFormations { get; set; }
+        public virtual ICollection<SessionFormationDetails> SessionFormations { get; set; }
         public virtual ICollection<EvaluationProjet> EvaluationProjets { get; set; }
         public virtual ICollection<CSVF> CSVFs { get; set; }
         public virtual Commune CommuneNaissance { get; set; }

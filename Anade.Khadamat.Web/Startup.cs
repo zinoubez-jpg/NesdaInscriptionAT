@@ -48,7 +48,7 @@ namespace Anade.Khadamat.Web
 
 
             services.AddScoped<IReportService, ReportService>();
-            services.AddScoped<ILoadProperties<SessionFormation, int>, LoadProperties<SessionFormation, int>>();
+            services.AddScoped<ILoadProperties<SessionFormationDetails, int>, LoadProperties<SessionFormationDetails, int>>();
 
             services.AddScoped<IPromoteurEligibiliteSettings, PromoteurEligibiliteSettings>();
             services.Configure<PromoteurEligibiliteSettings>(Configuration.GetSection("PromoteurEligibiliteSettings"));

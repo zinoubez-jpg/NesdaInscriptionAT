@@ -15,70 +15,6 @@
           </Border>
         </Style>
       </Image>
-      <Textbox Name="DateDebut">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Format(First(Fields!DateDebut.Value, "SessionFormation"), "yyyy/MM/dd")</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>DateDebut</rd:DefaultName>
-        <Top>11.48503cm</Top>
-        <Left>18.1102cm</Left>
-        <Height>0.6cm</Height>
-        <Width>2.5cm</Width>
-        <ZIndex>1</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="DateFin">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Format(First(Fields!DateFin.Value, "SessionFormation"), "yyyy/MM/dd")</Value>
-                <Style>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>DateFin</rd:DefaultName>
-        <Top>11.48503cm</Top>
-        <Left>13.64403cm</Left>
-        <Height>0.6cm</Height>
-        <Width>2.5cm</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Textbox Name="NomAr">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -100,7 +36,7 @@
         <Left>13.96153cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
-        <ZIndex>3</ZIndex>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -134,7 +70,7 @@
         <Left>3.6957cm</Left>
         <Height>0.55767cm</Height>
         <Width>12.44833cm</Width>
-        <ZIndex>4</ZIndex>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -167,7 +103,7 @@
         <Left>10.96764cm</Left>
         <Height>0.6cm</Height>
         <Width>2.5cm</Width>
-        <ZIndex>5</ZIndex>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -201,7 +137,7 @@
         <Left>6.89187cm</Left>
         <Height>0.55767cm</Height>
         <Width>4.99767cm</Width>
-        <ZIndex>6</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -237,7 +173,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="SessionFormation">
+    <DataSet Name="SessionFormationDetails">
       <Query>
         <DataSourceName>EspacePromoteurDataSet</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -273,12 +209,12 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>DBNesdaInscription5FDataSet1</rd:DataSetName>
-        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription5FDataSet1.xsd</rd:SchemaPath>
-        <rd:TableName>SessionFormations</rd:TableName>
+        <rd:DataSetName>DBNesdaInscription6DataSet</rd:DataSetName>
+        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription6DataSet.xsd</rd:SchemaPath>
+        <rd:TableName>SessionFormationsDetails</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>SessionFormationsTableAdapter</rd:TableAdapterName>
+        <rd:TableAdapterName>SessionFormationsDetailsTableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
     <DataSet Name="Inscription">
@@ -293,6 +229,10 @@
         </Field>
         <Field Name="TypeInscriptionId">
           <DataField>TypeInscriptionId</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="CategorieId">
+          <DataField>CategorieId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="DateInscription">
@@ -463,10 +403,6 @@
           <DataField>CopieDiplomeRCCFCAPath</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="CategorieId">
-          <DataField>CategorieId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="NumeroSiejeV3">
           <DataField>NumeroSiejeV3</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -475,42 +411,10 @@
           <DataField>ActiviteId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="Banque">
-          <DataField>Banque</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FormJuridique">
-          <DataField>FormJuridique</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="FrnchisseTVA">
-          <DataField>FrnchisseTVA</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="MontantPNR">
-          <DataField>MontantPNR</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="NIF">
-          <DataField>NIF</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="NumComtBancaire">
-          <DataField>NumComtBancaire</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="RCAGCFCA">
-          <DataField>RCAGCFCA</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="RegimFiscal">
-          <DataField>RegimFiscal</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>DBNesdaInscription5FDataSet1</rd:DataSetName>
-        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription5FDataSet1.xsd</rd:SchemaPath>
+        <rd:DataSetName>DBNesdaInscription6DataSet</rd:DataSetName>
+        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription6DataSet.xsd</rd:SchemaPath>
         <rd:TableName>Inscriptions</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
@@ -541,8 +445,8 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>DBNesdaInscription5FDataSet1</rd:DataSetName>
-        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription5FDataSet1.xsd</rd:SchemaPath>
+        <rd:DataSetName>DBNesdaInscription6DataSet</rd:DataSetName>
+        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription6DataSet.xsd</rd:SchemaPath>
         <rd:TableName>Formations</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

@@ -28,7 +28,7 @@ namespace Anade.Khadamat.Business
                 throw new BusinessException("Une personne avec le même NIN existe déjà.");
 
             if (age < _promoteurEligibiliteSettings.Value.MinAge || age > _promoteurEligibiliteSettings.Value.MaxAge)
-                throw new BusinessException($"لتسجيل، يجب أن يكون عمرك بين 18 و 55 سنة");
+                throw new BusinessException($"لتسجيل، يجب أن يكون عمرك بين 20و 58سنة");
             base.OnAdding(entity);
 
         }

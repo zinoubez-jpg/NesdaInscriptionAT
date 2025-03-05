@@ -47,7 +47,7 @@ namespace Anade.Khadamat.Data
         public virtual DbSet<CSVF> CSVFs { get; set; }
  
         public virtual DbSet<EvaluationProjet> EvaluationProjets { get; set; }
-        public virtual DbSet<SessionFormation> SessionFormations { get; set; }
+        public virtual DbSet<SessionFormationDetails> SessionFormationsDetails { get; set; }
 
         public virtual DbSet<Formation> Formations { get; set; }
         public virtual DbSet<Agence> Agences { get; set; }

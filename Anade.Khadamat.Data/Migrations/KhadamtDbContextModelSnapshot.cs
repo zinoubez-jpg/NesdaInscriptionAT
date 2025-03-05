@@ -504,7 +504,7 @@ namespace Anade.Khadamat.Data.Migrations
                     b.ToTable("NiveauInstruction");
                 });
 
-            modelBuilder.Entity("Anade.Khadamat.Domain.SessionFormation", b =>
+            modelBuilder.Entity("Anade.Khadamat.Domain.SessionFormationDetails", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -535,7 +535,7 @@ namespace Anade.Khadamat.Data.Migrations
 
                     b.HasIndex("InscriptionId");
 
-                    b.ToTable("SessionFormations");
+                    b.ToTable("SessionFormationsDetails");
                 });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.SituationFamiliale", b =>
@@ -739,7 +739,7 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Navigation("TypeInscription");
                 });
 
-            modelBuilder.Entity("Anade.Khadamat.Domain.SessionFormation", b =>
+            modelBuilder.Entity("Anade.Khadamat.Domain.SessionFormationDetails", b =>
                 {
                     b.HasOne("Anade.Khadamat.Domain.Formation", "Formation")
                         .WithMany("SessionFormations")

@@ -5237,77 +5237,22 @@ img {
 }
 
 
-
-
-
-
-
-/* Conteneur de la checkbox */
-.custom-checkbox {
-    position: relative;
-    display: inline-block;
-    font-size: 18px;
-    color: #fff; /* Texte en blanc pour contraster avec le fond vert */
+input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    accent-color: #2c724f; /* Applique la couleur verte */
     cursor: pointer;
-    padding-left: 40px;
-    user-select: none;
 }
 
-    /* Cacher l'input checkbox d'origine */
-    .custom-checkbox input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-    }
+#submitBtn:disabled {
+    background-color: #ccc; /* Gris pour indiquer qu'il est inactif */
+    cursor: not-allowed; /* Curseur interdit */
+    opacity: 0.6; /* Réduction de l'opacité */
+}
 
-    /* Style du checkmark */
-    .custom-checkbox .checkmark {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 20px;
-        width: 20px;
-        background-color: transparent; /* Fond transparent au départ */
-        border: 2px solid #fff; /* Bordure blanche pour contraste */
-        border-radius: 4px;
-        transition: all 0.3s ease;
-    }
-
-    /* Effet au survol */
-    .custom-checkbox:hover .checkmark {
-        background-color: rgba(255, 255, 255, 0.2); /* Léger fond blanc transparent */
-        border-color: #fff;
-    }
-
-    /* Style pour les cases cochées */
-    .custom-checkbox input:checked ~ .checkmark {
-        background-color: #fff; /* Fond blanc lorsque cochée */
-        border-color: #fff;
-    }
-
-    /* Ajouter un symbole de coche */
-    .custom-checkbox .checkmark:after {
-        content: "";
-        position: absolute;
-        display: none;
-        left: 6px;
-        top: 3px;
-        width: 6px;
-        height: 10px;
-        border: solid #2c724f; /* Symbole en vert pour correspondre au design */
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-    }
-
-    /* Afficher le symbole de coche lorsque la case est cochée */
-    .custom-checkbox input:checked ~ .checkmark:after {
-        display: block;
-    }
-
-
-#contrat.disabled {
-    opacity: 0.4;
-    pointer-events: none; /* Empêche les clics sur le formulaire désactivé */
+/* Facultatif : Effet au survol quand il est activé */
+#submitBtn:not(:disabled):hover {
+    opacity: 1;
 }
 
 

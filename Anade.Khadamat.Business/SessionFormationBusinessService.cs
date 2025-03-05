@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Anade.Khadamat.Business
 {
-    public class SessionFormationBusinessService : GenericBusinessService<SessionFormation, int>
+    public class SessionFormationBusinessService : GenericBusinessService<SessionFormationDetails, int>
     {
 
 
@@ -17,11 +17,11 @@ namespace Anade.Khadamat.Business
 
         }
 
-        public override Expression<Func<SessionFormation, object>>[] GetDefaultLoadProperties()
+        public override Expression<Func<SessionFormationDetails, object>>[] GetDefaultLoadProperties()
         {
-            Expression<Func<SessionFormation, object>> loadFormation = x => x.Formation;
-            Expression<Func<SessionFormation, object>> loadInscription = x => x.Inscription;
-            return new Expression<Func<SessionFormation, object>>[] { loadFormation, loadInscription};
+            Expression<Func<SessionFormationDetails, object>> loadFormation = x => x.Formation;
+            Expression<Func<SessionFormationDetails, object>> loadInscription = x => x.Inscription;
+            return new Expression<Func<SessionFormationDetails, object>>[] { loadFormation, loadInscription};
         }
     }
 }

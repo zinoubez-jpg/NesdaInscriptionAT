@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Anade.Khadamat.Domain
 {
-    public partial class SessionFormation : IEntity<int>
+    public partial class SessionFormationDetails : IEntity<int>
     {
         public int Id { get; set; }
         public string CodeSession { get; set; }

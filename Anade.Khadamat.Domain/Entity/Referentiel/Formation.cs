@@ -5,6 +5,6 @@ namespace Anade.Khadamat.Domain
     public partial class Formation : Referentiel
     {
        
-        public virtual ICollection<SessionFormation> SessionFormations { get; set; }
+        public virtual ICollection<SessionFormationDetails> SessionFormations { get; set; }
     }
 }

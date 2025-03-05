@@ -12,7 +12,7 @@ namespace Anade.Khadamat.Web.Controllers
     [Route("[controller]/[action]")]
     public class ReportingController : Controller
     {
-        private readonly ILoadProperties<SessionFormation, int> _loadSessionFormationProperties;
+        private readonly ILoadProperties<SessionFormationDetails, int> _loadSessionFormationProperties;
         private readonly IReportService _reportService;
         private readonly InscriptionBusinessService _inscriptionBusinessService;
         private readonly ReferentielBusinessService<Wilaya, int> _wilayaBusinessService;
@@ -27,7 +27,7 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly ReferentielBusinessService<Commune, int> _communeBusinessService;
         private readonly ReferentielBusinessService<Activite, int> _activiteeBusinessService;
 
-        public ReportingController(ILoadProperties<SessionFormation, int> loadSessionFormationProperties,
+        public ReportingController(ILoadProperties<SessionFormationDetails, int> loadSessionFormationProperties,
                                    IReportService reportService,
                                    InscriptionBusinessService inscriptionBusinessService,
                                    ReferentielBusinessService<Formation, int> formationBusinessService,
@@ -64,7 +64,7 @@ namespace Anade.Khadamat.Web.Controllers
             Dictionary<string, object> navWithList = new();
             string reportPrintName = "";
             string reportName = "Attestation";
-            Type ConventionPropriete = typeof(SessionFormation);
+            Type ConventionPropriete = typeof(SessionFormationDetails);
 
             reportName = "Attestation";
 
