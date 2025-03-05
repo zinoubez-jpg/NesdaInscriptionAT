@@ -677,19 +677,19 @@ namespace Anade.Khadamat.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Anade.Khadamat.Domain.Commune", "CommuneNaissance")
-                        .WithMany("CommuneNaissances")
+                        .WithMany("InscriptionsPCNais")
                         .HasForeignKey("CommuneNaissanceId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Anade.Khadamat.Domain.Commune", "CommuneResidence")
-                        .WithMany("CommuneResidences")
+                        .WithMany("InscriptionsPCRes")
                         .HasForeignKey("CommuneResidenceId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Anade.Khadamat.Domain.Commune", "CommuneSiegeSocial")
-                        .WithMany("CommuneSeigeSocials")
+                        .WithMany("InscriptionsPCSS")
                         .HasForeignKey("CommuneSeigeSocialId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -770,11 +770,11 @@ namespace Anade.Khadamat.Data.Migrations
 
             modelBuilder.Entity("Anade.Khadamat.Domain.Commune", b =>
                 {
-                    b.Navigation("CommuneNaissances");
+                    b.Navigation("InscriptionsPCNais");
 
-                    b.Navigation("CommuneResidences");
+                    b.Navigation("InscriptionsPCRes");
 
-                    b.Navigation("CommuneSeigeSocials");
+                    b.Navigation("InscriptionsPCSS");
                 });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.Formation", b =>

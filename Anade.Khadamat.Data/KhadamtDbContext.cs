@@ -18,24 +18,21 @@ namespace Anade.Khadamat.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Inscription>().HasOne(x => x.CommuneNaissance)
-                          .WithMany(x => x.CommuneNaissances)
+                          .WithMany(x => x.InscriptionsPCNais)
                           .HasForeignKey(x => x.CommuneNaissanceId)
                           .OnDelete(DeleteBehavior.NoAction);
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Inscription>().HasOne(x => x.CommuneResidence)
-               .WithMany(x => x.CommuneResidences)
+               .WithMany(x => x.InscriptionsPCRes)
                .HasForeignKey(x => x.CommuneResidenceId)
                .OnDelete(DeleteBehavior.NoAction);
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Inscription>().HasOne(x => x.CommuneSiegeSocial)
-              .WithMany(x => x.CommuneSeigeSocials)
+              .WithMany(x => x.InscriptionsPCSS)
               .HasForeignKey(x => x.CommuneSeigeSocialId)
               .OnDelete(DeleteBehavior.NoAction);
             base.OnModelCreating(modelBuilder);
-
-
-
 
         }
         public virtual DbSet<Inscription> Inscriptions { get; set; }

@@ -10,8 +10,8 @@ namespace Anade.Khadamat.Domain
         [Required(ErrorMessage = "RequiredMessage")]
         public int WilayaId { get; set; }
         public virtual Wilaya Wilaya { get; set; }
-        public virtual ICollection<Inscription> CommuneResidences { get; set; }
-        public virtual ICollection<Inscription> CommuneNaissances { get; set; }
-        public virtual ICollection<Inscription> CommuneSeigeSocials { get; set; }
+        public virtual ICollection<Inscription> InscriptionsPCRes { get; set; }
+        public virtual ICollection<Inscription> InscriptionsPCNais { get; set; }
+        public virtual ICollection<Inscription> InscriptionsPCSS { get; set; }
     }
 }
