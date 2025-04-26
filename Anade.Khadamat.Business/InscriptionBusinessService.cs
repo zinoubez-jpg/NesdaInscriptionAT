@@ -24,8 +24,9 @@ namespace Anade.Khadamat.Business
             double age = DateTime.Now.Subtract(entity.DateNaissance).TotalDays / 365;
 
             if (_repository.Count(x =>
+                                  x.Validee == true &&
                                   x.NIN == entity.NIN) > 0)
-                throw new BusinessException("Une personne avec le même NIN existe déjà.");
+                throw new BusinessException("هناك شخص آخر مسجل بنفس رقم التعريف الوطني.");
 
             if (age < _promoteurEligibiliteSettings.Value.MinAge || age > _promoteurEligibiliteSettings.Value.MaxAge)
                 throw new BusinessException($"لتسجيل، يجب أن يكون عمرك بين 20و 58سنة");
