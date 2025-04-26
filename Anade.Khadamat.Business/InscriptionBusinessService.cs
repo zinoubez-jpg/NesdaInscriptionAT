@@ -63,8 +63,12 @@ namespace Anade.Khadamat.Business
             Expression<Func<Inscription, object>> loadSessionFormations = x => x.SessionFormations;
             Expression<Func<Inscription, object>> loadFiches = x => x.EvaluationProjets;
             Expression<Func<Inscription, object>> loadCSVF = x => x.CSVFs;
+            Expression<Func<Inscription, object>> loadTypeFinancement = x => x.TypeFinancement;
+            Expression<Func<Inscription, object>> loadActivite = x => x.Activite;
+            Expression<Func<Inscription, object>> loadCategorie = x => x.Categorie;
 
-            return new Expression<Func<Inscription, object>>[] { loadCommuneRes, loadCommuneNais, loadCommuneSS, loadGenre, loadSituationFamiliale, loadTypeInscription , loadSessionFormations, loadFiches , loadCSVF};
+
+            return new Expression<Func<Inscription, object>>[] { loadCommuneRes, loadCommuneNais, loadCommuneSS, loadGenre, loadSituationFamiliale, loadTypeInscription , loadSessionFormations, loadFiches , loadCSVF, loadTypeFinancement , loadActivite, loadCategorie };
         }
     }
 }

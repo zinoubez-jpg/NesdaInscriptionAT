@@ -17,6 +17,11 @@ namespace Anade.Khadamat.Web.Models
         public int TypeInscriptionId { get; set; }
         [Required(ErrorMessage = "يجب ملء هذا الحقل")]
         public int CategorieId { get; set; }
+
+
+        [Display(Name = "TypeFinancementId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int TypeFinancementId { get; set; }
         public DateTime DateInscription { get; set; }
 
         [Display(Name = "NIN")]
@@ -119,6 +124,19 @@ namespace Anade.Khadamat.Web.Models
         public IFormFile CopieDiplomeRCCFCAPdf { get; set; }
         public string NumeroSiejeV3 { get; set; }
         public int ActiviteId { get; set; }
+
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        [DataType(DataType.Password)]
+        [StringLength(100, MinimumLength = 6, ErrorMessage = "كلمة المرور يجب أن تكون 6 أحرف على الأقل.")]
+        [Display(Name = "كلمة المرور")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "كلمتا المرور غير متطابقتين.")]
+        [Display(Name = "تأكيد كلمة المرور")]
+        public string ConfirmPassword { get; set; }
+       
         public virtual ICollection<SessionFormationDetails> SessionFormations { get; set; }
         public virtual ICollection<EvaluationProjet> EvaluationProjets { get; set; }
         public virtual ICollection<CSVF> CSVFs { get; set; }

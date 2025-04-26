@@ -52,5 +52,6 @@ namespace Anade.Khadamat.Data
         public virtual DbSet<Circonscription> Circonscriptions { get; set; }
         public virtual DbSet<Categorie> Categories { get; set; }
         public virtual DbSet<Activite> Activites { get; set; }
+        public virtual DbSet<TypeFinancement> TypeFinancements { get; set; }
     }
 }

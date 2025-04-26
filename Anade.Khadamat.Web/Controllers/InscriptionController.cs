@@ -53,6 +53,7 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly UserStructureService _userStructureService;
         private readonly TypeUserServices _typeUserServices;
         private readonly StructureService _structureService;
+        private readonly ReferentielBusinessService<TypeFinancement, int> _typeFinnacementBusinessService;
         public InscriptionController(                           
                                       ReferentielBusinessService<Commune, int> communeBusinessService,
                                       ReferentielBusinessService<Wilaya, int> wilayaBusinessService,
@@ -75,7 +76,9 @@ namespace Anade.Khadamat.Web.Controllers
                                       StructureService structureService,
                                       ReferentielBusinessService<Categorie, int> categorieBusinessService,
                                       CirconscriptionBusinessService circonscriptionBusinessService,
-                                      ReferentielBusinessService<Activite, int> activiteBusinessService
+                                      ReferentielBusinessService<Activite, int> activiteBusinessService,
+                                      ReferentielBusinessService<TypeFinancement, int> typeFinnacementBusinessService
+
                                    )
         {
             _communeBusinessService = communeBusinessService;
@@ -93,6 +96,7 @@ namespace Anade.Khadamat.Web.Controllers
             _circonscriptionBusinessService = circonscriptionBusinessService;
             _antenneBusinessService = antenneBusinessService;
             _activiteBusinessService = activiteBusinessService;
+            _typeFinnacementBusinessService = typeFinnacementBusinessService;
 
 
             _roleManager = roleManager;
@@ -111,7 +115,7 @@ namespace Anade.Khadamat.Web.Controllers
         [Route("{TypeInscriptionId}")]
         public virtual IActionResult CreateInscription(int typeInscriptionId)
         {
-            if (typeInscriptionId != 1 && typeInscriptionId != 2)
+            if ( typeInscriptionId != 2)
             {
                 return  Unauthorized();
             }
@@ -128,13 +132,13 @@ namespace Anade.Khadamat.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("{TypeInscriptionId}")]
-        public virtual async Task <IActionResult> CreateInscription(int typeInscriptionId, CreateInscriptionVM model)
+        public virtual IActionResult CreateInscription(int typeInscriptionId, CreateInscriptionVM model)
          {
             if (typeInscriptionId != 1 && typeInscriptionId != 2)
             {
                 return Unauthorized();
             }
-            var isRecaptchaValid = await _recaptchaService.ValidateRecaptchaAsync(model.RecaptchaResponse);
+            var isRecaptchaValid = _recaptchaService.ValidateRecaptchaAsync(model.RecaptchaResponse).Result ;
             if (!isRecaptchaValid)
             {
                 ModelState.AddModelError("Recaptcha", "لم تتمكن من اجتياز اختبار الـ CAPTCHA. يرجى المحاولة مرة أخرى.");
@@ -235,11 +239,13 @@ namespace Anade.Khadamat.Web.Controllers
                 var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
                 var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
                 var antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
+
                 Inscription NewInscription = new Inscription
                 {
 
                     TypeInscriptionId = typeInscriptionId,
                     CategorieId = model.CategorieId,
+                    TypeFinancementId = model.TypeFinancementId,
                     DateInscription = DateTime.Now,
                     NIN = model.NIN,
                     NomAr = model.NomAr,
@@ -269,6 +275,7 @@ namespace Anade.Khadamat.Web.Controllers
                     CopieDiplomeRCCFCAPath = copieDiplomeRCCFCAPdfPath,
                     AntenneId = antenne.Id,
                     ActiviteId = 1,
+                    PasswordHashInit= model.Password
 
 
                 };
@@ -279,7 +286,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                 if (businessResult.Succeeded)
                 {
-                   await _emailVerificationService.SendVerificationEmailAsync(
+                    _emailVerificationService.SendVerificationEmailAsync(
                       NewInscription.Email,
                       NewInscription.EmailVerificationToken
                      );
@@ -318,7 +325,7 @@ namespace Anade.Khadamat.Web.Controllers
                         TypeUserId = 2,
                         EmailConfirmed = true
                     };
-                    var password = inscri.Email;
+                    var password = inscri.PasswordHashInit;
                     var result = await _userManager.CreateAsync(userNew, password);
                 return View("EmailVerificationSuccess");
             }
@@ -345,6 +352,7 @@ namespace Anade.Khadamat.Web.Controllers
             var niveauInstructions = _niveauInstructionBusinessService.GetAll();
             var typeInscription = _typeInscriptionBusinessService.GetAll();
             var categories = _categorieBusinessService.GetAllFiltered(x=>x.Id!=1);
+            var typeFinancements = _typeFinnacementBusinessService.GetAll();
 
 
             ViewBag.GenreId = new SelectList(genres, nameof(Genre.Id), nameof(Genre.DesignationAr));
@@ -354,6 +362,7 @@ namespace Anade.Khadamat.Web.Controllers
             ViewBag.NiveauInstructionId = new SelectList(niveauInstructions, nameof(NiveauInstruction.Id), nameof(NiveauInstruction.DesignationAr));
             ViewBag.TypeInscriptionId = new SelectList(typeInscription, nameof(TypeInscription.Id), nameof(TypeInscription.DesignationAr));
             ViewBag.CategorieId = new SelectList(categories, nameof(Categorie.Id), nameof(Categorie.DesignationAr));
+            ViewBag.TypeFinancementId = new SelectList(typeFinancements, nameof(TypeFinancement.Id), nameof(TypeFinancement.DesignationAr));
         }
 
 

@@ -149,6 +149,16 @@
 
 
                                     </div>
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                        <label asp-for="TypeFinancementId">نوع التمويل <span style="color:red;">*</span> </label>
+                                        <select asp-for="TypeFinancementId" asp-items="@ViewBag.TypeFinancementId as SelectList" class="form-control select2" required>
+                                            <option value="">إختيار </option>
+                                        </select>
+                                        <span asp-validation-for="TypeFinancementId" class="text-danger"></span>
+
+
+                                    </div>
                                     
                                     <div class="row clearfix">
                                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
@@ -303,6 +313,17 @@
                                             <span asp-validation-for="CommuneSeigeSocialId" class="text-danger"></span>
 
 
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="Password">كلمة المرور <span style="color:red;">*</span></label>
+                                            <input asp-for="Password" type="password" class="form-control" required />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+                                            <label asp-for="ConfirmPassword">تأكيد كلمة المرور <span style="color:red;">*</span></label>
+                                            <input asp-for="ConfirmPassword" type="password" class="form-control" required />
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                         </div>
 
 

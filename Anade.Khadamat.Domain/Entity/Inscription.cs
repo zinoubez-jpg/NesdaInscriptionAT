@@ -72,7 +72,10 @@ namespace Anade.Khadamat.Domain
         [Display(Name = "NiveauInstructionId")]
         [Required(ErrorMessage = "يجب ملء هذا الحقل")]
         public int NiveauInstructionId { get; set; }
-    
+        [Display(Name = "TypeFinancementId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int TypeFinancementId { get; set; }
+
         public string EtablissementFormation { get; set; }
       
         public string IntituleDiplome { get; set; }
@@ -114,6 +117,7 @@ namespace Anade.Khadamat.Domain
         public string CopieDiplomeRCCFCAPath { get; set; }
         public string NumeroSiejeV3 { get; set; }
         public int ActiviteId { get; set; }
+        public string PasswordHashInit { get; set; }
         public virtual ICollection<SessionFormationDetails> SessionFormations { get; set; }
         public virtual ICollection<EvaluationProjet> EvaluationProjets { get; set; }
         public virtual ICollection<CSVF> CSVFs { get; set; }
@@ -127,6 +131,7 @@ namespace Anade.Khadamat.Domain
         public virtual Antenne Antenne { get; set; }
         public virtual Categorie Categorie { get; set; }
         public virtual Activite Activite { get; set; }
+        public virtual TypeFinancement TypeFinancement { get; set; }
 
 
     }
