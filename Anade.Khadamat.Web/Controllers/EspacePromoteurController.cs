@@ -2,6 +2,7 @@
 using Anade.Khadamat.Domain;
 using Anade.Khadamat.Identity;
 using Anade.Khadamat.Identity.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Anade.Khadamat.Web.Controllers
 {
+    [Authorize]
     public class EspacePromoteurController : Controller
     {
         public readonly InscriptionBusinessService _inscriptionBusinessService;

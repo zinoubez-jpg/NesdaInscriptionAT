@@ -1,4 +1,5 @@
-﻿<div class="page-wrapper">
+﻿
+<div class="page-wrapper">
 
 
     <!-- Banner Section -->
@@ -18,7 +19,7 @@
                                 </h1>
                                 <div class="text">ترافقكم الوكالة عبر مُختلف مراحل انشاء  وتوسعة مؤسستكم المُصغّرة  <br> .في قطاعات اقتصادية مُتنوعة من التكوين، المرافقة والدعم</div>
                                 <div class="btn-box">
-                                    <a asp-controller="Inscription" asp-action="CreateInscription" asp-route-TypeInscriptionId="2" class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
+                                    <a asp-controller="Home" asp-action="Inscrire"  class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +42,7 @@
                                 </h1>
                                 <div class="text">تسعى الوكالة الوطنية لدعم وتنمية المقاولاتية الى ترقية نظام بيئي للمقاولاتية الذي يحفز على إنشاء، تمويل وتطوير المؤسسات المُصغّرة عالية الأداء، ذات صمود وتخلق قيمة مُضافة مستدامة   </div>
                                 <div class="btn-box">
-                                    <a asp-controller="Inscription" asp-action="CreateInscription" asp-route-TypeInscriptionId="2" class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
+                                    <a asp-controller="Home" asp-action="Inscrire" class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +69,7 @@
                                     تلتزم الوكالة بتعزيز الفكر المقاولاتي، وتوفير الدعم المالي والتسهيلات الجبائية لضمان نجاح مشاريعكم.
                                 </div>
                                 <div class="btn-box">
-                                    <a asp-controller="Inscription" asp-action="CreateInscription" asp-route-TypeInscriptionId="2" class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
+                                    <a asp-controller="Home" asp-action="Inscrire"  class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +115,7 @@
                     <div class="cta-phone text-sm-end text-strat">
                         <h6 class="title" style="font-size:18px">البــــريـــــــــــد الإلـــكتـــــــرونــــــي   :    contact@nesda.dz </h6>
                     </div>
-                   
+
                     <!-- CTA Phone Number Start -->
                 </div>
             </div>
@@ -156,6 +157,69 @@
         </div>
     </section>
     <!-- End About Section -->
+    <!-- Services  Section -->
+    <section id="objectif" class="services-section">
+        <div class="auto-container">
+            <div class="sec-title">
+                <div class="title">الخدمات</div>
+                <h2>   خدمات الرقمية<span> للوكالة</span></h2>
+            </div>
+            <div class="inner-container">
+                <div class="row g-4">
+
+                    <!-- Service Block -->
+                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                        <div class="inner-box">
+                            <a asp-action="Inscrire" asp-controller="Home">
+                                <div class="icon-box">
+                                    <span class="icon fas fa-user-plus"></span>
+                                  
+                                </div>
+                                <h5><a>فضاء التسجيل</a></h5>
+                                <div class="text">
+                                    .يتيح لكم التسجيل بسهولة للاستفادة من خدمات جهاز الوكالة الوطنية لدعم وتنمية المقاولاتية
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Service Block -->
+                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                        <div class="inner-box">
+                            <a asp-action="SuiviDossier" asp-controller="EspacePromoteur">
+                                <div class="icon-box">
+                                    <span class="icon fas fa-user-friends"></span>
+
+                                </div>
+                                <h5><a>فضاء صاحب المشروع</a></h5>
+                                <div class="text">
+                                    فضاء مخصص لصاحب المشروع لإدارة معلوماته، متابعة تقدم مشروعه، وإنجاز مختلف الإجراءات عبر المنصة الإلكترونية.
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Service Block -->
+                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                        <div class="inner-box">
+                            <a href="https://nesda.ufc.dz/login/index.php">
+                                <div class="icon-box">
+                                    <span class="icon fas fa-laptop-code"></span>
+                                </div>
+                                <h5><a>التكوين عن بعد</a></h5>
+                                <div class="text">
+                                    تمكين صاحب المشروع من الوصول إلى المنصة التعليمية التابعة للوكالة، وذلك في إطار الاتفاقية الموقعة مع جامعة التكوين المتواصل، لمتابعة برامج التكوين المعتمدة عن بُعد.
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- End Services  Section -->
     <!-- Services objectif Section -->
     <section id="objectif" class="services-section">
         <div class="auto-container">
@@ -231,7 +295,7 @@
                             <div class="icon-box">
                                 <span class="icon ti-check-box"></span>
                             </div>
-                            <h5><a >التمويل الذاتي</a></h5>
+                            <h5><a>التمويل الذاتي</a></h5>
                             <div class="text">حيث يقوم صاحب المشروع بتمويل الاستثمار بالكامل بشكل مستقل، دون اللجوء إلى مصادر خارجية</div>
                         </div>
                     </div>
@@ -242,7 +306,7 @@
                             <div class="icon-box">
                                 <span class="icon ti-check-box"></span>
                             </div>
-                            <h5><a >التمويل الثنائي</a></h5>
+                            <h5><a>التمويل الثنائي</a></h5>
                             <div class="text">حيث يساهم كل من صاحب المشروع والوكالة بنسبة 50% من مبلغ الاستثمار</div>
                         </div>
                     </div>
@@ -253,7 +317,7 @@
                             <div class="icon-box">
                                 <span class="icon ti-check-box"></span>
                             </div>
-                            <h5><a >التمويل الثلاثي</a></h5>
+                            <h5><a>التمويل الثلاثي</a></h5>
                             <div class="text">يساهم حامل المشروع بنسبة ما بين 5 و 15% في حين الوكالة تساهم بنسبة ما بين 15 و 25%،والبنك يغطي نسبة 70%المتبقية</div>
                         </div>
                     </div>
