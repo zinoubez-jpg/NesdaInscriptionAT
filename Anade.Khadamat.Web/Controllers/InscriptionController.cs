@@ -187,7 +187,7 @@ namespace Anade.Khadamat.Web.Controllers
                     if (bResult.Succeeded)
                     {
                         TempData["Message"] = bResult.ToBootstrapAlerts();
-                        return RedirectToAction(nameof(Index));
+                        return View(model);
                     }
 
                 }
@@ -201,7 +201,7 @@ namespace Anade.Khadamat.Web.Controllers
                     if (bResult.Succeeded)
                     {
                         TempData["Message"] = bResult.ToBootstrapAlerts();
-                        return RedirectToAction(nameof(Index));
+                        return View(model);
                     }
 
                 }
@@ -217,7 +217,7 @@ namespace Anade.Khadamat.Web.Controllers
                     if (bResult.Succeeded)
                     {
                         TempData["Message"] = bResult.ToBootstrapAlerts();
-                        return RedirectToAction(nameof(Index));
+                        return View(model);
                     }
 
                 }
@@ -231,7 +231,7 @@ namespace Anade.Khadamat.Web.Controllers
                     if (bResult.Succeeded)
                     {
                         TempData["Message"] = bResult.ToBootstrapAlerts();
-                        return RedirectToAction(nameof(Index));
+                        return View(model);
                     }
 
                 }

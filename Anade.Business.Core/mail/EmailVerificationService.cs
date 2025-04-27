@@ -20,7 +20,7 @@ namespace Anade.Business.Core
 
         public async Task SendVerificationEmailAsync(string email, string token)
         {
-            var verificationLink = $" http://192.168.172.106:8043/Inscription/VerifyEmail?email={email}&token={token}";
+            var verificationLink = $" https://machrou3i.nesda.dz/Inscription/VerifyEmail?email={email}&token={token}";
             var emailBody = $@"
             <!DOCTYPE html>
             <html lang='ar' dir='rtl'>
