@@ -25,6 +25,7 @@ namespace Anade.Khadamat.Business
 
             if (_repository.Count(x =>
                                   x.Validee == true &&
+                                  x.Annulee == false &&
                                   x.NIN == entity.NIN) > 0)
                 throw new BusinessException("هناك شخص آخر مسجل بنفس رقم التعريف الوطني.");
 
