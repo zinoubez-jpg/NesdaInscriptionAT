@@ -54,6 +54,8 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly TypeUserServices _typeUserServices;
         private readonly StructureService _structureService;
         private readonly ReferentielBusinessService<TypeFinancement, int> _typeFinnacementBusinessService;
+        private readonly ReferentielBusinessService<Agence, int> _agenceBusinessService;
+
         public InscriptionController(                           
                                       ReferentielBusinessService<Commune, int> communeBusinessService,
                                       ReferentielBusinessService<Wilaya, int> wilayaBusinessService,
@@ -77,7 +79,8 @@ namespace Anade.Khadamat.Web.Controllers
                                       ReferentielBusinessService<Categorie, int> categorieBusinessService,
                                       CirconscriptionBusinessService circonscriptionBusinessService,
                                       ReferentielBusinessService<Activite, int> activiteBusinessService,
-                                      ReferentielBusinessService<TypeFinancement, int> typeFinnacementBusinessService
+                                      ReferentielBusinessService<TypeFinancement, int> typeFinnacementBusinessService,
+                                      ReferentielBusinessService<Agence, int> agenceBusinessService
 
                                    )
         {
@@ -97,8 +100,7 @@ namespace Anade.Khadamat.Web.Controllers
             _antenneBusinessService = antenneBusinessService;
             _activiteBusinessService = activiteBusinessService;
             _typeFinnacementBusinessService = typeFinnacementBusinessService;
-
-
+            _agenceBusinessService = agenceBusinessService;
             _roleManager = roleManager;
             _userManager = userManager;
             _userService = userService;
@@ -239,7 +241,7 @@ namespace Anade.Khadamat.Web.Controllers
                 var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
                 var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
                 var antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
-
+                var agence = _agenceBusinessService.GetById(antenne.AgenceId);
                 Inscription NewInscription = new Inscription
                 {
 
@@ -274,6 +276,9 @@ namespace Anade.Khadamat.Web.Controllers
                     CopieCNIPath = copieCNIPdfPath,
                     CopieDiplomeRCCFCAPath = copieDiplomeRCCFCAPdfPath,
                     AntenneId = antenne.Id,
+                    Anntenne=antenne.Code,
+                    Agence=agence.Code,
+                   
                     ActiviteId = 1,
                     PasswordHashInit= model.Password
 

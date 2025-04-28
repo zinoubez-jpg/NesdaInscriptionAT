@@ -525,6 +525,41 @@
     </script>
     <script type="text/javascript">
 
+        function restrictInputToFrenchAndNumbers($field) {
+            var frenchCharUnicodeRange = /^[a-zA-ZÀ-ÿ0-9\s]+$/;
+
+            function isAllowedInput(str) {
+                return frenchCharUnicodeRange.test(str);
+            }
+
+            $field.on("keypress", function (event) {
+                var key = event.which || event.keyCode;
+
+                if (key <= 32) {
+                    return true;
+                }
+
+                var char = String.fromCharCode(key);
+                return isAllowedInput(char);
+            });
+
+            $field.on("paste drop", function (event) {
+                var data = (event.originalEvent || event).clipboardData
+                    ? (event.originalEvent || event).clipboardData.getData('text')
+                    : event.originalEvent.dataTransfer.getData('text');
+
+                if (!isAllowedInput(data)) {
+                    event.preventDefault();
+                }
+            });
+        }
+
+        jQuery(document).ready(function () {
+            
+            restrictInputToFrenchAndNumbers($('#NomFr'));
+            restrictInputToFrenchAndNumbers($('#PrenomFr'));
+        });
+
         function restrictInputOtherThanArabic($field) {
             // Plage de caractères Unicode pour les caractères arabes, chiffres arabes, et chiffres occidentaux
             var arabicCharUnicodeRange = /^[\u0600-\u06FF\u0660-\u0669\u0030-\u0039\s]+$/; // Ajout des chiffres occidentaux et des espaces
