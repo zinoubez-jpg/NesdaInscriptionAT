@@ -136,7 +136,7 @@ namespace Anade.Khadamat.Web.Controllers
         [Route("{TypeInscriptionId}")]
         public virtual IActionResult CreateInscription(int typeInscriptionId, CreateInscriptionVM model)
          {
-            if (typeInscriptionId != 1 && typeInscriptionId != 2)
+            if ( typeInscriptionId != 2)
             {
                 return Unauthorized();
             }
@@ -179,33 +179,30 @@ namespace Anade.Khadamat.Web.Controllers
                 }
 
 
-                var bResult = new BusinessResult(false);
+                
                 if (model.CopieCNIPdf.Length > 2048576)
                 {
 
-                    bResult = new BusinessResult(true);
+                    var bResult = new BusinessResult();
                     bResult.Messages.Add(new MessageResult { Message = "حجم الملف يتجاوز الحد المسموح به", MessageType = MessageType.Error });
+                  
+                    TempData["Message"] = bResult.ToBootstrapAlerts();
+                        
+                    InitializeListViewBags();
 
-                    if (bResult.Succeeded)
-                    {
-                        TempData["Message"] = bResult.ToBootstrapAlerts();
-                        return View(model);
-                    }
+                    return View(model);
+                   
 
                 }
                 if (!model.CopieCNIPdf.ContentType.Equals("application/pdf"))
                 {
-
+                    var bResult = new BusinessResult();
                     bResult = new BusinessResult(true);
                     bResult.Messages.Add(new MessageResult { Message = "يرجى تحميل ملف بصيغة PDF لاستكمال طلبك.", MessageType = MessageType.Error });
-
-
-                    if (bResult.Succeeded)
-                    {
                         TempData["Message"] = bResult.ToBootstrapAlerts();
+                        InitializeListViewBags();
                         return View(model);
-                    }
-
+                    
                 }
                 string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder"); ;
 
@@ -213,29 +210,21 @@ namespace Anade.Khadamat.Web.Controllers
                 if (model.CopieDiplomeRCCFCAPdf.Length > 2048576)
                 {
 
-                    bResult = new BusinessResult(true);
+                   var bResult = new BusinessResult();
                     bResult.Messages.Add(new MessageResult { Message = "حجم الملف يتجاوز الحد المسموح به", MessageType = MessageType.Error });
-
-                    if (bResult.Succeeded)
-                    {
                         TempData["Message"] = bResult.ToBootstrapAlerts();
+                        InitializeListViewBags();
                         return View(model);
-                    }
-
                 }
                 if (!model.CopieDiplomeRCCFCAPdf.ContentType.Equals("application/pdf"))
                 {
 
-                    bResult = new BusinessResult(true);
+                    var bResult = new BusinessResult();
                     bResult.Messages.Add(new MessageResult { Message = "يرجى تحميل ملف بصيغة PDF لاستكمال طلبك.", MessageType = MessageType.Error });
-
-
-                    if (bResult.Succeeded)
-                    {
-                        TempData["Message"] = bResult.ToBootstrapAlerts();
-                        return View(model);
-                    }
-
+                    TempData["Message"] = bResult.ToBootstrapAlerts();
+                    InitializeListViewBags();
+                    return View(model);
+                  
                 }
                 string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
                 var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
@@ -296,7 +285,7 @@ namespace Anade.Khadamat.Web.Controllers
                       NewInscription.EmailVerificationToken
                      );
 
-                    //TempData["Message"] = businessResult.ToBootstrapAlerts();
+                   
 
                     return RedirectToAction(nameof(SuccesInscription));
 
