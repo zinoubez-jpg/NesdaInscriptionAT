@@ -1,9 +1,5 @@
 ﻿@model Anade.Khadamat.Web.Models.CreateInscriptionVM
-
-
 @{ ViewData["Title"] = "Inscription en ligne ";
-
-
 
 }
 
@@ -43,15 +39,15 @@
                                     {
                                         <p style="text-align: justify;">
                                             هذه الاستمارة مخصصة للتسجيل عبر الإنترنت لطلب التمويل لإنشاء مشروع توسيعي في إطار جهاز الوكالة الوطنية لدعم وتنمية المقاولاتية.
-                                        </p> 
+                                        </p>
                                     }
-                                            else
-                                            {
-                                <p style="text-align: justify;">
-                                    هذه الاستمارة مخصصة للتسجيل عبر الإنترنت لطلب التمويل لإنشاء مشروع جديد في إطار جهاز الوكالة الوطنية لدعم وتنمية المقاولاتية.
-                                </p>
+                                    else
+                                    {
+                                        <p style="text-align: justify;">
+                                            هذه الاستمارة مخصصة للتسجيل عبر الإنترنت لطلب التمويل لإنشاء مشروع جديد في إطار جهاز الوكالة الوطنية لدعم وتنمية المقاولاتية.
+                                        </p>
 
-                                            }
+                                    }
 
                                 </div>
 
@@ -73,7 +69,7 @@
     <!-- Reputation Section Two -->
     <div class="reputation-section-two">
         <div class="auto-container">
-            <div class="row clearfix" >
+            <div class="row clearfix">
                 <div class="container">
 
                     <partial name="_Message" />
@@ -81,12 +77,12 @@
                 <!-- Content Column -->
                 <div class="content-column col-lg-4 col-md-12 col-sm-12 ">
                     <div class="inner-column">
-                        
+
                         <div class="text">
 
                             @if (ViewBag.TypeInsId == 2)
                             {
-                             
+
                                 <br />
 
                                 <br />
@@ -101,13 +97,13 @@
                                     <li>الحرفيون .</li>
                                     <li>أصحاب السجلات التجارية .</li>
                                     <li>أصحاب التراخيص .</li>
-                                  
+
                                 </ul>
 
                             }
                             else
                             {
-                              
+
                                 <br />
 
                                 <ul class="list-style-one">
@@ -133,16 +129,16 @@
                 <!-- Form Column -->
                 <div class="form-column col-lg-8 col-md-12 col-sm-12">
                     <div class="inner-column">
-                     
+
                         <div class="form-boxed ">
 
                             <div class="contact-form">
                                 <!-- Contact Form -->
                                 <form enctype="multipart/form-data" asp-action="CreateInscription" class="needs-validation" novalidate>
-                                    
+
                                     <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                         <label asp-for="CategorieId">هل استفدت من أحد أجهزة الدعم أم تمتلك مؤسسة ممولة بمالك الخاص؟ <span style="color:red;">*</span> </label>
-                                        <select asp-for="CategorieId" asp-items="@ViewBag.CategorieId as SelectList" class="form-control select2"  required>
+                                        <select asp-for="CategorieId" asp-items="@ViewBag.CategorieId as SelectList" class="form-control select2" required>
                                             <option value="">إختيار </option>
                                         </select>
                                         <span asp-validation-for="CategorieId" class="text-danger"></span>
@@ -156,17 +152,14 @@
                                             <option value="">إختيار </option>
                                         </select>
                                         <span asp-validation-for="TypeFinancementId" class="text-danger"></span>
-
-
                                     </div>
-                                    
+
                                     <div class="row clearfix">
                                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                             <label asp-for="NIN">الرقم التعريفي الوطني الوحيد (NIN) <span style="color:red;">*</span></label>
                                             <input asp-for="NIN" class="required-input" required>
                                             <span asp-validation-for="NIN" class="text-danger"></span>
                                             <span id="ninValidationMessage"></span>
-
                                         </div>
                                     </div>
 
@@ -175,14 +168,11 @@
                                             <label asp-for="NomAr"> اللقب بالعربية <span style="color:red;">*</span></label>
                                             <input asp-for="NomAr" required>
                                             <span asp-validation-for="NomAr" class="text-danger"></span>
-
-
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                             <label asp-for="PrenomAr">الإسم بالعربية <span style="color:red;">*</span></label>
                                             <input asp-for="PrenomAr" required>
                                             <span asp-validation-for="PrenomAr" class="text-danger"></span>
-
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                             <label asp-for="NomFr"> اللقب بالأحرف اللاتينية <span style="color:red;">*</span></label>
@@ -280,7 +270,7 @@
 
 
                                         </div>
-                                        
+
                                     </div>
 
                                     <div class="row clearfix">
@@ -298,6 +288,7 @@
                                             <span asp-validation-for="Email" class="text-danger"></span>
                                             <span id="emailValidationMessage"></span>
                                         </div>
+
                                         <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                             <label asp-for="WilayaSeigeSocialId"> ولاية المقر الاجتماعي لمؤسستكم <span style="color:red;">*</span></label>
                                             <select asp-for="WilayaSeigeSocialId" asp-items="@ViewBag.WilayaResId as SelectList" class="form-control select2" id="wilayaSS" required>
@@ -356,14 +347,14 @@
                                                 @if (ViewBag.TypeInsId == 2)
                                                 {
 
-                                    <label asp-for="CopieDiplomeRCCFCAPdf" class="col-lg-12 col-md-12 col-sm-12 col-form-label">
-                                         نرجو منكم إرفاق نسخة واضحة من ( السجل التجاري / بطاقة فلاح / بطافة حرفي/ ترخيص) (PDF) <span style="color:red;">*</span>
-                                    </label> }
-                                else
-                                {
-                                    <label asp-for="CopieDiplomeRCCFCAPdf" class="col-lg-12 col-md-12 col-sm-12 col-form-label">
-                                        نرجو منكم إرفاق نسخة واضحة من الشهادة (الجامعية / معهد التكوين المهني) (PDF)
-                                    </label>}
+                                                    <label asp-for="CopieDiplomeRCCFCAPdf" class="col-lg-12 col-md-12 col-sm-12 col-form-label">
+                                                        نرجو منكم إرفاق نسخة واضحة من ( السجل التجاري / بطاقة فلاح / بطافة حرفي/ ترخيص) (PDF) <span style="color:red;">*</span>
+                                                    </label> }
+                                                else
+                                                {
+                                                    <label asp-for="CopieDiplomeRCCFCAPdf" class="col-lg-12 col-md-12 col-sm-12 col-form-label">
+                                                        نرجو منكم إرفاق نسخة واضحة من الشهادة (الجامعية / معهد التكوين المهني) (PDF)
+                                                    </label>}
                                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                                     <div class="custom-file">
                                                         <input asp-for="CopieDiplomeRCCFCAPdf"
@@ -382,7 +373,7 @@
 
                                         <div class="form-group">
                                             <label class="custom-checkbox">
-                                                <input type="checkbox" id="acceptTerms" >
+                                                <input type="checkbox" id="acceptTerms">
                                                 <span class="checkmark"></span>
                                                 أسمح لناسدا بمعالجة بياناتي الشخصية <a href="conditions.html" target="_blank">وفق للشروط المنصوص عليها في القانون 18/07</a>   المتعلقة بحماية الأشخاص الطبيعين في معالجة المعطيات الشخصية.
                                             </label>
@@ -428,7 +419,8 @@
     <partial name="_jqueryui.script" />
     <partial name="_select2.script" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
-
+   
+    <script src="~/js/EmailVerification.js"></script>
     @*<script>
             $(function () {
 
@@ -439,33 +431,7 @@
 
 
     <script>
-             let timeout = null;
 
-        document.getElementById('Email').addEventListener('input', function() {
-            clearTimeout(timeout);
-            var email = this.value;
-
-            timeout = setTimeout(function() {
-                if (email.length > 3) { 
-                    fetch('/Inscription/CheckEmailExists?email=' + encodeURIComponent(email))
-                        .then(response => response.json())
-                        .then(data => {
-                            const messageElement = document.getElementById('emailValidationMessage');
-                            if (data.exists) {
-                                messageElement.textContent = "❌ هذا البريد الإلكتروني مسجل من قبل";
-                                messageElement.style.color = "red";
-                            } else {
-                                messageElement.textContent = "البريد الإلكتروني متاح.";
-                                messageElement.style.color = "#006D6A";
-                            }
-                        });
-                } else {
-                    document.getElementById('emailValidationMessage').textContent = '';
-                }
-            }, 500); 
-        });
-
-       
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -504,11 +470,11 @@
             }
         });
     </script>
-  
-                
+
+
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#communeN").prop("disabled", false); 
+            $("#communeN").prop("disabled", false);
 
             $("#wilayaN").change(function () {
                 var wilayaNId = $(this).val();
@@ -520,7 +486,7 @@
                         $.each(data, function (i, city) {
                             item += '<option value="' + city.value + '">' + city.text + '</option>'
                         });
-                        $("#communeN").html(item).prop("disabled", false); 
+                        $("#communeN").html(item).prop("disabled", false);
                     });
                 } else {
                     $("#communeN").html("<option value=''>إختيار بلدية الميلاد</option>").prop("disabled", true);
@@ -529,7 +495,7 @@
         });
 
         $(document).ready(function () {
-            $("#communeR").prop("disabled", false); 
+            $("#communeR").prop("disabled", false);
 
             $("#wilayaR").change(function () {
                 var wilayaRId = $(this).val();
@@ -541,7 +507,7 @@
                         $.each(data, function (i, city) {
                             item += '<option value="' + city.value + '">' + city.text + '</option>'
                         });
-                        $("#communeR").html(item).prop("disabled", false); 
+                        $("#communeR").html(item).prop("disabled", false);
                     });
                 } else {
                     $("#communeR").html("<option value=''>إختيار بلدية الإقامة</option>").prop("disabled", true);
@@ -561,7 +527,7 @@
                         $.each(data, function (i, city) {
                             item += '<option value="' + city.value + '">' + city.text + '</option>'
                         });
-                        $("#communeSS").html(item).prop("disabled", false); 
+                        $("#communeSS").html(item).prop("disabled", false);
                     });
                 } else {
                     $("#communeSS").html("<option value=''>إختيار بلدية الإقامة</option>").prop("disabled", true);
@@ -624,7 +590,7 @@
         }
 
         jQuery(document).ready(function () {
-            
+
             restrictInputToFrenchAndNumbers($('#NomFr'));
             restrictInputToFrenchAndNumbers($('#PrenomFr'));
         });
@@ -683,7 +649,7 @@
             restrictInputOtherThanArabic($('#NomAr'));
             restrictInputOtherThanArabic($('#PrenomAr'));
             restrictInputOtherThanArabic($('#AdressAr'));
-           
+
         });
     </script>
     <script>
@@ -732,7 +698,7 @@
     </script>
 
 
-  
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
