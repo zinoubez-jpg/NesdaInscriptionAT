@@ -210,7 +210,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DBNesdaInscription6DataSet</rd:DataSetName>
-        <rd:SchemaPath>E:\NesdaInscriptionF-master\NesdaInscriptionF-master\Anade.Khadamat.Web\DBNesdaInscription6DataSet.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\berassil\Source\Repos\NesdaInscriptionAT\Anade.Khadamat.Web\DBNesdaInscription6DataSet.xsd</rd:SchemaPath>
         <rd:TableName>SessionFormationsDetails</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
