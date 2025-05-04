@@ -114,7 +114,7 @@ namespace Anade.Khadamat.Web.Controllers
             return View();
         }
 
-        [Route("{TypeInscriptionId}")]
+        [Route("{typeInscriptionId}")]
         public virtual IActionResult CreateInscription(int typeInscriptionId)
         {
             if ( typeInscriptionId != 2)
@@ -133,7 +133,7 @@ namespace Anade.Khadamat.Web.Controllers
         // POST: Generic/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("{TypeInscriptionId}")]
+        [Route("{typeInscriptionId}")]
         public virtual IActionResult CreateInscription(int typeInscriptionId, CreateInscriptionVM model)
          {
             if ( typeInscriptionId != 2)
@@ -292,6 +292,7 @@ namespace Anade.Khadamat.Web.Controllers
                 }
                 TempData["Message"] = businessResult.ToBootstrapAlerts();
                 InitializeListViewBags();
+                return View(model);
 
             }
             InitializeListViewBags();
@@ -387,7 +388,7 @@ namespace Anade.Khadamat.Web.Controllers
             if (file != null)
             {
                 string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, folderName);
-                uniqueFileName = $"{model.NIN}{fileNameSuffix}.pdf";
+                uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {

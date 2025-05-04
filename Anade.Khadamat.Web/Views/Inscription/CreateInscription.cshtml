@@ -432,18 +432,35 @@
     <script>
         function validatePDF(input) {
             const file = input.files[0];
-            if (file && file.type !== 'application/pdf') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'ملف غير صالح',
-                    text: 'الرجاء تحميل ملف بصيغة PDF فقط.',
-                    confirmButtonText: 'حسنًا'
-                }).then(() => {
-                    input.value = ""; 
-                });
-                return false;
+            const maxSize = 2 * 1024 * 1024; 
+
+            if (file) {
+                if (file.type !== 'application/pdf') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'ملف غير صالح',
+                        text: 'الرجاء تحميل ملف بصيغة PDF فقط.',
+                        confirmButtonText: 'حسنًا'
+                    }).then(() => {
+                        input.value = "";
+                    });
+                    return false;
+                }
+
+                if (file.size > maxSize) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'حجم الملف كبير',
+                        text: 'الرجاء تحميل ملف لا يتجاوز حجمه 2 ميغابايت.',
+                        confirmButtonText: 'حسنًا'
+                    }).then(() => {
+                        input.value = "";
+                    });
+                    return false;
+                }
             }
         }
+
 
         
     </script>

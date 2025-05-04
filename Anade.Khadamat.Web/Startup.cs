@@ -8,6 +8,7 @@ using Anade.Khadamat.Domain;
 using Anade.Khadamat.Web.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -70,7 +71,7 @@ namespace Anade.Khadamat.Web
                 });
             });
 
-
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

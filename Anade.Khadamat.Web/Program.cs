@@ -13,8 +13,8 @@ namespace Anade.Khadamat.Web
     {
         public static void Main(string[] args)
         {
-            Environment.SetEnvironmentVariable("TMP", @"C:\NesdaAcademyTemp");
-            Environment.SetEnvironmentVariable("TEMP", @"C:\NesdaAcademyTemp");
+            Environment.SetEnvironmentVariable("TMP", @"C:\TMP");
+            Environment.SetEnvironmentVariable("TEMP", @"C:\TMP");
             CreateHostBuilder(args).Build().Run();
         }
 
