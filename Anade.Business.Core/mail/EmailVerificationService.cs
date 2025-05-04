@@ -186,7 +186,7 @@ namespace Anade.Business.Core
                         </div>
             
                         <p>إذا كان الزر أعلاه لا يعمل، يمكنك أيضًا نسخ ولصق الرابط التالي في متصفحك:</p>
-                        <p style='font-size: 13px; word-break: break-all; color: #777;'>http://192.168.172.106:8043/Inscription/VerifyEmail?email={email}&token={token}</p>
+                        <p style='font-size: 13px; word-break: break-all; color: #777;'>https://machrou3i.nesda.dz /Inscription/VerifyEmail?email={email}&token={token}</p>
             
                         <div class='divider'></div>
             
