@@ -128,6 +128,16 @@ namespace Anade.Khadamat.Web.Controllers
             {
                 return Unauthorized();
             }
+            if (model.CategorieId == 1)
+            {
+
+                var bResult = new BusinessResult();
+                bResult.Messages.Add(new MessageResult { Message = "يرجى إختيار نوع الفئة بشكل صحيح", MessageType = MessageType.Error });
+                TempData["Message"] = bResult.ToBootstrapAlerts();
+                InitializeListViewBags();
+                return View(model);
+
+            }
             var isRecaptchaValid = _recaptchaService.ValidateRecaptchaAsync(model.RecaptchaResponse).Result ;
             if (!isRecaptchaValid)
             {
@@ -182,15 +192,18 @@ namespace Anade.Khadamat.Web.Controllers
                    
 
                 }
-                if (!model.CopieCNIPdf.ContentType.Equals("application/pdf"))
+                if (!IsValidPdfFile(model.CopieCNIPdf))
                 {
-                    var bResult = new BusinessResult();
-                    bResult = new BusinessResult(true);
-                    bResult.Messages.Add(new MessageResult { Message = "يرجى تحميل ملف بصيغة PDF لاستكمال طلبك.", MessageType = MessageType.Error });
-                        TempData["Message"] = bResult.ToBootstrapAlerts();
-                        InitializeListViewBags();
-                        return View(model);
-                    
+                    var bResult = new BusinessResult(true);
+                    bResult.Messages.Add(new MessageResult
+                    {
+                        Message = "يرجى تحميل ملف بصيغة PDF صالح لاستكمال طلبك.",
+                        MessageType = MessageType.Error
+                    });
+
+                    TempData["Message"] = bResult.ToBootstrapAlerts();
+                    InitializeListViewBags();
+                    return View(model);
                 }
                 string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder"); ;
 
@@ -204,27 +217,22 @@ namespace Anade.Khadamat.Web.Controllers
                         InitializeListViewBags();
                         return View(model);
                 }
-                if (!model.CopieDiplomeRCCFCAPdf.ContentType.Equals("application/pdf"))
-                {
 
-                    var bResult = new BusinessResult();
-                    bResult.Messages.Add(new MessageResult { Message = "يرجى تحميل ملف بصيغة PDF لاستكمال طلبك.", MessageType = MessageType.Error });
+                if (!IsValidPdfFile(model.CopieDiplomeRCCFCAPdf))
+                {
+                    var bResult = new BusinessResult(true);
+                    bResult.Messages.Add(new MessageResult
+                    {
+                        Message = "يرجى تحميل ملف بصيغة PDF صالح لاستكمال طلبك.",
+                        MessageType = MessageType.Error
+                    });
+
                     TempData["Message"] = bResult.ToBootstrapAlerts();
                     InitializeListViewBags();
                     return View(model);
-                  
                 }
 
-                if (model.CategorieId ==1)
-                {
-
-                    var bResult = new BusinessResult();
-                    bResult.Messages.Add(new MessageResult { Message = "يرجى إختيار نوع الفئة بشكل صحيح", MessageType = MessageType.Error });
-                    TempData["Message"] = bResult.ToBootstrapAlerts();
-                    InitializeListViewBags();
-                    return View(model);
-
-                }
+               
 
 
 
@@ -402,6 +410,37 @@ namespace Anade.Khadamat.Web.Controllers
 
             return uniqueFileName;
         }
+
+        private bool IsValidPdfFile(IFormFile file)
+        {
+            if (file == null || file.Length < 5)
+                return false;
+
+            // Vérification de l'extension
+            var extension = Path.GetExtension(file.FileName);
+            if (string.IsNullOrEmpty(extension) || !extension.Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            // Vérification du type MIME
+            if (!file.ContentType.Equals("application/pdf", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            // Vérification du contenu : signature PDF ("%PDF-")
+            try
+            {
+                using (var reader = new BinaryReader(file.OpenReadStream()))
+                {
+                    var headerBytes = reader.ReadBytes(5);
+                    var header = System.Text.Encoding.ASCII.GetString(headerBytes);
+                    return header.StartsWith("%PDF");
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
 
 

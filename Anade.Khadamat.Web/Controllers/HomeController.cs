@@ -36,7 +36,14 @@ namespace Anade.Khadamat.Web.Controllers
 
             return View();
         }
-     
+
+        public IActionResult NesdaPrivacyPolicy()
+        {
+
+            return View();
+        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

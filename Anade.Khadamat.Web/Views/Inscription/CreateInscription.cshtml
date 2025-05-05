@@ -374,15 +374,6 @@
                                                     </div>
                                             </div>
                                         </div>
-
-                                        <div class="form-group">
-                                            <label class="custom-checkbox">
-                                                <input type="checkbox" id="acceptTerms">
-                                                <span class="checkmark"></span>
-                                                أسمح لناسدا بمعالجة بياناتي الشخصية <a href="conditions.html" target="_blank">وفق للشروط المنصوص عليها في القانون 18/07</a>   المتعلقة بحماية الأشخاص الطبيعين في معالجة المعطيات الشخصية.
-                                            </label>
-                                        </div>
-
                                         <div class="form-group">
                                             <div class="g-recaptcha"
                                                  data-sitekey="6LcN3q4qAAAAAEFq86pRnXIr1ROxvFnB1PzCBdoB"
@@ -390,6 +381,15 @@
                                             <input type="hidden" asp-for="RecaptchaResponse" id="recaptchaResponse" required />
                                             <span asp-validation-for="RecaptchaResponse" class="text-danger"></span>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="custom-checkbox">
+                                                <input type="checkbox" id="acceptTerms">
+                                                <span class="checkmark"></span>
+                                                أسمح لناسدا بمعالجة بياناتي الشخصية وفق للشروط المنصوص عليها في القانون 18/07 المتعلقة بحماية الأشخاص الطبيعين في معالجة المعطيات الشخصية. <a asp-controller="Home" asp-action="NesdaPrivacyPolicy" target="_blank" name="NesdaPolitique">سياسة الخصوصية الخاصة بنا متاحة للمراجعة.</a>
+                                            </label>
+                                        </div>
+
+                                       
                                     </div>
                                     <div class="col-lg-12 btn-box col-md-12 col-sm-12 text-center form-group">
                                         <button class="theme-btn btn-style-one" type="submit" name="submit-form" disabled id="submitBtn"><span class="txt">تسجيل</span></button>
@@ -428,42 +428,75 @@
 
     <script src="~/js/EmailVerification.js"></script>
 
-
     <script>
-        function validatePDF(input) {
-            const file = input.files[0];
-            const maxSize = 2 * 1024 * 1024; 
+              
+        document.addEventListener("DOMContentLoaded", function () {
+            setupFileInput("fileInput", "loadingState");
+            setupFileInput("fileInput2", "loadingState2");
 
-            if (file) {
-                if (file.type !== 'application/pdf') {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'ملف غير صالح',
-                        text: 'الرجاء تحميل ملف بصيغة PDF فقط.',
-                        confirmButtonText: 'حسنًا'
-                    }).then(() => {
-                        input.value = "";
-                    });
-                    return false;
-                }
+            function setupFileInput(fileInputId, loadingStateId) {
+                const fileInput = document.getElementById(fileInputId);
+                const loadingState = document.getElementById(loadingStateId);
 
-                if (file.size > maxSize) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'حجم الملف كبير',
-                        text: 'الرجاء تحميل ملف لا يتجاوز حجمه 2 ميغابايت.',
-                        confirmButtonText: 'حسنًا'
-                    }).then(() => {
-                        input.value = "";
-                    });
-                    return false;
-                }
+                fileInput.addEventListener("change", function () {
+                    loadingState.style.display = "none"; // Réinitialiser l'affichage
+
+                    if (fileInput.files && fileInput.files.length > 0) {
+                        const isValid = validatePDF(fileInput);
+                        if (!isValid) {
+                            return;
+                        }
+
+                        // Si le fichier est valide, afficher le message de succès après un petit délai
+                        loadingState.style.display = "block";
+                        loadingState.style.color = "#000"; // reset color
+                        loadingState.textContent = "جارٍ تحميل الملف...";
+
+                        setTimeout(() => {
+                            loadingState.textContent = "تم تحميل الملف بنجاح: " + fileInput.files[0].name;
+                            loadingState.style.color = "#2c724f";
+                        }, 1000);
+                    }
+                });
             }
-        }
 
+            function validatePDF(input) {
+                const file = input.files[0];
+                const maxSize = 2 * 1024 * 1024;
 
-        
+                if (file) {
+                    if (file.type !== 'application/pdf') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'ملف غير صالح',
+                            text: 'الرجاء تحميل ملف بصيغة PDF .',
+                            confirmButtonText: 'حسنًا'
+                        }).then(() => {
+                            input.value = "";
+                        });
+                        return false;
+                    }
+
+                    if (file.size > maxSize) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'حجم الملف كبير',
+                            text: 'الرجاء تحميل ملف لا يتجاوز حجمه 2 ميغابايت.',
+                            confirmButtonText: 'حسنًا'
+                        }).then(() => {
+                            input.value = "";
+                        });
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        });
     </script>
+
+  
+  
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let timeout = null;
@@ -731,51 +764,7 @@
 
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const fileInput = document.getElementById("fileInput");
-            const loadingState = document.getElementById("loadingState");
-
-            fileInput.addEventListener("change", function () {
-                if (fileInput.files && fileInput.files.length > 0) {
-                    // Afficher l'état de chargement
-                    loadingState.style.display = "block";
-
-                    // Simuler un délai pour le chargement (remplacez par une logique réelle si nécessaire)
-                    setTimeout(() => {
-                        loadingState.textContent = "تم تحميل الملف بنجاح: " + fileInput.files[0].name;
-                        loadingState.style.color = "#2c724f";
-                    }, 1000);
-                } else {
-                    // Masquer l'état si aucun fichier n'est sélectionné
-                    loadingState.style.display = "none";
-                }
-            });
-        });
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const fileInput = document.getElementById("fileInput2");
-            const loadingState = document.getElementById("loadingState2");
-
-            fileInput.addEventListener("change", function () {
-                if (fileInput.files && fileInput.files.length > 0) {
-                    // Afficher l'état de chargement
-                    loadingState.style.display = "block";
-
-                    // Simuler un délai pour le chargement (remplacez par une logique réelle si nécessaire)
-                    setTimeout(() => {
-                        loadingState.textContent = "تم تحميل الملف بنجاح: " + fileInput.files[0].name;
-                        loadingState.style.color = "#2c724f";
-                    }, 1000);
-                } else {
-                    // Masquer l'état si aucun fichier n'est sélectionné
-                    loadingState.style.display = "none";
-                }
-            });
-        });
-
-    </script>
+   
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
