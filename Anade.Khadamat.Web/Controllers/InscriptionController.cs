@@ -40,13 +40,8 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly ReferentielBusinessService<TypeInscription, int> _typeInscriptionBusinessService;
         private readonly IRecaptchaService _recaptchaService;
         private readonly IHostingEnvironment _hostingEnvironment;
-
         private readonly CirconscriptionBusinessService _circonscriptionBusinessService;
         private readonly ReferentielBusinessService<Activite, int> _activiteBusinessService;
-
-
-
-
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
         private readonly UserService _userService;
@@ -55,7 +50,6 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly StructureService _structureService;
         private readonly ReferentielBusinessService<TypeFinancement, int> _typeFinnacementBusinessService;
         private readonly ReferentielBusinessService<Agence, int> _agenceBusinessService;
-
         public InscriptionController(                           
                                       ReferentielBusinessService<Commune, int> communeBusinessService,
                                       ReferentielBusinessService<Wilaya, int> wilayaBusinessService,
@@ -69,7 +63,6 @@ namespace Anade.Khadamat.Web.Controllers
                                       IRecaptchaService recaptchaService,
                                       IHostingEnvironment hostingEnvironment,
                                       ReferentielBusinessService<Antenne, int> antenneBusinessService,
-
                                       UserManager<User> userManager,
                                       RoleManager<Role> roleManager,
                                       UserService userService,
@@ -121,13 +114,8 @@ namespace Anade.Khadamat.Web.Controllers
             {
                 return  Unauthorized();
             }
-
              ViewBag.TypeInsId = typeInscriptionId;
-
-          
-
             InitializeListViewBags();
-
             return View();
         }
         // POST: Generic/Create
@@ -226,6 +214,22 @@ namespace Anade.Khadamat.Web.Controllers
                     return View(model);
                   
                 }
+
+                if (model.CategorieId ==1)
+                {
+
+                    var bResult = new BusinessResult();
+                    bResult.Messages.Add(new MessageResult { Message = "يرجى إختيار نوع الفئة بشكل صحيح", MessageType = MessageType.Error });
+                    TempData["Message"] = bResult.ToBootstrapAlerts();
+                    InitializeListViewBags();
+                    return View(model);
+
+                }
+
+
+
+
+
                 string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
                 var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
                 var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
@@ -398,6 +402,7 @@ namespace Anade.Khadamat.Web.Controllers
 
             return uniqueFileName;
         }
+
 
 
 
