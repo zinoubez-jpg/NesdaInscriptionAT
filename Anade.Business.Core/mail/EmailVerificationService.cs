@@ -11,7 +11,6 @@ namespace Anade.Business.Core
     {
         private readonly IEmailService _emailService;
         private readonly KhadamtDbContext _context;
-
         public EmailVerificationService(IEmailService emailService, KhadamtDbContext context)
         {
             _emailService = emailService;
@@ -20,7 +19,8 @@ namespace Anade.Business.Core
 
         public async Task SendVerificationEmailAsync(string email, string token)
         {
-            var verificationLink = $" https://machrou3i.nesda.dz/Inscription/VerifyEmail?email={email}&token={token}";
+
+            var verificationLink = $"https://machrou3i.nesda.dz/Inscription/VerifyEmail?email={email}&token={token}";
             var emailBody = $@"
             <!DOCTYPE html>
             <html lang='ar' dir='rtl'>
@@ -208,7 +208,7 @@ namespace Anade.Business.Core
 
 
 
-            await _emailService.SendEmailAsync(email, "Validation d'inscription", emailBody);
+            await _emailService.SendEmailAsync(email, "Verification d'email", emailBody);
         }
 
         public async Task<bool> VerifyEmailAsync(string email, string token)

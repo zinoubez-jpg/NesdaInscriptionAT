@@ -439,7 +439,7 @@
                 const loadingState = document.getElementById(loadingStateId);
 
                 fileInput.addEventListener("change", function () {
-                    loadingState.style.display = "none"; // Réinitialiser l'affichage
+                    loadingState.style.display = "none"; 
 
                     if (fileInput.files && fileInput.files.length > 0) {
                         const isValid = validatePDF(fileInput);
@@ -447,9 +447,8 @@
                             return;
                         }
 
-                        // Si le fichier est valide, afficher le message de succès après un petit délai
                         loadingState.style.display = "block";
-                        loadingState.style.color = "#000"; // reset color
+                        loadingState.style.color = "#000"; 
                         loadingState.textContent = "جارٍ تحميل الملف...";
 
                         setTimeout(() => {
@@ -469,7 +468,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'ملف غير صالح',
-                            text: 'الرجاء تحميل ملف بصيغة PDF .',
+                            text: 'PDF الرجاء تحميل ملف بصيغة  .',
                             confirmButtonText: 'حسنًا'
                         }).then(() => {
                             input.value = "";

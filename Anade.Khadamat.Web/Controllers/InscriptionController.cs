@@ -159,7 +159,7 @@ namespace Anade.Khadamat.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                if ( _context.Inscriptions.Any(u => u.Email == model.Email))
+                if ( _context.Inscriptions.Any(u => u.Email == model.Email && u.IsEmailVerified))
                 {
                     ModelState.AddModelError("Email", "البريد الإلكتروني الذي أدخلته مرتبط بحساب موجود. يرجى استخدام بريد إلكتروني آخر");
                     InitializeListViewBags();
@@ -319,21 +319,44 @@ namespace Anade.Khadamat.Web.Controllers
                 return BadRequest("Paramètres invalides");
             }
 
-            var verified = await _emailVerificationService.VerifyEmailAsync(email, token);
+           
 
-            if (verified)
+            if (_userService.Count(u => u.Email == email )>0)
             {
-                    var inscri = _inscriptionBusinessService.GetSingle(x => x.Email == email, _inscriptionBusinessService.GetDefaultLoadProperties());
-                    var userNew = new User
-                    {
-                        UserName = inscri.Email,
-                        Email = inscri.Email,
-                        DateCreation = DateTime.Now,
-                        TypeUserId = 2,
-                        EmailConfirmed = true
-                    };
-                    var password = inscri.PasswordHashInit;
-                    var result = await _userManager.CreateAsync(userNew, password);
+                return View("EmailVerificationFailedExistEmail");
+
+            }
+
+           var verified = await _emailVerificationService.VerifyEmailAsync(email, token);
+
+            if (!verified)
+            {
+                return View("EmailVerificationFailed");
+            }
+
+            var inscri =  _inscriptionBusinessService.GetSingle(
+                x => x.Email == email && x.EmailVerificationToken == null,
+                _inscriptionBusinessService.GetDefaultLoadProperties());
+
+            if (inscri == null)
+            {
+                return View("EmailVerificationFailed");
+            }
+
+            var userNew = new User
+            {
+                UserName = inscri.Email,
+                Email = inscri.Email,
+                DateCreation = DateTime.Now,
+                TypeUserId = 2,
+                EmailConfirmed = true
+            };
+
+            var result = await _userManager.CreateAsync(userNew, inscri.PasswordHashInit);
+
+            if (result.Succeeded)
+            {
+                
                 return View("EmailVerificationSuccess");
             }
 
@@ -349,7 +372,7 @@ namespace Anade.Khadamat.Web.Controllers
         [HttpGet]
         public IActionResult CheckEmailExists(string email)
         {
-            bool emailExists = _context.Inscriptions.Any(u => u.Email == email); 
+            bool emailExists = _context.Inscriptions.Any(u => u.Email == email && u.IsEmailVerified); 
             return Json(new { exists = emailExists });
         }
         [HttpGet]
