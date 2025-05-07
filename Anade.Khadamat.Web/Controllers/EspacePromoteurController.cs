@@ -82,7 +82,7 @@ namespace Anade.Khadamat.Web.Controllers
         public IActionResult SuiviDossier()
         {
             var user = _userService.GetUserEagerLoadedAsync(User).Result;
-            var inscrit = _inscriptionBusinessService.GetSingle(x => x.Email == user.Email, _inscriptionBusinessService.GetDefaultLoadProperties());
+            var inscrit = _inscriptionBusinessService.GetSingle(x => x.Email == user.Email && x.IsEmailVerified, _inscriptionBusinessService.GetDefaultLoadProperties());
             var WilayaNais = _wilayaBusinessService.GetById(inscrit.CommuneNaissance.WilayaId);
             var wilayaRes = _wilayaBusinessService.GetById(inscrit.CommuneResidence.WilayaId);
             var wilayaSS = _wilayaBusinessService.GetById(inscrit.CommuneSiegeSocial.WilayaId);
