@@ -186,7 +186,7 @@ namespace Anade.Business.Core
                         </div>
             
                         <p>إذا كان الزر أعلاه لا يعمل، يمكنك أيضًا نسخ ولصق الرابط التالي في متصفحك:</p>
-                        <p style='font-size: 13px; word-break: break-all; color: #777;'>https://machrou3i.nesda.dz /Inscription/VerifyEmail?email={email}&token={token}</p>
+                        <p style='font-size: 13px; word-break: break-all; color: #777;'>https://machrou3i.nesda.dz/Inscription/VerifyEmail?email={email}&token={token}</p>
             
                         <div class='divider'></div>
             
@@ -196,17 +196,15 @@ namespace Anade.Business.Core
                     <div class='footer'>
                         <p><strong>الوكالة الوطنية لدعم وتنمية المقاولاتية</strong></p>
                         <p>08 شارع أرزقي بن بوزيد، العناصر، الجزائر، الجزائر</p>
-                        <p>هاتف: 51 56 97 213+ | البريد الإلكتروني: contact@nesda.dz</p>
+                        <p>هاتف: 033 033 0770 | البريد الإلكتروني: contact@nesda.dz</p>
                         <div class='social-links'>
-                            <a href='#'>f</a> |
-                            <a href='#'>in</a>
+                            <a href='https://web.facebook.com/Cc.nesda.dz'>f</a> |
+                            <a href='https://www.linkedin.com/company/nesda-%D8%A7%D9%84%D9%88%D9%83%D8%A7%D9%84%D8%A9-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A%D8%A9-%D9%84%D8%AF%D8%B9%D9%85-%D9%88-%D8%AA%D9%86%D9%85%D9%8A%D8%A9-%D8%A7%D9%84%D9%85%D9%82%D8%A7%D9%88%D9%84%D8%A7%D8%AA%D9%8A%D8%A9/posts/?feedView=all'>in</a>
                         </div>
                     </div>
                 </div>
             </body>
             </html>";
-
-
 
             await _emailService.SendEmailAsync(email, "Verification d'email", emailBody);
         }
