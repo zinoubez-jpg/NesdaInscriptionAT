@@ -326,6 +326,9 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Property<bool>("Annulee")
                         .HasColumnType("bit");
 
+                    b.Property<string>("AnnuleePAR")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("AntenneId")
                         .HasColumnType("int");
 
@@ -346,6 +349,9 @@ namespace Anade.Khadamat.Data.Migrations
 
                     b.Property<string>("CopieDiplomeRCCFCAPath")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAnnulation")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateInscription")
                         .HasColumnType("datetime2");
@@ -377,6 +383,9 @@ namespace Anade.Khadamat.Data.Migrations
 
                     b.Property<bool>("IsEmailVerified")
                         .HasColumnType("bit");
+
+                    b.Property<string>("MotifAnnulation")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NIN")
                         .IsRequired()
@@ -746,7 +755,7 @@ namespace Anade.Khadamat.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Anade.Khadamat.Domain.TypeFinancement", null)
+                    b.HasOne("Anade.Khadamat.Domain.TypeFinancement", "TypeFinancement")
                         .WithMany("Inscriptions")
                         .HasForeignKey("TypeFinancementId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -775,6 +784,8 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Navigation("NiveauInstruction");
 
                     b.Navigation("SituationFamiliale");
+
+                    b.Navigation("TypeFinancement");
 
                     b.Navigation("TypeInscription");
                 });

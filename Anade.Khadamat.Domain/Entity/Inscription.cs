@@ -100,7 +100,10 @@ namespace Anade.Khadamat.Domain
         public string ValideePAR { get; set; }
         public DateTime DateValidation { get; set; }
         public bool Annulee { get; set; }
-      
+        public string AnnuleePAR { get; set; }
+        public DateTime DateAnnulation { get; set; }
+        public string MotifAnnulation { get; set; }
+
 
         public bool IsEmailVerified { get; set; }
         public string EmailVerificationToken { get; set; }
