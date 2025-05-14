@@ -76,6 +76,19 @@ namespace Anade.Khadamat.Web.Controllers
             {
                 item.Formation = _formationBusinessService.GetById(item.FormationId);
             }
+
+            if (inscrit == null)
+            {
+                return NotFound("Inscription non trouvée ou email non vérifié.");
+            }
+
+            if (inscrit.Annulee)
+            {
+                return Content("Votre inscription est annulée.");
+            }
+
+
+
             return View(inscrit);
         }
 
@@ -89,6 +102,16 @@ namespace Anade.Khadamat.Web.Controllers
             inscrit.CommuneNaissance.Wilaya = WilayaNais;
             inscrit.CommuneResidence.Wilaya = wilayaRes;
             inscrit.CommuneSiegeSocial.Wilaya = wilayaSS;
+            if (inscrit == null)
+            {
+                return NotFound("Inscription non trouvée ou email non vérifié.");
+            }
+
+            if (inscrit.Annulee)
+            {
+                return Content("Votre inscription est annulée.");
+            }
+
             return View(inscrit);
         }
 
@@ -99,6 +122,15 @@ namespace Anade.Khadamat.Web.Controllers
             foreach (var item in inscrit.SessionFormations)
             {
                 item.Formation = _formationBusinessService.GetById(item.FormationId);
+            }
+            if (inscrit == null)
+            {
+                return NotFound("Inscription non trouvée ou email non vérifié.");
+            }
+
+            if (inscrit.Annulee)
+            {
+                return Content("Votre inscription est annulée.");
             }
 
             return View(inscrit);

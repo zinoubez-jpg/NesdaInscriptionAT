@@ -1,540 +1,574 @@
-﻿
-<div class="page-wrapper">
+﻿@inject SignInManager<User>  SignInManager
 
-
-    <!-- Banner Section -->
-    <div class="banner-section">
-        <div class="main-slider-carousel owl-carousel owl-theme">
-
-            <div class="slide" data-bg-image="images/main-slider/intro-1.jpg">
-                <div class="auto-container w-100">
-                    <div class="row clearfix">
-
-                        <!-- Content Column -->
-                        <div class="content-column col-lg-7 col-md-12 col-sm-12">
-                            <div class="inner-column">
-                                <div class="title">مرحبا بكم في خدمات</div>
-                                <h1>
-                                    الوكالة الوطنية لدعم وتنمية المقاولاتية <span>NESDA</span>
-                                </h1>
-                                <div class="text">ترافقكم الوكالة عبر مُختلف مراحل انشاء  وتوسعة مؤسستكم المُصغّرة  <br> .في قطاعات اقتصادية مُتنوعة من التكوين، المرافقة والدعم</div>
-                                <div class="btn-box">
-                                    <a asp-controller="Home" asp-action="Inscrire"  class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="slide" data-bg-image="images/main-slider/intro-2.jpg">
-                <div class="auto-container w-100">
-                    <div class="row clearfix">
-
-                        <!-- Content Column -->
-                        <div class="content-column col-lg-7 col-md-12 col-sm-12">
-                            <div class="inner-column">
-
-                                <h1>
-                                    إجعل من  <span>فكرة</span> مشروع مؤسسة مصغرة
-                                </h1>
-                                <div class="text">تسعى الوكالة الوطنية لدعم وتنمية المقاولاتية الى ترقية نظام بيئي للمقاولاتية الذي يحفز على إنشاء، تمويل وتطوير المؤسسات المُصغّرة عالية الأداء، ذات صمود وتخلق قيمة مُضافة مستدامة   </div>
-                                <div class="btn-box">
-                                    <a asp-controller="Home" asp-action="Inscrire" class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="slide" data-bg-image="images/main-slider/intro-4.jpg">
-                <div class="auto-container w-100">
-                    <div class="row clearfix">
-
-                        <!-- Content Column -->
-                        <!-- Content Column -->
-                        <div class="content-column col-lg-7 col-md-12 col-sm-12">
-                            <div class="inner-column">
-
-                                <h1>
-                                    <span>أنتم!</span> الشباب حاملي أفكار مشاريع
-                                </h1>
-                                <div class="text">
-                                    تطمحون إلى إنشاء أو تطوير مؤسساتكم المصغرة؟ نحن ندعمكم في تحقيق طموحاتكم في مجالات إنتاج السلع والخدمات.
-                                    تلتزم الوكالة بتعزيز الفكر المقاولاتي، وتوفير الدعم المالي والتسهيلات الجبائية لضمان نجاح مشاريعكم.
-                                </div>
-                                <div class="btn-box">
-                                    <a asp-controller="Home" asp-action="Inscrire"  class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
-
-    </div>
-    <!-- End Banner Section -->
-    <!-- CTA Section Start -->
-    <div class="cta-section" data-bg-image="images/background/cta-bg.jpg">
-        <div class="auto-container">
-            <div class="row align-items-center">
-                <div class="col-lg-7">
-                    <!-- CTA Content Start -->
-                    <div class="cta-content">
-                        <h3 class="title">تواصل معنا للمزيد من المعلومات </h3>
-                        <p>
-
-                            الــــوكــــالـــــــة الـــــوطنيـــــة لـــــدعــــم وتنــميــــة المـــقــــاولاتـيـــة
-                        </p>
-                        <p>
-
-
-                            08 شــارع محمـد ارزقـي بن بوزيــد , العناصر
-                            الجزائــر العاصمــــــة
-
-                        </p>
-
-                    </div>
-                    <!-- CTA Content End -->
-                </div>
-                <div class="col-lg-5">
-                    <!-- CTA Phone Number Start -->
-                    <div class="cta-phone text-lg-end text-strat">
-                        
-                        <h2 class="title" style="direction:ltr"> 0770  033  033 </h2>
-                    </div>
-                    <div class="cta-phone text-sm-end text-strat">
-                        <h6 class="title" style="font-size:18px">البريـد الإلكتـرونـي   :    contact@nesda.dz </h6>
-                    </div>
-
-                    <!-- CTA Phone Number Start -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- CTA Section End -->
-    <!-- About Section -->
-    <section id="about" class="about-section">
-        <div class="auto-container">
-            <div class="inner-container">
-                <div class="row align-items-center clearfix">
-                    <!-- Image Column -->
-                    <div class="image-column col-lg-6">
-                        <div class="about-image">
-                            <div class="about-inner-image">
-
-                                <img src="~/images/about/home-about .png" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Content Column -->
-                    <div class="content-column col-lg-6 col-md-12 col-sm-12 mb-0">
-                        <div class="about-column">
-                            <div class="sec-title">
-                                <div class="title">من نحن؟</div>
-                                <h2>الوكالة الوطنية لدعم وتنمية <span>المقاولاتية</span> </h2>
-                            </div>
-                            <div class="text">
-                                <p>الوكالة الوطنية لدعم وتنمية المقاولاتية، هي هيئة حكومية ذات طابع خاص، موضوعة تحت وصاية وزارة اقتصاد المعرفة والمؤسسات الناشئة والمؤسسات المُصغّرة</p>
-                                <p>تتكفل الوكالة بتسيير جهاز ذو مقاربة اقتصادية، يهدف الى مرافقة حاملي المشاريع لإنشاء وتوسيع مؤسسات  مصغرة في مجال انتاج الخدمات والسلع، قصد خلق الثروة ومناصب عمل</p>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End About Section -->
-    <!-- Services  Section -->
-    <section id="objectif" class="services-section">
-        <div class="auto-container">
-            <div class="sec-title">
-                <div class="title">الخدمات</div>
-                <h2>   الخدمات الرقمية<span> للوكالة</span></h2>
-            </div>
-            <div class="inner-container">
-                <div class="row g-4">
-
-                    <!-- Service Block -->
-                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
-                        <div class="inner-box">
-                            <a asp-action="Inscrire" asp-controller="Home">
-                                <div class="icon-box">
-                                    <span class="icon fas fa-user-plus"></span>
-                                  
-                                </div>
-                                <h5><a>فضاء التسجيل</a></h5>
-                                <div class="text">
-                                    .يتيح لكم التسجيل بسهولة للاستفادة من خدمات جهاز الوكالة الوطنية لدعم وتنمية المقاولاتية
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Service Block -->
-                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
-                        <div class="inner-box">
-                            <a asp-action="SuiviDossier" asp-controller="EspacePromoteur">
-                                <div class="icon-box">
-                                    <span class="icon fas fa-user-friends"></span>
-
-                                </div>
-                                <h5><a>فضاء صاحب المشروع</a></h5>
-                                <div class="text">
-                                    فضاء مخصص لصاحب المشروع لإدارة معلوماته، متابعة تقدم مشروعه، وإنجاز مختلف الإجراءات عبر المنصة الإلكترونية.
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Service Block -->
-                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
-                        <div class="inner-box">
-                            <a href="https://nesda.ufc.dz/login/index.php">
-                                <div class="icon-box">
-                                    <span class="icon fas fa-laptop-code"></span>
-                                </div>
-                                <h5><a>التكوين عن بعد</a></h5>
-                                <div class="text">
-                                    تمكين صاحب المشروع من الوصول إلى المنصة التعليمية التابعة للوكالة، وذلك في إطار الاتفاقية الموقعة مع جامعة التكوين المتواصل، لمتابعة برامج التكوين المعتمدة عن بُعد.
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- End Services  Section -->
-    <!-- Services objectif Section -->
-    <section id="objectif" class="services-section">
-        <div class="auto-container">
-            <div class="sec-title">
-                <div class="title">الأهداف</div>
-                <h2>أهداف<span> الوكالة</span> </h2>
-
-                <div class="text">
-                    <p>تسعى الوكالة الوطنية لدعم وتنمية المقاولاتية الى ترقية نظام بيئي للمقاولاتية الذي يحفز على إنشاء، تمويل وتطوير المؤسسات المُصغّرة عالية الأداء، ذات صمود وتخلق قيمة مُضافة مستدامة للمواطنين وللوطن</p>
-                </div>
-            </div>
-            <div class="inner-container">
-                <div class="row g-0">
-
-                    <!-- Service Block -->
-                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
-                        <div class="inner-box">
-                            <div class="icon-box">
-                                <span class="icon ti-blackboard"></span>
-                            </div>
-                            <h5><a>التكوين</a></h5>
-                            <div class="text">تكوين حاملي المشاريع حول أهم المهارات النظرية والتطبيقية المتعلقة بإنشاء وتسيير المؤسسات المُصغّرة</div>
-                        </div>
-                    </div>
-
-                    <!-- Service Block -->
-                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
-                        <div class="inner-box">
-                            <div class="icon-box">
-                                <span class="icon far fa-handshake"></span>
-                            </div>
-                            <h5><a>المرافقة </a></h5>
-                            <div class="text">مرافقة حاملي المشاريع عبر مختلف مراحل انشاء مؤسساتهم المُصغّرة الى غاية بداية النشاط</div>
-                        </div>
-                    </div>
-
-                    <!-- Service Block -->
-                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
-                        <div class="inner-box">
-                            <div class="icon-box">
-                                <span class="icon ti-money"></span>
-                            </div>
-                            <h5><a>التمويل </a></h5>
-                            <div class="text">توفير صيغ تمويلية لحاملي المشاريع من أجل إنشاء وتوسعة مؤسساتهم المُصغّرة</div>
-                        </div>
-                    </div>
+@{ var user = await SignInManager.UserManager.GetUserAsync(User); }
 
 
 
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- End Services objectif Section -->
-    <!-- Services Section -->
-    <section id="finance" class="services-section">
-        <div class="auto-container">
-            <div class="sec-title">
-                <div class="title">التمويل</div>
-                <h2>التركيبات<span> المالية</span> </h2>
-
-                <div class="text">
-                    <p>تعرض الوكالة الوطنية لدعم وتنمية المقاولاتية عدة صيغ تمويلية لانشاء   وتوسعة المؤسسات المُصغّرة عبر 3 تركيبات مالية</p>
-                </div>
-            </div>
-            <div class="inner-container">
-                <div class="row g-0">
-
-                    <!-- Service Block -->
-                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
-                        <div class="inner-box">
-                            <div class="icon-box">
-                                <span class="icon ti-check-box"></span>
-                            </div>
-                            <h5><a>التمويل الذاتي</a></h5>
-                            <div class="text">حيث يقوم صاحب المشروع بتمويل الاستثمار بالكامل بشكل مستقل، دون اللجوء إلى مصادر خارجية</div>
-                        </div>
-                    </div>
-
-                    <!-- Service Block -->
-                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
-                        <div class="inner-box">
-                            <div class="icon-box">
-                                <span class="icon ti-check-box"></span>
-                            </div>
-                            <h5><a>التمويل الثنائي</a></h5>
-                            <div class="text">حيث يساهم كل من صاحب المشروع والوكالة بنسبة 50% من مبلغ الاستثمار</div>
-                        </div>
-                    </div>
-
-                    <!-- Service Block -->
-                    <div class="service-block col-lg-4 col-md-6 col-sm-12">
-                        <div class="inner-box">
-                            <div class="icon-box">
-                                <span class="icon ti-check-box"></span>
-                            </div>
-                            <h5><a>التمويل الثلاثي</a></h5>
-                            <div class="text">يساهم حامل المشروع بنسبة ما بين 5 و 15% في حين الوكالة تساهم بنسبة ما بين 15 و 25%،والبنك يغطي نسبة 70%المتبقية</div>
-                        </div>
-                    </div>
+    <div class="page-wrapper">
 
 
+        <!-- Banner Section -->
+        <div class="banner-section">
+            <div class="main-slider-carousel owl-carousel owl-theme">
 
-                </div>
+                <div class="slide" data-bg-image="images/main-slider/intro-1.jpg">
+                    <div class="auto-container w-100">
+                        <div class="row clearfix">
 
-            </div>
-        </div>
-    </section>
-    <!-- End Services Section -->
-    <!--Sidebar Page Container-->
-    <section id="condition" class="sidebar-page-container">
-        <div class="auto-container">
-            <!-- Service Title Box -->
-            <div class="sec-title">
+                            <!-- Content Column -->
+                            <div class="content-column col-lg-7 col-md-12 col-sm-12">
+                                <div class="inner-column">
+                                    <div class="title">مرحبا بكم في خدمات</div>
+                                    <h1>
+                                        الوكالة الوطنية لدعم وتنمية المقاولاتية <span>NESDA</span>
+                                    </h1>
+                                    <div class="text">ترافقكم الوكالة عبر مُختلف مراحل انشاء  وتوسعة مؤسستكم المُصغّرة  <br> .في قطاعات اقتصادية مُتنوعة من التكوين، المرافقة والدعم</div>
 
-                <h2>معايير<span> الانتقاء</span> </h2>
-            </div>
-            <div class="row clearfix">
-
-                <!-- Content Side -->
-                <div class="content-side col-lg-12 col-md-12 col-sm-12">
-                    <div class="service-detail">
-                        <div class="inner-box">
-
-                            <div class="lower-content">
-
-                                <!-- Analysis Columns -->
-                                <div class="analysis-columns">
-                                    <div class="row clearfix">
-                                        <!-- Column -->
-                                        <div class="column col-lg-12 col-md-12 col-sm-12">
-
-                                            <h4>المؤهلات والشروط التي يجب ان تتوفر لدى حامل المشروع</h4>
-                                            <ul class="list-style-one">
-                                                <li>
-                                                    تقديم مساهمة مالية شخصية مُطابقة لأحد صيغ التمويل المختارة .
-
-                                                </li>
-                                                <li>عدم الاستفادة من إعانة لإستحداث نشاط ما من مختلف أجهزة الدعم .</li>
-                                                <li>شهادة أو مؤهل مهني و/أو امتلاك معرفة ومهارات معرفية مُعترف بها وموثقة بواسطة شهادة أو اعتراف مهني آخر بالإضافة الى شهادة تكوين على مستوى مركز تطوير المقاولاتية .</li>
-                                                <li>يجب أن يتراوح سن حامل المشروع ما بين 18 و 55 سنة .</li>
-
-                                            </ul>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <div class="btn-box">
+                                            <a href="https://machrou3i.nesda.dz/EspacePromoteur/SuiviDossier" class="theme-btn btn-style-one"><span class="txt"> تتبع طلبك </span></a>
                                         </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="btn-box">
+                                            <a asp-controller="Home" asp-action="Inscrire" class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
+                                        </div>
+                                    }
 
-                                    </div>
                                 </div>
-                                <!-- End Analysis Columns -->
+                            </div>
 
-                                <section id="avantage" class="accordian-box">
-                                    <div class="sec-title">
+                        </div>
 
-                                        <h2>الاعانات<span> المالية</span> </h2>
+                    </div>
+                </div>
+
+                <div class="slide" data-bg-image="images/main-slider/intro-2.jpg">
+                    <div class="auto-container w-100">
+                        <div class="row clearfix">
+
+                            <!-- Content Column -->
+                            <div class="content-column col-lg-7 col-md-12 col-sm-12">
+                                <div class="inner-column">
+
+                                    <h1>
+                                        إجعل من  <span>فكرة</span> مشروع مؤسسة مصغرة
+                                    </h1>
+                                    <div class="text">تسعى الوكالة الوطنية لدعم وتنمية المقاولاتية الى ترقية نظام بيئي للمقاولاتية الذي يحفز على إنشاء، تمويل وتطوير المؤسسات المُصغّرة عالية الأداء، ذات صمود وتخلق قيمة مُضافة مستدامة   </div>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <div class="btn-box">
+                                            <a href="https://machrou3i.nesda.dz/EspacePromoteur/SuiviDossier" class="theme-btn btn-style-one"><span class="txt"> تتبع طلبك </span></a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="btn-box">
+                                            <a asp-controller="Home" asp-action="Inscrire" class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="slide" data-bg-image="images/main-slider/intro-4.jpg">
+                    <div class="auto-container w-100">
+                        <div class="row clearfix">
+
+                            <!-- Content Column -->
+                            <!-- Content Column -->
+                            <div class="content-column col-lg-7 col-md-12 col-sm-12">
+                                <div class="inner-column">
+
+                                    <h1>
+                                        <span>أنتم!</span> الشباب حاملي أفكار مشاريع
+                                    </h1>
+                                    <div class="text">
+                                        تطمحون إلى إنشاء أو تطوير مؤسساتكم المصغرة؟ نحن ندعمكم في تحقيق طموحاتكم في مجالات إنتاج السلع والخدمات.
+                                        تلتزم الوكالة بتعزيز الفكر المقاولاتي، وتوفير الدعم المالي والتسهيلات الجبائية لضمان نجاح مشاريعكم.
                                     </div>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <div class="btn-box">
+                                            <a href="https://machrou3i.nesda.dz/EspacePromoteur/SuiviDossier" class="theme-btn btn-style-one"><span class="txt"> تتبع طلبك </span></a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="btn-box">
+                                            <a asp-controller="Home" asp-action="Inscrire" class="theme-btn btn-style-one"><span class="txt"> قم بالتسجيل </span></a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
 
-                                    <h4>تشمل الإعانات المالية المقدمة من قبل الوكالة :</h4>
+                        </div>
 
-                                    <!--Accordian Box-->
-                                    <ul class="accordion-box">
+                    </div>
+                </div>
 
-                                        <!--Block-->
-                                        <li class="accordion block active-block">
-                                            <div class="acc-btn active"><div class="icon-outer"><span class="icon icofont-plus"></span> <span class="icon icofont-minus"></span></div>قرض غير مكافئ</div>
-                                            <div class="acc-content current">
-                                                <div class="content">
-                                                    <div class="accordian-text">تمنح الوكالة قرض غير مكافئ لحاملي المشاريع والذي تتراوح نسبته بين 15% و 50% حسب صيغة التمويل والمنطقة التي ينجز فيها المشروع ووضعية صاحب المشروع .</div>
-                                                </div>
+            </div>
+
+
+        </div>
+        <!-- End Banner Section -->
+        <!-- CTA Section Start -->
+        <div class="cta-section" data-bg-image="images/background/cta-bg.jpg">
+            <div class="auto-container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <!-- CTA Content Start -->
+                        <div class="cta-content">
+                            <h3 class="title">تواصل معنا للمزيد من المعلومات </h3>
+                            <p>
+
+                                الــــوكــــالـــــــة الـــــوطنيـــــة لـــــدعــــم وتنــميــــة المـــقــــاولاتـيـــة
+                            </p>
+                            <p>
+
+
+                                08 شــارع محمـد ارزقـي بن بوزيــد , العناصر
+                                الجزائــر العاصمــــــة
+
+                            </p>
+
+                        </div>
+                        <!-- CTA Content End -->
+                    </div>
+                    <div class="col-lg-5">
+                        <!-- CTA Phone Number Start -->
+                        <div class="cta-phone text-lg-end text-strat">
+
+                            <h2 class="title" style="direction:ltr"> 0770  033  033 </h2>
+                        </div>
+                        <div class="cta-phone text-sm-end text-strat">
+                            <h6 class="title" style="font-size:18px">البريـد الإلكتـرونـي   :    contact@nesda.dz </h6>
+                        </div>
+
+                        <!-- CTA Phone Number Start -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CTA Section End -->
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="auto-container">
+                <div class="inner-container">
+                    <div class="row align-items-center clearfix">
+                        <!-- Image Column -->
+                        <div class="image-column col-lg-6">
+                            <div class="about-image">
+                                <div class="about-inner-image">
+
+                                    <img src="~/images/about/home-about .png" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Content Column -->
+                        <div class="content-column col-lg-6 col-md-12 col-sm-12 mb-0">
+                            <div class="about-column">
+                                <div class="sec-title">
+                                    <div class="title">من نحن؟</div>
+                                    <h2>الوكالة الوطنية لدعم وتنمية <span>المقاولاتية</span> </h2>
+                                </div>
+                                <div class="text">
+                                    <p>الوكالة الوطنية لدعم وتنمية المقاولاتية، هي هيئة حكومية ذات طابع خاص، موضوعة تحت وصاية وزارة اقتصاد المعرفة والمؤسسات الناشئة والمؤسسات المُصغّرة</p>
+                                    <p>تتكفل الوكالة بتسيير جهاز ذو مقاربة اقتصادية، يهدف الى مرافقة حاملي المشاريع لإنشاء وتوسيع مؤسسات  مصغرة في مجال انتاج الخدمات والسلع، قصد خلق الثروة ومناصب عمل</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End About Section -->
+        <!-- Services  Section -->
+        <section id="objectif" class="services-section">
+            <div class="auto-container">
+                <div class="sec-title">
+                    <div class="title">الخدمات</div>
+                    <h2>   الخدمات الرقمية<span> للوكالة</span></h2>
+                </div>
+                <div class="inner-container">
+                    <div class="row g-4">
+
+                        <!-- Service Block -->
+                        <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                            <div class="inner-box">
+                                <a asp-action="Inscrire" asp-controller="Home">
+                                    <div class="icon-box">
+                                        <span class="icon fas fa-user-plus"></span>
+
+                                    </div>
+                                    <h5><a>فضاء التسجيل</a></h5>
+                                    <div class="text">
+                                        .يتيح لكم التسجيل بسهولة للاستفادة من خدمات جهاز الوكالة الوطنية لدعم وتنمية المقاولاتية
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Service Block -->
+                        <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                            <div class="inner-box">
+                                <a asp-action="SuiviDossier" asp-controller="EspacePromoteur">
+                                    <div class="icon-box">
+                                        <span class="icon fas fa-user-friends"></span>
+
+                                    </div>
+                                    <h5><a>فضاء صاحب المشروع</a></h5>
+                                    <div class="text">
+                                        فضاء مخصص لصاحب المشروع لإدارة معلوماته، متابعة تقدم مشروعه، وإنجاز مختلف الإجراءات عبر المنصة الإلكترونية.
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Service Block -->
+                        <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                            <div class="inner-box">
+                                <a href="https://nesda.ufc.dz/login/index.php">
+                                    <div class="icon-box">
+                                        <span class="icon fas fa-laptop-code"></span>
+                                    </div>
+                                    <h5><a>التكوين عن بعد</a></h5>
+                                    <div class="text">
+                                        تمكين صاحب المشروع من الوصول إلى المنصة التعليمية التابعة للوكالة، وذلك في إطار الاتفاقية الموقعة مع جامعة التكوين المتواصل، لمتابعة برامج التكوين المعتمدة عن بُعد.
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- End Services  Section -->
+        <!-- Services objectif Section -->
+        <section id="objectif" class="services-section">
+            <div class="auto-container">
+                <div class="sec-title">
+                    <div class="title">الأهداف</div>
+                    <h2>أهداف<span> الوكالة</span> </h2>
+
+                    <div class="text">
+                        <p>تسعى الوكالة الوطنية لدعم وتنمية المقاولاتية الى ترقية نظام بيئي للمقاولاتية الذي يحفز على إنشاء، تمويل وتطوير المؤسسات المُصغّرة عالية الأداء، ذات صمود وتخلق قيمة مُضافة مستدامة للمواطنين وللوطن</p>
+                    </div>
+                </div>
+                <div class="inner-container">
+                    <div class="row g-0">
+
+                        <!-- Service Block -->
+                        <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                            <div class="inner-box">
+                                <div class="icon-box">
+                                    <span class="icon ti-blackboard"></span>
+                                </div>
+                                <h5><a>التكوين</a></h5>
+                                <div class="text">تكوين حاملي المشاريع حول أهم المهارات النظرية والتطبيقية المتعلقة بإنشاء وتسيير المؤسسات المُصغّرة</div>
+                            </div>
+                        </div>
+
+                        <!-- Service Block -->
+                        <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                            <div class="inner-box">
+                                <div class="icon-box">
+                                    <span class="icon far fa-handshake"></span>
+                                </div>
+                                <h5><a>المرافقة </a></h5>
+                                <div class="text">مرافقة حاملي المشاريع عبر مختلف مراحل انشاء مؤسساتهم المُصغّرة الى غاية بداية النشاط</div>
+                            </div>
+                        </div>
+
+                        <!-- Service Block -->
+                        <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                            <div class="inner-box">
+                                <div class="icon-box">
+                                    <span class="icon ti-money"></span>
+                                </div>
+                                <h5><a>التمويل </a></h5>
+                                <div class="text">توفير صيغ تمويلية لحاملي المشاريع من أجل إنشاء وتوسعة مؤسساتهم المُصغّرة</div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- End Services objectif Section -->
+        <!-- Services Section -->
+        <section id="finance" class="services-section">
+            <div class="auto-container">
+                <div class="sec-title">
+                    <div class="title">التمويل</div>
+                    <h2>التركيبات<span> المالية</span> </h2>
+
+                    <div class="text">
+                        <p>تعرض الوكالة الوطنية لدعم وتنمية المقاولاتية عدة صيغ تمويلية لانشاء   وتوسعة المؤسسات المُصغّرة عبر 3 تركيبات مالية</p>
+                    </div>
+                </div>
+                <div class="inner-container">
+                    <div class="row g-0">
+
+                        <!-- Service Block -->
+                        <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                            <div class="inner-box">
+                                <div class="icon-box">
+                                    <span class="icon ti-check-box"></span>
+                                </div>
+                                <h5><a>التمويل الذاتي</a></h5>
+                                <div class="text">حيث يقوم صاحب المشروع بتمويل الاستثمار بالكامل بشكل مستقل، دون اللجوء إلى مصادر خارجية</div>
+                            </div>
+                        </div>
+
+                        <!-- Service Block -->
+                        <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                            <div class="inner-box">
+                                <div class="icon-box">
+                                    <span class="icon ti-check-box"></span>
+                                </div>
+                                <h5><a>التمويل الثنائي</a></h5>
+                                <div class="text">حيث يساهم كل من صاحب المشروع والوكالة بنسبة 50% من مبلغ الاستثمار</div>
+                            </div>
+                        </div>
+
+                        <!-- Service Block -->
+                        <div class="service-block col-lg-4 col-md-6 col-sm-12">
+                            <div class="inner-box">
+                                <div class="icon-box">
+                                    <span class="icon ti-check-box"></span>
+                                </div>
+                                <h5><a>التمويل الثلاثي</a></h5>
+                                <div class="text">يساهم حامل المشروع بنسبة ما بين 5 و 15% في حين الوكالة تساهم بنسبة ما بين 15 و 25%،والبنك يغطي نسبة 70%المتبقية</div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- End Services Section -->
+        <!--Sidebar Page Container-->
+        <section id="condition" class="sidebar-page-container">
+            <div class="auto-container">
+                <!-- Service Title Box -->
+                <div class="sec-title">
+
+                    <h2>معايير<span> الانتقاء</span> </h2>
+                </div>
+                <div class="row clearfix">
+
+                    <!-- Content Side -->
+                    <div class="content-side col-lg-12 col-md-12 col-sm-12">
+                        <div class="service-detail">
+                            <div class="inner-box">
+
+                                <div class="lower-content">
+
+                                    <!-- Analysis Columns -->
+                                    <div class="analysis-columns">
+                                        <div class="row clearfix">
+                                            <!-- Column -->
+                                            <div class="column col-lg-12 col-md-12 col-sm-12">
+
+                                                <h4>المؤهلات والشروط التي يجب ان تتوفر لدى حامل المشروع</h4>
+                                                <ul class="list-style-one">
+                                                    <li>
+                                                        تقديم مساهمة مالية شخصية مُطابقة لأحد صيغ التمويل المختارة .
+
+                                                    </li>
+                                                    <li>عدم الاستفادة من إعانة لإستحداث نشاط ما من مختلف أجهزة الدعم .</li>
+                                                    <li>شهادة أو مؤهل مهني و/أو امتلاك معرفة ومهارات معرفية مُعترف بها وموثقة بواسطة شهادة أو اعتراف مهني آخر بالإضافة الى شهادة تكوين على مستوى مركز تطوير المقاولاتية .</li>
+                                                    <li>يجب أن يتراوح سن حامل المشروع ما بين 18 و 55 سنة .</li>
+
+                                                </ul>
                                             </div>
-                                        </li>
 
-                                        <!--Block-->
-                                        <li class="accordion block">
-                                            <div class="acc-btn"><div class="icon-outer"><span class="icon icofont-plus"></span> <span class="icon icofont-minus"></span></div>قرض اضافي غير مكافئ لكراء محل</div>
-                                            <div class="acc-content">
-                                                <div class="content">
-                                                    <div class="accordian-text">
-                                                        عند الضرورة يمكن لحاملي المشاريع الإستفادة من قرض إضافي غير مكافئ تصل قيمته 500.000 دج للتكفل بإيجار المحل أو مكان الرسو على مستوى الموانئ المخصص لإحداث أنشطة إنتاج السلع والخدمات بإستثناء الأنشطة غير المقيمة
-                                                        . ويمنح هذا القرض عندما يلجأ حاملي المشاريع الى التمويل البنكي في مرحلة إحداث انشاطات
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
+                                        </div>
+                                    </div>
+                                    <!-- End Analysis Columns -->
 
-                                        <!--Block-->
-                                        <li class="accordion block">
-                                            <div class="acc-btn"><div class="icon-outer"><span class="icon icofont-plus"></span> <span class="icon icofont-minus"></span></div>قرض اضافي غير مكافئ للإستغلال</div>
-                                            <div class="acc-content">
-                                                <div class="content">
-                                                    <div class="accordian-text">يمكن لحاملي المشاريع من الاستفادة من قرض اضافي غير مكافئ للإستغلال بصفة استثنائية تصل قيمته الى مليون دينار جزائري (1.000.000دج)</div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-
-                                </section>
-                                <br />
-                                <br />
-                                <!-- Analysis Columns -->
-                                <div class="analysis-columns">
-                                    <div class="row clearfix">
+                                    <section id="avantage" class="accordian-box">
                                         <div class="sec-title">
 
-                                            <h2>الاعانات<span> الجبائية</span> </h2>
-
-                                        </div>
-                                        <h4>يستفيد صاحب المشروع من امتيازات ضريبية خلال مرحلتي إنشاء المشروع وتوسيع طاقته الإنتاجية</h4>
-
-                                        <!-- Column -->
-                                        <div class="column col-lg-6 col-md-6 col-sm-12">
-
-                                            <h4>مرحلة الانجاز</h4>
-                                            <ul class="list-style-one">
-                                                <li>
-                                                    الاعفاء من حقوق نقل الملكية بمقابل مالي للإكتسابات العقارية الخاصة في اطار إنشاء نشاط صناعي .
-
-                                                </li>
-                                                <li>الاعفاء من الرسم على القيمة المضافة (TVA) لمقتنيات التجهيزات والخدمات التي تدخل مباشرة في انجاز الاستثمار الخاص بمرحلتي الانشاء والتوسيع بالنسبة للنشاطات الخاضعة للنظام الضريبي الحقيقي (لا تستفيد السيارات السياحية من هذا التدبيرإلا اذا كانت تشكل الأداة الرئيسية للنشاط) .</li>
-                                                <li>تطبيق نسبة مخفضة بـ 5% تخص الحقوق الجمركية للتجهيزات المستوردة والداخلة مباشرة في انجاز الاستثما .</li>
-
-                                            </ul>
+                                            <h2>الاعانات<span> المالية</span> </h2>
                                         </div>
 
-                                        <div class="column col-lg-6 col-md-6 col-sm-12">
+                                        <h4>تشمل الإعانات المالية المقدمة من قبل الوكالة :</h4>
 
-                                            <h4>مرحلة الاستغلال</h4>
-                                            <ul class="list-style-one">
-                                                <li>
-                                                    الاعفاء من الرسم العقاري على البناءات والبناءات الاضافية لمدة 03 سنوات، 06 سنوات أو 10 سنوات حسب موقع المشروع، ابتداءا من تاريخ اتمامها  .
+                                        <!--Accordian Box-->
+                                        <ul class="accordion-box">
 
-                                                </li>
-                                                <li>الاعفاء من الضريبة الجزافية الوحيدة (IFU) أو حسب الحالة (IRG أوIBS) لمدة 03 سنوات، 06 سنوات أو 10 سنوات، حسب موقع المشروع ابتداءا من تاريخ الاستغلال .</li>
-                                                <li>عند انتهاء فترة الاعفاء المذكورة في المطة السابقة، يمكن تمديدها لسنتين (02) عندما يتعهد المستثمر بتوظيف ثلاثة (03) عمال على الأقل لمدة غير محددة .</li>
-                                                <li>عدم احترام التعهد الخاص بخلق مناصب الشغل يؤدي الى سحب الامتيازات الممنوحة والمطالبة بالحقوق والرسوم الواجب دفعها .</li>
+                                            <!--Block-->
+                                            <li class="accordion block active-block">
+                                                <div class="acc-btn active"><div class="icon-outer"><span class="icon icofont-plus"></span> <span class="icon icofont-minus"></span></div>قرض غير مكافئ</div>
+                                                <div class="acc-content current">
+                                                    <div class="content">
+                                                        <div class="accordian-text">تمنح الوكالة قرض غير مكافئ لحاملي المشاريع والذي تتراوح نسبته بين 15% و 50% حسب صيغة التمويل والمنطقة التي ينجز فيها المشروع ووضعية صاحب المشروع .</div>
+                                                    </div>
+                                                </div>
+                                            </li>
 
-                                            </ul>
+                                            <!--Block-->
+                                            <li class="accordion block">
+                                                <div class="acc-btn"><div class="icon-outer"><span class="icon icofont-plus"></span> <span class="icon icofont-minus"></span></div>قرض اضافي غير مكافئ لكراء محل</div>
+                                                <div class="acc-content">
+                                                    <div class="content">
+                                                        <div class="accordian-text">
+                                                            عند الضرورة يمكن لحاملي المشاريع الإستفادة من قرض إضافي غير مكافئ تصل قيمته 500.000 دج للتكفل بإيجار المحل أو مكان الرسو على مستوى الموانئ المخصص لإحداث أنشطة إنتاج السلع والخدمات بإستثناء الأنشطة غير المقيمة
+                                                            . ويمنح هذا القرض عندما يلجأ حاملي المشاريع الى التمويل البنكي في مرحلة إحداث انشاطات
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <!--Block-->
+                                            <li class="accordion block">
+                                                <div class="acc-btn"><div class="icon-outer"><span class="icon icofont-plus"></span> <span class="icon icofont-minus"></span></div>قرض اضافي غير مكافئ للإستغلال</div>
+                                                <div class="acc-content">
+                                                    <div class="content">
+                                                        <div class="accordian-text">يمكن لحاملي المشاريع من الاستفادة من قرض اضافي غير مكافئ للإستغلال بصفة استثنائية تصل قيمته الى مليون دينار جزائري (1.000.000دج)</div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+
+                                    </section>
+                                    <br />
+                                    <br />
+                                    <!-- Analysis Columns -->
+                                    <div class="analysis-columns">
+                                        <div class="row clearfix">
+                                            <div class="sec-title">
+
+                                                <h2>الاعانات<span> الجبائية</span> </h2>
+
+                                            </div>
+                                            <h4>يستفيد صاحب المشروع من امتيازات ضريبية خلال مرحلتي إنشاء المشروع وتوسيع طاقته الإنتاجية</h4>
+
+                                            <!-- Column -->
+                                            <div class="column col-lg-6 col-md-6 col-sm-12">
+
+                                                <h4>مرحلة الانجاز</h4>
+                                                <ul class="list-style-one">
+                                                    <li>
+                                                        الاعفاء من حقوق نقل الملكية بمقابل مالي للإكتسابات العقارية الخاصة في اطار إنشاء نشاط صناعي .
+
+                                                    </li>
+                                                    <li>الاعفاء من الرسم على القيمة المضافة (TVA) لمقتنيات التجهيزات والخدمات التي تدخل مباشرة في انجاز الاستثمار الخاص بمرحلتي الانشاء والتوسيع بالنسبة للنشاطات الخاضعة للنظام الضريبي الحقيقي (لا تستفيد السيارات السياحية من هذا التدبيرإلا اذا كانت تشكل الأداة الرئيسية للنشاط) .</li>
+                                                    <li>تطبيق نسبة مخفضة بـ 5% تخص الحقوق الجمركية للتجهيزات المستوردة والداخلة مباشرة في انجاز الاستثما .</li>
+
+                                                </ul>
+                                            </div>
+
+                                            <div class="column col-lg-6 col-md-6 col-sm-12">
+
+                                                <h4>مرحلة الاستغلال</h4>
+                                                <ul class="list-style-one">
+                                                    <li>
+                                                        الاعفاء من الرسم العقاري على البناءات والبناءات الاضافية لمدة 03 سنوات، 06 سنوات أو 10 سنوات حسب موقع المشروع، ابتداءا من تاريخ اتمامها  .
+
+                                                    </li>
+                                                    <li>الاعفاء من الضريبة الجزافية الوحيدة (IFU) أو حسب الحالة (IRG أوIBS) لمدة 03 سنوات، 06 سنوات أو 10 سنوات، حسب موقع المشروع ابتداءا من تاريخ الاستغلال .</li>
+                                                    <li>عند انتهاء فترة الاعفاء المذكورة في المطة السابقة، يمكن تمديدها لسنتين (02) عندما يتعهد المستثمر بتوظيف ثلاثة (03) عمال على الأقل لمدة غير محددة .</li>
+                                                    <li>عدم احترام التعهد الخاص بخلق مناصب الشغل يؤدي الى سحب الامتيازات الممنوحة والمطالبة بالحقوق والرسوم الواجب دفعها .</li>
+
+                                                </ul>
+                                            </div>
+
                                         </div>
-
                                     </div>
+                                    <!-- End Analysis Columns -->
                                 </div>
-                                <!-- End Analysis Columns -->
                             </div>
                         </div>
                     </div>
-                </div>
 
 
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section Start -->
-    <div class="cta-section" data-bg-image="images/background/cta-bg.jpg">
-        <div class="auto-container">
-            <div class="row align-items-center">
-                <div class="col-lg-7">
-                    <!-- CTA Content Start -->
-                    <div class="cta-content">
-                        <h3 class="title">تواصل معنا للمزيد من المعلومات </h3>
-                        <p>
-
-                            الــــوكــــالـــــــة الـــــوطنيـــــة لـــــدعــــم وتنــميــــة المـــقــــاولاتـيـــة
-                        </p>
-                        <p>
-
-
-                            08 شــارع محمـد ارزقـي بن بوزيــد , العناصر
-                            الجزائــر العاصمــــــة
-
-                        </p>
-
-                    </div>
-                    <!-- CTA Content End -->
-                </div>
-                <div class="col-lg-5">
-                    <!-- CTA Phone Number Start -->
-                    <div class="cta-phone text-lg-end text-strat">
-                        <h2 class="title" style="direction:ltr">0770  033  033</h2>
-                    </div>
-                    <div class="cta-phone text-sm-end text-strat">
-                        <h6 class="title" style="font-size:18px">البريـد الإلكتـرونـي   :    contact@nesda.dz </h6>
-                    </div>
-
-                    <!-- CTA Phone Number Start -->
                 </div>
             </div>
+        </section>
+
+        <!-- CTA Section Start -->
+        <div class="cta-section" data-bg-image="images/background/cta-bg.jpg">
+            <div class="auto-container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <!-- CTA Content Start -->
+                        <div class="cta-content">
+                            <h3 class="title">تواصل معنا للمزيد من المعلومات </h3>
+                            <p>
+
+                                الــــوكــــالـــــــة الـــــوطنيـــــة لـــــدعــــم وتنــميــــة المـــقــــاولاتـيـــة
+                            </p>
+                            <p>
+
+
+                                08 شــارع محمـد ارزقـي بن بوزيــد , العناصر
+                                الجزائــر العاصمــــــة
+
+                            </p>
+
+                        </div>
+                        <!-- CTA Content End -->
+                    </div>
+                    <div class="col-lg-5">
+                        <!-- CTA Phone Number Start -->
+                        <div class="cta-phone text-lg-end text-strat">
+                            <h2 class="title" style="direction:ltr">0770  033  033</h2>
+                        </div>
+                        <div class="cta-phone text-sm-end text-strat">
+                            <h6 class="title" style="font-size:18px">البريـد الإلكتـرونـي   :    contact@nesda.dz </h6>
+                        </div>
+
+                        <!-- CTA Phone Number Start -->
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- CTA Section End -->
+        <!-- About Section -->
+
     </div>
-    <!-- CTA Section End -->
-    <!-- About Section -->
 
-</div>
+    @section scripts{
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-@section scripts{
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <script>
 
-    <script>
-
-        $(document).ready(function () {
-            $(".main-slider-carousel").owlCarousel({
-                items: 1, // Nombre d'éléments affichés en même temps
-                loop: true, // Reboucle les slides
-                autoplay: true, // Lancement automatique
-                autoplayTimeout: 10000, // Délai entre chaque slide (en millisecondes)
-                autoplayHoverPause: false, // Met en pause si l'utilisateur passe la souris
-                animateOut: 'fadeOut', // Effet de sortie
-                animateIn: 'fadeIn', // Effet d'entrée
-                smartSpeed: 1000, // Durée de la transition (en millisecondes)
-                dots: true, // Affiche des points de navigation
-                nav: true, // Affiche les flèches de navigation
+            $(document).ready(function () {
+                $(".main-slider-carousel").owlCarousel({
+                    items: 1, // Nombre d'éléments affichés en même temps
+                    loop: true, // Reboucle les slides
+                    autoplay: true, // Lancement automatique
+                    autoplayTimeout: 10000, // Délai entre chaque slide (en millisecondes)
+                    autoplayHoverPause: false, // Met en pause si l'utilisateur passe la souris
+                    animateOut: 'fadeOut', // Effet de sortie
+                    animateIn: 'fadeIn', // Effet d'entrée
+                    smartSpeed: 1000, // Durée de la transition (en millisecondes)
+                    dots: true, // Affiche des points de navigation
+                    nav: true, // Affiche les flèches de navigation
+                });
             });
-        });
 
-    </script>
-}
+        </script>
+    }
