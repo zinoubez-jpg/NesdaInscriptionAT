@@ -135,18 +135,18 @@ namespace Anade.Khadamat.Web.Controllers
 
             return View(inscrit);
         }
-        public IActionResult SimulBPlan()
-        {
+        //public IActionResult SimulBPlan()
+        //{
             
 
-            return View();
-        }
-        public IActionResult SimulVAN()
-        {
+        //    return View();
+        //}
+        //public IActionResult SimulVAN()
+        //{
 
 
-            return View();
-        }
+        //    return View();
+        //}
 
     }
 }

@@ -20,7 +20,7 @@ namespace Anade.Business.Core
         public async Task SendVerificationEmailAsync(string email, string token)
         {
 
-            var verificationLink = $"https://machrou3i.nesda.dz/Inscription/VerifyEmail?email={email}&token={token}";
+            var verificationLink = $"https://myproject.nesda.dz/Inscription/VerifyEmail?email={email}&token={token}";
             var emailBody = $@"
             <!DOCTYPE html>
             <html lang='ar' dir='rtl'>
@@ -166,7 +166,7 @@ namespace Anade.Business.Core
                     }}
                 </style>
             </head>
-            <body>
+            <body dir='Rtl'>
                 <div class='email-container'>
                     <div class='header'>
                         <h1>الوكالة الوطنية لدعم وتنمية المقاولاتية</h1>
@@ -185,9 +185,7 @@ namespace Anade.Business.Core
                             <p style='color:red;'>رابط التحقق هذا صالح لمدة 24 ساعة. إذا لم تقم بهذا الطلب، يرجى تجاهل هذا البريد الإلكتروني.</p>
                         </div>
             
-                        <p>إذا كان الزر أعلاه لا يعمل، يمكنك أيضًا نسخ ولصق الرابط التالي في متصفحك:</p>
-                        <p style='font-size: 13px; word-break: break-all; color: #777;'>https://machrou3i.nesda.dz/Inscription/VerifyEmail?email={email}&token={token}</p>
-            
+                       
                         <div class='divider'></div>
             
                         <p>نشكرك على ثقتك.</p>
