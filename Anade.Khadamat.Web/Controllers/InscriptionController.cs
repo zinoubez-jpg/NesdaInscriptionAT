@@ -369,18 +369,18 @@ namespace Anade.Khadamat.Web.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult CheckEmailExists(string email)
-        {
-            bool emailExists = _context.Inscriptions.Any(u => u.Email == email && u.IsEmailVerified); 
-            return Json(new { exists = emailExists });
-        }
-        [HttpGet]
-        public IActionResult CheckNINExists(string nin)
-        {
-            bool ninExists = _context.Inscriptions.Any(u => u.NIN == nin && u.Validee == true && u.Annulee == false); 
-            return Json(new { exists = ninExists });
-        }
+        //[HttpGet]
+        //public IActionResult CheckEmailExists(string email)
+        //{
+        //    bool emailExists = _context.Inscriptions.Any(u => u.Email == email && u.IsEmailVerified); 
+        //    return Json(new { exists = emailExists });
+        //}
+        //[HttpGet]
+        //public IActionResult CheckNINExists(string nin)
+        //{
+        //    bool ninExists = _context.Inscriptions.Any(u => u.NIN == nin && u.Validee == true && u.Annulee == false); 
+        //    return Json(new { exists = ninExists });
+        //}
 
 
 

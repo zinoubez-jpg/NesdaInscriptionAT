@@ -9,11 +9,13 @@ using Anade.Khadamat.Web.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Threading.Tasks;
 
 namespace Anade.Khadamat.Web
 {
@@ -71,7 +73,14 @@ namespace Anade.Khadamat.Web
                 });
             });
 
-           
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,6 +97,18 @@ namespace Anade.Khadamat.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            // Middleware pour supprimer l’en-tête X-Powered-By
+            app.Use(async (context, next) =>
+            {
+                context.Response.OnStarting(() =>
+                {
+                    context.Response.Headers.Remove("X-Powered-By");
+                    return Task.CompletedTask;
+                });
+
+                await next.Invoke();
+            });
 
             app.UseRouting();
             app.UseAuthentication();

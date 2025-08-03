@@ -160,7 +160,7 @@
                                             <label asp-for="NIN">الرقم التعريفي الوطني الوحيد (NIN) <span style="color:red;">*</span></label>
                                             <input asp-for="NIN" class="required-input" required>
                                             <span asp-validation-for="NIN" class="text-danger"></span>
-                                            <span id="ninValidationMessage"></span>
+                                            @*<span id="ninValidationMessage"></span>*@
                                         </div>
                                     </div>
 
@@ -287,7 +287,7 @@
                                             <label asp-for="Email">البريد الإلكتروني <span style="color:red;">*</span></label>
                                             <input asp-for="Email" style="direction:ltr" required>
                                             <span asp-validation-for="Email" class="text-danger"></span>
-                                            <span id="emailValidationMessage"></span>
+                                            @*<span id="emailValidationMessage"></span>*@
                                         </div>
 
                                         <div class="col-lg-6 col-md-12 col-sm-12 form-group">
@@ -426,7 +426,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
 
-    <script src="~/js/EmailVerification.js"></script>
+   
 
     <script>
               
@@ -495,44 +495,6 @@
     </script>
 
   
-  
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let timeout = null;
-            const ninInput = document.querySelector('input[name="NIN"]');
-            const messageElement = document.getElementById('ninValidationMessage');
-
-            if (ninInput) {
-                ninInput.addEventListener('input', function () {
-                    clearTimeout(timeout);
-                    const nin = this.value.trim();
-
-                    timeout = setTimeout(function () {
-                        if (nin.length > 17) {
-                            fetch('@Url.Action("CheckNINExists", "Inscription")?nin=' + encodeURIComponent(nin))
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.exists) {
-                                        messageElement.textContent = " رقم التعريف الوطني مسجل من قبل";
-                                        messageElement.style.color = "red";
-                                    } else {
-                                        messageElement.textContent = " رقم التعريف الوطني متاح.";
-                                        messageElement.style.color = "#006D6A";
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Erreur lors de la vérification du NIN:', error);
-                                    messageElement.textContent = "حدث خطأ أثناء التحقق.";
-                                    messageElement.style.color = "orange";
-                                });
-                        } else {
-                            messageElement.textContent = '';
-                        }
-                    }, 500);
-                });
-            }
-        });
-    </script>
 
 
     <script type="text/javascript">

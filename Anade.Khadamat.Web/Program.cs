@@ -22,7 +22,14 @@ namespace Anade.Khadamat.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                // Configuration de Kestrel pour supprimer le header "Server"
+                webBuilder.ConfigureKestrel(serverOptions =>
+                    {
+                        serverOptions.AddServerHeader = false; //  Supprime "Server"
+                });
+
                     webBuilder.UseStartup<Startup>();
                 });
     }
+
 }

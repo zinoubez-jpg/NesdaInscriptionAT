@@ -88,7 +88,7 @@ namespace Anade.Khadamat.Web.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     
@@ -108,12 +108,15 @@ namespace Anade.Khadamat.Web.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
+                    //    _logger.LogWarning("User account locked out.");
+                    //    return RedirectToPage("./Lockout");
+
+                    ModelState.AddModelError(string.Empty, "تم رصد محاولات تسجيل دخول فاشلة متكررة. يُرجى المحاولة لاحقًا.");
+                    return Page();
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "بيانات تسجيل الدخول غير صحيحة.");
                     return Page();
                 }
             }
