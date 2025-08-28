@@ -16,8 +16,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
-
+using System.Web;
 
 namespace Anade.Khadamat.Web.Controllers
 {
@@ -122,7 +123,7 @@ namespace Anade.Khadamat.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("{typeInscriptionId}")]
-        public virtual IActionResult CreateInscription(int typeInscriptionId, CreateInscriptionVM model)
+        public virtual async Task<IActionResult> CreateInscription(int typeInscriptionId, CreateInscriptionVM model)
          {
             if ( typeInscriptionId != 2)
             {
@@ -138,6 +139,7 @@ namespace Anade.Khadamat.Web.Controllers
                 return View(model);
 
             }
+
             var isRecaptchaValid = _recaptchaService.ValidateRecaptchaAsync(model.RecaptchaResponse).Result ;
             if (!isRecaptchaValid)
             {
@@ -159,6 +161,49 @@ namespace Anade.Khadamat.Web.Controllers
 
             if (ModelState.IsValid)
             {
+
+                var apiResult = await CheckPromoteurExistenceAsync(model);
+
+                // Not nesda prometeur 
+                if (model.CategorieId != 2)
+                {
+                    
+                    if (apiResult != "\"false\"")
+                    {
+                        
+                        var bResult = new BusinessResult();
+                        bResult.Messages.Add(new MessageResult
+                        {
+                            Message = apiResult,
+                            MessageType = MessageType.Error
+                        });
+                        TempData["Message"] = bResult.ToBootstrapAlerts();
+                        InitializeListViewBags();
+                        return View(model);
+                    }
+                }
+                
+                // Promoteur nesda
+                else
+                {
+                    // Category == 2
+                    if (apiResult == "\"false\"")
+                    {
+                        
+                        var bResult = new BusinessResult();
+                        bResult.Messages.Add(new MessageResult
+                        {
+                            Message = "هذا ليس من حاملي مشارييع ناسدا",
+                            MessageType = MessageType.Error
+                        });
+                        TempData["Message"] = bResult.ToBootstrapAlerts();
+                        InitializeListViewBags();
+                        return View(model);
+                    }
+                    
+                }
+
+                // hckeing email
                 if ( _context.Inscriptions.Any(u => u.Email == model.Email && u.IsEmailVerified))
                 {
                     ModelState.AddModelError("Email", "البريد الإلكتروني الذي أدخلته مرتبط بحساب موجود. يرجى استخدام بريد إلكتروني آخر");
@@ -175,7 +220,6 @@ namespace Anade.Khadamat.Web.Controllers
 
                     return View(model);
                 }
-
 
                 
                 if (model.CopieCNIPdf.Length > 2048576)
@@ -231,11 +275,6 @@ namespace Anade.Khadamat.Web.Controllers
                     InitializeListViewBags();
                     return View(model);
                 }
-
-               
-
-
-
 
 
                 string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
@@ -465,6 +504,32 @@ namespace Anade.Khadamat.Web.Controllers
         }
 
 
+
+
+        private async Task<string> CheckPromoteurExistenceAsync(CreateInscriptionVM model)
+        {
+            using var client = new HttpClient();
+            var baseUrl = "https://promoteur.nesda.dz/Inscription/Verif_Existance";
+
+            var formattedDate = model.DateNaissance.ToString("dd/MM/yyyy");
+
+            var encodedNom = HttpUtility.UrlEncode(model.NomFr);
+            var encodedPrenom = HttpUtility.UrlEncode(model.PrenomFr);
+            var encodedDate = HttpUtility.UrlEncode(formattedDate);
+            var encodedNumActP = HttpUtility.UrlEncode("675675"); 
+
+            var url = $"{baseUrl}?NIN={model.NIN}&NOM_P={encodedNom}&PRENOM_P={encodedPrenom}&DDN_P={encodedDate}&NUM_ACT_P={encodedNumActP}&Commune_Nais={model.CommuneNaissanceId}";
+
+            try
+            {
+                var response = await client.GetStringAsync(url);
+                return response; 
+            }
+            catch (HttpRequestException ex)
+            {
+                return $"API Error";
+            }
+        }
 
 
 
