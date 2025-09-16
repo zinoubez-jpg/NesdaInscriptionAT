@@ -111,11 +111,11 @@ namespace Anade.Khadamat.Web.Controllers
         [Route("{typeInscriptionId}")]
         public virtual IActionResult CreateInscription(int typeInscriptionId)
         {
-            if ( typeInscriptionId != 2)
+            if (typeInscriptionId != 2)
             {
-                return  Unauthorized();
+                return Unauthorized();
             }
-             ViewBag.TypeInsId = typeInscriptionId;
+            ViewBag.TypeInsId = typeInscriptionId;
             InitializeListViewBags();
             return View();
         }
@@ -137,7 +137,6 @@ namespace Anade.Khadamat.Web.Controllers
                 TempData["Message"] = bResult.ToBootstrapAlerts();
                 InitializeListViewBags();
                 return View(model);
-
             }
 
             var isRecaptchaValid = _recaptchaService.ValidateRecaptchaAsync(model.RecaptchaResponse).Result ;
@@ -161,20 +160,20 @@ namespace Anade.Khadamat.Web.Controllers
 
             if (ModelState.IsValid)
             {
-
-                var apiResult = await CheckPromoteurExistenceAsync(model);
+                String apiResult = "";
+                model.CommuneNaissance = _communeBusinessService.GetById(model.CommuneNaissanceId);
 
                 // Not nesda prometeur 
                 if (model.CategorieId != 2)
                 {
-                    
+                    apiResult = await CheckPromoteurExistenceAsync(model);
                     if (apiResult != "\"false\"")
                     {
                         
                         var bResult = new BusinessResult();
                         bResult.Messages.Add(new MessageResult
                         {
-                            Message = apiResult,
+                            Message = apiResult, // TODO: to replace later with arabic msg
                             MessageType = MessageType.Error
                         });
                         TempData["Message"] = bResult.ToBootstrapAlerts();
@@ -183,17 +182,18 @@ namespace Anade.Khadamat.Web.Controllers
                     }
                 }
                 
-                // Promoteur nesda
+                // Promoteur nesda (category ==2)
                 else
                 {
-                    // Category == 2
-                    if (apiResult == "\"false\"")
+                    apiResult = await CheckExtensionEligibilityAsync(model);
+                    bool isFourDigitCode = System.Text.RegularExpressions.Regex.IsMatch(apiResult, @"^\d{4}$");
+                    if (!isFourDigitCode)
                     {
-                        
+                      
                         var bResult = new BusinessResult();
                         bResult.Messages.Add(new MessageResult
                         {
-                            Message = "هذا ليس من حاملي مشارييع ناسدا",
+                            Message = apiResult,
                             MessageType = MessageType.Error
                         });
                         TempData["Message"] = bResult.ToBootstrapAlerts();
@@ -279,9 +279,24 @@ namespace Anade.Khadamat.Web.Controllers
 
                 string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
                 var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
-                var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
-                var antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
-                var agence = _agenceBusinessService.GetById(antenne.AgenceId);
+
+                Antenne antenne;
+                Agence agence;
+
+                if (model.CategorieId != 2)
+                {
+                    var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
+                     antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
+                     agence = _agenceBusinessService.GetById(antenne.AgenceId);
+
+                }
+                else
+                {
+                     antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
+                     agence = _agenceBusinessService.GetById(antenne.AgenceId);
+                }
+                
+
                 Inscription NewInscription = new Inscription
                 {
 
@@ -509,16 +524,16 @@ namespace Anade.Khadamat.Web.Controllers
         private async Task<string> CheckPromoteurExistenceAsync(CreateInscriptionVM model)
         {
             using var client = new HttpClient();
-            var baseUrl = "https://promoteur.nesda.dz/Inscription/Verif_Existance";
+            var baseUrl = "https://promoteur.nesda.dz/Inscription/Verif_Existance_cr";
 
             var formattedDate = model.DateNaissance.ToString("dd/MM/yyyy");
 
             var encodedNom = HttpUtility.UrlEncode(model.NomFr);
             var encodedPrenom = HttpUtility.UrlEncode(model.PrenomFr);
             var encodedDate = HttpUtility.UrlEncode(formattedDate);
-            var encodedNumActP = HttpUtility.UrlEncode("675675"); 
+            var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9,5)); ; 
 
-            var url = $"{baseUrl}?NIN={model.NIN}&NOM_P={encodedNom}&PRENOM_P={encodedPrenom}&DDN_P={encodedDate}&NUM_ACT_P={encodedNumActP}&Commune_Nais={model.CommuneNaissanceId}";
+            var url = $"{baseUrl}?NIN={model.NIN}&NOM_P={encodedNom}&PRENOM_P={encodedPrenom}&DDN_P={encodedDate}&NUM_ACT_P={encodedNumActP}&Commune_Nais={model.CommuneNaissance.Code}";
 
             try
             {
@@ -527,11 +542,33 @@ namespace Anade.Khadamat.Web.Controllers
             }
             catch (HttpRequestException ex)
             {
-                return $"API Error";
+                return $"API Error"; 
             }
         }
 
+        private async Task<string> CheckExtensionEligibilityAsync(CreateInscriptionVM model)
+        {
+            using var client = new HttpClient();
+            var baseUrl = "https://promoteur.nesda.dz/Inscription/Verif_Existance_Ext";
+            
 
+            var formattedDate = model.DateNaissance.ToString("dd/MM/yyyy");
+            var encodedNom = HttpUtility.UrlEncode(model.NomFr);
+            var encodedPrenom = HttpUtility.UrlEncode(model.PrenomFr);
+            var encodedDate = HttpUtility.UrlEncode(formattedDate);
+            var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9, 5));
+            var url = $"{baseUrl}?NIN={model.NIN}&NOM_P={encodedNom}&PRENOM_P={encodedPrenom}&DDN_P={encodedDate}&NUM_ACT_P={encodedNumActP}&Commune_Nais={model.CommuneNaissance.Code}";
+
+            try
+            {
+                var response = await client.GetStringAsync(url);
+                return response.Trim('"');
+            }
+            catch (HttpRequestException ex)
+            {
+                return "Une erreur est survenue. Veuillez contacter l’administrateur.";
+            }
+        }
 
         #endregion
 
