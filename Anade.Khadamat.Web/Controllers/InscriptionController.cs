@@ -125,10 +125,10 @@ namespace Anade.Khadamat.Web.Controllers
         [Route("{typeInscriptionId}")]
         public virtual async Task<IActionResult> CreateInscription(int typeInscriptionId, CreateInscriptionVM model)
          {
-            if ( typeInscriptionId != 2)
-            {
-                return Unauthorized();
-            }
+            //if ( typeInscriptionId != 2)
+            //{
+            //    return Unauthorized();
+            //}
             if (model.CategorieId == 1)
             {
 
