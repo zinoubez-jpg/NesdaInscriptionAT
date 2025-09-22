@@ -463,6 +463,7 @@ namespace Anade.Khadamat.Web.Controllers
             ViewBag.CategorieId = new SelectList(categories, nameof(Categorie.Id), nameof(Categorie.DesignationAr));
             ViewBag.TypeFinancementId = new SelectList(typeFinancements, nameof(TypeFinancement.Id), nameof(TypeFinancement.DesignationAr));
             ViewBag.WilayaCentreDeveloppementEntrepreneuriatId = new SelectList(wilayas, nameof(TypeFinancement.Id), nameof(TypeFinancement.DesignationAr));
+            ViewBag.WilayaCentreDeveloppementEntrepreneuriatId = new SelectList(wilayas, nameof(Wilaya.Id), nameof(Wilaya.DisplayNameAr));
             ViewBag.TypeCentreDeveloppementEntrepreneuriatId = new SelectList(typesCentreDeveloppementEntrepreneuriat, nameof(TypeCentreDeveloppementEntrepreneuriat.Id), nameof(TypeCentreDeveloppementEntrepreneuriat.DesignationAr));
             ViewBag.CentreDeveloppementEntrepreneuriatId = new SelectList(centresDeveloppementEntrepreneuriat, nameof(CentreDeveloppementEntrepreneuriat.Id), nameof(CentreDeveloppementEntrepreneuriat.DesignationAr));
         }
