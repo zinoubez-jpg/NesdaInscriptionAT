@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Anade.Khadamat.Domain
 {
-    public partial class Inscription  : IEntity<int>
+    public partial class Inscription : IEntity<int>
     {
         [Display(Name = "Id")]
         [Required(ErrorMessage = "يجب ملء هذا الحقل")]
@@ -77,9 +77,9 @@ namespace Anade.Khadamat.Domain
         public int TypeFinancementId { get; set; }
 
         public string EtablissementFormation { get; set; }
-      
+
         public string IntituleDiplome { get; set; }
-        
+
         public string Specialite { get; set; }
 
         [Display(Name = "WilayaSeigeSocialId")]
@@ -121,6 +121,7 @@ namespace Anade.Khadamat.Domain
         public string NumeroSiejeV3 { get; set; }
         public int ActiviteId { get; set; }
         public string PasswordHashInit { get; set; }
+
         public virtual ICollection<SessionFormationDetails> SessionFormations { get; set; }
         public virtual ICollection<EvaluationProjet> EvaluationProjets { get; set; }
         public virtual ICollection<CSVF> CSVFs { get; set; }
@@ -136,6 +137,7 @@ namespace Anade.Khadamat.Domain
         public virtual Activite Activite { get; set; }
         public virtual TypeFinancement TypeFinancement { get; set; }
 
-
+        public int CentreDeveloppementEntrepreneuriatId { get; set; }
+        public virtual CentreDeveloppementEntrepreneuriat CentreDeveloppementEntrepreneuriat { get; set; }
     }
 }

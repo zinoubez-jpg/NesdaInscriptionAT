@@ -136,7 +136,7 @@ namespace Anade.Khadamat.Web.Models
         [Compare("Password", ErrorMessage = "كلمتا المرور غير متطابقتين.")]
         [Display(Name = "تأكيد كلمة المرور")]
         public string ConfirmPassword { get; set; }
-       
+
         public virtual ICollection<SessionFormationDetails> SessionFormations { get; set; }
         public virtual ICollection<EvaluationProjet> EvaluationProjets { get; set; }
         public virtual ICollection<CSVF> CSVFs { get; set; }
@@ -151,15 +151,21 @@ namespace Anade.Khadamat.Web.Models
         public virtual Categorie Categorie { get; set; }
         public virtual Activite Activite { get; set; }
 
+        [Display(Name = "WilayaCentreDeveloppementEntrepreneuriatId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int WilayaCentreDeveloppementEntrepreneuriatId { get; set; }
 
+        [Display(Name = "CentreDeveloppementEntrepreneuriatId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int CentreDeveloppementEntrepreneuriatId { get; set; }
 
+        [Display(Name = "TypeCentreDeveloppementEntrepreneuriatId")]
+        [Required(ErrorMessage = "يجب ملء هذا الحقل")]
+        public int TypeCentreDeveloppementEntrepreneuriatId { get; set; }
 
+        public virtual CentreDeveloppementEntrepreneuriat CentreDeveloppementEntrepreneuriat { get; set; }
 
-
-
-
-
-       
+        public virtual TypeCentreDeveloppementEntrepreneuriat TypeCentreDeveloppementEntrepreneuriat { get; set; }
 
     }
 }
