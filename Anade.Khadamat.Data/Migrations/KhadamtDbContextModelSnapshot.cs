@@ -163,6 +163,42 @@ namespace Anade.Khadamat.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("Anade.Khadamat.Domain.CentreDeveloppementEntrepreneuriat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("DesignationAr")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("DesignationFr")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int>("TypeCentreDeveloppementEntrepreneuriatId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WilayaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeCentreDeveloppementEntrepreneuriatId");
+
+                    b.HasIndex("WilayaId");
+
+                    b.ToTable("CentreDeveloppementEntrepreneuriat");
+                });
+
             modelBuilder.Entity("Anade.Khadamat.Domain.Circonscription", b =>
                 {
                     b.Property<int>("Id")
@@ -335,6 +371,9 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Property<int>("CategorieId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CentreDeveloppementEntrepreneuriatId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CommuneNaissanceId")
                         .HasColumnType("int");
 
@@ -476,6 +515,8 @@ namespace Anade.Khadamat.Data.Migrations
 
                     b.HasIndex("CategorieId");
 
+                    b.HasIndex("CentreDeveloppementEntrepreneuriatId");
+
                     b.HasIndex("CommuneNaissanceId");
 
                     b.HasIndex("CommuneResidenceId");
@@ -581,6 +622,32 @@ namespace Anade.Khadamat.Data.Migrations
                     b.ToTable("SituationFamiliales");
                 });
 
+            modelBuilder.Entity("Anade.Khadamat.Domain.TypeCentreDeveloppementEntrepreneuriat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("DesignationAr")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("DesignationFr")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypeCentreDeveloppementEntrepreneuriat");
+                });
+
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeFinancement", b =>
                 {
                     b.Property<int>("Id")
@@ -679,6 +746,25 @@ namespace Anade.Khadamat.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Anade.Khadamat.Domain.CentreDeveloppementEntrepreneuriat", b =>
+                {
+                    b.HasOne("Anade.Khadamat.Domain.TypeCentreDeveloppementEntrepreneuriat", "TypeCentreDeveloppementEntrepreneuriat")
+                        .WithMany("CentresDeveloppementEntrepreneuriat")
+                        .HasForeignKey("TypeCentreDeveloppementEntrepreneuriatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Anade.Khadamat.Domain.Wilaya", "Wilaya")
+                        .WithMany("CentresDeveloppementEntrepreneuriat")
+                        .HasForeignKey("WilayaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TypeCentreDeveloppementEntrepreneuriat");
+
+                    b.Navigation("Wilaya");
+                });
+
             modelBuilder.Entity("Anade.Khadamat.Domain.Commune", b =>
                 {
                     b.HasOne("Anade.Khadamat.Domain.Wilaya", "Wilaya")
@@ -716,6 +802,12 @@ namespace Anade.Khadamat.Data.Migrations
                     b.HasOne("Anade.Khadamat.Domain.Categorie", "Categorie")
                         .WithMany()
                         .HasForeignKey("CategorieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Anade.Khadamat.Domain.CentreDeveloppementEntrepreneuriat", "CentreDeveloppementEntrepreneuriat")
+                        .WithMany("Inscriptions")
+                        .HasForeignKey("CentreDeveloppementEntrepreneuriatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -773,6 +865,8 @@ namespace Anade.Khadamat.Data.Migrations
 
                     b.Navigation("Categorie");
 
+                    b.Navigation("CentreDeveloppementEntrepreneuriat");
+
                     b.Navigation("CommuneNaissance");
 
                     b.Navigation("CommuneResidence");
@@ -819,6 +913,11 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Navigation("Inscriptions");
                 });
 
+            modelBuilder.Entity("Anade.Khadamat.Domain.CentreDeveloppementEntrepreneuriat", b =>
+                {
+                    b.Navigation("Inscriptions");
+                });
+
             modelBuilder.Entity("Anade.Khadamat.Domain.Commune", b =>
                 {
                     b.Navigation("InscriptionsPCNais");
@@ -857,6 +956,11 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Navigation("Inscriptions");
                 });
 
+            modelBuilder.Entity("Anade.Khadamat.Domain.TypeCentreDeveloppementEntrepreneuriat", b =>
+                {
+                    b.Navigation("CentresDeveloppementEntrepreneuriat");
+                });
+
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeFinancement", b =>
                 {
                     b.Navigation("Inscriptions");
@@ -869,6 +973,8 @@ namespace Anade.Khadamat.Data.Migrations
 
             modelBuilder.Entity("Anade.Khadamat.Domain.Wilaya", b =>
                 {
+                    b.Navigation("CentresDeveloppementEntrepreneuriat");
+
                     b.Navigation("Communes");
                 });
 #pragma warning restore 612, 618
