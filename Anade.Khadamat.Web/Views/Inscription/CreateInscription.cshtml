@@ -513,36 +513,33 @@
         $(document).ready(function () {
             $("#designationCDE").prop("disabled", true);
 
-            function updateCentreDeveloppementEntrepreneuriatList() {
-                var wilayaCDEId = $("#wilayaCDE").val();
-                var typeCDEId = $("#TypeCDE").val();
-                var url = "/Inscription/GetCentreDeveloppementEntrepreneuriatList";
+            function checkAndLoadCentres() {
+                var wilayaId = $("#wilayaCDE").val();
+                var typeId = $("#TypeCDE").val();
 
-                // Vérifier que les deux champs sont sélectionnés
-                if (wilayaCDEId && typeCDEId) {
-                    $.getJSON(url, {
-                        WilayaId: wilayaCDEId,
-                        TypeCDEId: typeCDEId
-                    }, function (data) {
-                        var item = "<option value=''>إختيار مركز تطوير المقاولاتية</option>";
-                        $.each(data, function (i, cde) {
-                            item += '<option value="' + cde.value + '">' + cde.text + '</option>'
-                        });
-                        $("#designationCDE").html(item).prop("disabled", false);
-                    });
+                if (wilayaId && typeId) {
+                    loadCentres(wilayaId, typeId);
                 } else {
                     $("#designationCDE").html("<option value=''>إختيار مركز تطوير المقاولاتية</option>")
                         .prop("disabled", true);
                 }
             }
 
+            function loadCentres(wilayaId, typeId) {
+                $.getJSON("/Inscription/GetCentreDeveloppementEntrepreneuriatList", {
+                    WilayaId: wilayaId,
+                    TypeCDEId: typeId
+                }, function (data) {
+                    var options = "<option value=''>إختيار مركز تطوير المقاولاتية</option>";
+                    $.each(data, function (i, item) {
+                        options += '<option value="' + item.value + '">' + item.text + '</option>';
+                    });
+                    $("#designationCDE").html(options).prop("disabled", false);
+                });
+            }
             // Écouter les changements sur les deux dropdowns
-            $("#wilayaCDE, #TypeCDE").change(function () {
-                updateCentreDeveloppementEntrepreneuriatList();
-            });
-
-            // Initialiser l'état au chargement
-            updateCentreDeveloppementEntrepreneuriatList();
+            $("#wilayaCDE").change(checkAndLoadCentres);
+            $("#TypeCDE").change(checkAndLoadCentres);
         });
 
         $(document).ready(function () {
