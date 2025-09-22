@@ -166,6 +166,7 @@ namespace Anade.Khadamat.Web.Controllers
             {
                 String apiResult = "";
                 model.CommuneNaissance = _communeBusinessService.GetById(model.CommuneNaissanceId);
+                model.CentreDeveloppementEntrepreneuriatId = 1;
 
                 // Not nesda prometeur 
                 if (model.CategorieId != 2)
@@ -339,10 +340,10 @@ namespace Anade.Khadamat.Web.Controllers
                     Agence = agence.Code,
 
                     ActiviteId = 1,
-                    PasswordHashInit = model.Password
+                    PasswordHashInit = model.Password,
 
-
-                };
+                    CentreDeveloppementEntrepreneuriatId = model.CentreDeveloppementEntrepreneuriatId
+            };
 
 
                 var businessResult = _inscriptionBusinessService.Add(NewInscription);

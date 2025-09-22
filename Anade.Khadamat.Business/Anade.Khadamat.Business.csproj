@@ -12,6 +12,9 @@
     <ProjectReference Include="..\Anade.Business.Core\Anade.Business.Core.csproj" />
     <ProjectReference Include="..\Anade.Data.Abstractions\Anade.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Anade.Domain.Core\Anade.Domain.Core.csproj" />
+    <ProjectReference Include="..\Anade.Khadamat.Data_Authentification\Anade.Khadamat.Data_Authentification.csproj" />
+    <ProjectReference Include="..\Anade.Khadamat.Data_Inscription\Anade.Khadamat.Data_Inscription.csproj" />
+    <ProjectReference Include="..\Anade.Khadamat.Data_Suivi\Anade.Khadamat.Data_Suivi.csproj" />
     <ProjectReference Include="..\Anade.Khadamat.Domain\Anade.Khadamat.Domain.csproj" />
   </ItemGroup>
 
