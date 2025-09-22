@@ -114,8 +114,6 @@
 
                                 </ul>
 
-
-
                             }
 
                         </div>
@@ -513,41 +511,38 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $("#designationCDE").prop("disabled", false);
+            $("#designationCDE").prop("disabled", true);
 
-            $("#wilayaCDE").change(function () {
-                var wilayaCDEId = $(this).val();
+            function updateCentreDeveloppementEntrepreneuriatList() {
+                var wilayaCDEId = $("#wilayaCDE").val();
+                var typeCDEId = $("#TypeCDE").val();
                 var url = "/Inscription/GetCentreDeveloppementEntrepreneuriatList";
 
-                if (wilayaCDEId) {
-                    $.getJSON(url, { WilayaId: wilayaCDEId }, function (data) {
-                        var item = "<option value=''>إختيار بلدية الميلاد</option>";
-                        $.each(data, function (i, city) {
-                            item += '<option value="' + city.value + '">' + city.text + '</option>'
+                // Vérifier que les deux champs sont sélectionnés
+                if (wilayaCDEId && typeCDEId) {
+                    $.getJSON(url, {
+                        WilayaId: wilayaCDEId,
+                        TypeCDEId: typeCDEId
+                    }, function (data) {
+                        var item = "<option value=''>إختيار مركز تطوير المقاولاتية</option>";
+                        $.each(data, function (i, cde) {
+                            item += '<option value="' + cde.value + '">' + cde.text + '</option>'
                         });
                         $("#designationCDE").html(item).prop("disabled", false);
                     });
                 } else {
-                    $("#designationCDE").html("<option value=''>إختيار بلدية الميلاد</option>").prop("disabled", true);
+                    $("#designationCDE").html("<option value=''>إختيار مركز تطوير المقاولاتية</option>")
+                        .prop("disabled", true);
                 }
+            }
+
+            // Écouter les changements sur les deux dropdowns
+            $("#wilayaCDE, #TypeCDE").change(function () {
+                updateCentreDeveloppementEntrepreneuriatList();
             });
 
-            $("#TypeCDE").change(function () {
-                var typeCDEId = $(this).val();
-                var url = "/Inscription/GetCentreDeveloppementEntrepreneuriatList";
-
-                if (typeCDEId) {
-                    $.getJSON(url, { TypeCDEId: typeCDEId }, function (data) {
-                        var item = "<option value=''>إختيار بلدية الميلاد</option>";
-                        $.each(data, function (i, city) {
-                            item += '<option value="' + city.value + '">' + city.text + '</option>'
-                        });
-                        $("#designationCDE").html(item).prop("disabled", false);
-                    });
-                } else {
-                    $("#designationCDE").html("<option value=''>إختيار بلدية الميلاد</option>").prop("disabled", true);
-                }
-            });
+            // Initialiser l'état au chargement
+            updateCentreDeveloppementEntrepreneuriatList();
         });
 
         $(document).ready(function () {
