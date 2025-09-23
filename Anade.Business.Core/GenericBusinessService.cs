@@ -18,7 +18,7 @@ namespace Anade.Business.Core
             _unitOfWork = unitOfWork;
             _repository = _unitOfWork.GetRepository<T, TKey>();
         }
-        public BusinessResult Add(T entity)
+        public virtual BusinessResult Add(T entity)
         {
             BusinessResult businessResult;
 

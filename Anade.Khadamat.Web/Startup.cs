@@ -17,6 +17,10 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
 
+using Anade.Khadamat.Data_Authentification;
+using Anade.Khadamat.Data_Inscription;
+using Anade.Khadamat.Data_Suivi;
+
 namespace Anade.Khadamat.Web
 {
     public class Startup
@@ -37,8 +41,19 @@ namespace Anade.Khadamat.Web
                                        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             services.Configure<ConfigurationModel>(Configuration.GetSection("EmbedSettings"));
+
+            services.AddScoped<DbContext, AuthentificationDbContext>();
+            services.AddDbContext<AuthentificationDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("AuthentificationDbContext")));
+
+            services.AddScoped<DbContext, InscriptionDbContext>();
+            services.AddDbContext<InscriptionDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("InscriptionDbContext")));
+
+            services.AddScoped<DbContext, SuiviDbContext>();
+            services.AddDbContext<SuiviDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("SuiviDbContext")));
+
             services.AddScoped<DbContext, KhadamtDbContext>();
             services.AddDbContext<KhadamtDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("khadamatDbConnection")));
+            
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
             services.AddTransient(typeof(IRepository<,>), typeof(GenericRepository<,>));
