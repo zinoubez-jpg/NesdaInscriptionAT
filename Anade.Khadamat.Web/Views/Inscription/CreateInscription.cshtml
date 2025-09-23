@@ -141,14 +141,6 @@
                                             <span asp-validation-for="CategorieId" class="text-danger"></span>
                                         </div>
 
-                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                            <label asp-for="TypeFinancementId">نوع التمويل <span style="color:red;">*</span> </label>
-                                            <select asp-for="TypeFinancementId" asp-items="@ViewBag.TypeFinancementId as SelectList" class="form-control select2" required>
-                                                <option value="">إختيار </option>
-                                            </select>
-                                            <span asp-validation-for="TypeFinancementId" class="text-danger"></span>
-                                        </div>
-
                                     }
                                     else
                                     {
@@ -180,6 +172,16 @@
 
                                         </div>
                                     }
+
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                        <label asp-for="TypeFinancementId">نوع التمويل <span style="color:red;">*</span> </label>
+                                        <select asp-for="TypeFinancementId" asp-items="@ViewBag.TypeFinancementId as SelectList" class="form-control select2" required>
+                                            <option value="">إختيار </option>
+                                        </select>
+                                        <span asp-validation-for="TypeFinancementId" class="text-danger"></span>
+                                    </div>
+
 
                                     <div class="row clearfix">
                                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">

@@ -404,8 +404,10 @@ namespace Anade.Khadamat.Web.Controllers
 
                 }
             }
+            
             else
             {
+                // Dans l'inscription en ligne : [DBNesdaInscription6] --> CategoriesId = 1 --> Sans emploi
                 model.CategorieId = 1;
 
                 var isRecaptchaValid = _recaptchaService.ValidateRecaptchaAsync(model.RecaptchaResponse).Result;
@@ -424,7 +426,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                     bR.Messages.Add(msgR);
                     TempData["Message"] = bR.ToBootstrapAlerts();
-
+                    InitializeListViewBags();
                     return View(model);
                 }
 
@@ -433,7 +435,8 @@ namespace Anade.Khadamat.Web.Controllers
 
                     Inscription_Promoteur entity = new();
 
-                    // Initialisations
+                    // Initialisations de l'entité Inscription_Promoteur
+
                     entity.NIN = model.NIN;
                     entity.NOM_P = model.NomFr;
                     entity.PRENOM_P = model.PrenomFr;
@@ -471,7 +474,14 @@ namespace Anade.Khadamat.Web.Controllers
 
                     entity.ADR_E = "";
 
+                    // Dans l'inscription en ligne : [DBNesdaInscription6] --> IntituleDiplome c'est un champs Arabe,
+                    // mais dans la base de données [INSCRIPTION] le champs Francais.
+
                     entity.SPECIALITE = model.IntituleDiplome;
+                    entity.SPECIALITE = "...";
+
+                    // Dans l'inscription en ligne : [INSCRIPTION] --> Inscription_PaysId = 4 --> Algérie.
+                    entity.Inscription_PaysId = 4;
 
                     if (model.NiveauInstructionId == 1)
                     {
@@ -508,146 +518,99 @@ namespace Anade.Khadamat.Web.Controllers
 
                     if (string.IsNullOrEmpty(entity.NIN) || entity.NIN.Length != 18 || !entity.NIN.All(char.IsDigit))
                     {
-                        // Collecter toutes les erreurs de validation
-                        var errors = ModelState.Values
-                            .SelectMany(v => v.Errors)
-                            .Select(e => e.ErrorMessage)
-                            .ToList();
-
-                        return Json(new
+                        var bR = new BusinessResult();
+                        var msgR = new MessageResult()
                         {
-                            success = false,
-                            message = "تأكد من أن الرقم التعريفي الوطني الوحيد الخاص بك, يتكون من 18 رقمًا بالضبط",
-                            errors
-                        });
+                            Message = "تأكد من أن الرقم التعريفي الوطني الوحيد الخاص بك, يتكون من 18 رقمًا بالضبط",
+                            MessageType = MessageType.Error,
+                        };
+
+                        bR.Messages.Add(msgR);
+                        TempData["Message"] = bR.ToBootstrapAlerts();
+                        InitializeListViewBags();
+                        return View(model);
                     }
 
                     // Dans CreatePromoteur, ajoutez cette validation avant le ModelState.IsValid
                     if (_promoteurInscriptionBusinessService.GetByNIN(entity.NIN) != null)
                     {
-                        return Json(new
+                        var bR = new BusinessResult();
+                        var msgR = new MessageResult()
                         {
-                            success = false,
-                            message = "الرقم التعريفي الوطني الوحيد الذي قمت بإدخاله مسجل مسبقًا في قاعدة البيانات"
-                        });
-                    }
+                            Message = "الرقم التعريفي الوطني الوحيد الذي قمت بإدخاله مسجل مسبقًا في قاعدة البيانات",
+                            MessageType = MessageType.Error,
+                        };
 
-                    // Dans CreatePromoteur, ajoutez cette validation avant le ModelState.IsValid
-                    //if (await _promoteurInscriptionApiService.GetByNINAsync(entity.NIN) != null)
-                    //{
-                    //    return Json(new
-                    //    {
-                    //        success = false,
-                    //        message = "الرقم التعريفي الوطني الوحيد الذي قمت بإدخاله مسجل مسبقًا في قاعدة البيانات"
-                    //    });
-                    //}
+                        bR.Messages.Add(msgR);
+                        TempData["Message"] = bR.ToBootstrapAlerts();
+                        InitializeListViewBags();
+                        return View(model);
+                    }
 
                     // Validation de l'âge
                     if (entity.DDN_P != default)
                     {
                         if (!AgeHelper.IsAgeValid(entity.DDN_P))
                         {
-                            return Json(new
+                            var bR = new BusinessResult();
+                            var msgR = new MessageResult()
                             {
-                                success = false,
-                                message = "يجب أن يتراوح العمر بين 18 و 55 سنة"
-                            });
+                                Message = "يجب أن يتراوح العمر بين 18 و 55 سنة",
+                                MessageType = MessageType.Error,
+                            };
+
+                            bR.Messages.Add(msgR);
+                            TempData["Message"] = bR.ToBootstrapAlerts();
+                            InitializeListViewBags();
+                            return View(model);
                         }
                     }
                     else
                     {
-                        return Json(new
+                        var bR = new BusinessResult();
+                        var msgR = new MessageResult()
                         {
-                            success = false,
-                            message = "يجب إدخال تاريخ الميلاد"
-                        });
+                            Message = "يجب إدخال تاريخ الميلاد",
+                            MessageType = MessageType.Error,
+                        };
+
+                        bR.Messages.Add(msgR);
+                        TempData["Message"] = bR.ToBootstrapAlerts();
+                        InitializeListViewBags();
+                        return View(model);
                     }
-
-
-
-
 
                     var user = await _userManager.FindByEmailAsync(entity.EMAIL_P);
 
                     if (user != null)
                     {
-                        return Json(new
+                        var bR = new BusinessResult();
+                        var msgR = new MessageResult()
                         {
-                            success = false,
-                            message = "Cet email est déjà utilisé"
-                        });
+                            Message = "عنوان البريد الإلكتروني الذي أدخلته مستخدم في نظامنا بحساب آخر",
+                            MessageType = MessageType.Error,
+                        };
+
+                        bR.Messages.Add(msgR);
+                        TempData["Message"] = bR.ToBootstrapAlerts();
+                        InitializeListViewBags();
+                        return View(model);
                     }
 
-                    var apiBusinessResult = await Create(entity);
+                    var apiBusinessResult = CreateInscriptionPromoteurCreation(entity, model);
 
                     if (!apiBusinessResult.Succeeded)
                     {
-                        // Cas où l'API retourne une erreur métier (ex: BusinessException convertie en ApiBusinessResult)
-                        return Json(new
+                        // Gérer l'erreur ici (afficher les messages dans TempData, etc.)
+                        var bR = new BusinessResult();
+                        foreach (var message in apiBusinessResult.Messages)
                         {
-                            success = false,
-                            message = apiBusinessResult.Messages.FirstOrDefault()?.Message,
-                            errors = apiBusinessResult.Messages.Select(m => m.Message).ToList() // Liste des erreurs
-                        });
+                            bR.Messages.Add(message);
+                        }
+                        TempData["Message"] = bR.ToBootstrapAlerts();
+                        InitializeListViewBags();
+                        return View(model);
                     }
-
-                    Inscription_Promoteur promoteur = JsonConvert.DeserializeObject<Inscription_Promoteur>(apiBusinessResult.Result.ToString());
-
-                    var identityResult = await CreateAccountAsync(promoteur);
-
-                    if (!identityResult.Succeeded)
-                    {
-                        var identityErrors = identityResult.Errors.Select(e => e.Description).ToList();
-                        return Json(new
-                        {
-                            success = false,
-                            message = "Erreur lors de la création du compte",
-                            errors = identityErrors
-                        });
-                    }
-
-                    _logger.LogInformation("Tentative de redirection vers: " + Url.Action("ConfirmationCompte", "Registration"));
-
-                    return Json(new
-                    {
-                        success = true,
-                        message = "Inscription réussie! Un email de confirmation a été envoyé.",
-                        redirectUrl = Url.Action("ConfirmationCompte", "Registration")
-                    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     String apiResult = "";
 
@@ -688,7 +651,6 @@ namespace Anade.Khadamat.Web.Controllers
 
                     if (model.CopieCNIPdf.Length > 2048576)
                     {
-
                         var bResult = new BusinessResult();
                         bResult.Messages.Add(new MessageResult { Message = "حجم الملف يتجاوز الحد المسموح به", MessageType = MessageType.Error });
 
@@ -697,8 +659,6 @@ namespace Anade.Khadamat.Web.Controllers
                         InitializeListViewBags();
 
                         return View(model);
-
-
                     }
 
                     if (!IsValidPdfFile(model.CopieCNIPdf))
@@ -753,7 +713,6 @@ namespace Anade.Khadamat.Web.Controllers
                         var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
                         antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
                         agence = _agenceBusinessService.GetById(antenne.AgenceId);
-
                     }
 
                     else
@@ -764,7 +723,6 @@ namespace Anade.Khadamat.Web.Controllers
 
                     Inscription NewInscription = new Inscription
                     {
-
                         TypeInscriptionId = typeInscriptionId,
                         CategorieId = model.CategorieId,
                         TypeFinancementId = model.TypeFinancementId,
@@ -819,25 +777,23 @@ namespace Anade.Khadamat.Web.Controllers
                     InitializeListViewBags();
                     return View(model);
                 }
+                
                 else
                 {
                     // Collecter toutes les erreurs de validation
-                    var errors = ModelState.Values
-                        .SelectMany(v => v.Errors)
-                        .Select(e => e.ErrorMessage)
-                        .ToList();
-
-                    return Json(new
+                    var bR = new BusinessResult();
+                    var msgR = new MessageResult()
                     {
-                        success = false,
-                        message = "Des erreurs de validation sont survenues",
-                        errors
-                    });
+                        Message = "واجهنا أخطاء في التحقق من البيانات",
+                        MessageType = MessageType.Error,
+                    };
+
+                    bR.Messages.Add(msgR);
+                    TempData["Message"] = bR.ToBootstrapAlerts();
+                    InitializeListViewBags();
+                    return View(model);
                 }
-
             }
-
-
 
             InitializeListViewBags();
             return View(model);
@@ -1041,7 +997,7 @@ namespace Anade.Khadamat.Web.Controllers
 
         #endregion
 
-        public async Task<ApiBusinessResult> Create(Inscription_Promoteur entity)
+        public ApiBusinessResult CreateInscriptionPromoteurCreation2(Inscription_Promoteur entity, CreateInscriptionVM model)
         {
             ApiBusinessResult apiBusinessResult;
 
@@ -1126,7 +1082,7 @@ namespace Anade.Khadamat.Web.Controllers
                 else
                 {
                     apiBusinessResult = new ApiBusinessResult(false) { };
-                    apiBusinessResult.Messages.Add(new MessageResult { Message = "Cet email a été dèja utilis.", MessageType = MessageType.Warning });
+                    apiBusinessResult.Messages.Add(new MessageResult { Message = "le nin existe dèja.", MessageType = MessageType.Warning });
                 }
             }
             else
@@ -1138,80 +1094,109 @@ namespace Anade.Khadamat.Web.Controllers
             return apiBusinessResult;
         }
 
-        public async Task<IdentityResult> CreateAccountAsync(Inscription_Promoteur promoteur, string returnUrl = null)
+        public ApiBusinessResult CreateInscriptionPromoteurCreation(Inscription_Promoteur entity, CreateInscriptionVM model)
         {
-            IdentityResult result = IdentityResult.Failed();
-            returnUrl ??= Url.Content("~/");
+            ApiBusinessResult apiBusinessResult;
 
-            if (ModelState.IsValid)
+            if (entity == null)
+                return new ApiBusinessResult(false) { Messages = { new MessageResult { Message = "الهوية غير موجودة", MessageType = MessageType.Error } } };
+
+            var ninExistresult = _promoteurInscriptionBusinessService.Count(x => x.NIN == entity.NIN);
+
+            if (ninExistresult == 0)
             {
-                var user = new User()
+                var emailExistresult = _promoteurInscriptionBusinessService.Count(x => x.EMAIL_P == entity.EMAIL_P);
+
+                if (emailExistresult == 0)
                 {
-                    UserName = promoteur.EMAIL_P
-                                               ,
-                    Nom = promoteur.NOM_P
-                                               ,
-                    Prenom = promoteur.PRENOM_P
-                                               ,
-                    DateCreation = DateTime.Now
-                                               ,
-                    TypeUserId = TypeUserIds.ClientAnade
-                                               ,
-                    Email = promoteur.EMAIL_P
-                };
+                    Inscription_Associes associer = new();
+                    Inscription_Detail_Dossier detail_dossier = new();
 
-                //Affecter une structure au promoteur en se basant sur son annexe.
-                var structureDemandeur = await _userService.GetStructureByCodeAsync(promoteur.Code_Annexe, NiveauIds.Annexe);
-                user.Structures.Add(new UserStructure() { Actuelle = true, DateAffectation = DateTime.Now, StructureId = structureDemandeur.Id });
+                    detail_dossier.Date_Inscription = DateTime.Now;
+                    detail_dossier.ADR_E = entity.ADR_E;
+                    if (entity.Id_Commune_Siege_Social != null)
+                        detail_dossier.Inscription_CommuneId = (int)entity.Id_Commune_Siege_Social;
+                    else
+                        detail_dossier.Inscription_CommuneId = 1;
 
-                // ToDo : Module Gestion de mot de passe pour las demandeurs de contrat : Done !
-                //var password = await _userManager.CreateRandomAlphaNumericPasswordAsync(10);
+                    detail_dossier.Adr_E_Arab = "";
+                    detail_dossier.Inscription_ActiviteId = 1;
+                    detail_dossier.Inscription_Type_FinancementId = 4;
+                    detail_dossier.Inscription_PNR_SuppId = 1;
 
-                var password = promoteur.Mot_Passe;
-                result = await _userManager.CreateAsync(user, password);
+                    // TODO : Inscription_PhaseId pour la création extension;
+                    detail_dossier.Inscription_PhaseId = 1;
 
-                if (result.Succeeded)
+                    // Ajouter la relation entre la table PROMOTEUR et Detail_dossier dans la table  associer
+                    associer.Inscription_Promoteur = entity;
+                    associer.Inscription_Detail_Dossier = detail_dossier;
+                    associer.Inscription_QualiteId = 2;
+
+                    //pour test CHOMEUR valeur = 2
+                    //associer.Inscription_CategorieId = entity.Inscription_CategorieId;
+                    entity.Inscription_CategorieId = 2;
+                    associer.Inscription_CategorieId = 2;
+
+
+                    var inscription_CategoriePase = _inscription_CategorieBusinesService.GetById(entity.Inscription_CategorieId, _inscription_CategorieBusinesService.GetDefaultLoadProperties());
+
+                    entity.Inscription_Categorie_PhaseId = inscription_CategoriePase.Inscription_PhaseId;
+
+                    var businessResult = _promoteurInscriptionBusinessService.Add(entity);
+
+                    if (businessResult.Succeeded)
+                    {
+                        apiBusinessResult = new ApiBusinessResult(businessResult.Succeeded) { };
+                        apiBusinessResult.Result = entity;
+                    }
+                    else
+                    {
+                        apiBusinessResult = new ApiBusinessResult(false) { };
+                        if (businessResult.Messages != null)
+                        {
+                            foreach (var message in businessResult.Messages)
+                            {
+                                apiBusinessResult.Messages.Add(new MessageResult
+                                {
+                                    Message = message.Message,
+                                    MessageType = message.MessageType
+                                });
+                            }
+                        }
+                        else
+                        {
+                            apiBusinessResult.Messages.Add(new MessageResult
+                            {
+                                Message = "حدث خطأ غير معروف",
+                                MessageType = MessageType.Error
+                            });
+                        }
+                    }
+                }
+                else
                 {
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-
-                    var webroot = _environment.WebRootPath;
-                    var pathToFile = webroot
-                                + Path.DirectorySeparatorChar.ToString()
-                                + "Templates"
-                                + Path.DirectorySeparatorChar.ToString()
-                                + "EmailTemplate"
-                                + Path.DirectorySeparatorChar.ToString()
-                                + "NouveauMP.html";
-
-                    var builder = new BodyBuilder();
-                    using (StreamReader SourceReader = System.IO.File.OpenText(pathToFile)) { builder.HtmlBody = SourceReader.ReadToEnd(); }
-                    builder.HtmlBody = builder.HtmlBody.Replace("[NomPrenom]", promoteur.NOM_P + ' ' + promoteur.PRENOM_P);
-                    builder.HtmlBody = builder.HtmlBody.Replace("[UserName]", user.UserName);
-                    builder.HtmlBody = builder.HtmlBody.Replace("[PassWord]", password);
-                    builder.HtmlBody = builder.HtmlBody.Replace("[callbackUrl]", callbackUrl);
-
-                    //var email = new Email(new string[] { user.Email }, "Confirmation du compte [ANADE] ", builder.HtmlBody);
-
-                    //await _emailSender.SendEmailAsync(email);
-
-                    MailMessage emailMessage = new MailMessage();
-                    emailMessage.Subject = "Confirmation du compte[ANADE]";
-                    emailMessage.To.Add(new MailAddress(user.Email));
-                    emailMessage.IsBodyHtml = true;
-                    emailMessage.Body = builder.HtmlBody;
+                    // CORRECTION: Retourner ApiBusinessResult au lieu de ViewResult
+                    apiBusinessResult = new ApiBusinessResult(false);
+                    apiBusinessResult.Messages.Add(new MessageResult
+                    {
+                        Message = "عنوان البريد الإلكتروني الذي أدخلته مستخدم في نظامنا بحساب آخر",
+                        MessageType = MessageType.Error
+                    });
                 }
             }
+            else
+            {
+                apiBusinessResult = new ApiBusinessResult(false);
+                apiBusinessResult.Messages.Add(new MessageResult
+                {
+                    Message = "الرقم التعريفي الوطني مسجل مسبقاً",
+                    MessageType = MessageType.Warning
+                });
+            }
 
-            return result;
+            return apiBusinessResult;
         }
-
+        
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ConfirmationCompte()

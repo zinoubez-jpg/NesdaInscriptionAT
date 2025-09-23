@@ -159,10 +159,10 @@ namespace Anade.Khadamat.Business
                 businessResult = new BusinessResult(false);
                 businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 businessResult = new BusinessResult(false);
-                businessResult.Messages.Add(new MessageResult { Message = e.Message, MessageType = MessageType.Warning });
+                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
             }
 
             return businessResult;
