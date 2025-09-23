@@ -41,7 +41,7 @@ namespace Anade.Business.Core
                 businessResult = new BusinessResult();
                 businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
             }
-            catch(Exception)
+            catch(Exception /*ex*/)
             {
                 businessResult = new BusinessResult();
                 businessResult.Messages.Add(new MessageResult { Message = "Un erreur s'est produite réessayez, si cela persiste contactez votre administrateur ", MessageType = MessageType.Warning });
