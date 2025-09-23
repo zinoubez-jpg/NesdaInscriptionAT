@@ -49,6 +49,21 @@ namespace Anade.Khadamat.Web
             services.AddTransient<SessionFormationBusinessService>();
             services.AddTransient<CirconscriptionBusinessService>();
 
+            // pour utiliser les compte dans l'inscription en ligne.
+            services.AddTransient<CompteAuthentificationBusinesService>();
+
+            // pour utiliser les compte dans l'inscription en ligne.
+            services.AddTransient<PromoteurInscriptionBusinesService>();
+            services.AddTransient<Detail_DossierInscriptionBusinesService>();
+            services.AddTransient<AssociesInscriptionBusinesService>();
+            services.AddTransient<Inscription_CategorieBusinesService>();
+            services.AddTransient<Inscription_CirconscriptionBusinessService>();
+            services.AddTransient<Inscription_CommuneBusinesService>();
+            services.AddTransient<Inscription_AnnexeBusinesService>();
+            services.AddTransient<Inscription_AntenneBusinesService>();
+
+            // pour utiliser les compte dans l'inscription en ligne.
+            services.AddTransient<PromoteurSuiviBusinesService>();
 
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<ILoadProperties<SessionFormationDetails, int>, LoadProperties<SessionFormationDetails, int>>();
