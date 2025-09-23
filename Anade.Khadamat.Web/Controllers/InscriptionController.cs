@@ -167,6 +167,7 @@ namespace Anade.Khadamat.Web.Controllers
         [Route("{typeInscriptionId}")]
         public virtual async Task<IActionResult> CreateInscription(int typeInscriptionId, CreateInscriptionVM model)
         {
+            // Phase Extension
             if (typeInscriptionId == 2)
             {
                 if (model.CategorieId == 1)
@@ -405,6 +406,7 @@ namespace Anade.Khadamat.Web.Controllers
                 }
             }
             
+            // Phase Création
             else
             {
                 // Dans l'inscription en ligne : [DBNesdaInscription6] --> CategoriesId = 1 --> Sans emploi
@@ -1132,8 +1134,8 @@ namespace Anade.Khadamat.Web.Controllers
                     associer.Inscription_Detail_Dossier = detail_dossier;
                     associer.Inscription_QualiteId = 2;
 
-                    //pour test CHOMEUR valeur = 2
-                    //associer.Inscription_CategorieId = entity.Inscription_CategorieId;
+                    // Pour test CHOMEUR valeur = 2
+                    // associer.Inscription_CategorieId = entity.Inscription_CategorieId;
                     entity.Inscription_CategorieId = 2;
                     associer.Inscription_CategorieId = 2;
 

@@ -4,17 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Anade.Khadamat.Data_Authentification;
 
 namespace Anade.Business.Core
 {
     public class EmailVerificationService : IEmailVerificationService
     {
         private readonly IEmailService _emailService;
-        private readonly KhadamtDbContext _context;
-        public EmailVerificationService(IEmailService emailService, KhadamtDbContext context)
+        private readonly KhadamtDbContext _khadamtDbContext;
+        private readonly AuthentificationDbContext _authentificationDbContext;
+        public EmailVerificationService(IEmailService emailService
+                                      , KhadamtDbContext khadamtDbContext
+                                      , AuthentificationDbContext authentificationDbContext)
         {
             _emailService = emailService;
-            _context = context;
+            _khadamtDbContext = khadamtDbContext;
+            _authentificationDbContext = authentificationDbContext;
         }
 
         public async Task SendVerificationEmailAsync(string email, string token)
@@ -209,7 +214,7 @@ namespace Anade.Business.Core
 
         public async Task<bool> VerifyEmailAsync(string email, string token)
         {
-            var inscrit =  _context.Inscriptions
+            var inscrit =  _khadamtDbContext.Inscriptions
                 .FirstOrDefault(u => u.Email == email &&
                                         u.EmailVerificationToken == token &&
                                         u.EmailVerificationTokenExpiry > DateTime.UtcNow);
@@ -220,7 +225,16 @@ namespace Anade.Business.Core
             inscrit.EmailVerificationToken = null;
             inscrit.EmailVerificationTokenExpiry = null;
 
-            await _context.SaveChangesAsync();
+            await _khadamtDbContext.SaveChangesAsync();
+
+            var compteAuthentification = _authentificationDbContext.Compte.FirstOrDefault(c => c.Pseudo==email);
+
+            if(compteAuthentification != null)
+            {
+                compteAuthentification.Authentification_EtatId = 1;
+                await _authentificationDbContext.SaveChangesAsync();
+            }
+
             return true;
         }
     }

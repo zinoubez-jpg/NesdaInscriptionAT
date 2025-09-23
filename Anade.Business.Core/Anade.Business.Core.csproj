@@ -16,6 +16,7 @@
     <ProjectReference Include="..\Anade.Data.Abstractions\Anade.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Anade.Domain.Core\Anade.Domain.Core.csproj" />
     <ProjectReference Include="..\Anade.Khadamat.Data\Anade.Khadamat.Data.csproj" />
+    <ProjectReference Include="..\Anade.Khadamat.Data_Authentification\Anade.Khadamat.Data_Authentification.csproj" />
   </ItemGroup>
 
 </Project>
