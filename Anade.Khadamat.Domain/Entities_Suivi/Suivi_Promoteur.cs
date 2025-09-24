@@ -52,6 +52,7 @@ namespace Anade.Khadamat.Domain
         public string FAX_E { get; set; }
         public string EMAIL { get; set; }
         public string SITE_WEB { get; set; }
+        public bool AVOIR_EXTENSION { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [InverseProperty("PROMOTEUR")] // Ajoutez cet attribut pour clarifier la navigation

@@ -284,11 +284,117 @@ namespace Anade.Khadamat.Business
             return promoteur;
         }
 
+        public bool CheckPromoteurExistenceByInfos(Inscription_Promoteur entity)
+        {
+            var commune_ele = _inscription_CommuneBusinesService.GetById(entity.CommuneId);
+
+            entity.Inscription_Commune = commune_ele;
+
+            //Si le promoteur gérant existe déja dans sieje Base de données Suivi
+            var promoteuractif = _promoteurSuiviBusinesService.GetByInformationsPromoteur(entity);
+
+            if (promoteuractif.Count != 0)
+            {
+                return true;
+            }
+            else
+            {
+                //Si le promoteur gérant existe déja dans inscription en ligne
+                var promoteurExisteInscription = GetSingle(x => x.DDN_P == entity.DDN_P && x.CommuneId == entity.CommuneId && x.NUM_ACT_P == entity.NUM_ACT_P);
+
+                if (promoteurExisteInscription != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    var promoteurExisteNN = GetSingle(x => x.NIN == entity.NIN);
+
+                    if (promoteurExisteNN != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        public string CheckExtensionEligibilityByInfos(Inscription_Promoteur entity)
+        {
+            Inscription_Commune communeOld = new();
+
+            // 1- Vérification par NIN.
+            var listePromoteurs = GetAllFiltered(x => x.NIN == entity.NIN);
+
+            if (listePromoteurs.Count != 0)
+            {
+                var listePromoteurExisteSuiviCode = _promoteurSuiviBusinesService.GetAllFilteredByCodePromoteurs(listePromoteurs, false);
+
+                if (listePromoteurExisteSuiviCode.Count != 0)
+                {
+                    var promoteurNonExtNIN = listePromoteurExisteSuiviCode.First();
+
+                    communeOld = _inscription_CommuneBusinesService.GetByCode(promoteurNonExtNIN.COMMUNE_NAIS);
+
+                    return communeOld.Code;
+                }
+                else
+                {
+                    var listePromoteurExisteSuivi = _promoteurSuiviBusinesService.GetAllFilteredByCodePromoteurs(listePromoteurs, true);
+
+                    if (listePromoteurExisteSuivi.Count != 0)
+                    {
+                        return ("يوجد ملف (مرحلة التوسع) مفعل في حسابك");
+                    }
+                }
+            }
+
+            // 2- Vérification par informations du promoteur
+            communeOld = _inscription_CommuneBusinesService.GetById(entity.CommuneId);
+            
+            if (communeOld != null)
+            {
+                entity.Inscription_Commune = communeOld;
+                var listePromoteurNonActifExtensionSuivi = _promoteurSuiviBusinesService.GetAllFilteredByInfosPromoteur(entity, false);
+
+                if (listePromoteurNonActifExtensionSuivi.Count != 0)
+                {
+                    var promoteurNonExt = listePromoteurNonActifExtensionSuivi.First();
+
+                    communeOld = _inscription_CommuneBusinesService.GetByCode(promoteurNonExt.COMMUNE_NAIS);
+
+                    return communeOld.Code;
+                }
+                else
+                {
+                    var listePromoteurActifExtensionSuivi = _promoteurSuiviBusinesService.GetAllFilteredByInfosPromoteur(entity, true);
+
+                    if (listePromoteurActifExtensionSuivi.Count != 0)
+                    {
+                        return ("يوجد ملف (مرحلة التوسع) مفعل في حسابك");
+                    }
+                    else
+                    {
+                        return ("لا يوجد أي ملف (مرحلة الإنشاء) مفعل في حسابك");
+                    }
+                }
+            }
+            else
+            {
+                return ("نواجه حاليًا عطلًا تقنيًا. نرجو منكم التكرم بالتواصل مع مسؤول النظام");
+            }
+        }
+
         public string ConstructMatriculeSieje(Inscription_Promoteur promoteur)
         {
             string matricule = "", annee, squentialNumber, codeCommune, numeroActeNaissance;
             annee = promoteur.DDN_P.Year.ToString();
+            
             numeroActeNaissance = "0" + promoteur.NUM_ACT_P;
+            
             squentialNumber = GetSequentialNumber(promoteur);
             if (promoteur.IsNaissanceEtrange()) codeCommune = "9999";
             else
@@ -296,7 +402,6 @@ namespace Anade.Khadamat.Business
                 var commune_ele = _inscription_CommuneBusinesService.GetById(promoteur.CommuneId);
                 codeCommune = commune_ele.Code;
             }
-
 
             matricule = matricule.StringWritter(codeCommune, annee, numeroActeNaissance.Trim(), squentialNumber);
             return matricule;

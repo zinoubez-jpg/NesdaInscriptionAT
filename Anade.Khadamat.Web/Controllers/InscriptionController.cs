@@ -167,6 +167,13 @@ namespace Anade.Khadamat.Web.Controllers
         [Route("{typeInscriptionId}")]
         public virtual async Task<IActionResult> CreateInscription(int typeInscriptionId, CreateInscriptionVM model)
         {
+            ViewBag.TypeInsId = typeInscriptionId;
+
+            // Le processus diffère selon le type d'inscription :
+            //    1- Création : contrôle de non-existence du promoteur.
+            //    2- Extension (NESDA) : contrôle d'existence du promoteur.
+            //    3- Extension (Hors NESDA) : contrôle de non-existence du promoteur.
+
             // Phase Extension
             if (typeInscriptionId == 2)
             {
@@ -209,14 +216,12 @@ namespace Anade.Khadamat.Web.Controllers
                     // Not nesda prometeur 
                     if (model.CategorieId != 2)
                     {
-                        apiResult = await CheckPromoteurExistenceAsync(model);
-                        if (apiResult != "\"false\"")
+                        if (CheckPromoteurExistenceByInfos(model))
                         {
-
                             var bResult = new BusinessResult();
                             bResult.Messages.Add(new MessageResult
                             {
-                                Message = apiResult, // TODO: to replace later with arabic msg
+                                Message = "تفيد نتائج التدقيق في نظامنا بوجود ملف مسجل مسبقًا باسمكم. لذا نرجو منكم الاطلاع على المعلومات التالية وإبلاغنا في حال وجود أي اختلاف: تاريخ الميلاد، بلدية الميلاد، ورقم شهادة الميلاد",
                                 MessageType = MessageType.Error
                             });
                             TempData["Message"] = bResult.ToBootstrapAlerts();
@@ -225,10 +230,11 @@ namespace Anade.Khadamat.Web.Controllers
                         }
                     }
 
-                    // Promoteur nesda (category ==2)
+                    // Promoteur nesda (category == 2)
                     else
                     {
-                        apiResult = await CheckExtensionEligibilityAsync(model);
+                        //apiResult = await CheckExtensionEligibilityAsync(model);
+                        apiResult = CheckExtensionEligibilityByInfos(model);
                         bool isFourDigitCode = System.Text.RegularExpressions.Regex.IsMatch(apiResult, @"^\d{4}$");
                         if (!isFourDigitCode)
                         {
@@ -379,7 +385,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                         ActiviteId = 1,
                         PasswordHashInit = model.Password,
-                        
+
                         CentreDeveloppementEntrepreneuriatId = model.CentreDeveloppementEntrepreneuriatId
                     };
 
@@ -394,10 +400,7 @@ namespace Anade.Khadamat.Web.Controllers
                           NewInscription.EmailVerificationToken
                          );
 
-
-
                         return RedirectToAction(nameof(SuccesInscription));
-
                     }
                     TempData["Message"] = businessResult.ToBootstrapAlerts();
                     InitializeListViewBags();
@@ -405,7 +408,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                 }
             }
-            
+
             // Phase Création
             else
             {
@@ -614,24 +617,37 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    String apiResult = "";
-
-                    model.CommuneNaissance = _communeBusinessService.GetById(model.CommuneNaissanceId);
-
-                    // Not nesda prometeur 
-                    apiResult = await CheckPromoteurExistenceAsync(model);
-                    if (apiResult != "\"false\"")
+                    if (CheckPromoteurExistenceByInfos(model))
                     {
                         var bResult = new BusinessResult();
                         bResult.Messages.Add(new MessageResult
                         {
-                            Message = apiResult, // TODO: to replace later with arabic msg
+                            Message = "تفيد نتائج التدقيق في نظامنا بوجود ملف مسجل مسبقًا باسمكم. لذا نرجو منكم الاطلاع على المعلومات التالية وإبلاغنا في حال وجود أي اختلاف: تاريخ الميلاد، بلدية الميلاد، ورقم شهادة الميلاد",
                             MessageType = MessageType.Error
                         });
                         TempData["Message"] = bResult.ToBootstrapAlerts();
                         InitializeListViewBags();
                         return View(model);
                     }
+
+                    //String apiResult = "";
+
+                    //model.CommuneNaissance = _communeBusinessService.GetById(model.CommuneNaissanceId);
+
+                    //// Not nesda prometeur 
+                    //apiResult = await CheckPromoteurExistenceAsync(model);
+                    //if (apiResult != "\"false\"")
+                    //{
+                    //    var bResult = new BusinessResult();
+                    //    bResult.Messages.Add(new MessageResult
+                    //    {
+                    //        Message = apiResult, // TODO: to replace later with arabic msg
+                    //        MessageType = MessageType.Error
+                    //    });
+                    //    TempData["Message"] = bResult.ToBootstrapAlerts();
+                    //    InitializeListViewBags();
+                    //    return View(model);
+                    //}
 
                     // hckeing email
                     if (_context.Inscriptions.Any(u => u.Email == model.Email && u.IsEmailVerified))
@@ -719,7 +735,11 @@ namespace Anade.Khadamat.Web.Controllers
 
                     else
                     {
-                        antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
+                        //antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
+                        //agence = _agenceBusinessService.GetById(antenne.AgenceId);
+
+                        var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
+                        antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
                         agence = _agenceBusinessService.GetById(antenne.AgenceId);
                     }
 
@@ -779,7 +799,7 @@ namespace Anade.Khadamat.Web.Controllers
                     InitializeListViewBags();
                     return View(model);
                 }
-                
+
                 else
                 {
                     // Collecter toutes les erreurs de validation
@@ -857,243 +877,6 @@ namespace Anade.Khadamat.Web.Controllers
         {
 
             return View();
-        }
-
-        #region Helper Methods
-        private void InitializeListViewBags()
-        {
-            var genres = _genreBusinessService.GetAll();
-            var situationFamiliales = _situationFamilialeBusinessService.GetAll();
-            var communes = _communeBusinessService.GetAll();
-            var wilayas = _wilayaBusinessService.GetAll();
-            var niveauInstructions = _niveauInstructionBusinessService.GetAll();
-            var typeInscription = _typeInscriptionBusinessService.GetAll();
-            var categories = _categorieBusinessService.GetAllFiltered(x => x.Id != 1);
-            var typeFinancements = _typeFinnacementBusinessService.GetAll();
-            var typesCentreDeveloppementEntrepreneuriat = _typeCentreDeveloppementEntrepreneuriat.GetAllFiltered(x => x.Id != 1);
-            var centresDeveloppementEntrepreneuriat = _centreDeveloppementEntrepreneuriatBusinessService.GetAll();
-
-            ViewBag.GenreId = new SelectList(genres, nameof(Genre.Id), nameof(Genre.DesignationAr));
-            ViewBag.SituationFamilialeId = new SelectList(situationFamiliales, nameof(SituationFamiliale.Id), nameof(SituationFamiliale.DesignationAr));
-            ViewBag.CommuneResidenceId = new SelectList(communes, nameof(Commune.Id), nameof(Commune.DesignationAr));
-            ViewBag.WilayaResId = new SelectList(wilayas, nameof(Wilaya.Id), nameof(Wilaya.DisplayNameAr));
-            ViewBag.NiveauInstructionId = new SelectList(niveauInstructions, nameof(NiveauInstruction.Id), nameof(NiveauInstruction.DesignationAr));
-            ViewBag.TypeInscriptionId = new SelectList(typeInscription, nameof(TypeInscription.Id), nameof(TypeInscription.DesignationAr));
-            ViewBag.CategorieId = new SelectList(categories, nameof(Categorie.Id), nameof(Categorie.DesignationAr));
-            ViewBag.TypeFinancementId = new SelectList(typeFinancements, nameof(TypeFinancement.Id), nameof(TypeFinancement.DesignationAr));
-            ViewBag.WilayaCentreDeveloppementEntrepreneuriatId = new SelectList(wilayas, nameof(Wilaya.Id), nameof(Wilaya.DisplayNameAr));
-            ViewBag.TypeCentreDeveloppementEntrepreneuriatId = new SelectList(typesCentreDeveloppementEntrepreneuriat, nameof(TypeCentreDeveloppementEntrepreneuriat.Id), nameof(TypeCentreDeveloppementEntrepreneuriat.DesignationAr));
-            ViewBag.CentreDeveloppementEntrepreneuriatId = new SelectList(centresDeveloppementEntrepreneuriat, nameof(CentreDeveloppementEntrepreneuriat.Id), nameof(CentreDeveloppementEntrepreneuriat.DesignationAr));
-        }
-
-        [HttpGet]
-        public JsonResult GetCommuneList(int WilayaId)
-        {
-            var communelist = new SelectList(_communeBusinessService.GetAll().Where(x => x.WilayaId == WilayaId), "Id", "DesignationAr");
-            return Json(communelist);
-        }
-
-        private string ProcessUploadedFile(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
-        {
-            string uniqueFileName = null;
-
-            if (file != null)
-            {
-                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, folderName);
-                uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-            }
-
-            return uniqueFileName;
-        }
-
-        private bool IsValidPdfFile(IFormFile file)
-        {
-            if (file == null || file.Length < 5)
-                return false;
-
-            // Vérification de l'extension
-            var extension = Path.GetExtension(file.FileName);
-            if (string.IsNullOrEmpty(extension) || !extension.Equals(".pdf", StringComparison.OrdinalIgnoreCase))
-                return false;
-
-            // Vérification du type MIME
-            if (!file.ContentType.Equals("application/pdf", StringComparison.OrdinalIgnoreCase))
-                return false;
-
-            // Vérification du contenu : signature PDF ("%PDF-")
-            try
-            {
-                using (var reader = new BinaryReader(file.OpenReadStream()))
-                {
-                    var headerBytes = reader.ReadBytes(5);
-                    var header = System.Text.Encoding.ASCII.GetString(headerBytes);
-                    return header.StartsWith("%PDF");
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        private async Task<string> CheckPromoteurExistenceAsync(CreateInscriptionVM model)
-        {
-            using var client = new HttpClient();
-            var baseUrl = "https://promoteur.nesda.dz/Inscription/Verif_Existance_cr";
-
-            var formattedDate = model.DateNaissance.ToString("dd/MM/yyyy");
-
-            var encodedNom = HttpUtility.UrlEncode(model.NomFr);
-            var encodedPrenom = HttpUtility.UrlEncode(model.PrenomFr);
-            var encodedDate = HttpUtility.UrlEncode(formattedDate);
-            var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9, 5)); ;
-
-            var url = $"{baseUrl}?NIN={model.NIN}&NOM_P={encodedNom}&PRENOM_P={encodedPrenom}&DDN_P={encodedDate}&NUM_ACT_P={encodedNumActP}&Commune_Nais={model.CommuneNaissance.Code}";
-
-            try
-            {
-                var response = await client.GetStringAsync(url);
-                return response;
-            }
-            catch (HttpRequestException ex)
-            {
-                return $"API Error";
-            }
-        }
-
-        private async Task<string> CheckExtensionEligibilityAsync(CreateInscriptionVM model)
-        {
-            using var client = new HttpClient();
-            var baseUrl = "https://promoteur.nesda.dz/Inscription/Verif_Existance_Ext";
-
-
-            var formattedDate = model.DateNaissance.ToString("dd/MM/yyyy");
-            var encodedNom = HttpUtility.UrlEncode(model.NomFr);
-            var encodedPrenom = HttpUtility.UrlEncode(model.PrenomFr);
-            var encodedDate = HttpUtility.UrlEncode(formattedDate);
-            var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9, 5));
-            var url = $"{baseUrl}?NIN={model.NIN}&NOM_P={encodedNom}&PRENOM_P={encodedPrenom}&DDN_P={encodedDate}&NUM_ACT_P={encodedNumActP}&Commune_Nais={model.CommuneNaissance.Code}";
-
-            try
-            {
-                var response = await client.GetStringAsync(url);
-                return response.Trim('"');
-            }
-            catch (HttpRequestException ex)
-            {
-                return "Une erreur est survenue. Veuillez contacter l’administrateur.";
-            }
-        }
-
-        [HttpGet]
-        public JsonResult GetCentreDeveloppementEntrepreneuriatList(int WilayaId, int TypeCDEId)
-        {
-            var centreDeveloppementEntrepreneuriatlist = new SelectList(_centreDeveloppementEntrepreneuriatBusinessService.GetAll().Where(x => x.WilayaId == WilayaId && x.TypeCentreDeveloppementEntrepreneuriatId == TypeCDEId), "Id", "DesignationAr");
-            return Json(centreDeveloppementEntrepreneuriatlist);
-        }
-
-        #endregion
-
-        public ApiBusinessResult CreateInscriptionPromoteurCreation2(Inscription_Promoteur entity, CreateInscriptionVM model)
-        {
-            ApiBusinessResult apiBusinessResult;
-
-            if (entity == null)
-                return null;
-
-            var ninExistresult = _promoteurInscriptionBusinessService.Count(x => x.NIN == entity.NIN);
-
-            if (ninExistresult == 0)
-            {
-                var emailExistresult = _promoteurInscriptionBusinessService.Count(x => x.EMAIL_P == entity.EMAIL_P);
-
-                if (emailExistresult == 0)
-                {
-                    Inscription_Associes associer = new();
-                    Inscription_Detail_Dossier detail_dossier = new();
-
-                    detail_dossier.Date_Inscription = DateTime.Now;
-                    detail_dossier.ADR_E = entity.ADR_E;
-                    if (entity.Id_Commune_Siege_Social != null)
-                        detail_dossier.Inscription_CommuneId = (int)entity.Id_Commune_Siege_Social;
-                    else
-                        detail_dossier.Inscription_CommuneId = 1;
-
-                    detail_dossier.Adr_E_Arab = "";
-                    detail_dossier.Inscription_ActiviteId = 1;
-                    detail_dossier.Inscription_Type_FinancementId = 4;
-                    detail_dossier.Inscription_PNR_SuppId = 1;
-
-                    // TODO : Inscription_PhaseId pour la création extension;
-                    detail_dossier.Inscription_PhaseId = 1;
-
-                    // Ajouter la relation entre la table PROMOTEUR et Detail_dossier dans la table  associer
-                    associer.Inscription_Promoteur = entity;
-                    associer.Inscription_Detail_Dossier = detail_dossier;
-                    associer.Inscription_QualiteId = 2;
-
-                    //pour test CHOMEUR valeur = 2
-                    //associer.Inscription_CategorieId = entity.Inscription_CategorieId;
-                    entity.Inscription_CategorieId = 2;
-                    associer.Inscription_CategorieId = 2;
-
-
-                    var inscription_CategoriePase = _inscription_CategorieBusinesService.GetById(entity.Inscription_CategorieId, _inscription_CategorieBusinesService.GetDefaultLoadProperties());
-
-                    entity.Inscription_Categorie_PhaseId = inscription_CategoriePase.Inscription_PhaseId;
-
-                    var businessResult = _promoteurInscriptionBusinessService.Add(entity);
-
-                    if (businessResult.Succeeded)
-                    {
-                        apiBusinessResult = new ApiBusinessResult(businessResult.Succeeded) { };
-                        apiBusinessResult.Result = entity;
-                    }
-                    else
-                    {
-                        apiBusinessResult = new ApiBusinessResult(false) { };
-                        // Vérifier si businessResult.Messages n'est pas null avant d'ajouter
-                        if (businessResult.Messages != null)
-                        {
-                            // Copie tous les messages d'erreur du businessResult vers apiBusinessResult
-                            foreach (var message in businessResult.Messages)
-                            {
-                                apiBusinessResult.Messages.Add(new MessageResult
-                                {
-                                    Message = message.Message,  // On accède à la propriété string Message
-                                    MessageType = message.MessageType  // On conserve le type original
-                                });
-                            }
-                        }
-                        else
-                        {
-                            // Ajouter un message par défaut si businessResult.Messages est null
-                            apiBusinessResult.Messages.Add(new MessageResult
-                            {
-                                Message = "Une erreur inconnue est survenue",
-                                MessageType = MessageType.Error
-                            });
-                        }
-                    }
-                }
-                else
-                {
-                    apiBusinessResult = new ApiBusinessResult(false) { };
-                    apiBusinessResult.Messages.Add(new MessageResult { Message = "le nin existe dèja.", MessageType = MessageType.Warning });
-                }
-            }
-            else
-            {
-                apiBusinessResult = new ApiBusinessResult(false) { };
-                apiBusinessResult.Messages.Add(new MessageResult { Message = "le nin existe dèja.", MessageType = MessageType.Warning });
-
-            }
-            return apiBusinessResult;
         }
 
         public ApiBusinessResult CreateInscriptionPromoteurCreation(Inscription_Promoteur entity, CreateInscriptionVM model)
@@ -1198,12 +981,196 @@ namespace Anade.Khadamat.Web.Controllers
 
             return apiBusinessResult;
         }
-        
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ConfirmationCompte()
         {
             return View();
         }
+
+        #region Helper Methods
+        private void InitializeListViewBags()
+        {
+            var genres = _genreBusinessService.GetAll();
+            var situationFamiliales = _situationFamilialeBusinessService.GetAll();
+            var communes = _communeBusinessService.GetAll();
+            var wilayas = _wilayaBusinessService.GetAll();
+            var niveauInstructions = _niveauInstructionBusinessService.GetAll();
+            var typeInscription = _typeInscriptionBusinessService.GetAll();
+            var categories = _categorieBusinessService.GetAllFiltered(x => x.Id != 1);
+            var typeFinancements = _typeFinnacementBusinessService.GetAll();
+            var typesCentreDeveloppementEntrepreneuriat = _typeCentreDeveloppementEntrepreneuriat.GetAllFiltered(x => x.Id != 1);
+            var centresDeveloppementEntrepreneuriat = _centreDeveloppementEntrepreneuriatBusinessService.GetAll();
+
+            ViewBag.GenreId = new SelectList(genres, nameof(Genre.Id), nameof(Genre.DesignationAr));
+            ViewBag.SituationFamilialeId = new SelectList(situationFamiliales, nameof(SituationFamiliale.Id), nameof(SituationFamiliale.DesignationAr));
+            ViewBag.CommuneResidenceId = new SelectList(communes, nameof(Commune.Id), nameof(Commune.DesignationAr));
+            ViewBag.WilayaResId = new SelectList(wilayas, nameof(Wilaya.Id), nameof(Wilaya.DisplayNameAr));
+            ViewBag.NiveauInstructionId = new SelectList(niveauInstructions, nameof(NiveauInstruction.Id), nameof(NiveauInstruction.DesignationAr));
+            ViewBag.TypeInscriptionId = new SelectList(typeInscription, nameof(TypeInscription.Id), nameof(TypeInscription.DesignationAr));
+            ViewBag.CategorieId = new SelectList(categories, nameof(Categorie.Id), nameof(Categorie.DesignationAr));
+            ViewBag.TypeFinancementId = new SelectList(typeFinancements, nameof(TypeFinancement.Id), nameof(TypeFinancement.DesignationAr));
+            ViewBag.WilayaCentreDeveloppementEntrepreneuriatId = new SelectList(wilayas, nameof(Wilaya.Id), nameof(Wilaya.DisplayNameAr));
+            ViewBag.TypeCentreDeveloppementEntrepreneuriatId = new SelectList(typesCentreDeveloppementEntrepreneuriat, nameof(TypeCentreDeveloppementEntrepreneuriat.Id), nameof(TypeCentreDeveloppementEntrepreneuriat.DesignationAr));
+            ViewBag.CentreDeveloppementEntrepreneuriatId = new SelectList(centresDeveloppementEntrepreneuriat, nameof(CentreDeveloppementEntrepreneuriat.Id), nameof(CentreDeveloppementEntrepreneuriat.DesignationAr));
+        }
+
+        [HttpGet]
+        public JsonResult GetCommuneList(int WilayaId)
+        {
+            var communelist = new SelectList(_communeBusinessService.GetAll().Where(x => x.WilayaId == WilayaId), "Id", "DesignationAr");
+            return Json(communelist);
+        }
+
+        private string ProcessUploadedFile(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
+        {
+            string uniqueFileName = null;
+
+            if (file != null)
+            {
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, folderName);
+                uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
+
+        private bool IsValidPdfFile(IFormFile file)
+        {
+            if (file == null || file.Length < 5)
+                return false;
+
+            // Vérification de l'extension
+            var extension = Path.GetExtension(file.FileName);
+            if (string.IsNullOrEmpty(extension) || !extension.Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            // Vérification du type MIME
+            if (!file.ContentType.Equals("application/pdf", StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            // Vérification du contenu : signature PDF ("%PDF-")
+            try
+            {
+                using (var reader = new BinaryReader(file.OpenReadStream()))
+                {
+                    var headerBytes = reader.ReadBytes(5);
+                    var header = System.Text.Encoding.ASCII.GetString(headerBytes);
+                    return header.StartsWith("%PDF");
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool CheckPromoteurExistenceByInfos(CreateInscriptionVM model)
+        {
+            Inscription_Promoteur promoteur = new();
+
+            var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9, 5)); ;
+            var communeNaissanceNew = _communeBusinessService.GetById(model.CommuneNaissanceId);
+            var communeNaissanceOld = _inscription_CommuneBusinesService.GetByCode(communeNaissanceNew.Code);
+
+            promoteur.NIN = model.NIN;
+            promoteur.DDN_P = model.DateNaissance;
+            promoteur.NOM_P = model.NomFr;
+            promoteur.PRENOM_P = model.PrenomFr;
+            promoteur.NUM_ACT_P = "0"+encodedNumActP;
+            promoteur.CommuneId = communeNaissanceOld.Id;
+            promoteur.Inscription_Commune = communeNaissanceOld;
+
+            return _promoteurInscriptionBusinessService.CheckPromoteurExistenceByInfos(promoteur);
+
+        }
+
+        private string CheckExtensionEligibilityByInfos(CreateInscriptionVM model)
+        {
+            Inscription_Promoteur promoteur = new();
+
+            var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9, 5)); ;
+            var communeNaissanceNew = _communeBusinessService.GetById(model.CommuneNaissanceId);
+            var communeNaissanceOld = _inscription_CommuneBusinesService.GetByCode(communeNaissanceNew.Code);
+
+            promoteur.NIN = model.NIN;
+            promoteur.DDN_P = model.DateNaissance;
+            promoteur.NOM_P = model.NomFr;
+            promoteur.PRENOM_P = model.PrenomFr;
+            promoteur.NUM_ACT_P = "0"+encodedNumActP;
+            promoteur.CommuneId = communeNaissanceOld.Id;
+            promoteur.Inscription_Commune = communeNaissanceOld;
+
+            return _promoteurInscriptionBusinessService.CheckExtensionEligibilityByInfos(promoteur);
+
+        }
+
+        [HttpGet]
+        public JsonResult GetCentreDeveloppementEntrepreneuriatList(int WilayaId, int TypeCDEId)
+        {
+            var centreDeveloppementEntrepreneuriatlist = new SelectList(_centreDeveloppementEntrepreneuriatBusinessService.GetAll().Where(x => x.WilayaId == WilayaId && x.TypeCentreDeveloppementEntrepreneuriatId == TypeCDEId), "Id", "DesignationAr");
+            return Json(centreDeveloppementEntrepreneuriatlist);
+        }
+
+        #endregion
+
+        #region Méthodes à supprimer
+
+        private async Task<string> CheckPromoteurExistenceAsync(CreateInscriptionVM model)
+        {
+            using var client = new HttpClient();
+            var baseUrl = "https://promoteur.nesda.dz/Inscription/Verif_Existance_cr";
+
+            var formattedDate = model.DateNaissance.ToString("dd/MM/yyyy");
+
+            var encodedNom = HttpUtility.UrlEncode(model.NomFr);
+            var encodedPrenom = HttpUtility.UrlEncode(model.PrenomFr);
+            var encodedDate = HttpUtility.UrlEncode(formattedDate);
+            var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9, 5)); ;
+
+            var url = $"{baseUrl}?NIN={model.NIN}&NOM_P={encodedNom}&PRENOM_P={encodedPrenom}&DDN_P={encodedDate}&NUM_ACT_P={encodedNumActP}&Commune_Nais={model.CommuneNaissance.Code}";
+
+            try
+            {
+                var response = await client.GetStringAsync(url);
+                return response;
+            }
+            catch (HttpRequestException ex)
+            {
+                return $"API Error";
+            }
+        }
+
+        private async Task<string> CheckExtensionEligibilityAsync(CreateInscriptionVM model)
+        {
+            using var client = new HttpClient();
+            var baseUrl = "https://promoteur.nesda.dz/Inscription/Verif_Existance_Ext";
+
+
+            var formattedDate = model.DateNaissance.ToString("dd/MM/yyyy");
+            var encodedNom = HttpUtility.UrlEncode(model.NomFr);
+            var encodedPrenom = HttpUtility.UrlEncode(model.PrenomFr);
+            var encodedDate = HttpUtility.UrlEncode(formattedDate);
+            var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9, 5));
+            var url = $"{baseUrl}?NIN={model.NIN}&NOM_P={encodedNom}&PRENOM_P={encodedPrenom}&DDN_P={encodedDate}&NUM_ACT_P={encodedNumActP}&Commune_Nais={model.CommuneNaissance.Code}";
+
+            try
+            {
+                var response = await client.GetStringAsync(url);
+                return response.Trim('"');
+            }
+            catch (HttpRequestException ex)
+            {
+                return "Une erreur est survenue. Veuillez contacter l’administrateur.";
+            }
+        }
+
+        #endregion
     }
 }
