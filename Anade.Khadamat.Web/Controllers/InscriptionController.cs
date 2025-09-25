@@ -221,7 +221,7 @@ namespace Anade.Khadamat.Web.Controllers
                             var bResult = new BusinessResult();
                             bResult.Messages.Add(new MessageResult
                             {
-                                Message = "تفيد نتائج التدقيق في نظامنا بوجود ملف مسجل مسبقًا باسمكم. لذا نرجو منكم الاطلاع على المعلومات التالية وإبلاغنا في حال وجود أي اختلاف: تاريخ الميلاد، بلدية الميلاد، ورقم شهادة الميلاد",
+                                Message = "تفيد نتائج التدقيق في نظامنا بوجود ملف مسجل مسبقًا باسمكم. لذا نرجو منكم التحقق من جميع المعلومات, وإبلاغنا في حال وجود أي مشكل",
                                 MessageType = MessageType.Error
                             });
                             TempData["Message"] = bResult.ToBootstrapAlerts();
