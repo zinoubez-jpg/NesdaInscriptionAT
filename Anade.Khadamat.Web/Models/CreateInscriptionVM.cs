@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Anade.Khadamat.Web.Models
 {
-    public class CreateInscriptionVM
+    public class CreateInscriptionVM : IValidatableObject
     {
 
         [Display(Name = "Id")]
@@ -122,6 +122,7 @@ namespace Anade.Khadamat.Web.Models
 
         [Required(ErrorMessage = "يجب اختيار ملف")]
         public IFormFile CopieDiplomeRCCFCAPdf { get; set; }
+
         public string NumeroSiejeV3 { get; set; }
         public int ActiviteId { get; set; }
 
@@ -166,6 +167,31 @@ namespace Anade.Khadamat.Web.Models
         public virtual CentreDeveloppementEntrepreneuriat CentreDeveloppementEntrepreneuriat { get; set; }
 
         public virtual TypeCentreDeveloppementEntrepreneuriat TypeCentreDeveloppementEntrepreneuriat { get; set; }
+
+        // Validation conditionnelle avec IValidatableObject pour gérer la contrainte métier conditionnelle
+        [Display(Name = "CopieDiplomeCDEPdf")]
+        public IFormFile CopieDiplomeCDEPdf { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            // Validation conditionnelle pour CopieDiplomeCDEPdf
+            if (TypeInscriptionId == 1 && (CopieDiplomeCDEPdf == null || CopieDiplomeCDEPdf.Length == 0))
+            {
+                yield return new ValidationResult(
+                    // "يجب اختيار ملف CopieDiplomeCDEPdf عندما TypeInscriptionId = 1",
+                    "يجب إرفاق نسخة من الملف المطلوب",
+                    new[] { nameof(CopieDiplomeCDEPdf) });
+            }
+
+            // Validation conditionnelle inverse (Optionnelle)
+            if (TypeInscriptionId == 2 && CopieDiplomeCDEPdf != null && CopieDiplomeCDEPdf.Length > 0)
+            {
+                yield return new ValidationResult(
+                     // "لا يجب اختيار ملف CopieDiplomeCDEPdf عندما TypeInscriptionId = 2",
+                     "لا يجب اختيار ملف",
+                    new[] { nameof(CopieDiplomeCDEPdf) });
+            }
+        }
 
     }
 }

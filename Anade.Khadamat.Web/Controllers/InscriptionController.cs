@@ -617,38 +617,6 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    if (CheckPromoteurExistenceByInfos(model))
-                    {
-                        var bResult = new BusinessResult();
-                        bResult.Messages.Add(new MessageResult
-                        {
-                            Message = "تفيد نتائج التدقيق في نظامنا بوجود ملف مسجل مسبقًا باسمكم. لذا نرجو منكم الاطلاع على المعلومات التالية وإبلاغنا في حال وجود أي اختلاف: تاريخ الميلاد، بلدية الميلاد، ورقم شهادة الميلاد",
-                            MessageType = MessageType.Error
-                        });
-                        TempData["Message"] = bResult.ToBootstrapAlerts();
-                        InitializeListViewBags();
-                        return View(model);
-                    }
-
-                    //String apiResult = "";
-
-                    //model.CommuneNaissance = _communeBusinessService.GetById(model.CommuneNaissanceId);
-
-                    //// Not nesda prometeur 
-                    //apiResult = await CheckPromoteurExistenceAsync(model);
-                    //if (apiResult != "\"false\"")
-                    //{
-                    //    var bResult = new BusinessResult();
-                    //    bResult.Messages.Add(new MessageResult
-                    //    {
-                    //        Message = apiResult, // TODO: to replace later with arabic msg
-                    //        MessageType = MessageType.Error
-                    //    });
-                    //    TempData["Message"] = bResult.ToBootstrapAlerts();
-                    //    InitializeListViewBags();
-                    //    return View(model);
-                    //}
-
                     // hckeing email
                     if (_context.Inscriptions.Any(u => u.Email == model.Email && u.IsEmailVerified))
                     {
@@ -721,6 +689,32 @@ namespace Anade.Khadamat.Web.Controllers
 
                     string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
+                    if (model.CopieDiplomeCDEPdf.Length > 2048576)
+                    {
+
+                        var bResult = new BusinessResult();
+                        bResult.Messages.Add(new MessageResult { Message = "حجم الملف يتجاوز الحد المسموح به", MessageType = MessageType.Error });
+                        TempData["Message"] = bResult.ToBootstrapAlerts();
+                        InitializeListViewBags();
+                        return View(model);
+                    }
+
+                    if (!IsValidPdfFile(model.CopieDiplomeCDEPdf))
+                    {
+                        var bResult = new BusinessResult(true);
+                        bResult.Messages.Add(new MessageResult
+                        {
+                            Message = "يرجى تحميل ملف بصيغة PDF صالح لاستكمال طلبك.",
+                            MessageType = MessageType.Error
+                        });
+
+                        TempData["Message"] = bResult.ToBootstrapAlerts();
+                        InitializeListViewBags();
+                        return View(model);
+                    }
+
+                    string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
+
                     var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
 
                     Antenne antenne;
@@ -775,6 +769,8 @@ namespace Anade.Khadamat.Web.Controllers
                         RecaptchaResponse = model.RecaptchaResponse,
                         CopieCNIPath = copieCNIPdfPath,
                         CopieDiplomeRCCFCAPath = copieDiplomeRCCFCAPdfPath,
+                        CopieDiplomeCDEPath = copieDiplomeCDEPath,
+
                         AntenneId = antenne.Id,
                         Anntenne = antenne.Code,
                         Agence = agence.Code,

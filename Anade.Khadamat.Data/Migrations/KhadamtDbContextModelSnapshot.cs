@@ -386,6 +386,9 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Property<string>("CopieCNIPath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CopieDiplomeCDEPath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CopieDiplomeRCCFCAPath")
                         .HasColumnType("nvarchar(max)");
 

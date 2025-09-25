@@ -43,6 +43,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\CNIFolder\" />
     <Folder Include="wwwroot\DiplomeFolder\" />
+    <Folder Include="wwwroot\DiplomeCDEFolder\" />    
   </ItemGroup>
 
   <ItemGroup>

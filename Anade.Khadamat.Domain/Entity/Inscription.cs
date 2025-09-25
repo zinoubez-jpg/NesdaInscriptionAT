@@ -118,6 +118,10 @@ namespace Anade.Khadamat.Domain
 
         [Display(Name = "CopieDiplomeRCCFCAPath")]
         public string CopieDiplomeRCCFCAPath { get; set; }
+
+        [Display(Name = "CopieDiplomeCDEPath")]
+        public string CopieDiplomeCDEPath { get; set; }
+
         public string NumeroSiejeV3 { get; set; }
         public int ActiviteId { get; set; }
         public string PasswordHashInit { get; set; }
@@ -139,5 +143,6 @@ namespace Anade.Khadamat.Domain
 
         public int CentreDeveloppementEntrepreneuriatId { get; set; }
         public virtual CentreDeveloppementEntrepreneuriat CentreDeveloppementEntrepreneuriat { get; set; }
+
     }
 }
