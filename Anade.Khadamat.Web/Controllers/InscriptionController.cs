@@ -781,7 +781,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                     Document documentDiplomeCDE = new();
 
-                    documentDiplomeCDE.TypeDocumentId = TypeDocumentId.Diplome;
+                    documentDiplomeCDE.TypeDocumentId = TypeDocumentId.DiplomeCDE;
                     documentDiplomeCDE.Nom = NamesOfCDEPath[0]; 
                     documentDiplomeCDE.Code = NamesOfCDEPath[1];
 
