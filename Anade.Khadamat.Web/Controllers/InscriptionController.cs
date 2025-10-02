@@ -1092,6 +1092,7 @@ namespace Anade.Khadamat.Web.Controllers
         private List<string> ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
         {
             string uniqueFileGuidName = Guid.NewGuid().ToString("D");
+            uniqueFileGuidName= $"{uniqueFileGuidName}.pdf";
             string uniqueFileName = null;
 
             if (file != null)
