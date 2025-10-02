@@ -177,7 +177,7 @@ namespace Anade.Khadamat.Web.Controllers
             // Phase Extension
             if (typeInscriptionId == 2)
             {
-                if (model.CategorieId == 1)
+                if (model.CategorieId == CategorieId.SansEmploi)
                 {
 
                     var bResult = new BusinessResult();
@@ -214,7 +214,7 @@ namespace Anade.Khadamat.Web.Controllers
                     model.CentreDeveloppementEntrepreneuriatId = 1;
 
                     // Not nesda prometeur 
-                    if (model.CategorieId != 2)
+                    if (model.CategorieId != CategorieId.NESDA)
                     {
                         if (CheckPromoteurExistenceByInfos(model))
                         {
@@ -298,7 +298,10 @@ namespace Anade.Khadamat.Web.Controllers
                         InitializeListViewBags();
                         return View(model);
                     }
-                    string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder"); ;
+
+                    List<string> NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
+
+                    //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
 
                     if (model.CopieDiplomeRCCFCAPdf.Length > 2048576)
@@ -325,14 +328,16 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
+                    List<string> NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
-                    string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+                    //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+
                     var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
 
                     Antenne antenne;
                     Agence agence;
 
-                    if (model.CategorieId != 2)
+                    if (model.CategorieId != CategorieId.NESDA)
                     {
                         var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
                         antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
@@ -345,6 +350,22 @@ namespace Anade.Khadamat.Web.Controllers
                         agence = _agenceBusinessService.GetById(antenne.AgenceId);
                     }
 
+                    List<Document> documents = new();
+
+                    Document documentCNI = new();
+
+                    documentCNI.TypeDocumentId = TypeDocumentId.CNI;
+                    documentCNI.Nom = NamesOfCNIPdfPath[0];
+                    documentCNI.Code = NamesOfCNIPdfPath[1];
+
+                    Document documentDiplome = new();
+
+                    documentDiplome.TypeDocumentId = TypeDocumentId.Diplome;
+                    documentDiplome.Nom = NamesOfRCCFCAPdfPath[0];
+                    documentDiplome.Code = NamesOfRCCFCAPdfPath[1];
+
+                    documents.Add(documentCNI);
+                    documents.Add(documentDiplome);
 
                     Inscription NewInscription = new Inscription
                     {
@@ -377,8 +398,8 @@ namespace Anade.Khadamat.Web.Controllers
                         EmailVerificationToken = Guid.NewGuid().ToString("N"),
                         EmailVerificationTokenExpiry = DateTime.UtcNow.AddHours(24),
                         RecaptchaResponse = model.RecaptchaResponse,
-                        CopieCNIPath = copieCNIPdfPath,
-                        CopieDiplomeRCCFCAPath = copieDiplomeRCCFCAPdfPath,
+                        CopieCNIPath = NamesOfCNIPdfPath[0],
+                        CopieDiplomeRCCFCAPath = NamesOfRCCFCAPdfPath[0],
                         AntenneId = antenne.Id,
                         Anntenne = antenne.Code,
                         Agence = agence.Code,
@@ -386,7 +407,8 @@ namespace Anade.Khadamat.Web.Controllers
                         ActiviteId = 1,
                         PasswordHashInit = model.Password,
 
-                        CentreDeveloppementEntrepreneuriatId = model.CentreDeveloppementEntrepreneuriatId
+                        CentreDeveloppementEntrepreneuriatId = model.CentreDeveloppementEntrepreneuriatId,
+                        Documents = documents
                     };
 
 
@@ -413,7 +435,7 @@ namespace Anade.Khadamat.Web.Controllers
             else
             {
                 // Dans l'inscription en ligne : [DBNesdaInscription6] --> CategoriesId = 1 --> Sans emploi
-                model.CategorieId = 1;
+                model.CategorieId = CategorieId.SansEmploi;
 
                 var isRecaptchaValid = _recaptchaService.ValidateRecaptchaAsync(model.RecaptchaResponse).Result;
 
@@ -661,7 +683,9 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder"); ;
+                    List<string> NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
+
+                    //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder"); ;
 
                     if (model.CopieDiplomeRCCFCAPdf.Length > 2048576)
                     {
@@ -687,7 +711,9 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+                    List<string> NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+
+                    //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
                     if (model.CopieDiplomeCDEPdf.Length > 2048576)
                     {
@@ -713,14 +739,16 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
+                    List<string> NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
+
+                    //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
 
                     var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
 
                     Antenne antenne;
                     Agence agence;
 
-                    if (model.CategorieId != 2)
+                    if (model.CategorieId != CategorieId.NESDA)
                     {
                         var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
                         antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
@@ -736,6 +764,30 @@ namespace Anade.Khadamat.Web.Controllers
                         antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
                         agence = _agenceBusinessService.GetById(antenne.AgenceId);
                     }
+
+                    List<Document> documents = new();
+
+                    Document documentCNI = new();
+
+                    documentCNI.TypeDocumentId = TypeDocumentId.CNI;
+                    documentCNI.Nom = NamesOfCNIPdfPath[0];
+                    documentCNI.Code = NamesOfCNIPdfPath[1];
+
+                    Document documentDiplome = new();
+
+                    documentDiplome.TypeDocumentId = TypeDocumentId.Diplome;
+                    documentDiplome.Nom = NamesOfRCCFCAPdfPath[0];
+                    documentDiplome.Code = NamesOfRCCFCAPdfPath[1];
+
+                    Document documentDiplomeCDE = new();
+
+                    documentDiplomeCDE.TypeDocumentId = TypeDocumentId.Diplome;
+                    documentDiplomeCDE.Nom = NamesOfCDEPath[0]; 
+                    documentDiplomeCDE.Code = NamesOfCDEPath[1];
+
+                    documents.Add(documentCNI);
+                    documents.Add(documentDiplome);
+                    documents.Add(documentDiplomeCDE);
 
                     Inscription NewInscription = new Inscription
                     {
@@ -767,9 +819,9 @@ namespace Anade.Khadamat.Web.Controllers
                         EmailVerificationToken = Guid.NewGuid().ToString("N"),
                         EmailVerificationTokenExpiry = DateTime.UtcNow.AddHours(24),
                         RecaptchaResponse = model.RecaptchaResponse,
-                        CopieCNIPath = copieCNIPdfPath,
-                        CopieDiplomeRCCFCAPath = copieDiplomeRCCFCAPdfPath,
-                        CopieDiplomeCDEPath = copieDiplomeCDEPath,
+                        CopieCNIPath = NamesOfCNIPdfPath[0],
+                        CopieDiplomeRCCFCAPath = NamesOfRCCFCAPdfPath[0],
+                        CopieDiplomeCDEPath = NamesOfCDEPath[0],
 
                         AntenneId = antenne.Id,
                         Anntenne = antenne.Code,
@@ -778,8 +830,8 @@ namespace Anade.Khadamat.Web.Controllers
                         ActiviteId = 1,
                         PasswordHashInit = model.Password,
 
-                        CentreDeveloppementEntrepreneuriatId = model.CentreDeveloppementEntrepreneuriatId
-
+                        CentreDeveloppementEntrepreneuriatId = model.CentreDeveloppementEntrepreneuriatId,
+                        Documents = documents
                     };
 
                     var businessResult = _inscriptionBusinessService.Add(NewInscription);
@@ -915,8 +967,8 @@ namespace Anade.Khadamat.Web.Controllers
 
                     // Pour test CHOMEUR valeur = 2
                     // associer.Inscription_CategorieId = entity.Inscription_CategorieId;
-                    entity.Inscription_CategorieId = 2;
-                    associer.Inscription_CategorieId = 2;
+                    entity.Inscription_CategorieId = CategorieId.NESDA;
+                    associer.Inscription_CategorieId = CategorieId.NESDA;
 
 
                     var inscription_CategoriePase = _inscription_CategorieBusinesService.GetById(entity.Inscription_CategorieId, _inscription_CategorieBusinesService.GetDefaultLoadProperties());
@@ -1037,6 +1089,32 @@ namespace Anade.Khadamat.Web.Controllers
             return uniqueFileName;
         }
 
+        private List<string> ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
+        {
+            string uniqueFileGuidName = Guid.NewGuid().ToString("D");
+            string uniqueFileName = null;
+
+            if (file != null)
+            {
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, folderName);
+                uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
+
+                string filePath = Path.Combine(uploadsFolder, uniqueFileGuidName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+            }
+
+            List<string> fileNames = new();
+
+            fileNames.Add(uniqueFileName);
+            fileNames.Add(uniqueFileGuidName);
+
+            return fileNames;
+        }
+
         private bool IsValidPdfFile(IFormFile file)
         {
             if (file == null || file.Length < 5)
@@ -1079,7 +1157,7 @@ namespace Anade.Khadamat.Web.Controllers
             promoteur.DDN_P = model.DateNaissance;
             promoteur.NOM_P = model.NomFr;
             promoteur.PRENOM_P = model.PrenomFr;
-            promoteur.NUM_ACT_P = "0"+encodedNumActP;
+            promoteur.NUM_ACT_P = "0" + encodedNumActP;
             promoteur.CommuneId = communeNaissanceOld.Id;
             promoteur.Inscription_Commune = communeNaissanceOld;
 
@@ -1099,7 +1177,7 @@ namespace Anade.Khadamat.Web.Controllers
             promoteur.DDN_P = model.DateNaissance;
             promoteur.NOM_P = model.NomFr;
             promoteur.PRENOM_P = model.PrenomFr;
-            promoteur.NUM_ACT_P = "0"+encodedNumActP;
+            promoteur.NUM_ACT_P = "0" + encodedNumActP;
             promoteur.CommuneId = communeNaissanceOld.Id;
             promoteur.Inscription_Commune = communeNaissanceOld;
 

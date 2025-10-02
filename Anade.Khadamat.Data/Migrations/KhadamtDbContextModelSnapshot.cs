@@ -248,6 +248,34 @@ namespace Anade.Khadamat.Data.Migrations
                     b.ToTable("Communes");
                 });
 
+            modelBuilder.Entity("Anade.Khadamat.Domain.Document", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("InscriptionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TypeDocumentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InscriptionId");
+
+                    b.HasIndex("TypeDocumentId");
+
+                    b.ToTable("Document");
+                });
+
             modelBuilder.Entity("Anade.Khadamat.Domain.EvaluationProjet", b =>
                 {
                     b.Property<int>("Id")
@@ -651,6 +679,32 @@ namespace Anade.Khadamat.Data.Migrations
                     b.ToTable("TypeCentreDeveloppementEntrepreneuriat");
                 });
 
+            modelBuilder.Entity("Anade.Khadamat.Domain.TypeDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("DesignationAr")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("DesignationFr")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypeDocument");
+                });
+
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeFinancement", b =>
                 {
                     b.Property<int>("Id")
@@ -777,6 +831,25 @@ namespace Anade.Khadamat.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Wilaya");
+                });
+
+            modelBuilder.Entity("Anade.Khadamat.Domain.Document", b =>
+                {
+                    b.HasOne("Anade.Khadamat.Domain.Inscription", "Inscription")
+                        .WithMany("Documents")
+                        .HasForeignKey("InscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Anade.Khadamat.Domain.TypeDocument", "TypeDocument")
+                        .WithMany("Documents")
+                        .HasForeignKey("TypeDocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Inscription");
+
+                    b.Navigation("TypeDocument");
                 });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.EvaluationProjet", b =>
@@ -944,6 +1017,8 @@ namespace Anade.Khadamat.Data.Migrations
                 {
                     b.Navigation("CSVFs");
 
+                    b.Navigation("Documents");
+
                     b.Navigation("EvaluationProjets");
 
                     b.Navigation("SessionFormations");
@@ -962,6 +1037,11 @@ namespace Anade.Khadamat.Data.Migrations
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeCentreDeveloppementEntrepreneuriat", b =>
                 {
                     b.Navigation("CentresDeveloppementEntrepreneuriat");
+                });
+
+            modelBuilder.Entity("Anade.Khadamat.Domain.TypeDocument", b =>
+                {
+                    b.Navigation("Documents");
                 });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeFinancement", b =>

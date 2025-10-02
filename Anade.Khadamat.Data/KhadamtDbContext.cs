@@ -55,5 +55,7 @@ namespace Anade.Khadamat.Data
         public virtual DbSet<TypeFinancement> TypeFinancements { get; set; }
         public virtual DbSet<TypeCentreDeveloppementEntrepreneuriat> TypeCentreDeveloppementEntrepreneuriat { get; set; }
         public virtual DbSet<CentreDeveloppementEntrepreneuriat> CentreDeveloppementEntrepreneuriat { get; set; }
+        public virtual DbSet<TypeDocument> TypeDocument { get; set; }
+        public virtual DbSet<Document> Document { get; set; }
     }
 }

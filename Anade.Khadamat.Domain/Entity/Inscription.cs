@@ -7,6 +7,11 @@ namespace Anade.Khadamat.Domain
 {
     public partial class Inscription : IEntity<int>
     {
+        public Inscription()
+        {
+            this.Documents = new HashSet<Document>();
+        }
+
         [Display(Name = "Id")]
         [Required(ErrorMessage = "يجب ملء هذا الحقل")]
         public int Id { get; set; }
@@ -143,6 +148,6 @@ namespace Anade.Khadamat.Domain
 
         public int CentreDeveloppementEntrepreneuriatId { get; set; }
         public virtual CentreDeveloppementEntrepreneuriat CentreDeveloppementEntrepreneuriat { get; set; }
-
+        public virtual ICollection<Document> Documents { get; set; }
     }
 }
