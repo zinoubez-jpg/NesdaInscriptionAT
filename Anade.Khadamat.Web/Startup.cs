@@ -20,6 +20,8 @@ using System.Threading.Tasks;
 using Anade.Khadamat.Data_Authentification;
 using Anade.Khadamat.Data_Inscription;
 using Anade.Khadamat.Data_Suivi;
+using Anade.Khadamat.Web.Services;
+using System.IO;
 
 namespace Anade.Khadamat.Web
 {
@@ -86,6 +88,15 @@ namespace Anade.Khadamat.Web
             services.AddScoped<IPromoteurEligibiliteSettings, PromoteurEligibiliteSettings>();
             services.Configure<PromoteurEligibiliteSettings>(Configuration.GetSection("PromoteurEligibiliteSettings"));
 
+            services.AddScoped<IFileService, FileService>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CNIAccess", policy =>
+                    policy.RequireRole("Admin", "HR"));
+                options.AddPolicy("DiplomeAccess", policy =>
+                    policy.RequireAuthenticatedUser());
+            });
 
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddScoped<IEmailService, EmailService>();
@@ -126,7 +137,25 @@ namespace Anade.Khadamat.Web
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+            //app.UseStaticFiles();
+
+            // Configuration des fichiers statiques avec sécurité
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    var path = ctx.Context.Request.Path.Value;
+                    // Bloquer l'accès direct aux dossiers protégés
+                    if (path.StartsWith("/CNIFolder/", StringComparison.OrdinalIgnoreCase) ||
+                        path.StartsWith("/DiplomeFolder/", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ctx.Context.Response.StatusCode = 403;
+                        ctx.Context.Response.ContentLength = 0;
+                        ctx.Context.Response.Body = Stream.Null;
+                    }
+                }
+            });
 
             // Middleware pour supprimer l’en-tête X-Powered-By
             app.Use(async (context, next) =>
