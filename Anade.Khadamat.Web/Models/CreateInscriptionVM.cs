@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Anade.Khadamat.Web.Models
 {
-    public class CreateInscriptionVM : IValidatableObject
+    public class CreateInscriptionVM
     {
 
         [Display(Name = "Id")]
@@ -171,27 +171,6 @@ namespace Anade.Khadamat.Web.Models
         // Validation conditionnelle avec IValidatableObject pour gérer la contrainte métier conditionnelle
         [Display(Name = "CopieDiplomeCDEPdf")]
         public IFormFile CopieDiplomeCDEPdf { get; set; }
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Validation conditionnelle pour CopieDiplomeCDEPdf
-            if (TypeInscriptionId == 1 && (CopieDiplomeCDEPdf == null || CopieDiplomeCDEPdf.Length == 0))
-            {
-                yield return new ValidationResult(
-                    // "يجب اختيار ملف CopieDiplomeCDEPdf عندما TypeInscriptionId = 1",
-                    "يجب إرفاق نسخة من الملف المطلوب",
-                    new[] { nameof(CopieDiplomeCDEPdf) });
-            }
-
-            // Validation conditionnelle inverse (Optionnelle)
-            if (TypeInscriptionId == 2 && CopieDiplomeCDEPdf != null && CopieDiplomeCDEPdf.Length > 0)
-            {
-                yield return new ValidationResult(
-                     // "لا يجب اختيار ملف CopieDiplomeCDEPdf عندما TypeInscriptionId = 2",
-                     "لا يجب اختيار ملف",
-                    new[] { nameof(CopieDiplomeCDEPdf) });
-            }
-        }
 
     }
 }

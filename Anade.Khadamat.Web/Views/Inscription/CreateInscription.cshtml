@@ -30,7 +30,7 @@
                                 <h4 class="title center"> إستمارت <span>التسجيل</span>  </h4>
 
                                 <div class="text">
-                                    @if (ViewBag.TypeInsId == 2)
+                                    @if (ViewBag.TypeInsId == TypesInscriptionId.Extension)
                                     {
                                         <p style="text-align: justify;">
                                             هذه الاستمارة مخصصة للتسجيل عبر الإنترنت لطلب التمويل لإنشاء مشروع توسيعي في إطار جهاز الوكالة الوطنية لدعم وتنمية المقاولاتية.
@@ -74,7 +74,7 @@
 
                         <div class="text">
 
-                            @if (ViewBag.TypeInsId == 2)
+                            @if (ViewBag.TypeInsId == TypesInscriptionId.Extension)
                             {
                                 <br />
 
@@ -128,7 +128,7 @@
                                 <form enctype="multipart/form-data" asp-action="CreateInscription" class="needs-validation" novalidate>
 
                                     <!-- Remplacez tout le code conditionnel long par : -->
-                                    @if (ViewBag.TypeInsId == 2)
+                                    @if (ViewBag.TypeInsId == TypesInscriptionId.Extension)
                                     {
                                         <partial name="_FormExtensionProject" model="Model" />
                                     }
@@ -173,9 +173,9 @@
         document.addEventListener("DOMContentLoaded", function () {
             setupFileInput("fileInput", "loadingState");
             setupFileInput("fileInput2", "loadingState2");
-            setupFileInput("fileInput3", "loadingState3");
+            setupFileInput("fileInput3", "loadingState3", false); // false = non obligatoire
 
-            function setupFileInput(fileInputId, loadingStateId) {
+            function setupFileInput(fileInputId, loadingStateId, isRequired = true) {
                 const fileInput = document.getElementById(fileInputId);
                 const loadingState = document.getElementById(loadingStateId);
 
@@ -196,8 +196,24 @@
                             loadingState.textContent = "تم تحميل الملف بنجاح: " + fileInput.files[0].name;
                             loadingState.style.color = "#2c724f";
                         }, 1000);
+                    } else if (isRequired) {
+                        // Seulement afficher un message d'erreur si le champ est obligatoire
+                        loadingState.style.display = "block";
+                        loadingState.style.color = "#dc3545";
+                        loadingState.textContent = "الرجاء تحميل الملف";
                     }
                 });
+
+                // Validation initiale pour les champs obligatoires
+                if (isRequired) {
+                    fileInput.addEventListener("blur", function () {
+                        if (!fileInput.files || fileInput.files.length === 0) {
+                            loadingState.style.display = "block";
+                            loadingState.style.color = "#dc3545";
+                            loadingState.textContent = "الرجاء تحميل الملف";
+                        }
+                    });
+                }
             }
 
             function validatePDF(input) {

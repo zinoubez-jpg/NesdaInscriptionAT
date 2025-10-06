@@ -170,16 +170,15 @@ namespace Anade.Khadamat.Web.Controllers
             ViewBag.TypeInsId = typeInscriptionId;
 
             // Le processus diffère selon le type d'inscription :
-            //    1- Création : contrôle de non-existence du promoteur.
-            //    2- Extension (NESDA) : contrôle d'existence du promoteur.
-            //    3- Extension (Hors NESDA) : contrôle de non-existence du promoteur.
+            //    A - Création : contrôle de non-existence du promoteur.
+            //    B - Extension (NESDA) : contrôle d'existence du promoteur.
+            //    C - Extension (Hors NESDA) : contrôle de non-existence du promoteur.
 
             // Phase Extension
-            if (typeInscriptionId == 2)
+            if (typeInscriptionId == TypesInscriptionId.Extension)
             {
                 if (model.CategorieId == CategorieId.SansEmploi)
                 {
-
                     var bResult = new BusinessResult();
                     bResult.Messages.Add(new MessageResult { Message = "يرجى إختيار نوع الفئة بشكل صحيح", MessageType = MessageType.Error });
                     TempData["Message"] = bResult.ToBootstrapAlerts();
@@ -715,31 +714,37 @@ namespace Anade.Khadamat.Web.Controllers
 
                     //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
-                    if (model.CopieDiplomeCDEPdf.Length > 2048576)
-                    {
+                    List<string> NamesOfCDEPath = null;
 
-                        var bResult = new BusinessResult();
-                        bResult.Messages.Add(new MessageResult { Message = "حجم الملف يتجاوز الحد المسموح به", MessageType = MessageType.Error });
-                        TempData["Message"] = bResult.ToBootstrapAlerts();
-                        InitializeListViewBags();
-                        return View(model);
-                    }
-
-                    if (!IsValidPdfFile(model.CopieDiplomeCDEPdf))
+                    // Vérifier si un fichier a été uploadé (champ optionnel)
+                    if (model.CopieDiplomeCDEPdf != null && model.CopieDiplomeCDEPdf.Length > 0)
                     {
-                        var bResult = new BusinessResult(true);
-                        bResult.Messages.Add(new MessageResult
+                        // Valider seulement si un fichier est présent
+                        if (model.CopieDiplomeCDEPdf.Length > 2048576)
                         {
-                            Message = "يرجى تحميل ملف بصيغة PDF صالح لاستكمال طلبك.",
-                            MessageType = MessageType.Error
-                        });
+                            var bResult = new BusinessResult();
+                            bResult.Messages.Add(new MessageResult { Message = "حجم الملف يتجاوز الحد المسموح به", MessageType = MessageType.Error });
+                            TempData["Message"] = bResult.ToBootstrapAlerts();
+                            InitializeListViewBags();
+                            return View(model);
+                        }
 
-                        TempData["Message"] = bResult.ToBootstrapAlerts();
-                        InitializeListViewBags();
-                        return View(model);
+                        if (!IsValidPdfFile(model.CopieDiplomeCDEPdf))
+                        {
+                            var bResult = new BusinessResult(true);
+                            bResult.Messages.Add(new MessageResult
+                            {
+                                Message = "يرجى تحميل ملف بصيغة PDF صالح لاستكمال طلبك.",
+                                MessageType = MessageType.Error
+                            });
+
+                            TempData["Message"] = bResult.ToBootstrapAlerts();
+                            InitializeListViewBags();
+                            return View(model);
+                        }
+
+                        NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
                     }
-
-                    List<string> NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
 
                     //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
 
@@ -779,15 +784,18 @@ namespace Anade.Khadamat.Web.Controllers
                     documentDiplome.Nom = NamesOfRCCFCAPdfPath[0];
                     documentDiplome.Code = NamesOfRCCFCAPdfPath[1];
 
-                    Document documentDiplomeCDE = new();
-
-                    documentDiplomeCDE.TypeDocumentId = TypeDocumentId.DiplomeCDE;
-                    documentDiplomeCDE.Nom = NamesOfCDEPath[0]; 
-                    documentDiplomeCDE.Code = NamesOfCDEPath[1];
-
                     documents.Add(documentCNI);
                     documents.Add(documentDiplome);
-                    documents.Add(documentDiplomeCDE);
+
+                    // Ajouter le document CDE seulement si le fichier a été uploadé
+                    if (NamesOfCDEPath != null)
+                    {
+                        Document documentDiplomeCDE = new();
+                        documentDiplomeCDE.TypeDocumentId = TypeDocumentId.DiplomeCDE;
+                        documentDiplomeCDE.Nom = NamesOfCDEPath[0];
+                        documentDiplomeCDE.Code = NamesOfCDEPath[1];
+                        documents.Add(documentDiplomeCDE);
+                    }
 
                     Inscription NewInscription = new Inscription
                     {
@@ -821,7 +829,7 @@ namespace Anade.Khadamat.Web.Controllers
                         RecaptchaResponse = model.RecaptchaResponse,
                         CopieCNIPath = NamesOfCNIPdfPath[0],
                         CopieDiplomeRCCFCAPath = NamesOfRCCFCAPdfPath[0],
-                        CopieDiplomeCDEPath = NamesOfCDEPath[0],
+                        CopieDiplomeCDEPath = NamesOfCDEPath?[0], // Utiliser l'opérateur null-conditionnel
 
                         AntenneId = antenne.Id,
                         Anntenne = antenne.Code,
@@ -876,8 +884,6 @@ namespace Anade.Khadamat.Web.Controllers
             {
                 return BadRequest("Paramètres invalides");
             }
-
-
 
             if (_userService.Count(u => u.Email == email) > 0)
             {
@@ -1092,7 +1098,7 @@ namespace Anade.Khadamat.Web.Controllers
         private List<string> ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
         {
             string uniqueFileGuidName = Guid.NewGuid().ToString("D");
-            uniqueFileGuidName= $"{uniqueFileGuidName}.pdf";
+            uniqueFileGuidName = $"{uniqueFileGuidName}.pdf";
             string uniqueFileName = null;
 
             if (file != null)

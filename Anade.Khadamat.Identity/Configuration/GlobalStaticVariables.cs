@@ -45,4 +45,9 @@
         public const int Diplome = 2;
         public const int DiplomeCDE = 3;
     }
+    public static class TypesInscriptionId
+    {
+        public const int Création = 1;
+        public const int Extension = 2;
+    }
 }
