@@ -74,6 +74,8 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly Detail_DossierInscriptionBusinesService _detail_DossierInscriptionBusinessService;
         private readonly AssociesInscriptionBusinesService _associesInscriptionBusinessService;
         private readonly Inscription_CategorieBusinesService _inscription_CategorieBusinesService;
+        private readonly string _secureUploadPath;
+        private readonly string _inscritFolderPath;
 
         public InscriptionController(
                                       ReferentielBusinessService<Commune, int> communeBusinessService,
@@ -144,6 +146,20 @@ namespace Anade.Khadamat.Web.Controllers
             _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
             _associesInscriptionBusinessService = associesInscriptionBusinessService;
             _inscription_CategorieBusinesService = inscription_CategorieBusinesService;
+
+            // Chemin principal pour SecureUploads
+            _secureUploadPath = Path.Combine(_environment.ContentRootPath, "SecureUploads");
+
+            // Chemin pour le sous-dossier Inscrits dans SecureUploads
+            _inscritFolderPath = Path.Combine(_secureUploadPath, "Inscrits");
+
+            // Créer le répertoire SecureUploads s'il n'existe pas
+            if (!Directory.Exists(_secureUploadPath))
+                Directory.CreateDirectory(_secureUploadPath);
+
+            // Créer le sous-répertoire Inscrits s'il n'existe pas
+            if (!Directory.Exists(_inscritFolderPath))
+                Directory.CreateDirectory(_inscritFolderPath);
         }
         public IActionResult Index()
         {
@@ -1095,32 +1111,6 @@ namespace Anade.Khadamat.Web.Controllers
             return uniqueFileName;
         }
 
-        private List<string> ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
-        {
-            string uniqueFileGuidName = Guid.NewGuid().ToString("D");
-            uniqueFileGuidName = $"{uniqueFileGuidName}.pdf";
-            string uniqueFileName = null;
-
-            if (file != null)
-            {
-                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, folderName);
-                uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
-
-                string filePath = Path.Combine(uploadsFolder, uniqueFileGuidName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-            }
-
-            List<string> fileNames = new();
-
-            fileNames.Add(uniqueFileName);
-            fileNames.Add(uniqueFileGuidName);
-
-            return fileNames;
-        }
 
         private bool IsValidPdfFile(IFormFile file)
         {
@@ -1169,7 +1159,6 @@ namespace Anade.Khadamat.Web.Controllers
             promoteur.Inscription_Commune = communeNaissanceOld;
 
             return _promoteurInscriptionBusinessService.CheckPromoteurExistenceByInfos(promoteur);
-
         }
 
         private string CheckExtensionEligibilityByInfos(CreateInscriptionVM model)
@@ -1189,7 +1178,6 @@ namespace Anade.Khadamat.Web.Controllers
             promoteur.Inscription_Commune = communeNaissanceOld;
 
             return _promoteurInscriptionBusinessService.CheckExtensionEligibilityByInfos(promoteur);
-
         }
 
         [HttpGet]
@@ -1200,6 +1188,42 @@ namespace Anade.Khadamat.Web.Controllers
         }
 
         #endregion
+
+        private List<string> ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
+        {
+            string uniqueFileGuidName = Guid.NewGuid().ToString("D");
+            uniqueFileGuidName = $"{uniqueFileGuidName}.pdf";
+            string uniqueFileName = null;
+
+            if (file != null)
+            {
+                uniqueFileName = SaveSecureFile(file, model.NIN);
+            }
+
+            List<string> fileNames = new();
+
+            fileNames.Add(uniqueFileName);
+            fileNames.Add(uniqueFileGuidName);
+
+            return fileNames;
+        }
+
+        private string SaveSecureFile(IFormFile file, string subFolder)
+        {
+            var secureFolder = Path.Combine(_inscritFolderPath, subFolder);
+            if (!Directory.Exists(secureFolder))
+                Directory.CreateDirectory(secureFolder);
+
+            var fileName = $"{Guid.NewGuid():D}.pdf";
+            var filePath = Path.Combine(secureFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            return fileName; // Retourne le nom du fichier
+        }
 
         #region Méthodes à supprimer
 
@@ -1253,5 +1277,6 @@ namespace Anade.Khadamat.Web.Controllers
         }
 
         #endregion
+
     }
 }
