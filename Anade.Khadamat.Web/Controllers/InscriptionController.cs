@@ -1,5 +1,4 @@
 ﻿using Anade.Business.Core;
-using Anade.Domain.Core;
 using Anade.Khadamat.Business;
 using Anade.Khadamat.Data;
 using Anade.Khadamat.Domain;
@@ -20,17 +19,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using Rework;
-
-using Anade.Khadamat.Web.Services;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using MimeKit;
-using Newtonsoft.Json;
-using System.Globalization;
-using System.Net.Mail;
-using System.Text;
-using Microsoft.Extensions.Localization;
+
 
 
 namespace Anade.Khadamat.Web.Controllers
@@ -177,6 +167,7 @@ namespace Anade.Khadamat.Web.Controllers
             InitializeListViewBags();
             return View();
         }
+        
         // POST: Generic/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -1111,7 +1102,6 @@ namespace Anade.Khadamat.Web.Controllers
             return uniqueFileName;
         }
 
-
         private bool IsValidPdfFile(IFormFile file)
         {
             if (file == null || file.Length < 5)
@@ -1191,13 +1181,13 @@ namespace Anade.Khadamat.Web.Controllers
 
         private List<string> ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
         {
-            string uniqueFileGuidName = Guid.NewGuid().ToString("D");
+            string uniqueFileGuidName = null;
             uniqueFileGuidName = $"{uniqueFileGuidName}.pdf";
-            string uniqueFileName = null;
+            string uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
 
             if (file != null)
             {
-                uniqueFileName = SaveSecureFile(file, model.NIN);
+                uniqueFileGuidName = SaveSecureFile(file, model.NIN);
             }
 
             List<string> fileNames = new();
