@@ -11,8 +11,7 @@ namespace Anade.Khadamat.Domain
     public partial class Document : IEntity<int>
     {
         public int Id { get; set; }
-        public string Nom { get; set; }
-        public string Code { get; set; }
+        public string FilePath { get; set; }
 
         public int TypeDocumentId { get; set; }
         public int InscriptionId { get; set; }

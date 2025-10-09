@@ -255,14 +255,11 @@ namespace Anade.Khadamat.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Code")
+                    b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("InscriptionId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Nom")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TypeDocumentId")
                         .HasColumnType("int");

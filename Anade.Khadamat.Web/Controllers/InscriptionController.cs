@@ -305,7 +305,7 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    List<string> NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
+                    string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI");
 
                     //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
@@ -334,7 +334,7 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    List<string> NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+                    string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp");
 
                     //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
@@ -361,14 +361,12 @@ namespace Anade.Khadamat.Web.Controllers
                     Document documentCNI = new();
 
                     documentCNI.TypeDocumentId = TypeDocumentId.CNI;
-                    documentCNI.Nom = NamesOfCNIPdfPath[0];
-                    documentCNI.Code = NamesOfCNIPdfPath[1];
+                    documentCNI.FilePath = NamesOfCNIPdfPath;
 
                     Document documentDiplome = new();
 
                     documentDiplome.TypeDocumentId = TypeDocumentId.Diplome;
-                    documentDiplome.Nom = NamesOfRCCFCAPdfPath[0];
-                    documentDiplome.Code = NamesOfRCCFCAPdfPath[1];
+                    documentDiplome.FilePath = NamesOfRCCFCAPdfPath;
 
                     documents.Add(documentCNI);
                     documents.Add(documentDiplome);
@@ -404,8 +402,8 @@ namespace Anade.Khadamat.Web.Controllers
                         EmailVerificationToken = Guid.NewGuid().ToString("N"),
                         EmailVerificationTokenExpiry = DateTime.UtcNow.AddHours(24),
                         RecaptchaResponse = model.RecaptchaResponse,
-                        CopieCNIPath = NamesOfCNIPdfPath[0],
-                        CopieDiplomeRCCFCAPath = NamesOfRCCFCAPdfPath[0],
+                        CopieCNIPath = NamesOfCNIPdfPath,
+                        CopieDiplomeRCCFCAPath = NamesOfRCCFCAPdfPath,
                         AntenneId = antenne.Id,
                         Anntenne = antenne.Code,
                         Agence = agence.Code,
@@ -689,7 +687,7 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    List<string> NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
+                    string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI");
 
                     //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder"); ;
 
@@ -717,11 +715,11 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    List<string> NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+                    string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp");
 
                     //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
-                    List<string> NamesOfCDEPath = null;
+                    string NamesOfCDEPath = null;
 
                     // Vérifier si un fichier a été uploadé (champ optionnel)
                     if (model.CopieDiplomeCDEPdf != null && model.CopieDiplomeCDEPdf.Length > 0)
@@ -750,7 +748,7 @@ namespace Anade.Khadamat.Web.Controllers
                             return View(model);
                         }
 
-                        NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
+                        NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE");
                     }
 
                     //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
@@ -782,14 +780,12 @@ namespace Anade.Khadamat.Web.Controllers
                     Document documentCNI = new();
 
                     documentCNI.TypeDocumentId = TypeDocumentId.CNI;
-                    documentCNI.Nom = NamesOfCNIPdfPath[0];
-                    documentCNI.Code = NamesOfCNIPdfPath[1];
+                    documentCNI.FilePath = NamesOfCNIPdfPath;
 
                     Document documentDiplome = new();
 
                     documentDiplome.TypeDocumentId = TypeDocumentId.Diplome;
-                    documentDiplome.Nom = NamesOfRCCFCAPdfPath[0];
-                    documentDiplome.Code = NamesOfRCCFCAPdfPath[1];
+                    documentDiplome.FilePath = NamesOfRCCFCAPdfPath;
 
                     documents.Add(documentCNI);
                     documents.Add(documentDiplome);
@@ -799,8 +795,8 @@ namespace Anade.Khadamat.Web.Controllers
                     {
                         Document documentDiplomeCDE = new();
                         documentDiplomeCDE.TypeDocumentId = TypeDocumentId.DiplomeCDE;
-                        documentDiplomeCDE.Nom = NamesOfCDEPath[0];
-                        documentDiplomeCDE.Code = NamesOfCDEPath[1];
+                        documentDiplomeCDE.FilePath = NamesOfCDEPath;
+
                         documents.Add(documentDiplomeCDE);
                     }
 
@@ -834,9 +830,9 @@ namespace Anade.Khadamat.Web.Controllers
                         EmailVerificationToken = Guid.NewGuid().ToString("N"),
                         EmailVerificationTokenExpiry = DateTime.UtcNow.AddHours(24),
                         RecaptchaResponse = model.RecaptchaResponse,
-                        CopieCNIPath = NamesOfCNIPdfPath[0],
-                        CopieDiplomeRCCFCAPath = NamesOfRCCFCAPdfPath[0],
-                        CopieDiplomeCDEPath = NamesOfCDEPath?[0], // Utiliser l'opérateur null-conditionnel
+                        CopieCNIPath = NamesOfCNIPdfPath,
+                        CopieDiplomeRCCFCAPath = NamesOfRCCFCAPdfPath,
+                        CopieDiplomeCDEPath = NamesOfCDEPath,
 
                         AntenneId = antenne.Id,
                         Anntenne = antenne.Code,
@@ -1179,30 +1175,25 @@ namespace Anade.Khadamat.Web.Controllers
 
         #endregion
 
-        private List<string> ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
+        private string ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix)
         {
-            string uniqueFileGuidName = null;
-            uniqueFileGuidName = $"{uniqueFileGuidName}.pdf";
-            string uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
+            string FilePath = null;
 
             if (file != null)
             {
-                uniqueFileGuidName = SaveSecureFile(file, model.NIN);
+                FilePath = SaveSecureFile(file, model.NIN, fileNameSuffix);
             }
 
-            List<string> fileNames = new();
-
-            fileNames.Add(uniqueFileName);
-            fileNames.Add(uniqueFileGuidName);
-
-            return fileNames;
+            return FilePath;
         }
 
-        private string SaveSecureFile(IFormFile file, string subFolder)
+        private string SaveSecureFile(IFormFile file, string subFolder,string fileNameSuffix)
         {
             var secureFolder = Path.Combine(_inscritFolderPath, subFolder);
             if (!Directory.Exists(secureFolder))
                 Directory.CreateDirectory(secureFolder);
+
+            // uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
 
             var fileName = $"{Guid.NewGuid():D}.pdf";
             var filePath = Path.Combine(secureFolder, fileName);
@@ -1212,7 +1203,7 @@ namespace Anade.Khadamat.Web.Controllers
                 file.CopyTo(stream);
             }
 
-            return fileName; // Retourne le nom du fichier
+            return filePath;
         }
 
         #region Méthodes à supprimer
