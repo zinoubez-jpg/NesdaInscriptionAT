@@ -20,8 +20,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Rework;
 using Microsoft.Extensions.Logging;
-
-
+using Anade.Khadamat.Web.Services;
 
 namespace Anade.Khadamat.Web.Controllers
 {
@@ -66,7 +65,7 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly Inscription_CategorieBusinesService _inscription_CategorieBusinesService;
         private readonly string _secureUploadPath;
         private readonly string _inscritFolderPath;
-
+        private readonly IFileStorageService _fileStorageService;
         public InscriptionController(
                                       ReferentielBusinessService<Commune, int> communeBusinessService,
                                       ReferentielBusinessService<Wilaya, int> wilayaBusinessService,
@@ -100,7 +99,8 @@ namespace Anade.Khadamat.Web.Controllers
                                       PromoteurInscriptionBusinesService promoteurInscriptionBusinessService,
                                       Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService,
                                       AssociesInscriptionBusinesService associesInscriptionBusinessService,
-                                      Inscription_CategorieBusinesService inscription_CategorieBusinesService
+                                      Inscription_CategorieBusinesService inscription_CategorieBusinesService,
+                                      IFileStorageService fileStorageService
                                    )
         {
             _communeBusinessService = communeBusinessService;
@@ -150,6 +150,8 @@ namespace Anade.Khadamat.Web.Controllers
             // Créer le sous-répertoire Inscrits s'il n'existe pas
             if (!Directory.Exists(_inscritFolderPath))
                 Directory.CreateDirectory(_inscritFolderPath);
+
+            _fileStorageService = fileStorageService;
         }
         public IActionResult Index()
         {
@@ -167,7 +169,7 @@ namespace Anade.Khadamat.Web.Controllers
             InitializeListViewBags();
             return View();
         }
-        
+
         // POST: Generic/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -305,7 +307,9 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI");
+                    string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
+
+                    //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI");
 
                     //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
@@ -334,7 +338,9 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp");
+                    string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+
+                    //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp");
 
                     //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
@@ -687,7 +693,9 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI");
+                    string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
+
+                    //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI");
 
                     //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder"); ;
 
@@ -715,7 +723,9 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp");
+                    string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+
+                    //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp");
 
                     //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
@@ -748,7 +758,9 @@ namespace Anade.Khadamat.Web.Controllers
                             return View(model);
                         }
 
-                        NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE");
+                        NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
+                        //NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE");
+                        //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
                     }
 
                     //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
@@ -1187,9 +1199,52 @@ namespace Anade.Khadamat.Web.Controllers
             return FilePath;
         }
 
-        private string SaveSecureFile(IFormFile file, string subFolder,string fileNameSuffix)
+        private string ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
+        {
+            string uniqueFileGuidName = Guid.NewGuid().ToString("D");
+            uniqueFileGuidName = $"{uniqueFileGuidName}.pdf";
+            string uniqueFileName = null;
+
+            if (file != null)
+            {
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, folderName);
+                uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
+
+                string filePath = Path.Combine(uploadsFolder, uniqueFileGuidName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+            }
+
+            List<string> fileNames = new();
+
+            fileNames.Add(uniqueFileName);
+            fileNames.Add(uniqueFileGuidName);
+
+            return uniqueFileName;
+        }
+
+
+        #region Méthodes à supprimer
+
+        //private string ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix)
+        //{
+        //    string FilePath = null;
+
+        //    if (file != null)
+        //    {
+        //        FilePath = _fileStorageService.SaveFile(file, model.NIN, fileNameSuffix);
+        //    }
+
+        //    return FilePath;
+        //}
+        
+        private string SaveSecureFile(IFormFile file, string subFolder, string fileNameSuffix)
         {
             var secureFolder = Path.Combine(_inscritFolderPath, subFolder);
+
             if (!Directory.Exists(secureFolder))
                 Directory.CreateDirectory(secureFolder);
 
@@ -1205,9 +1260,7 @@ namespace Anade.Khadamat.Web.Controllers
 
             return filePath;
         }
-
-        #region Méthodes à supprimer
-
+        
         private async Task<string> CheckPromoteurExistenceAsync(CreateInscriptionVM model)
         {
             using var client = new HttpClient();
@@ -1232,7 +1285,7 @@ namespace Anade.Khadamat.Web.Controllers
                 return $"API Error";
             }
         }
-
+        
         private async Task<string> CheckExtensionEligibilityAsync(CreateInscriptionVM model)
         {
             using var client = new HttpClient();
@@ -1256,7 +1309,7 @@ namespace Anade.Khadamat.Web.Controllers
                 return "Une erreur est survenue. Veuillez contacter l’administrateur.";
             }
         }
-
+        
         #endregion
 
     }

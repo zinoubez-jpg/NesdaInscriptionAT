@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using Anade.Khadamat.Data_Authentification;
 using Anade.Khadamat.Data_Inscription;
 using Anade.Khadamat.Data_Suivi;
+using Anade.Khadamat.Web.Services;
 
 namespace Anade.Khadamat.Web
 {
@@ -86,7 +87,6 @@ namespace Anade.Khadamat.Web
             services.AddScoped<IPromoteurEligibiliteSettings, PromoteurEligibiliteSettings>();
             services.Configure<PromoteurEligibiliteSettings>(Configuration.GetSection("PromoteurEligibiliteSettings"));
 
-
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IEmailVerificationService, EmailVerificationService>();
@@ -103,7 +103,6 @@ namespace Anade.Khadamat.Web
                 });
             });
 
-
             services.Configure<IdentityOptions>(options =>
             {
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
@@ -111,6 +110,14 @@ namespace Anade.Khadamat.Web
                 options.Lockout.AllowedForNewUsers = true;
             });
 
+            // Configuration
+            services.Configure<FileStorageConfig>(Configuration.GetSection("FileStorage"));
+
+            // Service
+            services.AddScoped<IFileStorageService, FileStorageService>();
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<IFileUrlService, FileUrlService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
