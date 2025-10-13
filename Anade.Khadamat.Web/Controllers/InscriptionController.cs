@@ -65,7 +65,7 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly Inscription_CategorieBusinesService _inscription_CategorieBusinesService;
         private readonly string _secureUploadPath;
         private readonly string _inscritFolderPath;
-        private readonly IFileStorageService _fileStorageService;
+
         public InscriptionController(
                                       ReferentielBusinessService<Commune, int> communeBusinessService,
                                       ReferentielBusinessService<Wilaya, int> wilayaBusinessService,
@@ -99,8 +99,7 @@ namespace Anade.Khadamat.Web.Controllers
                                       PromoteurInscriptionBusinesService promoteurInscriptionBusinessService,
                                       Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService,
                                       AssociesInscriptionBusinesService associesInscriptionBusinessService,
-                                      Inscription_CategorieBusinesService inscription_CategorieBusinesService,
-                                      IFileStorageService fileStorageService
+                                      Inscription_CategorieBusinesService inscription_CategorieBusinesService
                                    )
         {
             _communeBusinessService = communeBusinessService;
@@ -151,7 +150,6 @@ namespace Anade.Khadamat.Web.Controllers
             if (!Directory.Exists(_inscritFolderPath))
                 Directory.CreateDirectory(_inscritFolderPath);
 
-            _fileStorageService = fileStorageService;
         }
         public IActionResult Index()
         {
@@ -1242,18 +1240,6 @@ namespace Anade.Khadamat.Web.Controllers
 
 
         #region Méthodes à supprimer
-
-        //private string ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix)
-        //{
-        //    string FilePath = null;
-
-        //    if (file != null)
-        //    {
-        //        FilePath = _fileStorageService.SaveFile(file, model.NIN, fileNameSuffix);
-        //    }
-
-        //    return FilePath;
-        //}
         
         private string SaveSecureFile(IFormFile file, string subFolder, string fileNameSuffix)
         {

@@ -15,50 +15,31 @@ namespace Anade.Khadamat.Web.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-
-        public string GetCNIUrl(string filePath)
+        public string GetCNIUrl(string filename)
         {
-            if (string.IsNullOrEmpty(filePath))
-                return "#";
+            if (string.IsNullOrEmpty(filename)) return string.Empty;
 
-            // Extraire le nom du fichier et le sous-dossier du chemin complet
-            var fileName = Path.GetFileName(filePath);
-            var subFolder = Path.GetFileName(Path.GetDirectoryName(filePath));
+            var baseUrl = _configuration["AppSettings:MyProjectBaseUrl"];
+            if (string.IsNullOrEmpty(baseUrl))
+            {
+                return string.Empty;
+            }
 
-            var request = _httpContextAccessor.HttpContext.Request;
-            return $"{request.Scheme}://{request.Host}/secure-files/inscrits/{subFolder}/{fileName}";
+            return $"{baseUrl}/CNIFolder/{filename}";
         }
 
-        public string GetDiplomeUrl(string filePath)
+        public string GetDiplomeUrl(string filename)
         {
-            return GetCNIUrl(filePath); // Même logique
+            if (string.IsNullOrEmpty(filename)) return string.Empty;
+
+            var baseUrl = _configuration["AppSettings:MyProjectBaseUrl"];
+            if (string.IsNullOrEmpty(baseUrl))
+            {
+                return string.Empty;
+            }
+
+            return $"{baseUrl}/DiplomeFolder/{filename}";
         }
-
-        //public string GetCNIUrl(string filename)
-        //{
-        //    if (string.IsNullOrEmpty(filename)) return string.Empty;
-
-        //    var baseUrl = _configuration["AppSettings:MyProjectBaseUrl"];
-        //    if (string.IsNullOrEmpty(baseUrl))
-        //    {
-        //        return string.Empty;
-        //    }
-
-        //    return $"{baseUrl}/CNIFolder/{filename}";
-        //}
-
-        //public string GetDiplomeUrl(string filename)
-        //{
-        //    if (string.IsNullOrEmpty(filename)) return string.Empty;
-
-        //    var baseUrl = _configuration["AppSettings:MyProjectBaseUrl"];
-        //    if (string.IsNullOrEmpty(baseUrl))
-        //    {
-        //        return string.Empty;
-        //    }
-
-        //    return $"{baseUrl}/DiplomeFolder/{filename}";
-        //}
 
         public string GetDiplomeCDEUrl(string filename)
         {

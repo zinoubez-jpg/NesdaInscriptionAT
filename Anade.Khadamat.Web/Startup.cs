@@ -110,12 +110,6 @@ namespace Anade.Khadamat.Web
                 options.Lockout.AllowedForNewUsers = true;
             });
 
-            // Configuration
-            services.Configure<FileStorageConfig>(Configuration.GetSection("FileStorage"));
-
-            // Service
-            services.AddScoped<IFileStorageService, FileStorageService>();
-
             services.AddHttpContextAccessor();
             services.AddScoped<IFileUrlService, FileUrlService>();
         }
