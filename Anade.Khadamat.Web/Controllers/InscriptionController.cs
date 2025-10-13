@@ -305,12 +305,13 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
+                    //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
                     //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI");
 
                     //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
+                    string NamesOfCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
                     if (model.CopieDiplomeRCCFCAPdf.Length > 2048576)
                     {
@@ -336,11 +337,13 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+                    //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
                     //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp");
 
                     //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+
+                    string NamesOfRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
                     var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
 
@@ -691,11 +694,13 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
+                    //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
                     //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI");
 
-                    //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder"); ;
+                    //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
+
+                    string NamesOfCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
                     if (model.CopieDiplomeRCCFCAPdf.Length > 2048576)
                     {
@@ -721,11 +726,13 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+                    //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
                     //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp");
 
                     //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
+
+                    string NamesOfRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
                     string NamesOfCDEPath = null;
 
@@ -756,9 +763,13 @@ namespace Anade.Khadamat.Web.Controllers
                             return View(model);
                         }
 
-                        NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
+                        //NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
+
                         //NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE");
+
                         //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
+
+                        NamesOfCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
                     }
 
                     //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
@@ -1240,7 +1251,7 @@ namespace Anade.Khadamat.Web.Controllers
 
 
         #region Méthodes à supprimer
-        
+
         private string SaveSecureFile(IFormFile file, string subFolder, string fileNameSuffix)
         {
             var secureFolder = Path.Combine(_inscritFolderPath, subFolder);
@@ -1260,7 +1271,7 @@ namespace Anade.Khadamat.Web.Controllers
 
             return filePath;
         }
-        
+
         private async Task<string> CheckPromoteurExistenceAsync(CreateInscriptionVM model)
         {
             using var client = new HttpClient();
@@ -1285,7 +1296,7 @@ namespace Anade.Khadamat.Web.Controllers
                 return $"API Error";
             }
         }
-        
+
         private async Task<string> CheckExtensionEligibilityAsync(CreateInscriptionVM model)
         {
             using var client = new HttpClient();
@@ -1309,7 +1320,7 @@ namespace Anade.Khadamat.Web.Controllers
                 return "Une erreur est survenue. Veuillez contacter l’administrateur.";
             }
         }
-        
+
         #endregion
 
     }
