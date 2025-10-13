@@ -476,9 +476,23 @@ namespace Anade.Khadamat.Web.Controllers
 
             if (file != null)
             {
-                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, folderName);
+                // 📁 Exemple : créer le dossier dans le répertoire racine de l’application (pas dans wwwroot)
+                string appRootPath = _hostingEnvironment.ContentRootPath;
+
+                // Crée le dossier de destination (en dehors de wwwroot)
+                string uploadsFolder = Path.Combine(appRootPath, "ProtectedFiles", folderName);
+
+                // Crée le dossier s’il n’existe pas
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+
+                // 🧾 Nom du fichier
                 uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
+
+                // 🔗 Chemin complet du fichier
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                // 💾 Sauvegarde du fichier
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     file.CopyTo(fileStream);
