@@ -109,7 +109,6 @@ namespace Anade.Khadamat.Domain
         public DateTime DateAnnulation { get; set; }
         public string MotifAnnulation { get; set; }
 
-
         public bool IsEmailVerified { get; set; }
         public string EmailVerificationToken { get; set; }
         public DateTime? EmailVerificationTokenExpiry { get; set; }
@@ -117,15 +116,6 @@ namespace Anade.Khadamat.Domain
         [Required(ErrorMessage = "يرجى التحقق من الكابتشا")]
         [Display(Name = "ReCaptcha")]
         public string RecaptchaResponse { get; set; }
-
-        [Display(Name = "CopieCNIPath")]
-        public string CopieCNIPath { get; set; }
-
-        [Display(Name = "CopieDiplomeRCCFCAPath")]
-        public string CopieDiplomeRCCFCAPath { get; set; }
-
-        [Display(Name = "CopieDiplomeCDEPath")]
-        public string CopieDiplomeCDEPath { get; set; }
 
         public string NumeroSiejeV3 { get; set; }
         public int ActiviteId { get; set; }
