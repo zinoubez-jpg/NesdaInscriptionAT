@@ -111,7 +111,7 @@ namespace Anade.Khadamat.Web
             });
 
             services.AddHttpContextAccessor();
-            services.AddScoped<IFileUrlService, FileUrlService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
