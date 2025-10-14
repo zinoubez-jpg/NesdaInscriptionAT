@@ -28,7 +28,6 @@ namespace Anade.Khadamat.Web.Controllers
 
     public class InscriptionController : Controller
     {
-
         private readonly ReferentielBusinessService<Commune, int> _communeBusinessService;
         private readonly ReferentielBusinessService<Categorie, int> _categorieBusinessService;
         private readonly ReferentielBusinessService<Antenne, int> _antenneBusinessService;
@@ -63,8 +62,6 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly Detail_DossierInscriptionBusinesService _detail_DossierInscriptionBusinessService;
         private readonly AssociesInscriptionBusinesService _associesInscriptionBusinessService;
         private readonly Inscription_CategorieBusinesService _inscription_CategorieBusinesService;
-        private readonly string _secureUploadPath;
-        private readonly string _inscritFolderPath;
 
         public InscriptionController(
                                       ReferentielBusinessService<Commune, int> communeBusinessService,
@@ -135,22 +132,8 @@ namespace Anade.Khadamat.Web.Controllers
             _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
             _associesInscriptionBusinessService = associesInscriptionBusinessService;
             _inscription_CategorieBusinesService = inscription_CategorieBusinesService;
-
-            // Chemin principal pour SecureUploads
-            _secureUploadPath = Path.Combine(_environment.ContentRootPath, "SecureUploads");
-
-            // Chemin pour le sous-dossier Inscrits dans SecureUploads
-            _inscritFolderPath = Path.Combine(_secureUploadPath, "Inscrits");
-
-            // Créer le répertoire SecureUploads s'il n'existe pas
-            if (!Directory.Exists(_secureUploadPath))
-                Directory.CreateDirectory(_secureUploadPath);
-
-            // Créer le sous-répertoire Inscrits s'il n'existe pas
-            if (!Directory.Exists(_inscritFolderPath))
-                Directory.CreateDirectory(_inscritFolderPath);
-
         }
+
         public IActionResult Index()
         {
             return View();
@@ -1210,17 +1193,7 @@ namespace Anade.Khadamat.Web.Controllers
 
         #endregion
 
-        private string ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix)
-        {
-            string FilePath = null;
-
-            if (file != null)
-            {
-                FilePath = SaveSecureFile(file, model.NIN, fileNameSuffix);
-            }
-
-            return FilePath;
-        }
+        #region Méthodes à supprimer
 
         private string ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
         {
@@ -1249,11 +1222,34 @@ namespace Anade.Khadamat.Web.Controllers
             return uniqueFileName;
         }
 
+        private string ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix)
+        {
+            string FilePath = null;
 
-        #region Méthodes à supprimer
+            if (file != null)
+            {
+                FilePath = SaveSecureFile(file, model.NIN, fileNameSuffix);
+            }
 
+            return FilePath;
+        }
+        
         private string SaveSecureFile(IFormFile file, string subFolder, string fileNameSuffix)
         {
+            // Chemin principal pour SecureUploads
+            string _secureUploadPath = Path.Combine(_environment.ContentRootPath, "SecureUploads");
+
+            // Chemin pour le sous-dossier Inscrits dans SecureUploads
+            string _inscritFolderPath = Path.Combine(_secureUploadPath, "Inscrits");
+
+            // Créer le répertoire SecureUploads s'il n'existe pas
+            if (!Directory.Exists(_secureUploadPath))
+                Directory.CreateDirectory(_secureUploadPath);
+
+            // Créer le sous-répertoire Inscrits s'il n'existe pas
+            if (!Directory.Exists(_inscritFolderPath))
+                Directory.CreateDirectory(_inscritFolderPath);
+
             var secureFolder = Path.Combine(_inscritFolderPath, subFolder);
 
             if (!Directory.Exists(secureFolder))
