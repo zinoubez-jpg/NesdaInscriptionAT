@@ -17,6 +17,11 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
 
+using Anade.Khadamat.Data_Authentification;
+using Anade.Khadamat.Data_Inscription;
+using Anade.Khadamat.Data_Suivi;
+using Anade.Khadamat.Web.Services;
+
 namespace Anade.Khadamat.Web
 {
     public class Startup
@@ -37,8 +42,19 @@ namespace Anade.Khadamat.Web
                                        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             services.Configure<ConfigurationModel>(Configuration.GetSection("EmbedSettings"));
+
+            services.AddScoped<DbContext, AuthentificationDbContext>();
+            services.AddDbContext<AuthentificationDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("AuthentificationDbContext")));
+
+            services.AddScoped<DbContext, InscriptionDbContext>();
+            services.AddDbContext<InscriptionDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("InscriptionDbContext")));
+
+            services.AddScoped<DbContext, SuiviDbContext>();
+            services.AddDbContext<SuiviDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("SuiviDbContext")));
+
             services.AddScoped<DbContext, KhadamtDbContext>();
             services.AddDbContext<KhadamtDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("khadamatDbConnection")));
+            
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
             services.AddTransient(typeof(IRepository<,>), typeof(GenericRepository<,>));
@@ -49,13 +65,27 @@ namespace Anade.Khadamat.Web
             services.AddTransient<SessionFormationBusinessService>();
             services.AddTransient<CirconscriptionBusinessService>();
 
+            // pour utiliser les compte dans l'inscription en ligne.
+            services.AddTransient<CompteAuthentificationBusinesService>();
+
+            // pour utiliser les compte dans l'inscription en ligne.
+            services.AddTransient<PromoteurInscriptionBusinesService>();
+            services.AddTransient<Detail_DossierInscriptionBusinesService>();
+            services.AddTransient<AssociesInscriptionBusinesService>();
+            services.AddTransient<Inscription_CategorieBusinesService>();
+            services.AddTransient<Inscription_CirconscriptionBusinessService>();
+            services.AddTransient<Inscription_CommuneBusinesService>();
+            services.AddTransient<Inscription_AnnexeBusinesService>();
+            services.AddTransient<Inscription_AntenneBusinesService>();
+
+            // pour utiliser les compte dans l'inscription en ligne.
+            services.AddTransient<PromoteurSuiviBusinesService>();
 
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<ILoadProperties<SessionFormationDetails, int>, LoadProperties<SessionFormationDetails, int>>();
 
             services.AddScoped<IPromoteurEligibiliteSettings, PromoteurEligibiliteSettings>();
             services.Configure<PromoteurEligibiliteSettings>(Configuration.GetSection("PromoteurEligibiliteSettings"));
-
 
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddScoped<IEmailService, EmailService>();
@@ -73,13 +103,14 @@ namespace Anade.Khadamat.Web
                 });
             });
 
-
             services.Configure<IdentityOptions>(options =>
             {
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
             });
+
+            services.AddHttpContextAccessor();
 
         }
 

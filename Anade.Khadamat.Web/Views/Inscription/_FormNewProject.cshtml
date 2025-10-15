@@ -1,0 +1,264 @@
+﻿@model Anade.Khadamat.Web.Models.CreateInscriptionVM
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="NIN">الرقم التعريفي الوطني الوحيد (NIN) <span style="color:red;">*</span></label>
+        <input asp-for="NIN" class="required-input" required>
+        <span asp-validation-for="NIN" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="NomAr"> اللقب بالعربية <span style="color:red;">*</span></label>
+        <input asp-for="NomAr" required>
+        <span asp-validation-for="NomAr" class="text-danger"></span>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="PrenomAr">الإسم بالعربية <span style="color:red;">*</span></label>
+        <input asp-for="PrenomAr" required>
+        <span asp-validation-for="PrenomAr" class="text-danger"></span>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="NomFr"> اللقب بالأحرف اللاتينية <span style="color:red;">*</span></label>
+        <input asp-for="NomFr" style="direction:ltr" required>
+        <span asp-validation-for="NomFr" class="text-danger"></span>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="PrenomFr">الإسم بالأحرف اللاتينية <span style="color:red;">*</span></label>
+        <input asp-for="PrenomFr" style="direction:ltr" required>
+        <span asp-validation-for="PrenomFr" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="DateNaissance"> تاريخ الميلاد <span style="color:red;">*</span></label>
+        <input asp-for="DateNaissance" type="date" required>
+        <span asp-validation-for="DateNaissance" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+        <label asp-for="WilayaNaissanceId">ولاية الميلاد <span style="color:red;">*</span></label>
+        <select asp-for="WilayaNaissanceId" asp-items="@ViewBag.WilayaResId as SelectList" class="form-control select2" id="wilayaN" required>
+            <option value="">إختيار ولاية الميلاد</option>
+        </select>
+        <span asp-validation-for="WilayaNaissanceId" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+        <label asp-for="CommuneNaissanceId">بلدية الميلاد  <span style="color:red;">*</span></label>
+        <select asp-for="CommuneNaissanceId" asp-items="@ViewBag.CommuneId" class="form-control select2" id="communeN" required>
+            <option value="">إختيار بلدية الميلاد</option>
+        </select>
+        <span asp-validation-for="CommuneNaissanceId" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="GenreId">نوع الجنس <span style="color:red;">*</span></label>
+        <select asp-for="GenreId" asp-items="@ViewBag.GenreId as SelectList" class="select2" required>
+            <option value="">إختيار نوع الجنس</option>
+        </select>
+        <span asp-validation-for="GenreId" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="SituationFamilialeId">الحالة العائلية <span style="color:red;">*</span></label>
+        <select asp-for="SituationFamilialeId" asp-items="@ViewBag.SituationFamilialeId as SelectList" class="form-control select2" required>
+            <option value="">إختيار الحالة العائلية</option>
+        </select>
+        <span asp-validation-for="SituationFamilialeId" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+        <label asp-for="TypeCentreDeveloppementEntrepreneuriatId">نوع مركز تطوير المقاولاتية  <span style="color:red;">*</span></label>
+        <select asp-for="TypeCentreDeveloppementEntrepreneuriatId" asp-items="@ViewBag.TypeCentreDeveloppementEntrepreneuriatId" class="form-control select2" id="TypeCDE" required>
+            <option value="">إختيار نوع مركز تطوير المقاولاتية</option>
+        </select>
+        <span asp-validation-for="TypeCentreDeveloppementEntrepreneuriatId" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+        <label asp-for="WilayaCentreDeveloppementEntrepreneuriatId">ولاية مركز تطوير المقاولاتية <span style="color:red;">*</span></label>
+        <select asp-for="WilayaCentreDeveloppementEntrepreneuriatId" asp-items="@ViewBag.WilayaCentreDeveloppementEntrepreneuriatId as SelectList" class="form-control select2" id="wilayaCDE" required>
+            <option value="">إختيار ولاية مركز تطوير المقاولاتية</option>
+        </select>
+        <span asp-validation-for="WilayaCentreDeveloppementEntrepreneuriatId" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="CentreDeveloppementEntrepreneuriatId">هل تابعت تكوينا بمركز تطوير المقاولاتية؟ <span style="color:red;">*</span></label>
+        <select asp-for="CentreDeveloppementEntrepreneuriatId" asp-items="@ViewBag.CentreDeveloppementEntrepreneuriatId as SelectList" class="form-control select2" id="designationCDE" required>
+            <option value="">إختيار </option>
+        </select>
+        <span asp-validation-for="CentreDeveloppementEntrepreneuriatId" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+    <label asp-for="TypeFinancementId">نوع التمويل <span style="color:red;">*</span> </label>
+    <select asp-for="TypeFinancementId" asp-items="@ViewBag.TypeFinancementId as SelectList" class="form-control select2" required>
+        <option value="">إختيار </option>
+    </select>
+    <span asp-validation-for="TypeFinancementId" class="text-danger"></span>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="AdressAr"> العنوان <span style="color:red;">*</span></label>
+        <input asp-for="AdressAr" required>
+        <span asp-validation-for="AdressAr" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+        <label asp-for="WilayaResidenceId"> ولاية الإقامة <span style="color:red;">*</span></label>
+        <select asp-for="WilayaResidenceId" asp-items="@ViewBag.WilayaResId as SelectList" class="form-control select2" id="wilayaR" required>
+            <option value="">إختيار ولاية الإقامة</option>
+        </select>
+        <span asp-validation-for="WilayaResidenceId" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+        <label asp-for="CommuneResidenceId">بلدية الإقامة  <span style="color:red;">*</span></label>
+        <select asp-for="CommuneResidenceId" asp-items="@ViewBag.CommuneId" class="form-control select2" id="communeR" required>
+            <option value="">إختيار بلدية الإقامة</option>
+        </select>
+        <span asp-validation-for="CommuneResidenceId" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="NiveauInstructionId"> المستوى الدراسي <span style="color:red;">*</span></label>
+        <select asp-for="NiveauInstructionId" asp-items="@ViewBag.NiveauInstructionId as SelectList" class="form-control select2" required>
+            <option value="">إختيار المستوى الدراسي</option>
+        </select>
+        <span asp-validation-for="NiveauInstructionId" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="NumTelephone"> رقم الهاتف <span style="color:red;">*</span></label>
+        <input asp-for="NumTelephone" required style="direction:ltr">
+        <span asp-validation-for="NumTelephone" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+        <label asp-for="WilayaSeigeSocialId"> ولاية المقر الاجتماعي لمؤسستكم <span style="color:red;">*</span></label>
+        <select asp-for="WilayaSeigeSocialId" asp-items="@ViewBag.WilayaResId as SelectList" class="form-control select2" id="wilayaSS" required>
+            <option value="">إختيار ولاية </option>
+        </select>
+        <span asp-validation-for="WilayaSeigeSocialId" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+        <label asp-for="CommuneSeigeSocialId">بلدية المقر الاجتماعي لمؤسستكم <span style="color:red;">*</span> </label>
+        <select asp-for="CommuneSeigeSocialId" asp-items="@ViewBag.CommuneId" class="form-control select2" id="communeSS" required>
+            <option value="">إختيار بلدية </option>
+        </select>
+        <span asp-validation-for="CommuneSeigeSocialId" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+        <label asp-for="Email">البريد الإلكتروني <span style="color:red;">*</span></label>
+        <input asp-for="Email" style="direction:ltr" required>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+        <label asp-for="Password">كلمة المرور <span style="color:red;">*</span></label>
+        <input asp-for="Password" type="password" class="form-control" required />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="col-lg-6 col-md-12 col-sm-12 form-group">
+        <label asp-for="ConfirmPassword">تأكيد كلمة المرور <span style="color:red;">*</span></label>
+        <input asp-for="ConfirmPassword" type="password" class="form-control" required />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+
+    <div class="contact-form">
+        <div class="form-group row">
+            <label asp-for="CopieCNIPdf" class="col-lg-12 col-md-12 col-sm-12 col-form-label">
+                نرجو منكم إرفاق نسخة واضحة من بطاقة التعريف البيومترية (PDF) <span style="color:red;">*</span>
+            </label>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="custom-file">
+                    <input asp-for="CopieCNIPdf"
+                           id="fileInput"
+                           class="form-control custom-file-input"
+                           accept="application/pdf"
+                           onchange="validatePDF(this)">
+                    <label class="custom-file-label" for="fileInput"></label>
+                    <span asp-validation-for="CopieCNIPdf" class="text-danger"></span>
+                </div>
+                <div id="loadingState" class="loading-state" style="display: none;">
+                    تحميل الملف ...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-form">
+        <div class="form-group row">
+            <label asp-for="CopieDiplomeRCCFCAPdf" class="col-lg-12 col-md-12 col-sm-12 col-form-label">
+                نرجو منكم إرفاق نسخة واضحة من الشهادة (الجامعية / معهد التكوين المهني) (PDF) <span style="color:red;">*</span>
+            </label>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="custom-file">
+                    <input asp-for="CopieDiplomeRCCFCAPdf"
+                           id="fileInput2"
+                           class="form-control custom-file-input"
+                           accept="application/pdf"
+                           onchange="validatePDF(this)">
+                    <label class="custom-file-label" for="fileInput2"></label>
+                    <span asp-validation-for="CopieDiplomeRCCFCAPdf" class="text-danger"></span>
+                </div>
+                <div id="loadingState2" class="loading-state" style="display: none;">
+                    تحميل الملف ...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-form">
+        <div class="form-group row">
+            <label asp-for="CopieDiplomeCDEPdf" class="col-lg-12 col-md-12 col-sm-12 col-form-label">
+                نرجو منكم إرفاق نسخة واضحة من الشهادة المتحصل عليها من طرف مركز تطوير المقاولاتية (PDF)
+            </label>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="custom-file">
+                    <input asp-for="CopieDiplomeCDEPdf"
+                           id="fileInput3"
+                           class="form-control custom-file-input"
+                           accept="application/pdf"
+                           onchange="validatePDF(this)">
+                    <label class="custom-file-label" for="fileInput3"></label>
+                    <span asp-validation-for="CopieDiplomeCDEPdf" class="text-danger"></span>
+                </div>
+                <div id="loadingState3" class="loading-state" style="display: none;">
+                    تحميل الملف ...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="g-recaptcha"
+             data-sitekey="6LcN3q4qAAAAAEFq86pRnXIr1ROxvFnB1PzCBdoB"
+             data-callback="onRecaptchaComplete"></div>
+        <input type="hidden" asp-for="RecaptchaResponse" id="recaptchaResponse" required />
+        <span asp-validation-for="RecaptchaResponse" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label class="custom-checkbox">
+            <input type="checkbox" id="acceptTerms">
+            <span class="checkmark"></span>
+            أسمح لناسدا بمعالجة بياناتي الشخصية وفق للشروط المنصوص عليها في القانون 18/07 المتعلقة بحماية الأشخاص الطبيعين في معالجة المعطيات الشخصية،يمكنك الإطلاع على. <a href="https://nesda.dz/Home/Privacy" target="_blank" name="NesdaPolitique">السياسة العامة لحماية المعطيات دات الطابع الشخصي الخاصة بالوكالة .</a>
+        </label>
+    </div>
+</div>

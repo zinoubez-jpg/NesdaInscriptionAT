@@ -5,8 +5,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Anade.Khadamat.Domain
 {
-    public partial class Inscription  : IEntity<int>
+    public partial class Inscription : IEntity<int>
     {
+        public Inscription()
+        {
+            this.Documents = new HashSet<Document>();
+        }
+
         [Display(Name = "Id")]
         [Required(ErrorMessage = "يجب ملء هذا الحقل")]
         public int Id { get; set; }
@@ -77,9 +82,9 @@ namespace Anade.Khadamat.Domain
         public int TypeFinancementId { get; set; }
 
         public string EtablissementFormation { get; set; }
-      
+
         public string IntituleDiplome { get; set; }
-        
+
         public string Specialite { get; set; }
 
         [Display(Name = "WilayaSeigeSocialId")]
@@ -104,7 +109,6 @@ namespace Anade.Khadamat.Domain
         public DateTime DateAnnulation { get; set; }
         public string MotifAnnulation { get; set; }
 
-
         public bool IsEmailVerified { get; set; }
         public string EmailVerificationToken { get; set; }
         public DateTime? EmailVerificationTokenExpiry { get; set; }
@@ -113,14 +117,10 @@ namespace Anade.Khadamat.Domain
         [Display(Name = "ReCaptcha")]
         public string RecaptchaResponse { get; set; }
 
-        [Display(Name = "CopieCNIPath")]
-        public string CopieCNIPath { get; set; }
-
-        [Display(Name = "CopieDiplomeRCCFCAPath")]
-        public string CopieDiplomeRCCFCAPath { get; set; }
         public string NumeroSiejeV3 { get; set; }
         public int ActiviteId { get; set; }
         public string PasswordHashInit { get; set; }
+
         public virtual ICollection<SessionFormationDetails> SessionFormations { get; set; }
         public virtual ICollection<EvaluationProjet> EvaluationProjets { get; set; }
         public virtual ICollection<CSVF> CSVFs { get; set; }
@@ -136,6 +136,8 @@ namespace Anade.Khadamat.Domain
         public virtual Activite Activite { get; set; }
         public virtual TypeFinancement TypeFinancement { get; set; }
 
-
+        public int CentreDeveloppementEntrepreneuriatId { get; set; }
+        public virtual CentreDeveloppementEntrepreneuriat CentreDeveloppementEntrepreneuriat { get; set; }
+        public virtual ICollection<Document> Documents { get; set; }
     }
 }

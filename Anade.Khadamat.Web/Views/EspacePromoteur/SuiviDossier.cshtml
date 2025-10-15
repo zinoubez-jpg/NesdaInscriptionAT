@@ -10,7 +10,6 @@
 
         #cd-timeline {
             display: none;
-      
         }
     </style>
     <link href="~/AccountTemplette/timeLine.css" rel="stylesheet" />
@@ -68,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <button onclick="afficherTimeline()" class="btn btn-outline-primary" type="button" title="btn btn-outline-primary">إضهار المزيد</button>
+                <button onclick="afficherTimeline()" class="btn btn-outline-primary" type="button" title="btn btn-outline-primary">إظهار المزيد</button>
                 <section class="cd-container" id="cd-timeline">
                     <div class="cd-timeline-block">
                         <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
@@ -309,7 +308,7 @@
         let valeurEtape = derniereEtape.getAttribute("data-value");
 
         let currentStep = Number(valeurEtape);
-     
+
         const totalSteps = 6;
 
         function updateProgress() {
@@ -331,7 +330,7 @@
             });
         }
 
-       
+
 
         // Initialize progress
         updateProgress();
@@ -346,7 +345,7 @@
                 btn.textContent = "إخفاء";
             } else {
                 section.style.display = "none"; // Cacher la section
-                btn.textContent = "إضهار المزيد";
+                btn.textContent = "إظهار المزيد";
             }
         }
 

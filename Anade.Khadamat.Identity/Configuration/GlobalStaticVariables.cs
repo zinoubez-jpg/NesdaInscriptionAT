@@ -8,7 +8,7 @@
     }
     public static class RoleIds
     {
-        public const string Projet = "Projet" ;
+        public const string Projet = "Projet";
         public const string Accompagnateur = "Accompagnateur";
     }
     public static class TypeUserIds
@@ -28,5 +28,26 @@
         public const int Antenne = 2;
         public const int Annexe = 3;
     }
-
+    public static class CategorieId
+    {
+        public const int SansEmploi = 1;
+        public const int NESDA = 2;
+        public const int ANGEM = 3;
+        public const int CNAC = 4;
+        public const int RegistreCommerce = 5;
+        public const int Agrément = 6;
+        public const int CarteFellah = 7;
+        public const int CarteArtisan = 8;
+    }
+    public static class TypeDocumentId
+    {
+        public const int CNI = 1;
+        public const int Diplome = 2;
+        public const int DiplomeCDE = 3;
+    }
+    public static class TypesInscriptionId
+    {
+        public const int Création = 1;
+        public const int Extension = 2;
+    }
 }

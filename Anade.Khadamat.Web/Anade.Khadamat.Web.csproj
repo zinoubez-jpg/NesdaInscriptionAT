@@ -26,6 +26,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.4" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
+    <PackageReference Include="Rework" Version="1.0.12" />
 
   </ItemGroup>
 
@@ -42,6 +43,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\CNIFolder\" />
     <Folder Include="wwwroot\DiplomeFolder\" />
+    <Folder Include="wwwroot\DiplomeCDEFolder\" />    
   </ItemGroup>
 
   <ItemGroup>

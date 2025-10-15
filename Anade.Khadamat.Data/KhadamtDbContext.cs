@@ -42,7 +42,7 @@ namespace Anade.Khadamat.Data
         public virtual DbSet<SituationFamiliale> SituationFamiliales { get; set; }
         public virtual DbSet<TypeInscription> TypesInscription { get; set; }
         public virtual DbSet<CSVF> CSVFs { get; set; }
- 
+
         public virtual DbSet<EvaluationProjet> EvaluationProjets { get; set; }
         public virtual DbSet<SessionFormationDetails> SessionFormationsDetails { get; set; }
 
@@ -53,5 +53,9 @@ namespace Anade.Khadamat.Data
         public virtual DbSet<Categorie> Categories { get; set; }
         public virtual DbSet<Activite> Activites { get; set; }
         public virtual DbSet<TypeFinancement> TypeFinancements { get; set; }
+        public virtual DbSet<TypeCentreDeveloppementEntrepreneuriat> TypeCentreDeveloppementEntrepreneuriat { get; set; }
+        public virtual DbSet<CentreDeveloppementEntrepreneuriat> CentreDeveloppementEntrepreneuriat { get; set; }
+        public virtual DbSet<TypeDocument> TypeDocument { get; set; }
+        public virtual DbSet<Document> Document { get; set; }
     }
 }
