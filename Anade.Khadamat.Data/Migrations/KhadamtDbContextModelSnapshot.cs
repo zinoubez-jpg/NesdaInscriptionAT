@@ -408,15 +408,6 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Property<int>("CommuneSeigeSocialId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CopieCNIPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CopieDiplomeCDEPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CopieDiplomeRCCFCAPath")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("DateAnnulation")
                         .HasColumnType("datetime2");
 
