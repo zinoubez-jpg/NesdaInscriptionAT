@@ -1149,7 +1149,7 @@ namespace Anade.Khadamat.Web.Controllers
 
             var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9, 5)); ;
             var communeNaissanceNew = _communeBusinessService.GetById(model.CommuneNaissanceId);
-            var communeNaissanceOld = _inscription_CommuneBusinesService.GetByCode(communeNaissanceNew.Code);
+            var communeNaissanceOld = _inscription_CommuneBusinesService.GetByCode(communeNaissanceNew.NouveauCode);
 
             promoteur.NIN = model.NIN;
             promoteur.DDN_P = model.DateNaissance;
@@ -1168,7 +1168,7 @@ namespace Anade.Khadamat.Web.Controllers
 
             var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9, 5)); ;
             var communeNaissanceNew = _communeBusinessService.GetById(model.CommuneNaissanceId);
-            var communeNaissanceOld = _inscription_CommuneBusinesService.GetByCode(communeNaissanceNew.Code);
+            var communeNaissanceOld = _inscription_CommuneBusinesService.GetByCode(communeNaissanceNew.NouveauCode);
 
             promoteur.NIN = model.NIN;
             promoteur.DDN_P = model.DateNaissance;
@@ -1186,132 +1186,6 @@ namespace Anade.Khadamat.Web.Controllers
         {
             var centreDeveloppementEntrepreneuriatlist = new SelectList(_centreDeveloppementEntrepreneuriatBusinessService.GetAll().Where(x => x.WilayaId == WilayaId && x.TypeCentreDeveloppementEntrepreneuriatId == TypeCDEId), "Id", "DesignationAr");
             return Json(centreDeveloppementEntrepreneuriatlist);
-        }
-
-        #endregion
-
-        #region Méthodes à supprimer
-
-        private string ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix, string folderName)
-        {
-            string uniqueFileGuidName = Guid.NewGuid().ToString("D");
-            uniqueFileGuidName = $"{uniqueFileGuidName}.pdf";
-            string uniqueFileName = null;
-
-            if (file != null)
-            {
-                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, folderName);
-                uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
-
-                string filePath = Path.Combine(uploadsFolder, uniqueFileGuidName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-            }
-
-            List<string> fileNames = new();
-
-            fileNames.Add(uniqueFileName);
-            fileNames.Add(uniqueFileGuidName);
-
-            return uniqueFileName;
-        }
-
-        private string ProcessUploadedFileGuidName(CreateInscriptionVM model, IFormFile file, string fileNameSuffix)
-        {
-            string FilePath = null;
-
-            if (file != null)
-            {
-                FilePath = SaveSecureFile(file, model.NIN, fileNameSuffix);
-            }
-
-            return FilePath;
-        }
-        
-        private string SaveSecureFile(IFormFile file, string subFolder, string fileNameSuffix)
-        {
-            // Chemin principal pour SecureUploads
-            string _secureUploadPath = Path.Combine(_environment.ContentRootPath, "SecureUploads");
-
-            // Chemin pour le sous-dossier Inscrits dans SecureUploads
-            string _inscritFolderPath = Path.Combine(_secureUploadPath, "Inscrits");
-
-            // Créer le répertoire SecureUploads s'il n'existe pas
-            if (!Directory.Exists(_secureUploadPath))
-                Directory.CreateDirectory(_secureUploadPath);
-
-            // Créer le sous-répertoire Inscrits s'il n'existe pas
-            if (!Directory.Exists(_inscritFolderPath))
-                Directory.CreateDirectory(_inscritFolderPath);
-
-            var secureFolder = Path.Combine(_inscritFolderPath, subFolder);
-
-            if (!Directory.Exists(secureFolder))
-                Directory.CreateDirectory(secureFolder);
-
-            // uniqueFileName = $"{model.NIN}{fileNameSuffix}{model.Id}.pdf";
-
-            var fileName = $"{Guid.NewGuid():D}.pdf";
-            var filePath = Path.Combine(secureFolder, fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                file.CopyTo(stream);
-            }
-
-            return filePath;
-        }
-
-        private async Task<string> CheckPromoteurExistenceAsync(CreateInscriptionVM model)
-        {
-            using var client = new HttpClient();
-            var baseUrl = "https://promoteur.nesda.dz/Inscription/Verif_Existance_cr";
-
-            var formattedDate = model.DateNaissance.ToString("dd/MM/yyyy");
-
-            var encodedNom = HttpUtility.UrlEncode(model.NomFr);
-            var encodedPrenom = HttpUtility.UrlEncode(model.PrenomFr);
-            var encodedDate = HttpUtility.UrlEncode(formattedDate);
-            var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9, 5)); ;
-
-            var url = $"{baseUrl}?NIN={model.NIN}&NOM_P={encodedNom}&PRENOM_P={encodedPrenom}&DDN_P={encodedDate}&NUM_ACT_P={encodedNumActP}&Commune_Nais={model.CommuneNaissance.Code}";
-
-            try
-            {
-                var response = await client.GetStringAsync(url);
-                return response;
-            }
-            catch (HttpRequestException ex)
-            {
-                return $"API Error";
-            }
-        }
-
-        private async Task<string> CheckExtensionEligibilityAsync(CreateInscriptionVM model)
-        {
-            using var client = new HttpClient();
-            var baseUrl = "https://promoteur.nesda.dz/Inscription/Verif_Existance_Ext";
-
-
-            var formattedDate = model.DateNaissance.ToString("dd/MM/yyyy");
-            var encodedNom = HttpUtility.UrlEncode(model.NomFr);
-            var encodedPrenom = HttpUtility.UrlEncode(model.PrenomFr);
-            var encodedDate = HttpUtility.UrlEncode(formattedDate);
-            var encodedNumActP = HttpUtility.UrlEncode(model.NIN.Substring(9, 5));
-            var url = $"{baseUrl}?NIN={model.NIN}&NOM_P={encodedNom}&PRENOM_P={encodedPrenom}&DDN_P={encodedDate}&NUM_ACT_P={encodedNumActP}&Commune_Nais={model.CommuneNaissance.Code}";
-
-            try
-            {
-                var response = await client.GetStringAsync(url);
-                return response.Trim('"');
-            }
-            catch (HttpRequestException ex)
-            {
-                return "Une erreur est survenue. Veuillez contacter l’administrateur.";
-            }
         }
 
         #endregion

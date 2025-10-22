@@ -24,7 +24,6 @@ namespace Anade.Khadamat.Web.Controllers
         public readonly ReferentielBusinessService<NiveauInstruction, int> _niveauInstructionBusinessService;
         public readonly ReferentielBusinessService<Formation, int> _formationBusinessService;
 
-
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
         private readonly UserService _userService;
@@ -63,12 +62,12 @@ namespace Anade.Khadamat.Web.Controllers
         }
         public IActionResult DetailsPromoteur()
         {
-            var user =  _userService.GetUserEagerLoadedAsync(User).Result;
-            var inscrit = _inscriptionBusinessService.GetSingle(x => x.Email == user.Email,_inscriptionBusinessService.GetDefaultLoadProperties());
+            var user = _userService.GetUserEagerLoadedAsync(User).Result;
+            var inscrit = _inscriptionBusinessService.GetSingle(x => x.Email == user.Email, _inscriptionBusinessService.GetDefaultLoadProperties());
             var WilayaNais = _wilayaBusinessService.GetById(inscrit.CommuneNaissance.WilayaId);
-            var wilayaRes= _wilayaBusinessService.GetById(inscrit.CommuneResidence.WilayaId);
+            var wilayaRes = _wilayaBusinessService.GetById(inscrit.CommuneResidence.WilayaId);
             var wilayaSS = _wilayaBusinessService.GetById(inscrit.CommuneSiegeSocial.WilayaId);
-           
+
             inscrit.CommuneNaissance.Wilaya = WilayaNais;
             inscrit.CommuneResidence.Wilaya = wilayaRes;
             inscrit.CommuneSiegeSocial.Wilaya = wilayaSS;
@@ -87,8 +86,6 @@ namespace Anade.Khadamat.Web.Controllers
                 return Content("Votre inscription est annulée.");
             }
 
-
-
             return View(inscrit);
         }
 
@@ -102,6 +99,7 @@ namespace Anade.Khadamat.Web.Controllers
             inscrit.CommuneNaissance.Wilaya = WilayaNais;
             inscrit.CommuneResidence.Wilaya = wilayaRes;
             inscrit.CommuneSiegeSocial.Wilaya = wilayaSS;
+
             if (inscrit == null)
             {
                 return NotFound("Inscription non trouvée ou email non vérifié.");
@@ -137,7 +135,7 @@ namespace Anade.Khadamat.Web.Controllers
         }
         //public IActionResult SimulBPlan()
         //{
-            
+
 
         //    return View();
         //}
