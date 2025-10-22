@@ -238,6 +238,11 @@ namespace Anade.Khadamat.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("NouveauCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
                     b.Property<int>("WilayaId")
                         .HasColumnType("int");
 
