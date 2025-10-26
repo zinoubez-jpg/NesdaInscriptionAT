@@ -54,7 +54,7 @@ namespace Anade.Khadamat.Web
 
             services.AddScoped<DbContext, KhadamtDbContext>();
             services.AddDbContext<KhadamtDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("khadamatDbConnection")));
-            
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
             services.AddTransient(typeof(IRepository<,>), typeof(GenericRepository<,>));
@@ -64,9 +64,13 @@ namespace Anade.Khadamat.Web
             services.AddTransient<CommuneBusinessService>();
             services.AddTransient<SessionFormationBusinessService>();
             services.AddTransient<CirconscriptionBusinessService>();
+            services.AddTransient<CentreDeveloppementEntrepreneuriatBusinessService>();
 
             // pour utiliser les compte dans l'inscription en ligne.
             services.AddTransient<CompteAuthentificationBusinesService>();
+            services.AddTransient<Authentification_CDEBusinesService>();
+            services.AddTransient<Authentification_Compte_CDEBusinesService>();
+            services.AddTransient<Identifiant_SIAuthentificationBusinesService>();
 
             // pour utiliser les compte dans l'inscription en ligne.
             services.AddTransient<PromoteurInscriptionBusinesService>();

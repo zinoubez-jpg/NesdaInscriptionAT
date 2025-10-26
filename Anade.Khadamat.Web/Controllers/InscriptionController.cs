@@ -989,8 +989,67 @@ namespace Anade.Khadamat.Web.Controllers
 
                     if (businessResult.Succeeded)
                     {
-                        apiBusinessResult = new ApiBusinessResult(businessResult.Succeeded) { };
-                        apiBusinessResult.Result = entity;
+                        businessResult = _detail_DossierInscriptionBusinessService.Add(detail_dossier);
+
+                        if (businessResult.Succeeded)
+                        {
+                            businessResult = _associesInscriptionBusinessService.Add(associer);
+
+                            if (businessResult.Succeeded)
+                            {
+                                businessResult = _promoteurInscriptionBusinessService.Attach_CDE_Compte(entity, model.CentreDeveloppementEntrepreneuriatId);
+
+                                if (businessResult.Succeeded)
+                                {
+                                    businessResult = _promoteurInscriptionBusinessService.Attach_Identifiant_SI_Compte(entity);
+                                }
+                                else
+                                {
+
+                                }
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                        else
+                        {
+
+                        }
+
+
+
+
+
+                        if (businessResult.Succeeded)
+                        {
+                            apiBusinessResult = new ApiBusinessResult(businessResult.Succeeded) { };
+                            apiBusinessResult.Result = entity;
+                        }
+                        else
+                        {
+                            apiBusinessResult = new ApiBusinessResult(false) { };
+                            if (businessResult.Messages != null)
+                            {
+                                foreach (var message in businessResult.Messages)
+                                {
+                                    apiBusinessResult.Messages.Add(new MessageResult
+                                    {
+                                        Message = message.Message,
+                                        MessageType = message.MessageType
+                                    });
+                                }
+                            }
+                            else
+                            {
+                                apiBusinessResult.Messages.Add(new MessageResult
+                                {
+                                    Message = "حدث خطأ غير معروف",
+                                    MessageType = MessageType.Error
+                                });
+                            }
+                        }
                     }
                     else
                     {
