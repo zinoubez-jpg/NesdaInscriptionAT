@@ -451,6 +451,25 @@ namespace Anade.Khadamat.Web.Controllers
                     return View(model);
                 }
 
+                if (model.CentreDeveloppementEntrepreneuriatId == 1)
+                {
+                    ModelState.AddModelError("CDE", "لم تقم باختياز مركز تطوير المقاولاتية. يرجى المحاولة مرة أخرى.");
+                    InitializeListViewBags();
+
+                    var bR = new BusinessResult();
+                    var msgR = new MessageResult()
+                    {
+                        Message = "لم تقم باختياز مركز تطوير المقاولاتية. يرجى المحاولة مرة أخرى.",
+                        MessageType = MessageType.Error,
+                    };
+
+                    bR.Messages.Add(msgR);
+                    TempData["Message"] = bR.ToBootstrapAlerts();
+                    InitializeListViewBags();
+                    return View(model);
+                }
+
+
                 if (ModelState.IsValid)
                 {
 
@@ -618,7 +637,7 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    var apiBusinessResult = CreateInscriptionPromoteurCreation(entity, model);
+                    ApiBusinessResult apiBusinessResult = CreateInscriptionPromoteurCreation(entity, model);
 
                     if (!apiBusinessResult.Succeeded)
                     {
@@ -957,6 +976,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                     detail_dossier.Date_Inscription = DateTime.Now;
                     detail_dossier.ADR_E = entity.ADR_E;
+
                     if (entity.Id_Commune_Siege_Social != null)
                         detail_dossier.Inscription_CommuneId = (int)entity.Id_Commune_Siege_Social;
                     else
@@ -985,38 +1005,51 @@ namespace Anade.Khadamat.Web.Controllers
 
                     entity.Inscription_Categorie_PhaseId = inscription_CategoriePase.Inscription_PhaseId;
 
-                    var businessResult = _promoteurInscriptionBusinessService.Add(entity);
+                    CentreDeveloppementEntrepreneuriat cdeEle = _centreDeveloppementEntrepreneuriatBusinessService.GetById(model.CentreDeveloppementEntrepreneuriatId);
+
+                    var businessResult = _associesInscriptionBusinessService.AddInscription(associer, cdeEle);
+
+
+
 
                     if (businessResult.Succeeded)
                     {
-                        businessResult = _detail_DossierInscriptionBusinessService.Add(detail_dossier);
 
-                        if (businessResult.Succeeded)
-                        {
-                            businessResult = _associesInscriptionBusinessService.Add(associer);
 
-                            if (businessResult.Succeeded)
-                            {
-                                businessResult = _promoteurInscriptionBusinessService.Attach_CDE_Compte(entity, model.CentreDeveloppementEntrepreneuriatId);
+                        //businessResult = _detail_DossierInscriptionBusinessService.Add(detail_dossier);
 
-                                if (businessResult.Succeeded)
-                                {
-                                    businessResult = _promoteurInscriptionBusinessService.Attach_Identifiant_SI_Compte(entity);
-                                }
-                                else
-                                {
+                        //if (businessResult.Succeeded)
+                        //{
+                        //    businessResult = _promoteurInscriptionBusinessService.Add(entity);
 
-                                }
-                            }
-                            else
-                            {
+                        //    if (businessResult.Succeeded)
+                        //    {
+                        //        businessResult = _promoteurInscriptionBusinessService.Attach_Identifiant_SI_Compte(entity);
 
-                            }
-                        }
-                        else
-                        {
+                        //        if (businessResult.Succeeded)
+                        //        {
+                        //            cdeEle = _centreDeveloppementEntrepreneuriatBusinessService.GetById(model.CentreDeveloppementEntrepreneuriatId);
 
-                        }
+                        //            businessResult = _promoteurInscriptionBusinessService.Attach_CDE_Compte(entity, cdeEle);
+                        //        }
+                        //        else
+                        //        {
+                        //            var businessResultDelete = _promoteurInscriptionBusinessService.Dettach_Identifiant_SI_Compte(entity);
+                        //            businessResultDelete = _associesInscriptionBusinessService.Delete(associer);
+                        //            businessResultDelete = _detail_DossierInscriptionBusinessService.Delete(detail_dossier);
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //        var businessResultDelete = _associesInscriptionBusinessService.Delete(associer);
+                        //        businessResultDelete = _detail_DossierInscriptionBusinessService.Delete(detail_dossier);
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    var businessResultDelete = _detail_DossierInscriptionBusinessService.Delete(detail_dossier);
+                        //}
+
 
 
 

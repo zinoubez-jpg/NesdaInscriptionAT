@@ -23,8 +23,11 @@ namespace Anade.Khadamat.Business
         protected readonly Authentification_Compte_CDEBusinesService _authentification_Compt_CDEBusinesService;
         protected readonly CentreDeveloppementEntrepreneuriatBusinessService _centreDeveloppementEntrepreneuriatBusinessService;
         protected readonly Detail_DossierInscriptionBusinesService _detail_DossierInscriptionBusinessService;
-        protected readonly AssociesInscriptionBusinesService _associesInscriptionBusinessService;
+        // protected readonly AssociesInscriptionBusinesService _associesInscriptionBusinessService;
         protected readonly Identifiant_SIAuthentificationBusinesService _identifiant_SIAuthentificationBusinesService;
+        protected readonly Authentification_Erreur_CDE_CompteBusinesService _authentification_Erreur_CDE_CompteBusinesService;
+
+
 
         public PromoteurInscriptionBusinesService(
             IUnitOfWork<InscriptionDbContext> unitOfWork
@@ -38,8 +41,9 @@ namespace Anade.Khadamat.Business
             , Authentification_Compte_CDEBusinesService authentification_Compt_CDEBusinesService
             , CentreDeveloppementEntrepreneuriatBusinessService centreDeveloppementEntrepreneuriatBusinessService
             , Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService
-            , AssociesInscriptionBusinesService associesInscriptionBusinessService
+            // , AssociesInscriptionBusinesService associesInscriptionBusinessService
             , Identifiant_SIAuthentificationBusinesService identifiant_SIAuthentificationBusinesService
+            , Authentification_Erreur_CDE_CompteBusinesService authentification_Erreur_CDE_CompteBusinesService
             ) : base(unitOfWork)
         {
             _compteAuthentificationBusinesService = compteAuthentificationBusinesService;
@@ -52,8 +56,9 @@ namespace Anade.Khadamat.Business
             _authentification_Compt_CDEBusinesService = authentification_Compt_CDEBusinesService;
             _centreDeveloppementEntrepreneuriatBusinessService = centreDeveloppementEntrepreneuriatBusinessService;
             _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
-            _associesInscriptionBusinessService = associesInscriptionBusinessService;
+            // _associesInscriptionBusinessService = associesInscriptionBusinessService;
             _identifiant_SIAuthentificationBusinesService = identifiant_SIAuthentificationBusinesService;
+            _authentification_Erreur_CDE_CompteBusinesService = authentification_Erreur_CDE_CompteBusinesService;
         }
 
         public override Expression<Func<Inscription_Promoteur, object>>[] GetDefaultLoadProperties()
@@ -136,14 +141,12 @@ namespace Anade.Khadamat.Business
 
         public override BusinessResult Add(Inscription_Promoteur entity)
         {
-
-            Authentification_Compte entityCompte = Create_Compte(entity);
-
-
             BusinessResult businessResult;
 
             try
             {
+                Authentification_Compte entityCompte = Create_Compte(entity);
+
                 OnAdding(entity);
                 _repository.Add(entity);
 
@@ -210,6 +213,15 @@ namespace Anade.Khadamat.Business
             entity.Code_P = promoteur.CODE_P;
 
             BusinessResult businessResult = _identifiant_SIAuthentificationBusinesService.Add(entity);
+
+            return businessResult;
+        }
+
+        public virtual BusinessResult Delete_Identifiant_SI(Authentification_Compte entityCompte, Inscription_Detail_Dossier detail_Dossier, Inscription_Promoteur promoteur)
+        {
+            Authentification_Identifiant_SI entity = _identifiant_SIAuthentificationBusinesService.GetSingle(x => x.Code_P == promoteur.CODE_P && x.Num_SI == detail_Dossier.Id.ToString() && x.Authentification_CompteId == entityCompte.Id);
+
+            BusinessResult businessResult = _identifiant_SIAuthentificationBusinesService.Delete(entity);
 
             return businessResult;
         }
@@ -289,21 +301,21 @@ namespace Anade.Khadamat.Business
 
         public BusinessResult Attach_Identifiant_SI_Compte(Inscription_Promoteur entity)
         {
-            Authentification_Compte entityCompte = _compteAuthentificationBusinesService.GetByUserName(entity.EMAIL_P);
-            
-            Inscription_Associes associes = _associesInscriptionBusinessService.GetSingle(x => x.Inscription_PromoteurId == entity.Id);
-
-            Inscription_Detail_Dossier detail_Dossier = _detail_DossierInscriptionBusinessService.GetById(associes.Inscription_Detail_DossierId);
-
             BusinessResult businessResult;
 
             try
             {
+                Authentification_Compte entityCompte = _compteAuthentificationBusinesService.GetByUserName(entity.EMAIL_P);
+
+                Inscription_Associes associes = new();// _associesInscriptionBusinessService.GetSingle(x => x.Inscription_PromoteurId == entity.Id);
+
+                Inscription_Detail_Dossier detail_Dossier = _detail_DossierInscriptionBusinessService.GetById(associes.Inscription_Detail_DossierId);
+
                 if (Add_Identifiant_SI(entityCompte, detail_Dossier, entity).Succeeded == false)
                 {
                     _repository.Delete(entity);
                     _unitOfWork.SaveChanges();
-                    throw new DataNotUpdatedException("Opération non enregsitrée niveau CompteCDE!");
+                    throw new DataNotUpdatedException("Opération non enregsitrée niveau Identifiant_SI_Compte!");
                 }
 
                 businessResult = BusinessResult.Success;
@@ -327,28 +339,21 @@ namespace Anade.Khadamat.Business
             return businessResult;
         }
 
-        public BusinessResult Attach_CDE_Compte(Inscription_Promoteur entity, int cdeId)
+        public BusinessResult Dettach_Identifiant_SI_Compte(Inscription_Promoteur entity)
         {
-            Authentification_Compte entityCompte = _compteAuthentificationBusinesService.GetByUserName(entity.EMAIL_P);
-
-            CentreDeveloppementEntrepreneuriat centreDeveloppementEntrepreneuriat = _centreDeveloppementEntrepreneuriatBusinessService.GetById(cdeId);
-
-            Authentification_CDE authentification_CDE = _authentificationCDEBusinesService.GetByCodeNew(centreDeveloppementEntrepreneuriat.Code);
-
-            Authentification_Compte_CDE authentification_Compte_CDE = new();
-
-            authentification_Compte_CDE.Authentification_CDEId = authentification_CDE.Id;
-            authentification_Compte_CDE.Authentification_CompteId = entityCompte.Id;
-
             BusinessResult businessResult;
 
             try
             {
-                if (Add_Compte_CDE(authentification_Compte_CDE).Succeeded == false)
+                Authentification_Compte entityCompte = _compteAuthentificationBusinesService.GetByUserName(entity.EMAIL_P);
+
+                Inscription_Associes associes = new();// _associesInscriptionBusinessService.GetSingle(x => x.Inscription_PromoteurId == entity.Id);
+
+                Inscription_Detail_Dossier detail_Dossier = _detail_DossierInscriptionBusinessService.GetById(associes.Inscription_Detail_DossierId);
+
+                if (Delete_Identifiant_SI(entityCompte, detail_Dossier, entity).Succeeded == false)
                 {
-                    _repository.Delete(entity);
-                    _unitOfWork.SaveChanges();
-                    throw new DataNotUpdatedException("Opération non enregsitrée niveau CompteCDE!");
+                    throw new DataNotUpdatedException("Opération non enregsitrée niveau Identifiant_SI_Compte!");
                 }
 
                 businessResult = BusinessResult.Success;
@@ -365,6 +370,71 @@ namespace Anade.Khadamat.Business
             }
             catch (Exception ex)
             {
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
+            }
+
+            return businessResult;
+        }
+
+        public BusinessResult Attach_CDE_Compte(Inscription_Promoteur entity, CentreDeveloppementEntrepreneuriat cdeEle)
+        {
+            BusinessResult businessResult;
+            Authentification_Erreur_CDE_Compte eleSavErreur = new();
+
+            try
+            {
+                Authentification_Compte entityCompte = _compteAuthentificationBusinesService.GetByUserName(entity.EMAIL_P);
+
+                Authentification_CDE authentification_CDE = _authentificationCDEBusinesService.GetByCodeNew(cdeEle.Code);
+
+                eleSavErreur.Code = authentification_CDE.Code_CDE;
+                eleSavErreur.DesignationAr = "CodeNew CentreDeveloppementEntrepreneuriat : " + cdeEle.Code;
+                eleSavErreur.EMAIL_P = entity.EMAIL_P;
+
+                _authentification_Erreur_CDE_CompteBusinesService.Add(eleSavErreur);
+
+                Authentification_Compte_CDE authentification_Compte_CDE = new();
+
+                authentification_Compte_CDE.Authentification_CDEId = authentification_CDE.Id;
+                authentification_Compte_CDE.Authentification_CompteId = entityCompte.Id;
+
+                if (Add_Compte_CDE(authentification_Compte_CDE).Succeeded == false)
+                {
+                    _repository.Delete(entity);
+                    _unitOfWork.SaveChanges();
+                    throw new DataNotUpdatedException("Opération non enregsitrée niveau CompteCDE!");
+                }
+
+                businessResult = BusinessResult.Success;
+            }
+            catch (DataNotUpdatedException ex)
+            {
+                eleSavErreur.Code = "DataUpExcp";
+                eleSavErreur.EMAIL_P = entity.EMAIL_P;
+                eleSavErreur.DesignationFr = ex.Message;
+                _authentification_Erreur_CDE_CompteBusinesService.Add(eleSavErreur);
+
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
+            }
+            catch (BusinessException ex)
+            {
+                eleSavErreur.Code = "BusinsExcp";
+                eleSavErreur.EMAIL_P = entity.EMAIL_P;
+                eleSavErreur.DesignationFr = ex.Message;
+                _authentification_Erreur_CDE_CompteBusinesService.Add(eleSavErreur);
+
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
+            }
+            catch (Exception ex)
+            {
+                eleSavErreur.Code = "Excp";
+                eleSavErreur.EMAIL_P = entity.EMAIL_P;
+                eleSavErreur.DesignationFr = ex.Message;
+                _authentification_Erreur_CDE_CompteBusinesService.Add(eleSavErreur);
+
                 businessResult = new BusinessResult(false);
                 businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
             }
@@ -549,6 +619,11 @@ namespace Anade.Khadamat.Business
             }
             else countSequential = _repository.Count(CodeLocalExiste(promoteur));
             return countSequential.ToString();
+        }
+
+        public void OnAddingPromoteur(Inscription_Promoteur entity)
+        {
+            OnAdding(entity);
         }
 
         #region Conditions on promoteur

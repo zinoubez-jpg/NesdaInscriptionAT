@@ -71,6 +71,7 @@ namespace Anade.Khadamat.Web
             services.AddTransient<Authentification_CDEBusinesService>();
             services.AddTransient<Authentification_Compte_CDEBusinesService>();
             services.AddTransient<Identifiant_SIAuthentificationBusinesService>();
+            services.AddTransient<Authentification_Erreur_CDE_CompteBusinesService>();
 
             // pour utiliser les compte dans l'inscription en ligne.
             services.AddTransient<PromoteurInscriptionBusinesService>();
