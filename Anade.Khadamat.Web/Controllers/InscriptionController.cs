@@ -342,8 +342,12 @@ namespace Anade.Khadamat.Web.Controllers
                     }
                     else
                     {
-                        antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
+                        var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == apiResult);
+                        antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
                         agence = _agenceBusinessService.GetById(antenne.AgenceId);
+
+                        //antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
+                        //agence = _agenceBusinessService.GetById(antenne.AgenceId);
                     }
 
                     List<Document> documents = new();
@@ -1012,8 +1016,42 @@ namespace Anade.Khadamat.Web.Controllers
 
 
 
+
+
+
                     if (businessResult.Succeeded)
                     {
+
+
+
+
+                        if (businessResult.Succeeded)
+                        {
+                            businessResult = _promoteurInscriptionBusinessService.Attach_Identifiant_SI_Compte(entity,associer);
+
+                            if (businessResult.Succeeded)
+                            {
+                                cdeEle = _centreDeveloppementEntrepreneuriatBusinessService.GetById(model.CentreDeveloppementEntrepreneuriatId);
+
+                                businessResult = _promoteurInscriptionBusinessService.Attach_CDE_Compte(entity, cdeEle);
+                            }
+                            else
+                            {
+                                var businessResultDelete = _promoteurInscriptionBusinessService.Dettach_Identifiant_SI_Compte(entity,associer);
+                                businessResultDelete = _associesInscriptionBusinessService.Delete(associer);
+                                businessResultDelete = _detail_DossierInscriptionBusinessService.Delete(detail_dossier);
+                            }
+                        }
+                        else
+                        {
+                            var businessResultDelete = _associesInscriptionBusinessService.Delete(associer);
+                            businessResultDelete = _detail_DossierInscriptionBusinessService.Delete(detail_dossier);
+                        }
+
+
+
+
+
 
 
                         //businessResult = _detail_DossierInscriptionBusinessService.Add(detail_dossier);

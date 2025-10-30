@@ -299,7 +299,7 @@ namespace Anade.Khadamat.Business
 
         }
 
-        public BusinessResult Attach_Identifiant_SI_Compte(Inscription_Promoteur entity)
+        public BusinessResult Attach_Identifiant_SI_Compte(Inscription_Promoteur entity,Inscription_Associes associes)
         {
             BusinessResult businessResult;
 
@@ -307,7 +307,7 @@ namespace Anade.Khadamat.Business
             {
                 Authentification_Compte entityCompte = _compteAuthentificationBusinesService.GetByUserName(entity.EMAIL_P);
 
-                Inscription_Associes associes = new();// _associesInscriptionBusinessService.GetSingle(x => x.Inscription_PromoteurId == entity.Id);
+                // Inscription_Associes associes = new();// _associesInscriptionBusinessService.GetSingle(x => x.Inscription_PromoteurId == entity.Id);
 
                 Inscription_Detail_Dossier detail_Dossier = _detail_DossierInscriptionBusinessService.GetById(associes.Inscription_Detail_DossierId);
 
@@ -339,7 +339,7 @@ namespace Anade.Khadamat.Business
             return businessResult;
         }
 
-        public BusinessResult Dettach_Identifiant_SI_Compte(Inscription_Promoteur entity)
+        public BusinessResult Dettach_Identifiant_SI_Compte(Inscription_Promoteur entity,Inscription_Associes associes)
         {
             BusinessResult businessResult;
 
@@ -347,7 +347,7 @@ namespace Anade.Khadamat.Business
             {
                 Authentification_Compte entityCompte = _compteAuthentificationBusinesService.GetByUserName(entity.EMAIL_P);
 
-                Inscription_Associes associes = new();// _associesInscriptionBusinessService.GetSingle(x => x.Inscription_PromoteurId == entity.Id);
+                //Inscription_Associes associes = new();// _associesInscriptionBusinessService.GetSingle(x => x.Inscription_PromoteurId == entity.Id);
 
                 Inscription_Detail_Dossier detail_Dossier = _detail_DossierInscriptionBusinessService.GetById(associes.Inscription_Detail_DossierId);
 
