@@ -342,12 +342,12 @@ namespace Anade.Khadamat.Web.Controllers
                     }
                     else
                     {
-                        var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == apiResult);
-                        antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
-                        agence = _agenceBusinessService.GetById(antenne.AgenceId);
-
-                        //antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
+                        //var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == apiResult);
+                        //antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
                         //agence = _agenceBusinessService.GetById(antenne.AgenceId);
+
+                        antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
+                        agence = _agenceBusinessService.GetById(antenne.AgenceId);
                     }
 
                     List<Document> documents = new();
