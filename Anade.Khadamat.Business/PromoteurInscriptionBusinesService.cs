@@ -530,9 +530,8 @@ namespace Anade.Khadamat.Business
                 {
                     var promoteurNonExtNIN = listePromoteurExisteSuiviCode.First();
 
-                    communeOld = _inscription_CommuneBusinesService.GetByCode(promoteurNonExtNIN.COMMUNE_NAIS);
+                    return promoteurNonExtNIN.NUM_DOSS.Substring(0, 4);
 
-                    return communeOld.Code;
                 }
                 else
                 {
@@ -551,6 +550,7 @@ namespace Anade.Khadamat.Business
             if (communeOld != null)
             {
                 entity.Inscription_Commune = communeOld;
+
                 var listePromoteurNonActifExtensionSuivi = _promoteurSuiviBusinesService.GetAllFilteredByInfosPromoteur(entity, false);
 
                 if (listePromoteurNonActifExtensionSuivi.Count != 0)
