@@ -557,9 +557,10 @@ namespace Anade.Khadamat.Business
                 {
                     var promoteurNonExt = listePromoteurNonActifExtensionSuivi.First();
 
-                    communeOld = _inscription_CommuneBusinesService.GetByCode(promoteurNonExt.COMMUNE_NAIS);
+                    
+                    //communeOld = _inscription_CommuneBusinesService.GetByCode(promoteurNonExt.COMMUNE_NAIS);
 
-                    return communeOld.Code;
+                   return promoteurNonExt.NUM_DOSS.Substring(0, 4);
                 }
                 else
                 {
