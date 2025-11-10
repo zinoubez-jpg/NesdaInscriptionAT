@@ -25,8 +25,6 @@ namespace Anade.Khadamat.Business
         protected readonly Detail_DossierInscriptionBusinesService _detail_DossierInscriptionBusinessService;
         // protected readonly AssociesInscriptionBusinesService _associesInscriptionBusinessService;
         protected readonly Identifiant_SIAuthentificationBusinesService _identifiant_SIAuthentificationBusinesService;
-        protected readonly Authentification_Erreur_CDE_CompteBusinesService _authentification_Erreur_CDE_CompteBusinesService;
-
 
 
         public PromoteurInscriptionBusinesService(
@@ -43,7 +41,6 @@ namespace Anade.Khadamat.Business
             , Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService
             // , AssociesInscriptionBusinesService associesInscriptionBusinessService
             , Identifiant_SIAuthentificationBusinesService identifiant_SIAuthentificationBusinesService
-            , Authentification_Erreur_CDE_CompteBusinesService authentification_Erreur_CDE_CompteBusinesService
             ) : base(unitOfWork)
         {
             _compteAuthentificationBusinesService = compteAuthentificationBusinesService;
@@ -58,7 +55,6 @@ namespace Anade.Khadamat.Business
             _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
             // _associesInscriptionBusinessService = associesInscriptionBusinessService;
             _identifiant_SIAuthentificationBusinesService = identifiant_SIAuthentificationBusinesService;
-            _authentification_Erreur_CDE_CompteBusinesService = authentification_Erreur_CDE_CompteBusinesService;
         }
 
         public override Expression<Func<Inscription_Promoteur, object>>[] GetDefaultLoadProperties()
@@ -380,19 +376,12 @@ namespace Anade.Khadamat.Business
         public BusinessResult Attach_CDE_Compte(Inscription_Promoteur entity, CentreDeveloppementEntrepreneuriat cdeEle)
         {
             BusinessResult businessResult;
-            Authentification_Erreur_CDE_Compte eleSavErreur = new();
 
             try
             {
                 Authentification_Compte entityCompte = _compteAuthentificationBusinesService.GetByUserName(entity.EMAIL_P);
 
                 Authentification_CDE authentification_CDE = _authentificationCDEBusinesService.GetByCodeNew(cdeEle.Code);
-
-                eleSavErreur.Code = authentification_CDE.Code_CDE;
-                eleSavErreur.DesignationAr = "CodeNew CentreDeveloppementEntrepreneuriat : " + cdeEle.Code;
-                eleSavErreur.EMAIL_P = entity.EMAIL_P;
-
-                _authentification_Erreur_CDE_CompteBusinesService.Add(eleSavErreur);
 
                 Authentification_Compte_CDE authentification_Compte_CDE = new();
 
@@ -410,31 +399,16 @@ namespace Anade.Khadamat.Business
             }
             catch (DataNotUpdatedException ex)
             {
-                eleSavErreur.Code = "DataUpExcp";
-                eleSavErreur.EMAIL_P = entity.EMAIL_P;
-                eleSavErreur.DesignationFr = ex.Message;
-                _authentification_Erreur_CDE_CompteBusinesService.Add(eleSavErreur);
-
                 businessResult = new BusinessResult(false);
                 businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
             }
             catch (BusinessException ex)
             {
-                eleSavErreur.Code = "BusinsExcp";
-                eleSavErreur.EMAIL_P = entity.EMAIL_P;
-                eleSavErreur.DesignationFr = ex.Message;
-                _authentification_Erreur_CDE_CompteBusinesService.Add(eleSavErreur);
-
                 businessResult = new BusinessResult(false);
                 businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
             }
             catch (Exception ex)
             {
-                eleSavErreur.Code = "Excp";
-                eleSavErreur.EMAIL_P = entity.EMAIL_P;
-                eleSavErreur.DesignationFr = ex.Message;
-                _authentification_Erreur_CDE_CompteBusinesService.Add(eleSavErreur);
-
                 businessResult = new BusinessResult(false);
                 businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
             }

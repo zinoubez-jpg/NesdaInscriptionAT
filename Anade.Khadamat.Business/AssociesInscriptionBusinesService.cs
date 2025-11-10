@@ -24,7 +24,6 @@ namespace Anade.Khadamat.Business
         protected readonly CentreDeveloppementEntrepreneuriatBusinessService _centreDeveloppementEntrepreneuriatBusinessService;
         protected readonly Detail_DossierInscriptionBusinesService _detail_DossierInscriptionBusinessService;
         protected readonly Identifiant_SIAuthentificationBusinesService _identifiant_SIAuthentificationBusinesService;
-        protected readonly Authentification_Erreur_CDE_CompteBusinesService _authentification_Erreur_CDE_CompteBusinesService;
         protected readonly PromoteurInscriptionBusinesService _promoteurInscriptionBusinessService;
 
         public AssociesInscriptionBusinesService(IUnitOfWork<InscriptionDbContext> unitOfWork
@@ -39,7 +38,6 @@ namespace Anade.Khadamat.Business
             , CentreDeveloppementEntrepreneuriatBusinessService centreDeveloppementEntrepreneuriatBusinessService
             , Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService
             , Identifiant_SIAuthentificationBusinesService identifiant_SIAuthentificationBusinesService
-            , Authentification_Erreur_CDE_CompteBusinesService authentification_Erreur_CDE_CompteBusinesService
             , PromoteurInscriptionBusinesService promoteurInscriptionBusinessService
             ) : base(unitOfWork)
         {
@@ -54,7 +52,6 @@ namespace Anade.Khadamat.Business
             _centreDeveloppementEntrepreneuriatBusinessService = centreDeveloppementEntrepreneuriatBusinessService;
             _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
             _identifiant_SIAuthentificationBusinesService = identifiant_SIAuthentificationBusinesService;
-            _authentification_Erreur_CDE_CompteBusinesService = authentification_Erreur_CDE_CompteBusinesService;
             _promoteurInscriptionBusinessService = promoteurInscriptionBusinessService;
         }
 
