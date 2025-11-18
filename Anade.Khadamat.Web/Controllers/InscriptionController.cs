@@ -499,7 +499,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                     var commune = _communeBusinessService.GetById(model.CommuneNaissanceId);
 
-                    entity.CommuneId = _inscription_CommuneBusinesService.GetByCode(commune.Code).Id;
+                    entity.CommuneId = _inscription_CommuneBusinesService.GetByCode(commune.NouveauCode).Id;
 
                     entity.NUM_ACT_P = HttpUtility.UrlEncode(model.NIN.Substring(9, 5));
 
@@ -508,13 +508,13 @@ namespace Anade.Khadamat.Web.Controllers
 
                     var commune2 = _communeBusinessService.GetById(model.CommuneResidenceId);
 
-                    entity.CommuneHabId = _inscription_CommuneBusinesService.GetByCode(commune2.Code).Id;
+                    entity.CommuneHabId = _inscription_CommuneBusinesService.GetByCode(commune2.NouveauCode).Id;
 
                     // entity.Inscription_CategorieId
 
                     var commune3 = _communeBusinessService.GetById(model.CommuneSeigeSocialId);
 
-                    entity.Id_Commune_Siege_Social = _inscription_CommuneBusinesService.GetByCode(commune3.Code).Id;
+                    entity.Id_Commune_Siege_Social = _inscription_CommuneBusinesService.GetByCode(commune3.NouveauCode).Id;
 
                     entity.ADR_E = "";
 

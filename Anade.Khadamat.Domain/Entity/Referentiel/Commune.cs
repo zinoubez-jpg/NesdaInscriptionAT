@@ -5,7 +5,7 @@ namespace Anade.Khadamat.Domain
 {
     public partial class Commune : Referentiel
     {
-        [Display(Name = "Code")]
+        [Display(Name = "NouveauCode")]
         [Required(ErrorMessage = "RequiredMessage"), StringLength(10, ErrorMessage = "StringLengthMessage")]
         public string NouveauCode { get; set; }
 
