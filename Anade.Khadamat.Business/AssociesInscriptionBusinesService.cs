@@ -282,8 +282,13 @@ namespace Anade.Khadamat.Business
 
                 if (!Add_Compte(entityCompte).Succeeded)
                 {
-                    DeleteAssocie(entity);
-                    businessResult = BusinessResult.Failure;
+                    if (!DeleteAssocie(entity).Succeeded)
+                    {
+                        businessResult = new BusinessResult();
+                        businessResult.Messages.Add(new MessageResult { Message = "Un erreur s'est produite réessayez, si cela persiste contactez votre administrateur ", MessageType = MessageType.Warning });
+                    }                        
+                    else
+                        businessResult = BusinessResult.Failure;
                 }
                 else
                 {
@@ -298,15 +303,31 @@ namespace Anade.Khadamat.Business
             return businessResult;
         }
 
-        protected void DeleteAssocie(Inscription_Associes entity)
+        protected void DeleteAssocieTest(Inscription_Associes entity)
         {
             Inscription_Promoteur promoteur = _promoteurInscriptionBusinessService.GetById(entity.Inscription_PromoteurId);
             Inscription_Detail_Dossier detail_Dossier = _detail_DossierInscriptionBusinessService.GetById(entity.Inscription_Detail_DossierId);
 
             Delete(entity);
+
             _promoteurInscriptionBusinessService.Delete(promoteur);
             _detail_DossierInscriptionBusinessService.Delete(detail_Dossier);
         }
 
+        protected BusinessResult DeleteAssocie(Inscription_Associes entity)
+        {
+            Inscription_Promoteur promoteur = _promoteurInscriptionBusinessService.GetById(entity.Inscription_PromoteurId);
+            Inscription_Detail_Dossier detail_Dossier = _detail_DossierInscriptionBusinessService.GetById(entity.Inscription_Detail_DossierId);
+
+            //Déttache le promoteur à supprimer  au Context sans SaveChanges()
+            BusinessResult promoteurBusinessResult = _promoteurInscriptionBusinessService.Remove(promoteur);
+            //Déttache le projet à supprimer  au Context sans SaveChanges()
+            BusinessResult projetBusinessResult = _detail_DossierInscriptionBusinessService.Remove(detail_Dossier);
+
+            if (promoteurBusinessResult.Succeeded && projetBusinessResult.Succeeded)
+                return Delete(entity);
+            else
+                return BusinessResult.Failure;
+        }
     }
 }
