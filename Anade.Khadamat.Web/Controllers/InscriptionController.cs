@@ -700,12 +700,6 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
-
-                    //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI");
-
-                    //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
-
                     string NamesOfCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
                     if (model.CopieDiplomeRCCFCAPdf.Length > 2048576)
@@ -731,12 +725,6 @@ namespace Anade.Khadamat.Web.Controllers
                         InitializeListViewBags();
                         return View(model);
                     }
-
-                    //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
-
-                    //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp");
-
-                    //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
                     string NamesOfRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
@@ -769,16 +757,8 @@ namespace Anade.Khadamat.Web.Controllers
                             return View(model);
                         }
 
-                        //NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
-
-                        //NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE");
-
-                        //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
-
                         NamesOfCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
                     }
-
-                    //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
 
                     var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
 
@@ -794,9 +774,6 @@ namespace Anade.Khadamat.Web.Controllers
 
                     else
                     {
-                        //antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
-                        //agence = _agenceBusinessService.GetById(antenne.AgenceId);
-
                         var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
                         antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
                         agence = _agenceBusinessService.GetById(antenne.AgenceId);
@@ -1004,7 +981,6 @@ namespace Anade.Khadamat.Web.Controllers
                     entity.Inscription_CategorieId = CategorieId.NESDA;
                     associer.Inscription_CategorieId = CategorieId.NESDA;
 
-
                     var inscription_CategoriePase = _inscription_CategorieBusinesService.GetById(entity.Inscription_CategorieId, _inscription_CategorieBusinesService.GetDefaultLoadProperties());
 
                     entity.Inscription_Categorie_PhaseId = inscription_CategoriePase.Inscription_PhaseId;
@@ -1013,86 +989,8 @@ namespace Anade.Khadamat.Web.Controllers
 
                     var businessResult = _associesInscriptionBusinessService.AddInscription(associer, cdeEle);
 
-
-
-
-
-
-
                     if (businessResult.Succeeded)
                     {
-
-
-
-
-                        if (businessResult.Succeeded)
-                        {
-                            businessResult = _promoteurInscriptionBusinessService.Attach_Identifiant_SI_Compte(entity,associer);
-
-                            if (businessResult.Succeeded)
-                            {
-                                cdeEle = _centreDeveloppementEntrepreneuriatBusinessService.GetById(model.CentreDeveloppementEntrepreneuriatId);
-
-                                businessResult = _promoteurInscriptionBusinessService.Attach_CDE_Compte(entity, cdeEle);
-                            }
-                            else
-                            {
-                                var businessResultDelete = _promoteurInscriptionBusinessService.Dettach_Identifiant_SI_Compte(entity,associer);
-                                businessResultDelete = _associesInscriptionBusinessService.Delete(associer);
-                                businessResultDelete = _detail_DossierInscriptionBusinessService.Delete(detail_dossier);
-                            }
-                        }
-                        else
-                        {
-                            var businessResultDelete = _associesInscriptionBusinessService.Delete(associer);
-                            businessResultDelete = _detail_DossierInscriptionBusinessService.Delete(detail_dossier);
-                        }
-
-
-
-
-
-
-
-                        //businessResult = _detail_DossierInscriptionBusinessService.Add(detail_dossier);
-
-                        //if (businessResult.Succeeded)
-                        //{
-                        //    businessResult = _promoteurInscriptionBusinessService.Add(entity);
-
-                        //    if (businessResult.Succeeded)
-                        //    {
-                        //        businessResult = _promoteurInscriptionBusinessService.Attach_Identifiant_SI_Compte(entity);
-
-                        //        if (businessResult.Succeeded)
-                        //        {
-                        //            cdeEle = _centreDeveloppementEntrepreneuriatBusinessService.GetById(model.CentreDeveloppementEntrepreneuriatId);
-
-                        //            businessResult = _promoteurInscriptionBusinessService.Attach_CDE_Compte(entity, cdeEle);
-                        //        }
-                        //        else
-                        //        {
-                        //            var businessResultDelete = _promoteurInscriptionBusinessService.Dettach_Identifiant_SI_Compte(entity);
-                        //            businessResultDelete = _associesInscriptionBusinessService.Delete(associer);
-                        //            businessResultDelete = _detail_DossierInscriptionBusinessService.Delete(detail_dossier);
-                        //        }
-                        //    }
-                        //    else
-                        //    {
-                        //        var businessResultDelete = _associesInscriptionBusinessService.Delete(associer);
-                        //        businessResultDelete = _detail_DossierInscriptionBusinessService.Delete(detail_dossier);
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    var businessResultDelete = _detail_DossierInscriptionBusinessService.Delete(detail_dossier);
-                        //}
-
-
-
-
-
-
                         if (businessResult.Succeeded)
                         {
                             apiBusinessResult = new ApiBusinessResult(businessResult.Succeeded) { };

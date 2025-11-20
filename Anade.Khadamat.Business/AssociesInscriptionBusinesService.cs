@@ -62,13 +62,6 @@ namespace Anade.Khadamat.Business
             return new Expression<Func<Inscription_Associes, object>>[] { loadCategorie };
         }
 
-        //protected override void OnAdding(Inscription_Associes entity)
-        //{
-        //    _promoteurInscriptionBusinessService.OnAddingPromoteur(entity.Inscription_Promoteur);
-
-        //    base.OnAdding(entity);
-        //}
-
         protected override void OnAdding(Inscription_Associes entity)
         {
             //Création compte dans la base [AUTHENTIFICATION]
@@ -178,7 +171,11 @@ namespace Anade.Khadamat.Business
         private Authentification_Compte Create_Compte(Inscription_Associes entityAssocies, CentreDeveloppementEntrepreneuriat cdeEle)
         {
             Inscription_Promoteur entity = entityAssocies.Inscription_Promoteur;
+
             Authentification_Compte entityCompte = new();
+            Authentification_Identifiant_SI entityIdentifiantSI = new();
+            Authentification_Compte_CDE entityCompteCDE = new();
+            Authentification_CDE entityCDE = _authentificationCDEBusinesService.GetByCodeNew(cdeEle.Code);
 
             // Affectation d'une annexe au compte se basant sur son commune habitation.
             Inscription_Circonscription inscription_Circonscription;
@@ -244,24 +241,28 @@ namespace Anade.Khadamat.Business
 
             entityCompte.Si_Inscription = true;
 
-            Authentification_CDE authentification_CDE = _authentificationCDEBusinesService.GetByCodeNew(cdeEle.Code);
-
-            Authentification_Compte_CDE authentification_Compte_CDE = new();
-
-            authentification_Compte_CDE.Authentification_CDEId = authentification_CDE.Id;
-            authentification_Compte_CDE.Authentification_CompteId = entityCompte.Id;
-
-            Authentification_Identifiant_SI entityIdentifiant_SI = new();
-
+            //entityCompteCDE.Authentification_CompteId = entityCompte.Id;
+            entityCompteCDE.Authentification_CDEId = entityCDE.Id;
+            entityCompteCDE.Authentification_CDE = entityCDE;
+            entityCompteCDE.Authentification_Compte = entityCompte;
 
             Inscription_Detail_Dossier detail_Dossier = _detail_DossierInscriptionBusinessService.GetById(entityAssocies.Inscription_Detail_DossierId);
 
-            entityIdentifiant_SI.Authentification_CompteId = entityCompte.Id;
-            entityIdentifiant_SI.Num_SI = detail_Dossier.Id.ToString();
-            entityIdentifiant_SI.Code_P = entity.CODE_P;
+            //entityIdentifiantSI.Authentification_CompteId = entityCompte.Id;
+            entityIdentifiantSI.Num_SI = detail_Dossier.Id.ToString();
+            entityIdentifiantSI.Code_P = entity.CODE_P;
+            entityIdentifiantSI.Authentification_Compte = entityCompte;
+
+            List<Authentification_Identifiant_SI> listIdentifiantSI = new();
+            List<Authentification_Compte_CDE> listCompteCDE = new();
+
+            listIdentifiantSI.Add(entityIdentifiantSI);
+            listCompteCDE.Add(entityCompteCDE);
+
+            entityCompte.Authentification_Identifiant_SI = listIdentifiantSI;
+            entityCompte.Authentification_Compte_CDE = listCompteCDE;
 
             return entityCompte;
-
         }
 
         public virtual BusinessResult Add_Compte(Authentification_Compte entity)
@@ -275,21 +276,36 @@ namespace Anade.Khadamat.Business
         {
             BusinessResult businessResult;
 
-            businessResult = Add(entity);
-
-            if (businessResult.Succeeded)
+            if (Add(entity).Succeeded)
             {
                 Authentification_Compte entityCompte = Create_Compte(entity, cdeEle);
 
-                if (Add_Compte(entityCompte).Succeeded == false)
+                if (!Add_Compte(entityCompte).Succeeded)
                 {
-                    _repository.Delete(entity);
-                    _unitOfWork.SaveChanges();
-                    throw new DataNotUpdatedException("Opération non enregsitrée niveau Compte!");
+                    DeleteAssocie(entity);
+                    businessResult = BusinessResult.Failure;
                 }
+                else
+                {
+                    businessResult = BusinessResult.Success;
+                }
+            }
+            else
+            {
+                businessResult = BusinessResult.Failure;
             }
 
             return businessResult;
+        }
+
+        protected void DeleteAssocie(Inscription_Associes entity)
+        {
+            Inscription_Promoteur promoteur = _promoteurInscriptionBusinessService.GetById(entity.Inscription_PromoteurId);
+            Inscription_Detail_Dossier detail_Dossier = _detail_DossierInscriptionBusinessService.GetById(entity.Inscription_Detail_DossierId);
+
+            Delete(entity);
+            _promoteurInscriptionBusinessService.Delete(promoteur);
+            _detail_DossierInscriptionBusinessService.Delete(detail_Dossier);
         }
 
     }
