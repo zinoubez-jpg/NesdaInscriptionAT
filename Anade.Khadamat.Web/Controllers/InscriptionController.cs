@@ -342,6 +342,10 @@ namespace Anade.Khadamat.Web.Controllers
                     }
                     else
                     {
+                        //var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == apiResult);
+                        //antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
+                        //agence = _agenceBusinessService.GetById(antenne.AgenceId);
+
                         antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
                         agence = _agenceBusinessService.GetById(antenne.AgenceId);
                     }
@@ -451,6 +455,25 @@ namespace Anade.Khadamat.Web.Controllers
                     return View(model);
                 }
 
+                if (model.CentreDeveloppementEntrepreneuriatId == 1)
+                {
+                    ModelState.AddModelError("CDE", "لم تقم باختياز مركز تطوير المقاولاتية. يرجى المحاولة مرة أخرى.");
+                    InitializeListViewBags();
+
+                    var bR = new BusinessResult();
+                    var msgR = new MessageResult()
+                    {
+                        Message = "لم تقم باختياز مركز تطوير المقاولاتية. يرجى المحاولة مرة أخرى.",
+                        MessageType = MessageType.Error,
+                    };
+
+                    bR.Messages.Add(msgR);
+                    TempData["Message"] = bR.ToBootstrapAlerts();
+                    InitializeListViewBags();
+                    return View(model);
+                }
+
+
                 if (ModelState.IsValid)
                 {
 
@@ -476,7 +499,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                     var commune = _communeBusinessService.GetById(model.CommuneNaissanceId);
 
-                    entity.CommuneId = _inscription_CommuneBusinesService.GetByCode(commune.Code).Id;
+                    entity.CommuneId = _inscription_CommuneBusinesService.GetByCode(commune.NouveauCode).Id;
 
                     entity.NUM_ACT_P = HttpUtility.UrlEncode(model.NIN.Substring(9, 5));
 
@@ -485,13 +508,13 @@ namespace Anade.Khadamat.Web.Controllers
 
                     var commune2 = _communeBusinessService.GetById(model.CommuneResidenceId);
 
-                    entity.CommuneHabId = _inscription_CommuneBusinesService.GetByCode(commune2.Code).Id;
+                    entity.CommuneHabId = _inscription_CommuneBusinesService.GetByCode(commune2.NouveauCode).Id;
 
                     // entity.Inscription_CategorieId
 
                     var commune3 = _communeBusinessService.GetById(model.CommuneSeigeSocialId);
 
-                    entity.Id_Commune_Siege_Social = _inscription_CommuneBusinesService.GetByCode(commune3.Code).Id;
+                    entity.Id_Commune_Siege_Social = _inscription_CommuneBusinesService.GetByCode(commune3.NouveauCode).Id;
 
                     entity.ADR_E = "";
 
@@ -618,7 +641,7 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    var apiBusinessResult = CreateInscriptionPromoteurCreation(entity, model);
+                    ApiBusinessResult apiBusinessResult = CreateInscriptionPromoteurCreation(entity, model);
 
                     if (!apiBusinessResult.Succeeded)
                     {
@@ -677,12 +700,6 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
-
-                    //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI");
-
-                    //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
-
                     string NamesOfCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
                     if (model.CopieDiplomeRCCFCAPdf.Length > 2048576)
@@ -708,12 +725,6 @@ namespace Anade.Khadamat.Web.Controllers
                         InitializeListViewBags();
                         return View(model);
                     }
-
-                    //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
-
-                    //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp");
-
-                    //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
                     string NamesOfRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
@@ -746,16 +757,8 @@ namespace Anade.Khadamat.Web.Controllers
                             return View(model);
                         }
 
-                        //NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
-
-                        //NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE");
-
-                        //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
-
                         NamesOfCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
                     }
-
-                    //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
 
                     var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
 
@@ -771,9 +774,6 @@ namespace Anade.Khadamat.Web.Controllers
 
                     else
                     {
-                        //antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
-                        //agence = _agenceBusinessService.GetById(antenne.AgenceId);
-
                         var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
                         antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
                         agence = _agenceBusinessService.GetById(antenne.AgenceId);
@@ -957,6 +957,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                     detail_dossier.Date_Inscription = DateTime.Now;
                     detail_dossier.ADR_E = entity.ADR_E;
+
                     if (entity.Id_Commune_Siege_Social != null)
                         detail_dossier.Inscription_CommuneId = (int)entity.Id_Commune_Siege_Social;
                     else
@@ -980,17 +981,44 @@ namespace Anade.Khadamat.Web.Controllers
                     entity.Inscription_CategorieId = CategorieId.NESDA;
                     associer.Inscription_CategorieId = CategorieId.NESDA;
 
-
                     var inscription_CategoriePase = _inscription_CategorieBusinesService.GetById(entity.Inscription_CategorieId, _inscription_CategorieBusinesService.GetDefaultLoadProperties());
 
                     entity.Inscription_Categorie_PhaseId = inscription_CategoriePase.Inscription_PhaseId;
 
-                    var businessResult = _promoteurInscriptionBusinessService.Add(entity);
+                    CentreDeveloppementEntrepreneuriat cdeEle = _centreDeveloppementEntrepreneuriatBusinessService.GetById(model.CentreDeveloppementEntrepreneuriatId);
+
+                    var businessResult = _associesInscriptionBusinessService.AddInscription(associer, cdeEle);
 
                     if (businessResult.Succeeded)
                     {
-                        apiBusinessResult = new ApiBusinessResult(businessResult.Succeeded) { };
-                        apiBusinessResult.Result = entity;
+                        if (businessResult.Succeeded)
+                        {
+                            apiBusinessResult = new ApiBusinessResult(businessResult.Succeeded) { };
+                            apiBusinessResult.Result = entity;
+                        }
+                        else
+                        {
+                            apiBusinessResult = new ApiBusinessResult(false) { };
+                            if (businessResult.Messages != null)
+                            {
+                                foreach (var message in businessResult.Messages)
+                                {
+                                    apiBusinessResult.Messages.Add(new MessageResult
+                                    {
+                                        Message = message.Message,
+                                        MessageType = message.MessageType
+                                    });
+                                }
+                            }
+                            else
+                            {
+                                apiBusinessResult.Messages.Add(new MessageResult
+                                {
+                                    Message = "حدث خطأ غير معروف",
+                                    MessageType = MessageType.Error
+                                });
+                            }
+                        }
                     }
                     else
                     {

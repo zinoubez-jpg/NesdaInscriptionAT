@@ -37,6 +37,5 @@ namespace Anade.Khadamat.Data_Authentification
         public virtual DbSet<Authentification_Visite> Visite { get; set; }
         public virtual DbSet<Authentification_CDE> CDE { get; set; }
         public virtual DbSet<Authentification_Compte_CDE> Compte_CDE { get; set; }
-
     }
 }

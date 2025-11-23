@@ -19,6 +19,13 @@ namespace Anade.Khadamat.Business
         protected readonly Inscription_AnnexeBusinesService _inscription_AnnexeBusinesService;
         protected readonly Inscription_AntenneBusinesService _inscription_AntenneBusinesService;
         protected readonly PromoteurSuiviBusinesService _promoteurSuiviBusinesService;
+        protected readonly Authentification_CDEBusinesService _authentificationCDEBusinesService;
+        protected readonly Authentification_Compte_CDEBusinesService _authentification_Compt_CDEBusinesService;
+        protected readonly CentreDeveloppementEntrepreneuriatBusinessService _centreDeveloppementEntrepreneuriatBusinessService;
+        protected readonly Detail_DossierInscriptionBusinesService _detail_DossierInscriptionBusinessService;
+        // protected readonly AssociesInscriptionBusinesService _associesInscriptionBusinessService;
+        protected readonly Identifiant_SIAuthentificationBusinesService _identifiant_SIAuthentificationBusinesService;
+
 
         public PromoteurInscriptionBusinesService(
             IUnitOfWork<InscriptionDbContext> unitOfWork
@@ -28,6 +35,12 @@ namespace Anade.Khadamat.Business
             , Inscription_AnnexeBusinesService inscription_AnnexeBusinesService
             , Inscription_AntenneBusinesService inscription_AntenneBusinesService
             , PromoteurSuiviBusinesService promoteurSuiviBusinesService
+            , Authentification_CDEBusinesService authentificationCDEBusinesService
+            , Authentification_Compte_CDEBusinesService authentification_Compt_CDEBusinesService
+            , CentreDeveloppementEntrepreneuriatBusinessService centreDeveloppementEntrepreneuriatBusinessService
+            , Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService
+            // , AssociesInscriptionBusinesService associesInscriptionBusinessService
+            , Identifiant_SIAuthentificationBusinesService identifiant_SIAuthentificationBusinesService
             ) : base(unitOfWork)
         {
             _compteAuthentificationBusinesService = compteAuthentificationBusinesService;
@@ -36,6 +49,12 @@ namespace Anade.Khadamat.Business
             _inscription_AnnexeBusinesService = inscription_AnnexeBusinesService;
             _inscription_AntenneBusinesService = inscription_AntenneBusinesService;
             _promoteurSuiviBusinesService = promoteurSuiviBusinesService;
+            _authentificationCDEBusinesService = authentificationCDEBusinesService;
+            _authentification_Compt_CDEBusinesService = authentification_Compt_CDEBusinesService;
+            _centreDeveloppementEntrepreneuriatBusinessService = centreDeveloppementEntrepreneuriatBusinessService;
+            _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
+            // _associesInscriptionBusinessService = associesInscriptionBusinessService;
+            _identifiant_SIAuthentificationBusinesService = identifiant_SIAuthentificationBusinesService;
         }
 
         public override Expression<Func<Inscription_Promoteur, object>>[] GetDefaultLoadProperties()
@@ -118,13 +137,12 @@ namespace Anade.Khadamat.Business
 
         public override BusinessResult Add(Inscription_Promoteur entity)
         {
-
-            Authentification_Compte entityCompte = Create_Compte(entity);
-
             BusinessResult businessResult;
 
             try
             {
+                Authentification_Compte entityCompte = Create_Compte(entity);
+
                 OnAdding(entity);
                 _repository.Add(entity);
 
@@ -173,7 +191,6 @@ namespace Anade.Khadamat.Business
             BusinessResult businessResult = _compteAuthentificationBusinesService.Add(entity);
 
             return businessResult;
-
         }
 
         private Authentification_Compte Create_Compte(Inscription_Promoteur entity)
@@ -337,9 +354,8 @@ namespace Anade.Khadamat.Business
                 {
                     var promoteurNonExtNIN = listePromoteurExisteSuiviCode.First();
 
-                    communeOld = _inscription_CommuneBusinesService.GetByCode(promoteurNonExtNIN.COMMUNE_NAIS);
+                    return promoteurNonExtNIN.NUM_DOSS.Substring(0, 4);
 
-                    return communeOld.Code;
                 }
                 else
                 {
@@ -354,19 +370,21 @@ namespace Anade.Khadamat.Business
 
             // 2- Vérification par informations du promoteur
             communeOld = _inscription_CommuneBusinesService.GetById(entity.CommuneId);
-            
+
             if (communeOld != null)
             {
                 entity.Inscription_Commune = communeOld;
+
                 var listePromoteurNonActifExtensionSuivi = _promoteurSuiviBusinesService.GetAllFilteredByInfosPromoteur(entity, false);
 
                 if (listePromoteurNonActifExtensionSuivi.Count != 0)
                 {
                     var promoteurNonExt = listePromoteurNonActifExtensionSuivi.First();
 
-                    communeOld = _inscription_CommuneBusinesService.GetByCode(promoteurNonExt.COMMUNE_NAIS);
+                    
+                    //communeOld = _inscription_CommuneBusinesService.GetByCode(promoteurNonExt.COMMUNE_NAIS);
 
-                    return communeOld.Code;
+                   return promoteurNonExt.NUM_DOSS.Substring(0, 4);
                 }
                 else
                 {
@@ -392,9 +410,9 @@ namespace Anade.Khadamat.Business
         {
             string matricule = "", annee, squentialNumber, codeCommune, numeroActeNaissance;
             annee = promoteur.DDN_P.Year.ToString();
-            
+
             numeroActeNaissance = "0" + promoteur.NUM_ACT_P;
-            
+
             squentialNumber = GetSequentialNumber(promoteur);
             if (promoteur.IsNaissanceEtrange()) codeCommune = "9999";
             else
@@ -426,6 +444,11 @@ namespace Anade.Khadamat.Business
             }
             else countSequential = _repository.Count(CodeLocalExiste(promoteur));
             return countSequential.ToString();
+        }
+
+        public void OnAddingPromoteur(Inscription_Promoteur entity)
+        {
+            OnAdding(entity);
         }
 
         #region Conditions on promoteur

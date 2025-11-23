@@ -524,4 +524,28 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form.needs-validation');
+            const submitBtn = document.getElementById('submitBtn');
+
+            form.addEventListener('submit', function () {
+                // Désactiver le bouton
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="txt">جارٍ التسجيل...</span>';
+
+                // Optionnel: Ajouter un indicateur de chargement
+                submitBtn.classList.add('loading');
+            });
+
+            // Réactiver le bouton en cas d'erreur de validation côté client
+            form.addEventListener('invalid', function () {
+                setTimeout(function () {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span class="txt">تسجيل</span>';
+                    submitBtn.classList.remove('loading');
+                }, 1000);
+            }, true);
+        });
+    </script>
 }

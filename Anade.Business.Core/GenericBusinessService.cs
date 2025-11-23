@@ -50,6 +50,36 @@ namespace Anade.Business.Core
             return businessResult;
         }
 
+        //Attache l'entité au Context sans faire appel au UnitOfWork.SaveChanges()
+        public virtual BusinessResult Append(T entity)
+        {
+            BusinessResult businessResult;
+            try
+            {
+                OnAdding(entity);
+                _repository.Add(entity);
+                OnAdded(entity);
+                businessResult = BusinessResult.Success;
+            }
+            catch (DataNotUpdatedException ex)
+            {
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
+            }
+            catch (BusinessException ex)
+            {
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
+            }
+            catch (Exception e)
+            {
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = e.Message, MessageType = MessageType.Warning });
+            }
+
+            return businessResult;
+        }
+        
         protected virtual void OnAdded(T entity)
         {
             
@@ -92,6 +122,37 @@ namespace Anade.Business.Core
             return businessResult;
         }
 
+        //Déttache l'entité à supprimer  au Context sans faire appel au UnitOfWork.SaveChanges()
+        public virtual BusinessResult Remove(T entity)
+        {
+            BusinessResult businessResult;
+
+            try
+            {
+                OnDeleting(entity);
+                _repository.Delete(entity);
+                OnDeleted(entity);
+                businessResult = BusinessResult.Success;
+            }
+            catch (DataNotUpdatedException ex)
+            {
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
+            }
+            catch (BusinessException ex)
+            {
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
+            }
+            catch (Exception)
+            {
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = "Un erreur s'est produite réessayez, si cela persiste contactez votre administrateur ", MessageType = MessageType.Warning });
+            }
+
+            return businessResult;
+        }
+        
         protected virtual void OnDeleted(T entity)
         {
             
