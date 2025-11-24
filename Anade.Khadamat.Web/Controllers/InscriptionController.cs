@@ -974,7 +974,7 @@ namespace Anade.Khadamat.Web.Controllers
                     // Ajouter la relation entre la table PROMOTEUR et Detail_dossier dans la table  associer
                     associer.Inscription_Promoteur = entity;
                     associer.Inscription_Detail_Dossier = detail_dossier;
-                    associer.Inscription_QualiteId = 2;
+                    associer.Inscription_QualiteId = QualiteId.Gérant;
 
                     // Pour test CHOMEUR valeur = 2
                     // associer.Inscription_CategorieId = entity.Inscription_CategorieId;

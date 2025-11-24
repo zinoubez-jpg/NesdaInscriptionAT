@@ -278,21 +278,29 @@ namespace Anade.Khadamat.Business
 
             if (Add(entity).Succeeded)
             {
-                Authentification_Compte entityCompte = Create_Compte(entity, cdeEle);
+                try
+                {
+                    Authentification_Compte entityCompte = Create_Compte(entity, cdeEle);
 
-                if (!Add_Compte(entityCompte).Succeeded)
-                {
-                    if (!DeleteAssocie(entity).Succeeded)
+                    if (!Add_Compte(entityCompte).Succeeded)
                     {
-                        businessResult = new BusinessResult();
-                        businessResult.Messages.Add(new MessageResult { Message = "Un erreur s'est produite réessayez, si cela persiste contactez votre administrateur ", MessageType = MessageType.Warning });
-                    }                        
+                        if (!DeleteAssocie(entity).Succeeded)
+                        {
+                            businessResult = new BusinessResult();
+                            businessResult.Messages.Add(new MessageResult { Message = "Un erreur s'est produite réessayez, si cela persiste contactez votre administrateur ", MessageType = MessageType.Warning });
+                        }
+                        else
+                            businessResult = BusinessResult.Failure;
+                    }
                     else
-                        businessResult = BusinessResult.Failure;
+                    {
+                        businessResult = BusinessResult.Success;
+                    }
                 }
-                else
+                catch
                 {
-                    businessResult = BusinessResult.Success;
+                    businessResult = BusinessResult.Failure;
+                    return businessResult;
                 }
             }
             else
