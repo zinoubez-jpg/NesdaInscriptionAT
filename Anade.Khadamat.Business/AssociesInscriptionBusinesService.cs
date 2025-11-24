@@ -299,6 +299,7 @@ namespace Anade.Khadamat.Business
                 }
                 catch
                 {
+                    DeleteAssocie(entity);
                     businessResult = BusinessResult.Failure;
                     return businessResult;
                 }
