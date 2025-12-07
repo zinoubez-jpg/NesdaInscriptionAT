@@ -643,6 +643,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                     ApiBusinessResult apiBusinessResult = CreateInscriptionPromoteurCreation(entity, model);
 
+
                     if (!apiBusinessResult.Succeeded)
                     {
                         // Gérer l'erreur ici (afficher les messages dans TempData, etc.)
@@ -939,7 +940,17 @@ namespace Anade.Khadamat.Web.Controllers
 
         public ApiBusinessResult CreateInscriptionPromoteurCreation(Inscription_Promoteur entity, CreateInscriptionVM model)
         {
-            ApiBusinessResult apiBusinessResult;
+            ApiBusinessResult apiBusinessResult = new(false)
+            {
+                Messages =
+                {
+                    new MessageResult
+                    {
+                        Message = "حدث خطأ غير معروف",
+                        MessageType = MessageType.Error
+                    }
+                }
+            };
 
             if (entity == null)
                 return new ApiBusinessResult(false) { Messages = { new MessageResult { Message = "الهوية غير موجودة", MessageType = MessageType.Error } } };
@@ -974,7 +985,7 @@ namespace Anade.Khadamat.Web.Controllers
                     // Ajouter la relation entre la table PROMOTEUR et Detail_dossier dans la table  associer
                     associer.Inscription_Promoteur = entity;
                     associer.Inscription_Detail_Dossier = detail_dossier;
-                    associer.Inscription_QualiteId = 2;
+                    associer.Inscription_QualiteId = QualiteId.Gérant;
 
                     // Pour test CHOMEUR valeur = 2
                     // associer.Inscription_CategorieId = entity.Inscription_CategorieId;

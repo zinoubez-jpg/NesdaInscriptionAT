@@ -50,4 +50,9 @@
         public const int Création = 1;
         public const int Extension = 2;
     }
+    public static class QualiteId
+    {
+        public const int Associe = 1;
+        public const int Gérant = 2;
+    }
 }
