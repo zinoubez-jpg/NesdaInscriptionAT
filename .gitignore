@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Anade.Khadamat.Web/ProtectedFiles/CNIFolder/109887624502102236_CNI0.pdf
+/Anade.Khadamat.Web/ProtectedFiles/DiplomeCDEFolder/109887624502102236_DpCDE0.pdf
+/Anade.Khadamat.Web/ProtectedFiles/DiplomeFolder/109887624502102236_Dp0.pdf

@@ -275,7 +275,7 @@ namespace Anade.Khadamat.Business
         public BusinessResult AddInscription(Inscription_Associes entity, CentreDeveloppementEntrepreneuriat cdeEle)
         {
             BusinessResult businessResult;
-
+           
             if (Add(entity).Succeeded)
             {
                 try
@@ -285,9 +285,9 @@ namespace Anade.Khadamat.Business
                     if (!Add_Compte(entityCompte).Succeeded)
                     {
                         if (!DeleteAssocie(entity).Succeeded)
-                        {
-                            businessResult = new BusinessResult();
-                            businessResult.Messages.Add(new MessageResult { Message = "Un erreur s'est produite réessayez, si cela persiste contactez votre administrateur ", MessageType = MessageType.Warning });
+                        {                            
+                            businessResult = BusinessResult.Failure;
+                            businessResult.Messages.Add(new MessageResult { Message = "حدث خطأ، يُرجى إعادة المحاولة مرة أخرى ", MessageType = MessageType.Warning });
                         }
                         else
                             businessResult = BusinessResult.Failure;
