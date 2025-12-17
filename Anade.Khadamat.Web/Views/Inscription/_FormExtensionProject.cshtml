@@ -64,7 +64,10 @@
 
     <div class="col-lg-6 col-md-12 col-sm-12 form-group">
         <label asp-for="CommuneNaissanceId">بلدية الميلاد  <span style="color:red;">*</span></label>
-        <select asp-for="CommuneNaissanceId" asp-items="@ViewBag.CommuneId" class="form-control select2" id="communeN" required>
+        <select asp-for="CommuneNaissanceId"
+                asp-items="@ViewBag.CommunesNaissance as SelectList"
+                class="form-control select2"
+                id="communeN" required>
             <option value="">إختيار بلدية الميلاد</option>
         </select>
         <span asp-validation-for="CommuneNaissanceId" class="text-danger"></span>
@@ -104,7 +107,10 @@
 
     <div class="col-lg-6 col-md-12 col-sm-12 form-group">
         <label asp-for="CommuneResidenceId">بلدية الإقامة  <span style="color:red;">*</span></label>
-        <select asp-for="CommuneResidenceId" asp-items="@ViewBag.CommuneId" class="form-control select2" id="communeR" required>
+        <select asp-for="CommuneResidenceId"
+                asp-items="@ViewBag.CommunesResidence as SelectList"
+                class="form-control select2"
+                id="communeR" required>
             <option value="">إختيار بلدية الإقامة</option>
         </select>
         <span asp-validation-for="CommuneResidenceId" class="text-danger"></span>
@@ -138,8 +144,11 @@
 
     <div class="col-lg-6 col-md-12 col-sm-12 form-group">
         <label asp-for="CommuneSeigeSocialId">بلدية المقر الاجتماعي لمؤسستكم <span style="color:red;">*</span> </label>
-        <select asp-for="CommuneSeigeSocialId" asp-items="@ViewBag.CommuneId" class="form-control select2" id="communeSS" required>
-            <option value="">إختيار بلدية </option>
+        <select asp-for="CommuneSeigeSocialId"
+                asp-items="@ViewBag.CommunesSiege as SelectList"
+                class="form-control select2"
+                id="communeSS" required>
+            <option value="">إختيار بلدية المقر الاجتماعي</option>
         </select>
         <span asp-validation-for="CommuneSeigeSocialId" class="text-danger"></span>
     </div>
