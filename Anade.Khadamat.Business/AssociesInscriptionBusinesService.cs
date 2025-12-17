@@ -129,6 +129,13 @@ namespace Anade.Khadamat.Business
 
             entity.Inscription_Promoteur.CODE_P = code_promoteur;
 
+            Authentification_Identifiant_SI eleIdentifiantSI = _identifiant_SIAuthentificationBusinesService.GetSingle(x => x.Code_P == code_promoteur);
+
+            if (eleIdentifiantSI != null)
+            {
+                throw new BusinessException("Vous avez peut-être un dossier sur notre plateforme.");
+            }
+
             base.OnAdding(entity);
         }
 
@@ -275,17 +282,19 @@ namespace Anade.Khadamat.Business
         public BusinessResult AddInscription(Inscription_Associes entity, CentreDeveloppementEntrepreneuriat cdeEle)
         {
             BusinessResult businessResult;
-           
+
             if (Add(entity).Succeeded)
             {
                 try
                 {
                     Authentification_Compte entityCompte = Create_Compte(entity, cdeEle);
 
+                    // Verification code promoteur dans la table Identifiant_SI
+
                     if (!Add_Compte(entityCompte).Succeeded)
                     {
                         if (!DeleteAssocie(entity).Succeeded)
-                        {                            
+                        {
                             businessResult = BusinessResult.Failure;
                             businessResult.Messages.Add(new MessageResult { Message = "حدث خطأ، يُرجى إعادة المحاولة مرة أخرى ", MessageType = MessageType.Warning });
                         }

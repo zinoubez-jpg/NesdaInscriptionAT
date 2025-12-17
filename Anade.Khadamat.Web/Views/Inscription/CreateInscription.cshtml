@@ -167,7 +167,111 @@
     <partial name="_select2.script" />
     <partial name="_sweetalert2.script" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+    <script>
+
+        //$(document).ready(function () {
+        //    // Appliquer un masque au champ de numéro de téléphone
+        //    $('#NumTelephone').inputmask({
+        //        mask: "0 9 99 99 99 99", // Le masque pour afficher 0x xx xx xx
+        //        placeholder: "0 _ __ __ __ __", // Affiche un espace réservé
+        //        showMaskOnHover: false, // Ne montre pas le masque lorsque l'utilisateur survole
+        //        showMaskOnFocus: true // Montre le masque uniquement lorsque le champ est actif
+        //    });
+        //});
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const phoneInput = document.getElementById('NumTelephone');
+
+            // Supprimer tout attribut inputmask existant
+            phoneInput.removeAttribute('data-inputmask');
+
+            // Formater le numéro pendant la saisie
+            phoneInput.addEventListener('input', function (e) {
+                // Garder uniquement les chiffres
+                let rawValue = e.target.value.replace(/\D/g, '');
+
+                // Limiter à 10 chiffres (format algérien: 0xxxxxxxxx)
+                if (rawValue.length > 10) {
+                    rawValue = rawValue.substring(0, 10);
+                }
+
+                // Formater avec des espaces
+                let formattedValue = formatPhoneNumber(rawValue);
+
+                // Mettre à jour la valeur
+                e.target.value = formattedValue;
+
+                // Gérer le curseur
+                const cursorPosition = e.target.selectionStart;
+                const diff = formattedValue.length - e.target.value.length;
+
+                if (diff !== 0 && cursorPosition) {
+                    e.target.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
+                }
+            });
+
+            // Fonction de formatage
+            function formatPhoneNumber(numbers) {
+                if (!numbers) return '';
+
+                let formatted = '';
+
+                // Ajouter le 0 initial si nécessaire
+                if (numbers.length > 0 && numbers[0] !== '0') {
+                    numbers = '0' + numbers;
+                    if (numbers.length > 10) numbers = numbers.substring(0, 10);
+                }
+
+                // Appliquer le format: 0 XXX XXX XXX
+
+                //for (let i = 0; i < numbers.length; i++) {
+                //    if (i === 1 || i === 4 || i === 7) {
+                //        formatted += ' ';
+                //    }
+                //    formatted += numbers[i];
+                //}
+
+                // Appliquer le format: 0 XXX XX XX XX
+
+                for (let i = 0; i < numbers.length; i++) {
+                    if (i === 1 || i === 4 || i === 6 || i === 8) {
+                        formatted += ' ';
+                    }
+                    formatted += numbers[i];
+                }
+
+                return formatted.trim();
+            }
+
+            // Gestion du focus pour améliorer l'expérience mobile
+            phoneInput.addEventListener('focus', function () {
+                // Si le champ est vide, ajouter le 0 initial
+                if (!this.value || this.value.trim() === '') {
+                    this.value = '0 ';
+                    this.setSelectionRange(2, 2); // Placer le curseur après "0 "
+                }
+            });
+
+            // Gestion du collage (paste)
+            phoneInput.addEventListener('paste', function (e) {
+                // Attendre que le contenu soit collé
+                setTimeout(() => {
+                    let rawValue = this.value.replace(/\D/g, '');
+
+                    if (rawValue.length > 10) {
+                        rawValue = rawValue.substring(0, 10);
+                    }
+
+                    this.value = formatPhoneNumber(rawValue);
+                }, 10);
+            });
+
+            // Forcer le clavier numérique sur mobile
+            phoneInput.setAttribute('inputmode', 'numeric');
+            phoneInput.setAttribute('pattern', '[0-9 ]*');
+        });
+
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -254,35 +358,43 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $("#designationCDE").prop("disabled", true);
+            // Récupérer les valeurs sélectionnées après une erreur
+            var selectedTypeCDE = $("#TypeCDE").val();
+            var selectedWilayaCDE = $("#wilayaCDE").val();
+            var selectedCentreCDE = $("#designationCDE").val();
 
-            function checkAndLoadCentres() {
-                var wilayaId = $("#wilayaCDE").val();
-                var typeId = $("#TypeCDE").val();
-
-                if (wilayaId && typeId) {
-                    loadCentres(wilayaId, typeId);
-                } else {
-                    $("#designationCDE").html("<option value=''>إختيار مركز تطوير المقاولاتية</option>")
-                        .prop("disabled", true);
-                }
+            // Si des valeurs existent, recharger les centres
+            if (selectedTypeCDE && selectedWilayaCDE) {
+                loadCentres(selectedWilayaCDE, selectedTypeCDE, selectedCentreCDE);
             }
 
-            function loadCentres(wilayaId, typeId) {
+            function loadCentres(wilayaId, typeId, selectedValue) {
                 $.getJSON("/Inscription/GetCentreDeveloppementEntrepreneuriatList", {
                     WilayaId: wilayaId,
-                    TypeCDEId: typeId
+                    TypeCDEId: typeId,
+                    selectedId: selectedValue
                 }, function (data) {
                     var options = "<option value=''>إختيار مركز تطوير المقاولاتية</option>";
                     $.each(data, function (i, item) {
-                        options += '<option value="' + item.value + '">' + item.text + '</option>';
+                        var selected = item.selected ? 'selected' : '';
+                        options += '<option value="' + item.value + '" ' + selected + '>' + item.text + '</option>';
                     });
                     $("#designationCDE").html(options).prop("disabled", false);
                 });
             }
-            // Écouter les changements sur les deux dropdowns
-            $("#wilayaCDE").change(checkAndLoadCentres);
-            $("#TypeCDE").change(checkAndLoadCentres);
+
+            // Écouter les changements
+            $("#wilayaCDE, #TypeCDE").change(function () {
+                var wilayaId = $("#wilayaCDE").val();
+                var typeId = $("#TypeCDE").val();
+
+                if (wilayaId && typeId) {
+                    loadCentres(wilayaId, typeId, null);
+                } else {
+                    $("#designationCDE").html("<option value=''>إختيار مركز تطوير المقاولاتية</option>")
+                        .prop("disabled", true);
+                }
+            });
         });
 
         $(document).ready(function () {
@@ -471,18 +583,6 @@
             });
         });
 
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            // Appliquer un masque au champ de numéro de téléphone
-            $('#NumTelephone').inputmask({
-                mask: "0 9 99 99 99 99", // Le masque pour afficher 0x xx xx xx
-                placeholder: "0 _ __ __ __ __", // Affiche un espace réservé
-                showMaskOnHover: false, // Ne montre pas le masque lorsque l'utilisateur survole
-                showMaskOnFocus: true // Montre le masque uniquement lorsque le champ est actif
-            });
-        });
     </script>
 
     <script>
