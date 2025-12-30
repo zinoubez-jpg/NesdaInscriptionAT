@@ -938,7 +938,7 @@ namespace Anade.Khadamat.Web.Controllers
             return View();
         }
 
-        public ApiBusinessResult CreateInscriptionPromoteurCreation(Inscription_Promoteur entity, CreateInscriptionVM model)
+        public ApiBusinessResult CreateInscriptionPromoteurCreationTest(Inscription_Promoteur entity, CreateInscriptionVM model)
         {
             ApiBusinessResult apiBusinessResult = new(false)
             {
@@ -1078,6 +1078,161 @@ namespace Anade.Khadamat.Web.Controllers
 
             return apiBusinessResult;
         }
+
+        // Dans CreateInscriptionPromoteurCreation méthode, ajoutez la journalisation :
+
+        public ApiBusinessResult CreateInscriptionPromoteurCreation(Inscription_Promoteur entity, CreateInscriptionVM model)
+        {
+            ApiBusinessResult apiBusinessResult = new(false)
+            {
+                Messages =
+                {
+                    new MessageResult
+                    {
+                        Message = "حدث خطأ غير معروف",
+                        MessageType = MessageType.Error
+                    }
+                }
+            };
+
+            // Log avant l'appel de la méthode
+            _logger.LogInformation("Début de CreateInscriptionPromoteurCreation pour le promoteur avec NIN: {NIN} et Email: {Email}",
+                entity?.NIN, entity?.EMAIL_P);
+
+            try
+            {
+                if (entity == null)
+                {
+                    _logger.LogError("Entité Inscription_Promoteur est null dans CreateInscriptionPromoteurCreation");
+                    return new ApiBusinessResult(false)
+                    {
+                        Messages = { new MessageResult { Message = "الهوية غير موجودة", MessageType = MessageType.Error } }
+                    };
+                }
+
+                var ninExistresult = _promoteurInscriptionBusinessService.Count(x => x.NIN == entity.NIN);
+                _logger.LogDebug("Vérification NIN: {NIN} - Résultat: {Count}", entity.NIN, ninExistresult);
+
+                if (ninExistresult == 0)
+                {
+                    var emailExistresult = _promoteurInscriptionBusinessService.Count(x => x.EMAIL_P == entity.EMAIL_P);
+                    _logger.LogDebug("Vérification Email: {Email} - Résultat: {Count}", entity.EMAIL_P, emailExistresult);
+
+                    if (emailExistresult == 0)
+                    {
+                        Inscription_Associes associer = new();
+                        Inscription_Detail_Dossier detail_dossier = new();
+
+                        detail_dossier.Date_Inscription = DateTime.Now;
+                        detail_dossier.ADR_E = entity.ADR_E;
+
+                        if (entity.Id_Commune_Siege_Social != null)
+                            detail_dossier.Inscription_CommuneId = (int)entity.Id_Commune_Siege_Social;
+                        else
+                            detail_dossier.Inscription_CommuneId = 1;
+
+                        detail_dossier.Adr_E_Arab = "";
+                        detail_dossier.Inscription_ActiviteId = 1;
+                        detail_dossier.Inscription_Type_FinancementId = 4;
+                        detail_dossier.Inscription_PNR_SuppId = 1;
+                        detail_dossier.Inscription_PhaseId = 1;
+
+                        associer.Inscription_Promoteur = entity;
+                        associer.Inscription_Detail_Dossier = detail_dossier;
+                        associer.Inscription_QualiteId = QualiteId.Gérant;
+                        entity.Inscription_CategorieId = CategorieId.NESDA;
+                        associer.Inscription_CategorieId = CategorieId.NESDA;
+
+                        var inscription_CategoriePase = _inscription_CategorieBusinesService.GetById(
+                            entity.Inscription_CategorieId,
+                            _inscription_CategorieBusinesService.GetDefaultLoadProperties());
+
+                        entity.Inscription_Categorie_PhaseId = inscription_CategoriePase.Inscription_PhaseId;
+
+                        CentreDeveloppementEntrepreneuriat cdeEle = _centreDeveloppementEntrepreneuriatBusinessService
+                            .GetById(model.CentreDeveloppementEntrepreneuriatId);
+
+                        // Log avant AddInscription
+                        _logger.LogInformation("Appel de AddInscription pour l'associé - Promoteur: {CodePromoteur}, CDE: {CdeId}",
+                            entity.CODE_P, model.CentreDeveloppementEntrepreneuriatId);
+
+                        var businessResult = _associesInscriptionBusinessService.AddInscription(associer, cdeEle);
+
+                        // Log après AddInscription
+                        _logger.LogInformation("Résultat de AddInscription: {Succeeded} - Messages: {MessageCount}",
+                            businessResult.Succeeded, businessResult.Messages?.Count ?? 0);
+
+                        if (businessResult.Succeeded)
+                        {
+                            apiBusinessResult = new ApiBusinessResult(businessResult.Succeeded) { };
+                            apiBusinessResult.Result = entity;
+                            _logger.LogInformation("AddInscription réussi pour le promoteur: {NIN}", entity.NIN);
+                        }
+                        else
+                        {
+                            apiBusinessResult = new ApiBusinessResult(false) { };
+                            if (businessResult.Messages != null)
+                            {
+                                foreach (var message in businessResult.Messages)
+                                {
+                                    apiBusinessResult.Messages.Add(new MessageResult
+                                    {
+                                        Message = message.Message,
+                                        MessageType = message.MessageType
+                                    });
+                                }
+                                _logger.LogError("AddInscription échoué pour {NIN}: {ErrorMessages}",
+                                    entity.NIN, string.Join("; ", businessResult.Messages.Select(m => m.Message)));
+                            }
+                            else
+                            {
+                                apiBusinessResult.Messages.Add(new MessageResult
+                                {
+                                    Message = "حدث خطأ غير معروف",
+                                    MessageType = MessageType.Error
+                                });
+                                _logger.LogError("AddInscription échoué sans messages pour {NIN}", entity.NIN);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Email déjà existant: {Email}", entity.EMAIL_P);
+                        apiBusinessResult = new ApiBusinessResult(false);
+                        apiBusinessResult.Messages.Add(new MessageResult
+                        {
+                            Message = "عنوان البريد الإلكتروني الذي أدخلته مستخدم في نظامنا بحساب آخر",
+                            MessageType = MessageType.Error
+                        });
+                    }
+                }
+                else
+                {
+                    _logger.LogWarning("NIN déjà existant: {NIN}", entity.NIN);
+                    apiBusinessResult = new ApiBusinessResult(false);
+                    apiBusinessResult.Messages.Add(new MessageResult
+                    {
+                        Message = "الرقم التعريفي الوطني مسجل مسبقاً",
+                        MessageType = MessageType.Warning
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erreur inattendue dans CreateInscriptionPromoteurCreation pour NIN: {NIN}", entity?.NIN);
+                apiBusinessResult = new ApiBusinessResult(false);
+                apiBusinessResult.Messages.Add(new MessageResult
+                {
+                    Message = "حدث خطأ غير متوقع في النظام",
+                    MessageType = MessageType.Error
+                });
+            }
+
+            _logger.LogInformation("Fin de CreateInscriptionPromoteurCreation - Succès: {Succeeded}", apiBusinessResult.Succeeded);
+            return apiBusinessResult;
+        }
+
+
 
         [HttpGet]
         [AllowAnonymous]
@@ -1304,7 +1459,8 @@ namespace Anade.Khadamat.Web.Controllers
         {
             var centres = _centreDeveloppementEntrepreneuriatBusinessService.GetAll()
                 .Where(x => x.WilayaId == WilayaId && x.TypeCentreDeveloppementEntrepreneuriatId == TypeCDEId)
-                .Select(c => new {
+                .Select(c => new
+                {
                     value = c.Id,
                     text = c.DesignationAr,
                     selected = (selectedId.HasValue && c.Id == selectedId.Value)
