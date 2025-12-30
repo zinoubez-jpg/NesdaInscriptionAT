@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using Anade.Domain.Core.ValueTypeExtensions;
 using System.Linq;
+using Microsoft.Extensions.Logging; // Ajoutez cette ligne en haut
 
 namespace Anade.Khadamat.Business
 {
@@ -25,6 +26,7 @@ namespace Anade.Khadamat.Business
         protected readonly Detail_DossierInscriptionBusinesService _detail_DossierInscriptionBusinessService;
         protected readonly Identifiant_SIAuthentificationBusinesService _identifiant_SIAuthentificationBusinesService;
         protected readonly PromoteurInscriptionBusinesService _promoteurInscriptionBusinessService;
+        protected readonly ILogger<AssociesInscriptionBusinesService> _logger;
 
         public AssociesInscriptionBusinesService(IUnitOfWork<InscriptionDbContext> unitOfWork
             , CompteAuthentificationBusinesService compteAuthentificationBusinesService
@@ -39,6 +41,7 @@ namespace Anade.Khadamat.Business
             , Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService
             , Identifiant_SIAuthentificationBusinesService identifiant_SIAuthentificationBusinesService
             , PromoteurInscriptionBusinesService promoteurInscriptionBusinessService
+            , ILogger<AssociesInscriptionBusinesService> logger // Ajoutez ce paramètre
             ) : base(unitOfWork)
         {
             _compteAuthentificationBusinesService = compteAuthentificationBusinesService;
@@ -53,6 +56,7 @@ namespace Anade.Khadamat.Business
             _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
             _identifiant_SIAuthentificationBusinesService = identifiant_SIAuthentificationBusinesService;
             _promoteurInscriptionBusinessService = promoteurInscriptionBusinessService;
+            _logger = logger; // Initialisez le logger
         }
 
         public override Expression<Func<Inscription_Associes, object>>[] GetDefaultLoadProperties()
@@ -139,41 +143,6 @@ namespace Anade.Khadamat.Business
             base.OnAdding(entity);
         }
 
-        public override BusinessResult Add(Inscription_Associes entity)
-        {
-            BusinessResult businessResult;
-            try
-            {
-                OnAdding(entity);
-                _repository.Add(entity);
-
-                if (_unitOfWork.SaveChanges() == 0)
-                {
-                    throw new DataNotUpdatedException("Opération non enregsitrée niveau Promoteur!");
-                }
-
-                OnAdded(entity);
-
-                businessResult = BusinessResult.Success;
-            }
-            catch (DataNotUpdatedException ex)
-            {
-                businessResult = new BusinessResult(false);
-                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
-            }
-            catch (BusinessException ex)
-            {
-                businessResult = new BusinessResult(false);
-                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
-            }
-            catch (Exception ex)
-            {
-                businessResult = new BusinessResult(false);
-                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
-            }
-
-            return businessResult;
-        }
 
         private Authentification_Compte Create_Compte(Inscription_Associes entityAssocies, CentreDeveloppementEntrepreneuriat cdeEle)
         {
@@ -279,7 +248,7 @@ namespace Anade.Khadamat.Business
             return businessResult;
         }
 
-        public BusinessResult AddInscription(Inscription_Associes entity, CentreDeveloppementEntrepreneuriat cdeEle)
+        public BusinessResult AddInscriptionTest(Inscription_Associes entity, CentreDeveloppementEntrepreneuriat cdeEle)
         {
             BusinessResult businessResult;
 
@@ -320,6 +289,209 @@ namespace Anade.Khadamat.Business
 
             return businessResult;
         }
+
+        public BusinessResult AddTest(Inscription_Associes entity)
+        {
+            BusinessResult businessResult;
+            try
+            {
+                OnAdding(entity);
+                _repository.Add(entity);
+
+                if (_unitOfWork.SaveChanges() == 0)
+                {
+                    throw new DataNotUpdatedException("Opération non enregsitrée niveau Promoteur!");
+                }
+
+                OnAdded(entity);
+
+                businessResult = BusinessResult.Success;
+            }
+            catch (DataNotUpdatedException ex)
+            {
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
+            }
+            catch (BusinessException ex)
+            {
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
+            }
+            catch (Exception ex)
+            {
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult { Message = ex.Message, MessageType = MessageType.Warning });
+            }
+
+            return businessResult;
+        }
+
+
+
+
+        public BusinessResult AddInscription(Inscription_Associes entity, CentreDeveloppementEntrepreneuriat cdeEle)
+        {
+            BusinessResult businessResult;
+
+            // Log avant Add(entity)
+            _logger.LogInformation("Début de AddInscription - CodePromoteur: {Code}, CDE: {CdeName}",
+                entity.Inscription_Promoteur?.CODE_P, cdeEle?.DesignationAr);
+
+            // Log détaillé avant l'appel de Add
+            _logger.LogDebug("Détails avant Add - NIN: {NIN}, DateNaissance: {DateNaissance}, CommuneId: {CommuneId}",
+                entity.Inscription_Promoteur?.NIN,
+                entity.Inscription_Promoteur?.DDN_P,
+                entity.Inscription_Promoteur?.CommuneId);
+
+            var addResult = Add(entity);
+
+            // Log après Add(entity)
+            _logger.LogInformation("Résultat de Add(entity): {Succeeded}", addResult.Succeeded);
+
+            if (addResult.Succeeded)
+            {
+                try
+                {
+                    // Log avant Create_Compte
+                    _logger.LogDebug("Création du compte pour le promoteur: {CodePromoteur}",
+                        entity.Inscription_Promoteur?.CODE_P);
+
+                    Authentification_Compte entityCompte = Create_Compte(entity, cdeEle);
+
+                    // Log avant Add_Compte
+                    _logger.LogInformation("Appel de Add_Compte pour le code: {CodePromoteur}",
+                        entity.Inscription_Promoteur?.CODE_P);
+
+                    var addCompteResult = Add_Compte(entityCompte);
+
+                    // Log après Add_Compte
+                    _logger.LogInformation("Résultat de Add_Compte: {Succeeded}", addCompteResult.Succeeded);
+
+                    if (!addCompteResult.Succeeded)
+                    {
+                        _logger.LogWarning("Add_Compte échoué, tentative de suppression de l'associé");
+
+                        var deleteResult = DeleteAssocie(entity);
+                        _logger.LogInformation("Résultat de DeleteAssocie après échec Add_Compte: {Succeeded}",
+                            deleteResult.Succeeded);
+
+                        if (!deleteResult.Succeeded)
+                        {
+                            _logger.LogError("Échec de suppression de l'associé après échec Add_Compte pour: {CodePromoteur}",
+                                entity.Inscription_Promoteur?.CODE_P);
+                            businessResult = BusinessResult.Failure;
+                            businessResult.Messages.Add(new MessageResult
+                            {
+                                Message = "حدث خطأ، يُرجى إعادة المحاولة مرة أخرى ",
+                                MessageType = MessageType.Warning
+                            });
+                        }
+                        else
+                        {
+                            businessResult = BusinessResult.Failure;
+                            _logger.LogWarning("Associé supprimé avec succès après échec Add_Compte");
+                        }
+                    }
+                    else
+                    {
+                        businessResult = BusinessResult.Success;
+                        _logger.LogInformation("AddInscription complété avec succès pour: {CodePromoteur}",
+                            entity.Inscription_Promoteur?.CODE_P);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Exception pendant AddInscription pour: {CodePromoteur}",
+                        entity.Inscription_Promoteur?.CODE_P);
+
+                    // Log avant DeleteAssocie
+                    _logger.LogWarning("Exception capturée, tentative de suppression de l'associé");
+
+                    var deleteResult = DeleteAssocie(entity);
+
+                    // Log après DeleteAssocie
+                    _logger.LogInformation("Résultat de DeleteAssocie après exception: {Succeeded}",
+                        deleteResult.Succeeded);
+
+                    businessResult = BusinessResult.Failure;
+                }
+            }
+            else
+            {
+                _logger.LogError("Add(entity) échoué dans AddInscription - Messages: {Messages}",
+                    string.Join("; ", addResult.Messages?.Select(m => m.Message) ?? new List<string>()));
+                businessResult = BusinessResult.Failure;
+            }
+
+            _logger.LogInformation("Fin de AddInscription - Résultat final: {Succeeded}", businessResult.Succeeded);
+            return businessResult;
+        }
+
+        // Modifiez aussi la méthode Add pour y ajouter des logs
+        public override BusinessResult Add(Inscription_Associes entity)
+        {
+            BusinessResult businessResult;
+
+            _logger.LogDebug("Début de Add pour AssociesInscription - PromoteurId: {PromoteurId}",
+                entity.Inscription_PromoteurId);
+
+            try
+            {
+                OnAdding(entity);
+                _repository.Add(entity);
+
+                _logger.LogDebug("Entity ajouté au repository, sauvegarde des changements");
+
+                if (_unitOfWork.SaveChanges() == 0)
+                {
+                    _logger.LogError("Aucun changement sauvegardé dans l'unité de travail pour PromoteurId: {PromoteurId}",
+                        entity.Inscription_PromoteurId);
+                    throw new DataNotUpdatedException("Opération non enregsitrée niveau Promoteur!");
+                }
+
+                OnAdded(entity);
+
+                businessResult = BusinessResult.Success;
+                _logger.LogInformation("Add réussi pour AssociesInscription - Id: {Id}", entity.Id);
+            }
+            catch (DataNotUpdatedException ex)
+            {
+                _logger.LogError(ex, "DataNotUpdatedException dans Add pour PromoteurId: {PromoteurId}",
+                    entity.Inscription_PromoteurId);
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult
+                {
+                    Message = ex.Message,
+                    MessageType = MessageType.Warning
+                });
+            }
+            catch (BusinessException ex)
+            {
+                _logger.LogWarning(ex, "BusinessException dans Add: {Message}", ex.Message);
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult
+                {
+                    Message = ex.Message,
+                    MessageType = MessageType.Warning
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception inattendue dans Add pour PromoteurId: {PromoteurId}",
+                    entity.Inscription_PromoteurId);
+                businessResult = new BusinessResult(false);
+                businessResult.Messages.Add(new MessageResult
+                {
+                    Message = ex.Message,
+                    MessageType = MessageType.Warning
+                });
+            }
+
+            return businessResult;
+        }
+
+
+
 
         protected void DeleteAssocieTest(Inscription_Associes entity)
         {
