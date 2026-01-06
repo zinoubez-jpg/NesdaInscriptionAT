@@ -478,6 +478,8 @@ namespace Anade.Khadamat.Web.Controllers
 
                     entity.CommuneId = _inscription_CommuneBusinesService.GetByCode(commune.Code).Id;
 
+                    
+
                     entity.NUM_ACT_P = HttpUtility.UrlEncode(model.NIN.Substring(9, 5));
 
                     entity.ADR_P = "";
