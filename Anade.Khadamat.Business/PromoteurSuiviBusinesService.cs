@@ -69,7 +69,11 @@ namespace Anade.Khadamat.Business
             if (promoteurs == null || !promoteurs.Any())
                 return new List<Suivi_Promoteur>();
 
-            return GetAllFiltered(x => promoteurs.Any(p => p.CODE_P == x.CODE_P) && x.AVOIR_EXTENSION == value);
+            // Extraire les codes en mémoire
+            var codesPromoteurs = promoteurs.Select(p => p.CODE_P).ToList();
+
+            // Utiliser Contains qui peut être traduit en SQL IN clause
+            return GetAllFiltered(x => codesPromoteurs.Contains(x.CODE_P) && x.AVOIR_EXTENSION == value);
         }
 
         public List<Suivi_Promoteur> GetAllFilteredByInfosPromoteur(Inscription_Promoteur promoteur, bool value)

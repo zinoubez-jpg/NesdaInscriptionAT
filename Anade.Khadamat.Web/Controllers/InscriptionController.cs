@@ -172,7 +172,7 @@ namespace Anade.Khadamat.Web.Controllers
                     var bResult = new BusinessResult();
                     bResult.Messages.Add(new MessageResult { Message = "يرجى إختيار نوع الفئة بشكل صحيح", MessageType = MessageType.Error });
                     TempData["Message"] = bResult.ToBootstrapAlerts();
-                    InitializeListViewBags();
+                    InitializeListViewBags(model);
                     return View(model);
                 }
 
@@ -181,7 +181,7 @@ namespace Anade.Khadamat.Web.Controllers
                 if (!isRecaptchaValid)
                 {
                     ModelState.AddModelError("Recaptcha", "لم تتمكن من اجتياز اختبار الـ CAPTCHA. يرجى المحاولة مرة أخرى.");
-                    InitializeListViewBags();
+                    InitializeListViewBags(model);
 
                     var bR = new BusinessResult();
                     var msgR = new MessageResult()
@@ -214,7 +214,7 @@ namespace Anade.Khadamat.Web.Controllers
                                 MessageType = MessageType.Error
                             });
                             TempData["Message"] = bResult.ToBootstrapAlerts();
-                            InitializeListViewBags();
+                            InitializeListViewBags(model);
                             return View(model);
                         }
                     }
@@ -235,7 +235,7 @@ namespace Anade.Khadamat.Web.Controllers
                                 MessageType = MessageType.Error
                             });
                             TempData["Message"] = bResult.ToBootstrapAlerts();
-                            InitializeListViewBags();
+                            InitializeListViewBags(model);
                             return View(model);
                         }
 
@@ -245,7 +245,7 @@ namespace Anade.Khadamat.Web.Controllers
                     if (_context.Inscriptions.Any(u => u.Email == model.Email && u.IsEmailVerified))
                     {
                         ModelState.AddModelError("Email", "البريد الإلكتروني الذي أدخلته مرتبط بحساب موجود. يرجى استخدام بريد إلكتروني آخر");
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         var bR = new BusinessResult();
                         var msgR = new MessageResult()
                         {
@@ -268,7 +268,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                         TempData["Message"] = bResult.ToBootstrapAlerts();
 
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
 
                         return View(model);
 
@@ -284,7 +284,7 @@ namespace Anade.Khadamat.Web.Controllers
                         });
 
                         TempData["Message"] = bResult.ToBootstrapAlerts();
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         return View(model);
                     }
 
@@ -302,7 +302,7 @@ namespace Anade.Khadamat.Web.Controllers
                         var bResult = new BusinessResult();
                         bResult.Messages.Add(new MessageResult { Message = "حجم الملف يتجاوز الحد المسموح به", MessageType = MessageType.Error });
                         TempData["Message"] = bResult.ToBootstrapAlerts();
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         return View(model);
                     }
 
@@ -316,7 +316,7 @@ namespace Anade.Khadamat.Web.Controllers
                         });
 
                         TempData["Message"] = bResult.ToBootstrapAlerts();
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         return View(model);
                     }
 
@@ -342,6 +342,10 @@ namespace Anade.Khadamat.Web.Controllers
                     }
                     else
                     {
+                        //var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == apiResult);
+                        //antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
+                        //agence = _agenceBusinessService.GetById(antenne.AgenceId);
+
                         antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
                         agence = _agenceBusinessService.GetById(antenne.AgenceId);
                     }
@@ -419,7 +423,7 @@ namespace Anade.Khadamat.Web.Controllers
                         return RedirectToAction(nameof(SuccesInscription));
                     }
                     TempData["Message"] = businessResult.ToBootstrapAlerts();
-                    InitializeListViewBags();
+                    InitializeListViewBags(model);
                     return View(model);
 
                 }
@@ -436,7 +440,7 @@ namespace Anade.Khadamat.Web.Controllers
                 if (!isRecaptchaValid)
                 {
                     ModelState.AddModelError("Recaptcha", "لم تتمكن من اجتياز اختبار الـ CAPTCHA. يرجى المحاولة مرة أخرى.");
-                    InitializeListViewBags();
+                    InitializeListViewBags(model);
 
                     var bR = new BusinessResult();
                     var msgR = new MessageResult()
@@ -447,9 +451,28 @@ namespace Anade.Khadamat.Web.Controllers
 
                     bR.Messages.Add(msgR);
                     TempData["Message"] = bR.ToBootstrapAlerts();
-                    InitializeListViewBags();
+                    InitializeListViewBags(model);
                     return View(model);
                 }
+
+                if (model.CentreDeveloppementEntrepreneuriatId == 1)
+                {
+                    ModelState.AddModelError("CDE", "لم تقم باختياز مركز تطوير المقاولاتية. يرجى المحاولة مرة أخرى.");
+                    InitializeListViewBags(model);
+
+                    var bR = new BusinessResult();
+                    var msgR = new MessageResult()
+                    {
+                        Message = "لم تقم باختياز مركز تطوير المقاولاتية. يرجى المحاولة مرة أخرى.",
+                        MessageType = MessageType.Error,
+                    };
+
+                    bR.Messages.Add(msgR);
+                    TempData["Message"] = bR.ToBootstrapAlerts();
+                    InitializeListViewBags(model);
+                    return View(model);
+                }
+
 
                 if (ModelState.IsValid)
                 {
@@ -476,7 +499,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                     var commune = _communeBusinessService.GetById(model.CommuneNaissanceId);
 
-                    entity.CommuneId = _inscription_CommuneBusinesService.GetByCode(commune.Code).Id;
+                    entity.CommuneId = _inscription_CommuneBusinesService.GetByCode(commune.NouveauCode).Id;
 
                     
 
@@ -487,13 +510,13 @@ namespace Anade.Khadamat.Web.Controllers
 
                     var commune2 = _communeBusinessService.GetById(model.CommuneResidenceId);
 
-                    entity.CommuneHabId = _inscription_CommuneBusinesService.GetByCode(commune2.Code).Id;
+                    entity.CommuneHabId = _inscription_CommuneBusinesService.GetByCode(commune2.NouveauCode).Id;
 
                     // entity.Inscription_CategorieId
 
                     var commune3 = _communeBusinessService.GetById(model.CommuneSeigeSocialId);
 
-                    entity.Id_Commune_Siege_Social = _inscription_CommuneBusinesService.GetByCode(commune3.Code).Id;
+                    entity.Id_Commune_Siege_Social = _inscription_CommuneBusinesService.GetByCode(commune3.NouveauCode).Id;
 
                     entity.ADR_E = "";
 
@@ -550,7 +573,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                         bR.Messages.Add(msgR);
                         TempData["Message"] = bR.ToBootstrapAlerts();
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         return View(model);
                     }
 
@@ -566,7 +589,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                         bR.Messages.Add(msgR);
                         TempData["Message"] = bR.ToBootstrapAlerts();
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         return View(model);
                     }
 
@@ -584,7 +607,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                             bR.Messages.Add(msgR);
                             TempData["Message"] = bR.ToBootstrapAlerts();
-                            InitializeListViewBags();
+                            InitializeListViewBags(model);
                             return View(model);
                         }
                     }
@@ -599,7 +622,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                         bR.Messages.Add(msgR);
                         TempData["Message"] = bR.ToBootstrapAlerts();
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         return View(model);
                     }
 
@@ -616,11 +639,12 @@ namespace Anade.Khadamat.Web.Controllers
 
                         bR.Messages.Add(msgR);
                         TempData["Message"] = bR.ToBootstrapAlerts();
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         return View(model);
                     }
 
-                    var apiBusinessResult = CreateInscriptionPromoteurCreation(entity, model);
+                    ApiBusinessResult apiBusinessResult = CreateInscriptionPromoteurCreation(entity, model);
+
 
                     if (!apiBusinessResult.Succeeded)
                     {
@@ -631,7 +655,7 @@ namespace Anade.Khadamat.Web.Controllers
                             bR.Messages.Add(message);
                         }
                         TempData["Message"] = bR.ToBootstrapAlerts();
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         return View(model);
                     }
 
@@ -639,7 +663,7 @@ namespace Anade.Khadamat.Web.Controllers
                     if (_context.Inscriptions.Any(u => u.Email == model.Email && u.IsEmailVerified))
                     {
                         ModelState.AddModelError("Email", "البريد الإلكتروني الذي أدخلته مرتبط بحساب موجود. يرجى استخدام بريد إلكتروني آخر");
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         var bR = new BusinessResult();
                         var msgR = new MessageResult()
                         {
@@ -660,7 +684,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                         TempData["Message"] = bResult.ToBootstrapAlerts();
 
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
 
                         return View(model);
                     }
@@ -675,15 +699,9 @@ namespace Anade.Khadamat.Web.Controllers
                         });
 
                         TempData["Message"] = bResult.ToBootstrapAlerts();
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         return View(model);
                     }
-
-                    //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
-
-                    //string NamesOfCNIPdfPath = ProcessUploadedFileGuidName(model, model.CopieCNIPdf, "_CNI");
-
-                    //string copieCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
                     string NamesOfCNIPdfPath = ProcessUploadedFile(model, model.CopieCNIPdf, "_CNI", "CNIFolder");
 
@@ -693,7 +711,7 @@ namespace Anade.Khadamat.Web.Controllers
                         var bResult = new BusinessResult();
                         bResult.Messages.Add(new MessageResult { Message = "حجم الملف يتجاوز الحد المسموح به", MessageType = MessageType.Error });
                         TempData["Message"] = bResult.ToBootstrapAlerts();
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         return View(model);
                     }
 
@@ -707,15 +725,9 @@ namespace Anade.Khadamat.Web.Controllers
                         });
 
                         TempData["Message"] = bResult.ToBootstrapAlerts();
-                        InitializeListViewBags();
+                        InitializeListViewBags(model);
                         return View(model);
                     }
-
-                    //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
-
-                    //string NamesOfRCCFCAPdfPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeRCCFCAPdf, "_Dp");
-
-                    //string copieDiplomeRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
                     string NamesOfRCCFCAPdfPath = ProcessUploadedFile(model, model.CopieDiplomeRCCFCAPdf, "_Dp", "DiplomeFolder");
 
@@ -730,7 +742,7 @@ namespace Anade.Khadamat.Web.Controllers
                             var bResult = new BusinessResult();
                             bResult.Messages.Add(new MessageResult { Message = "حجم الملف يتجاوز الحد المسموح به", MessageType = MessageType.Error });
                             TempData["Message"] = bResult.ToBootstrapAlerts();
-                            InitializeListViewBags();
+                            InitializeListViewBags(model);
                             return View(model);
                         }
 
@@ -744,20 +756,12 @@ namespace Anade.Khadamat.Web.Controllers
                             });
 
                             TempData["Message"] = bResult.ToBootstrapAlerts();
-                            InitializeListViewBags();
+                            InitializeListViewBags(model);
                             return View(model);
                         }
 
-                        //NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
-
-                        //NamesOfCDEPath = ProcessUploadedFileGuidName(model, model.CopieDiplomeCDEPdf, "_DpCDE");
-
-                        //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
-
                         NamesOfCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
                     }
-
-                    //string copieDiplomeCDEPath = ProcessUploadedFile(model, model.CopieDiplomeCDEPdf, "_DpCDE", "DiplomeCDEFolder");
 
                     var communeSS = _communeBusinessService.GetById(model.CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
 
@@ -773,9 +777,6 @@ namespace Anade.Khadamat.Web.Controllers
 
                     else
                     {
-                        //antenne = _antenneBusinessService.GetSingle(x => x.Code == apiResult);
-                        //agence = _agenceBusinessService.GetById(antenne.AgenceId);
-
                         var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
                         antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
                         agence = _agenceBusinessService.GetById(antenne.AgenceId);
@@ -858,7 +859,7 @@ namespace Anade.Khadamat.Web.Controllers
                     }
 
                     TempData["Message"] = businessResult.ToBootstrapAlerts();
-                    InitializeListViewBags();
+                    InitializeListViewBags(model);
                     return View(model);
                 }
 
@@ -874,12 +875,12 @@ namespace Anade.Khadamat.Web.Controllers
 
                     bR.Messages.Add(msgR);
                     TempData["Message"] = bR.ToBootstrapAlerts();
-                    InitializeListViewBags();
+                    InitializeListViewBags(model);
                     return View(model);
                 }
             }
 
-            InitializeListViewBags();
+            InitializeListViewBags(model);
             return View(model);
         }
 
@@ -939,9 +940,19 @@ namespace Anade.Khadamat.Web.Controllers
             return View();
         }
 
-        public ApiBusinessResult CreateInscriptionPromoteurCreation(Inscription_Promoteur entity, CreateInscriptionVM model)
+        public ApiBusinessResult CreateInscriptionPromoteurCreationTest(Inscription_Promoteur entity, CreateInscriptionVM model)
         {
-            ApiBusinessResult apiBusinessResult;
+            ApiBusinessResult apiBusinessResult = new(false)
+            {
+                Messages =
+                {
+                    new MessageResult
+                    {
+                        Message = "حدث خطأ غير معروف",
+                        MessageType = MessageType.Error
+                    }
+                }
+            };
 
             if (entity == null)
                 return new ApiBusinessResult(false) { Messages = { new MessageResult { Message = "الهوية غير موجودة", MessageType = MessageType.Error } } };
@@ -959,6 +970,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                     detail_dossier.Date_Inscription = DateTime.Now;
                     detail_dossier.ADR_E = entity.ADR_E;
+
                     if (entity.Id_Commune_Siege_Social != null)
                         detail_dossier.Inscription_CommuneId = (int)entity.Id_Commune_Siege_Social;
                     else
@@ -975,24 +987,51 @@ namespace Anade.Khadamat.Web.Controllers
                     // Ajouter la relation entre la table PROMOTEUR et Detail_dossier dans la table  associer
                     associer.Inscription_Promoteur = entity;
                     associer.Inscription_Detail_Dossier = detail_dossier;
-                    associer.Inscription_QualiteId = 2;
+                    associer.Inscription_QualiteId = QualiteId.Gérant;
 
                     // Pour test CHOMEUR valeur = 2
                     // associer.Inscription_CategorieId = entity.Inscription_CategorieId;
                     entity.Inscription_CategorieId = CategorieId.NESDA;
                     associer.Inscription_CategorieId = CategorieId.NESDA;
 
-
                     var inscription_CategoriePase = _inscription_CategorieBusinesService.GetById(entity.Inscription_CategorieId, _inscription_CategorieBusinesService.GetDefaultLoadProperties());
 
                     entity.Inscription_Categorie_PhaseId = inscription_CategoriePase.Inscription_PhaseId;
 
-                    var businessResult = _promoteurInscriptionBusinessService.Add(entity);
+                    CentreDeveloppementEntrepreneuriat cdeEle = _centreDeveloppementEntrepreneuriatBusinessService.GetById(model.CentreDeveloppementEntrepreneuriatId);
+
+                    var businessResult = _associesInscriptionBusinessService.AddInscription(associer, cdeEle);
 
                     if (businessResult.Succeeded)
                     {
-                        apiBusinessResult = new ApiBusinessResult(businessResult.Succeeded) { };
-                        apiBusinessResult.Result = entity;
+                        if (businessResult.Succeeded)
+                        {
+                            apiBusinessResult = new ApiBusinessResult(businessResult.Succeeded) { };
+                            apiBusinessResult.Result = entity;
+                        }
+                        else
+                        {
+                            apiBusinessResult = new ApiBusinessResult(false) { };
+                            if (businessResult.Messages != null)
+                            {
+                                foreach (var message in businessResult.Messages)
+                                {
+                                    apiBusinessResult.Messages.Add(new MessageResult
+                                    {
+                                        Message = message.Message,
+                                        MessageType = message.MessageType
+                                    });
+                                }
+                            }
+                            else
+                            {
+                                apiBusinessResult.Messages.Add(new MessageResult
+                                {
+                                    Message = "حدث خطأ غير معروف",
+                                    MessageType = MessageType.Error
+                                });
+                            }
+                        }
                     }
                     else
                     {
@@ -1042,6 +1081,161 @@ namespace Anade.Khadamat.Web.Controllers
             return apiBusinessResult;
         }
 
+        // Dans CreateInscriptionPromoteurCreation méthode, ajoutez la journalisation :
+
+        public ApiBusinessResult CreateInscriptionPromoteurCreation(Inscription_Promoteur entity, CreateInscriptionVM model)
+        {
+            ApiBusinessResult apiBusinessResult = new(false)
+            {
+                Messages =
+                {
+                    new MessageResult
+                    {
+                        Message = "حدث خطأ غير معروف",
+                        MessageType = MessageType.Error
+                    }
+                }
+            };
+
+            // Log avant l'appel de la méthode
+            _logger.LogInformation("Début de CreateInscriptionPromoteurCreation pour le promoteur avec NIN: {NIN} et Email: {Email}",
+                entity?.NIN, entity?.EMAIL_P);
+
+            try
+            {
+                if (entity == null)
+                {
+                    _logger.LogError("Entité Inscription_Promoteur est null dans CreateInscriptionPromoteurCreation");
+                    return new ApiBusinessResult(false)
+                    {
+                        Messages = { new MessageResult { Message = "الهوية غير موجودة", MessageType = MessageType.Error } }
+                    };
+                }
+
+                var ninExistresult = _promoteurInscriptionBusinessService.Count(x => x.NIN == entity.NIN);
+                _logger.LogDebug("Vérification NIN: {NIN} - Résultat: {Count}", entity.NIN, ninExistresult);
+
+                if (ninExistresult == 0)
+                {
+                    var emailExistresult = _promoteurInscriptionBusinessService.Count(x => x.EMAIL_P == entity.EMAIL_P);
+                    _logger.LogDebug("Vérification Email: {Email} - Résultat: {Count}", entity.EMAIL_P, emailExistresult);
+
+                    if (emailExistresult == 0)
+                    {
+                        Inscription_Associes associer = new();
+                        Inscription_Detail_Dossier detail_dossier = new();
+
+                        detail_dossier.Date_Inscription = DateTime.Now;
+                        detail_dossier.ADR_E = entity.ADR_E;
+
+                        if (entity.Id_Commune_Siege_Social != null)
+                            detail_dossier.Inscription_CommuneId = (int)entity.Id_Commune_Siege_Social;
+                        else
+                            detail_dossier.Inscription_CommuneId = 1;
+
+                        detail_dossier.Adr_E_Arab = "";
+                        detail_dossier.Inscription_ActiviteId = 1;
+                        detail_dossier.Inscription_Type_FinancementId = 4;
+                        detail_dossier.Inscription_PNR_SuppId = 1;
+                        detail_dossier.Inscription_PhaseId = 1;
+
+                        associer.Inscription_Promoteur = entity;
+                        associer.Inscription_Detail_Dossier = detail_dossier;
+                        associer.Inscription_QualiteId = QualiteId.Gérant;
+                        entity.Inscription_CategorieId = CategorieId.NESDA;
+                        associer.Inscription_CategorieId = CategorieId.NESDA;
+
+                        var inscription_CategoriePase = _inscription_CategorieBusinesService.GetById(
+                            entity.Inscription_CategorieId,
+                            _inscription_CategorieBusinesService.GetDefaultLoadProperties());
+
+                        entity.Inscription_Categorie_PhaseId = inscription_CategoriePase.Inscription_PhaseId;
+
+                        CentreDeveloppementEntrepreneuriat cdeEle = _centreDeveloppementEntrepreneuriatBusinessService
+                            .GetById(model.CentreDeveloppementEntrepreneuriatId);
+
+                        // Log avant AddInscription
+                        _logger.LogInformation("Appel de AddInscription pour l'associé - Promoteur: {CodePromoteur}, CDE: {CdeId}",
+                            entity.CODE_P, model.CentreDeveloppementEntrepreneuriatId);
+
+                        var businessResult = _associesInscriptionBusinessService.AddInscription(associer, cdeEle);
+
+                        // Log après AddInscription
+                        _logger.LogInformation("Résultat de AddInscription: {Succeeded} - Messages: {MessageCount}",
+                            businessResult.Succeeded, businessResult.Messages?.Count ?? 0);
+
+                        if (businessResult.Succeeded)
+                        {
+                            apiBusinessResult = new ApiBusinessResult(businessResult.Succeeded) { };
+                            apiBusinessResult.Result = entity;
+                            _logger.LogInformation("AddInscription réussi pour le promoteur: {NIN}", entity.NIN);
+                        }
+                        else
+                        {
+                            apiBusinessResult = new ApiBusinessResult(false) { };
+                            if (businessResult.Messages != null)
+                            {
+                                foreach (var message in businessResult.Messages)
+                                {
+                                    apiBusinessResult.Messages.Add(new MessageResult
+                                    {
+                                        Message = message.Message,
+                                        MessageType = message.MessageType
+                                    });
+                                }
+                                _logger.LogError("AddInscription échoué pour {NIN}: {ErrorMessages}",
+                                    entity.NIN, string.Join("; ", businessResult.Messages.Select(m => m.Message)));
+                            }
+                            else
+                            {
+                                apiBusinessResult.Messages.Add(new MessageResult
+                                {
+                                    Message = "حدث خطأ غير معروف",
+                                    MessageType = MessageType.Error
+                                });
+                                _logger.LogError("AddInscription échoué sans messages pour {NIN}", entity.NIN);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Email déjà existant: {Email}", entity.EMAIL_P);
+                        apiBusinessResult = new ApiBusinessResult(false);
+                        apiBusinessResult.Messages.Add(new MessageResult
+                        {
+                            Message = "عنوان البريد الإلكتروني الذي أدخلته مستخدم في نظامنا بحساب آخر",
+                            MessageType = MessageType.Error
+                        });
+                    }
+                }
+                else
+                {
+                    _logger.LogWarning("NIN déjà existant: {NIN}", entity.NIN);
+                    apiBusinessResult = new ApiBusinessResult(false);
+                    apiBusinessResult.Messages.Add(new MessageResult
+                    {
+                        Message = "الرقم التعريفي الوطني مسجل مسبقاً",
+                        MessageType = MessageType.Warning
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erreur inattendue dans CreateInscriptionPromoteurCreation pour NIN: {NIN}", entity?.NIN);
+                apiBusinessResult = new ApiBusinessResult(false);
+                apiBusinessResult.Messages.Add(new MessageResult
+                {
+                    Message = "حدث خطأ غير متوقع في النظام",
+                    MessageType = MessageType.Error
+                });
+            }
+
+            _logger.LogInformation("Fin de CreateInscriptionPromoteurCreation - Succès: {Succeeded}", apiBusinessResult.Succeeded);
+            return apiBusinessResult;
+        }
+
+
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ConfirmationCompte()
@@ -1050,7 +1244,7 @@ namespace Anade.Khadamat.Web.Controllers
         }
 
         #region Helper Methods
-        private void InitializeListViewBags()
+        private void InitializeListViewBags(CreateInscriptionVM model = null)
         {
             var genres = _genreBusinessService.GetAll();
             var situationFamiliales = _situationFamilialeBusinessService.GetAll();
@@ -1074,6 +1268,78 @@ namespace Anade.Khadamat.Web.Controllers
             ViewBag.WilayaCentreDeveloppementEntrepreneuriatId = new SelectList(wilayas, nameof(Wilaya.Id), nameof(Wilaya.DisplayNameAr));
             ViewBag.TypeCentreDeveloppementEntrepreneuriatId = new SelectList(typesCentreDeveloppementEntrepreneuriat, nameof(TypeCentreDeveloppementEntrepreneuriat.Id), nameof(TypeCentreDeveloppementEntrepreneuriat.DesignationAr));
             ViewBag.CentreDeveloppementEntrepreneuriatId = new SelectList(centresDeveloppementEntrepreneuriat, nameof(CentreDeveloppementEntrepreneuriat.Id), nameof(CentreDeveloppementEntrepreneuriat.DesignationAr));
+
+            // Pour chaque dropdown de commune, créer la liste appropriée
+            if (model != null)
+            {
+                // Communes pour la wilaya de naissance
+                if (model.WilayaNaissanceId > 0)
+                {
+                    var communesNaissance = _communeBusinessService.GetAll()
+                        .Where(x => x.WilayaId == model.WilayaNaissanceId)
+                        .ToList();
+                    ViewBag.CommunesNaissance = new SelectList(communesNaissance,
+                        nameof(Commune.Id), nameof(Commune.DesignationAr),
+                        model.CommuneNaissanceId);
+                }
+
+                // Communes pour la wilaya de résidence
+                if (model.WilayaResidenceId > 0)
+                {
+                    var communesResidence = _communeBusinessService.GetAll()
+                        .Where(x => x.WilayaId == model.WilayaResidenceId)
+                        .ToList();
+                    ViewBag.CommunesResidence = new SelectList(communesResidence,
+                        nameof(Commune.Id), nameof(Commune.DesignationAr),
+                        model.CommuneResidenceId);
+                }
+
+                // Communes pour la wilaya du siège social
+                if (model.WilayaSeigeSocialId > 0)
+                {
+                    var communesSiege = _communeBusinessService.GetAll()
+                        .Where(x => x.WilayaId == model.WilayaSeigeSocialId)
+                        .ToList();
+                    ViewBag.CommunesSiege = new SelectList(communesSiege,
+                        nameof(Commune.Id), nameof(Commune.DesignationAr),
+                        model.CommuneSeigeSocialId);
+                }
+            }
+
+            ViewBag.TypeCentreDeveloppementEntrepreneuriatId = new SelectList(
+                typesCentreDeveloppementEntrepreneuriat,
+                nameof(TypeCentreDeveloppementEntrepreneuriat.Id),
+                nameof(TypeCentreDeveloppementEntrepreneuriat.DesignationAr));
+
+            ViewBag.WilayaCentreDeveloppementEntrepreneuriatId = new SelectList(
+                wilayas,
+                nameof(Wilaya.Id),
+                nameof(Wilaya.DisplayNameAr));
+
+            // Initialiser avec liste vide ou complète selon le modèle
+            if (model != null && model.WilayaCentreDeveloppementEntrepreneuriatId > 0 &&
+                model.TypeCentreDeveloppementEntrepreneuriatId > 0)
+            {
+                // Filtrer les centres par wilaya ET type
+                var centresFiltres = centresDeveloppementEntrepreneuriat
+                    .Where(x => x.WilayaId == model.WilayaCentreDeveloppementEntrepreneuriatId &&
+                               x.TypeCentreDeveloppementEntrepreneuriatId == model.TypeCentreDeveloppementEntrepreneuriatId)
+                    .ToList();
+
+                ViewBag.CentreDeveloppementEntrepreneuriatId = new SelectList(
+                    centresFiltres,
+                    nameof(CentreDeveloppementEntrepreneuriat.Id),
+                    nameof(CentreDeveloppementEntrepreneuriat.DesignationAr),
+                    model.CentreDeveloppementEntrepreneuriatId);
+            }
+            else
+            {
+                // Liste vide ou tous les centres
+                ViewBag.CentreDeveloppementEntrepreneuriatId = new SelectList(
+                    new List<CentreDeveloppementEntrepreneuriat>(),
+                    nameof(CentreDeveloppementEntrepreneuriat.Id),
+                    nameof(CentreDeveloppementEntrepreneuriat.DesignationAr));
+            }
         }
 
         [HttpGet]
@@ -1184,10 +1450,26 @@ namespace Anade.Khadamat.Web.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetCentreDeveloppementEntrepreneuriatList(int WilayaId, int TypeCDEId)
+        public JsonResult GetCentreDeveloppementEntrepreneuriatList2(int WilayaId, int TypeCDEId)
         {
             var centreDeveloppementEntrepreneuriatlist = new SelectList(_centreDeveloppementEntrepreneuriatBusinessService.GetAll().Where(x => x.WilayaId == WilayaId && x.TypeCentreDeveloppementEntrepreneuriatId == TypeCDEId), "Id", "DesignationAr");
             return Json(centreDeveloppementEntrepreneuriatlist);
+        }
+
+        [HttpGet]
+        public JsonResult GetCentreDeveloppementEntrepreneuriatList(int WilayaId, int TypeCDEId, int? selectedId = null)
+        {
+            var centres = _centreDeveloppementEntrepreneuriatBusinessService.GetAll()
+                .Where(x => x.WilayaId == WilayaId && x.TypeCentreDeveloppementEntrepreneuriatId == TypeCDEId)
+                .Select(c => new
+                {
+                    value = c.Id,
+                    text = c.DesignationAr,
+                    selected = (selectedId.HasValue && c.Id == selectedId.Value)
+                })
+                .ToList();
+
+            return Json(centres);
         }
 
         #endregion

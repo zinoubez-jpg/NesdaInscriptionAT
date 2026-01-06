@@ -27,6 +27,7 @@ namespace Anade.Khadamat.Domain
         public string Code_CDE { get; set; }
         public string Lib_CDE { get; set; }
         public string Code_Antenne { get; set; }
+        public string Code_CDE_New { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Authentification_Compte_CDE> Authentification_Compte_CDE { get; set; }
