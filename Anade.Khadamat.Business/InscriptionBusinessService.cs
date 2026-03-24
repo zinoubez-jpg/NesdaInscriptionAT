@@ -10,11 +10,14 @@ namespace Anade.Khadamat.Business
     public class InscriptionBusinessService : GenericBusinessService<Inscription, int>
     {
         private readonly IOptions<PromoteurEligibiliteSettings> _promoteurEligibiliteSettings;
+        private readonly IOptions<PromoteurEligibiliteSettingsCreation> _promoteurEligibiliteSettingsCreation;
 
 
-        public InscriptionBusinessService(IUnitOfWork unitOfWork, IOptions<PromoteurEligibiliteSettings> promoteurEligibiliteSettings) : base(unitOfWork)
+        public InscriptionBusinessService(IUnitOfWork unitOfWork, IOptions<PromoteurEligibiliteSettings> promoteurEligibiliteSettings
+            , IOptions<PromoteurEligibiliteSettingsCreation> promoteurEligibiliteSettingsCreation) : base(unitOfWork)
         {
             _promoteurEligibiliteSettings = promoteurEligibiliteSettings;
+            _promoteurEligibiliteSettingsCreation = promoteurEligibiliteSettingsCreation;
 
         }
 
@@ -29,8 +32,11 @@ namespace Anade.Khadamat.Business
                                   x.NIN == entity.NIN) > 0)
                 throw new BusinessException("هناك شخص آخر مسجل بنفس رقم التعريف الوطني.");
 
-            if (age < _promoteurEligibiliteSettings.Value.MinAge || age > _promoteurEligibiliteSettings.Value.MaxAge)
-                throw new BusinessException($"لتسجيل، يجب أن يكون عمرك بين 20و 58سنة");
+            if ((age < _promoteurEligibiliteSettings.Value.MinAge || age > _promoteurEligibiliteSettings.Value.MaxAge)&& entity.TypeInscriptionId == 2)
+                throw new BusinessException($"لتسجيل، يجب أن يكون عمرك بين 20و 58سنة");          
+            
+            if ((age < _promoteurEligibiliteSettingsCreation.Value.MinAge || age > _promoteurEligibiliteSettingsCreation.Value.MaxAge)&& entity.TypeInscriptionId == 1)
+                throw new BusinessException($"لتسجيل، يجب أن يكون عمرك بين 18و 55سنة");
             base.OnAdding(entity);
 
         }
@@ -45,8 +51,11 @@ namespace Anade.Khadamat.Business
                                   x.NIN == entity.NIN) > 0)
                 throw new BusinessException("Une personne avec le même NIN existe déjà.");
 
-            if (age < _promoteurEligibiliteSettings.Value.MinAge || age > _promoteurEligibiliteSettings.Value.MaxAge)
+            if (entity.TypeInscriptionId == 2 && (age < _promoteurEligibiliteSettings.Value.MinAge || age > _promoteurEligibiliteSettings.Value.MaxAge))
                 throw new BusinessException($"La condition d'age n'est pas respectée");
+
+            if (entity.TypeInscriptionId == 1 && (age < _promoteurEligibiliteSettingsCreation.Value.MinAge || age > _promoteurEligibiliteSettingsCreation.Value.MaxAge))
+                throw new BusinessException($"لتسجيل، يجب أن يكون عمرك بين 18و 55سنة");
 
             base.OnUpdating(entity);
         }
