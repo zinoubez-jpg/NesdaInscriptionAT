@@ -90,6 +90,7 @@ namespace Anade.Khadamat.Web
 
             services.AddScoped<IPromoteurEligibiliteSettings, PromoteurEligibiliteSettings>();
             services.Configure<PromoteurEligibiliteSettings>(Configuration.GetSection("PromoteurEligibiliteSettings"));
+            services.Configure<PromoteurEligibiliteSettingsCreation>(Configuration.GetSection("PromoteurEligibiliteSettingsCreation"));
 
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddScoped<IEmailService, EmailService>();

@@ -473,7 +473,6 @@ namespace Anade.Khadamat.Web.Controllers
                     return View(model);
                 }
 
-
                 if (ModelState.IsValid)
                 {
 
