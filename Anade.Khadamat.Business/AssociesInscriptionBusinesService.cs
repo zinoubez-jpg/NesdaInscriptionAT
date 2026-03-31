@@ -215,6 +215,7 @@ namespace Anade.Khadamat.Business
                 entityCompte.Mot_De_Passe = entity.Mot_Passe_ToSHA;
             }
 
+            entityCompte.Authentification_EtatId = 1;
             entityCompte.Si_Inscription = true;
 
             //entityCompteCDE.Authentification_CompteId = entityCompte.Id;

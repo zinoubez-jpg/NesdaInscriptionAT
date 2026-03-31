@@ -824,12 +824,16 @@ namespace Anade.Khadamat.Web.Controllers
                 return View("EmailVerificationFailed");
             }
 
-            var resCreationPromoteurAuthentification = CreationPromoteurAuthentification(inscri);
-
-            if(resCreationPromoteurAuthentification == false)
+            if (inscri.TypeInscriptionId == TypesInscriptionId.Création)
             {
-                return View("EmailVerificationFailed");
+                var resCreationPromoteurAuthentification = CreationPromoteurAuthentification(inscri);
+
+                if (resCreationPromoteurAuthentification == false)
+                {
+                    return View("EmailVerificationFailed");
+                }
             }
+
 
             return View("EmailVerificationSuccess");
         }
