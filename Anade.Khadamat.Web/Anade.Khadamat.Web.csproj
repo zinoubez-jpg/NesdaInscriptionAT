@@ -48,6 +48,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ProtectedFiles\CNIFolder\" />
+    <Folder Include="ProtectedFiles\DiplomeCDEFolder\" />
+    <Folder Include="ProtectedFiles\DiplomeFolder\" />
     <Folder Include="wwwroot\CNIFolder\" />
     <Folder Include="wwwroot\DiplomeFolder\" />
     <Folder Include="wwwroot\DiplomeCDEFolder\" />    

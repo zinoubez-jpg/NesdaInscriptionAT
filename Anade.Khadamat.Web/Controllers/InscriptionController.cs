@@ -792,13 +792,6 @@ namespace Anade.Khadamat.Web.Controllers
 
             }
 
-            var verified = await _emailVerificationService.VerifyEmailAsync(email, token);
-
-            if (!verified)
-            {
-                return View("EmailVerificationFailed");
-            }
-
             var inscri = _inscriptionBusinessService.GetSingle(
                 x => x.Email == email && x.EmailVerificationToken == null,
                 _inscriptionBusinessService.GetDefaultLoadProperties());
@@ -834,6 +827,12 @@ namespace Anade.Khadamat.Web.Controllers
                 }
             }
 
+            var verified = await _emailVerificationService.VerifyEmailAsync(email, token);
+
+            if (!verified)
+            {
+                return View("EmailVerificationFailed");
+            }
 
             return View("EmailVerificationSuccess");
         }
@@ -1477,8 +1476,6 @@ namespace Anade.Khadamat.Web.Controllers
 
             return Json(centres);
         }
-
-
 
         #endregion
 
