@@ -63,17 +63,16 @@ namespace Anade.Khadamat.Web.Controllers
         public IActionResult DetailsPromoteur()
         {
             var user = _userService.GetUserEagerLoadedAsync(User).Result;
-            var inscrit = _inscriptionBusinessService.GetSingle(x => x.Email == user.Email, _inscriptionBusinessService.GetDefaultLoadProperties());
-            var WilayaNais = _wilayaBusinessService.GetById(inscrit.CommuneNaissance.WilayaId);
-            var wilayaRes = _wilayaBusinessService.GetById(inscrit.CommuneResidence.WilayaId);
-            var wilayaSS = _wilayaBusinessService.GetById(inscrit.CommuneSiegeSocial.WilayaId);
 
-            inscrit.CommuneNaissance.Wilaya = WilayaNais;
-            inscrit.CommuneResidence.Wilaya = wilayaRes;
-            inscrit.CommuneSiegeSocial.Wilaya = wilayaSS;
-            foreach (var item in inscrit.SessionFormations)
+            // Remplacer GetSingle par GetMany + FirstOrDefault
+            var inscriptions = _inscriptionBusinessService.GetAllFiltered(x => x.Email == user.Email, _inscriptionBusinessService.GetDefaultLoadProperties());
+            var inscrit = inscriptions.FirstOrDefault();
+
+            // Loguer les doublons
+            if (inscriptions.Count() > 1)
             {
-                item.Formation = _formationBusinessService.GetById(item.FormationId);
+                // Utilisez votre logger ici
+                Console.WriteLine($"ATTENTION: Email {user.Email} a {inscriptions.Count} inscriptions");
             }
 
             if (inscrit == null)
@@ -84,6 +83,19 @@ namespace Anade.Khadamat.Web.Controllers
             if (inscrit.Annulee)
             {
                 return Content("Votre inscription est annulée.");
+            }
+
+            var WilayaNais = _wilayaBusinessService.GetById(inscrit.CommuneNaissance.WilayaId);
+            var wilayaRes = _wilayaBusinessService.GetById(inscrit.CommuneResidence.WilayaId);
+            var wilayaSS = _wilayaBusinessService.GetById(inscrit.CommuneSiegeSocial.WilayaId);
+
+            inscrit.CommuneNaissance.Wilaya = WilayaNais;
+            inscrit.CommuneResidence.Wilaya = wilayaRes;
+            inscrit.CommuneSiegeSocial.Wilaya = wilayaSS;
+
+            foreach (var item in inscrit.SessionFormations)
+            {
+                item.Formation = _formationBusinessService.GetById(item.FormationId);
             }
 
             return View(inscrit);
@@ -92,13 +104,17 @@ namespace Anade.Khadamat.Web.Controllers
         public IActionResult SuiviDossier()
         {
             var user = _userService.GetUserEagerLoadedAsync(User).Result;
-            var inscrit = _inscriptionBusinessService.GetSingle(x => x.Email == user.Email && x.IsEmailVerified, _inscriptionBusinessService.GetDefaultLoadProperties());
-            var WilayaNais = _wilayaBusinessService.GetById(inscrit.CommuneNaissance.WilayaId);
-            var wilayaRes = _wilayaBusinessService.GetById(inscrit.CommuneResidence.WilayaId);
-            var wilayaSS = _wilayaBusinessService.GetById(inscrit.CommuneSiegeSocial.WilayaId);
-            inscrit.CommuneNaissance.Wilaya = WilayaNais;
-            inscrit.CommuneResidence.Wilaya = wilayaRes;
-            inscrit.CommuneSiegeSocial.Wilaya = wilayaSS;
+
+            // Version avec email vérifié en priorité
+            var inscriptions = _inscriptionBusinessService.GetAllFiltered(x => x.Email == user.Email, _inscriptionBusinessService.GetDefaultLoadProperties());
+
+            // Priorité à celle avec email vérifié
+            var inscrit = inscriptions.FirstOrDefault(x => x.IsEmailVerified) ?? inscriptions.FirstOrDefault();
+
+            if (inscriptions.Count() > 1)
+            {
+                Console.WriteLine($"ATTENTION: Email {user.Email} a {inscriptions.Count} inscriptions");
+            }
 
             if (inscrit == null)
             {
@@ -109,6 +125,14 @@ namespace Anade.Khadamat.Web.Controllers
             {
                 return Content("Votre inscription est annulée.");
             }
+
+            var WilayaNais = _wilayaBusinessService.GetById(inscrit.CommuneNaissance.WilayaId);
+            var wilayaRes = _wilayaBusinessService.GetById(inscrit.CommuneResidence.WilayaId);
+            var wilayaSS = _wilayaBusinessService.GetById(inscrit.CommuneSiegeSocial.WilayaId);
+
+            inscrit.CommuneNaissance.Wilaya = WilayaNais;
+            inscrit.CommuneResidence.Wilaya = wilayaRes;
+            inscrit.CommuneSiegeSocial.Wilaya = wilayaSS;
 
             return View(inscrit);
         }
@@ -116,11 +140,15 @@ namespace Anade.Khadamat.Web.Controllers
         public IActionResult ATFormation()
         {
             var user = _userService.GetUserEagerLoadedAsync(User).Result;
-            var inscrit = _inscriptionBusinessService.GetSingle(x => x.Email == user.Email, _inscriptionBusinessService.GetDefaultLoadProperties());
-            foreach (var item in inscrit.SessionFormations)
+
+            var inscriptions = _inscriptionBusinessService.GetAllFiltered(x => x.Email == user.Email, _inscriptionBusinessService.GetDefaultLoadProperties());
+            var inscrit = inscriptions.FirstOrDefault();
+
+            if (inscriptions.Count() > 1)
             {
-                item.Formation = _formationBusinessService.GetById(item.FormationId);
+                Console.WriteLine($"ATTENTION: Email {user.Email} a {inscriptions.Count} inscriptions");
             }
+
             if (inscrit == null)
             {
                 return NotFound("Inscription non trouvée ou email non vérifié.");
@@ -129,6 +157,11 @@ namespace Anade.Khadamat.Web.Controllers
             if (inscrit.Annulee)
             {
                 return Content("Votre inscription est annulée.");
+            }
+
+            foreach (var item in inscrit.SessionFormations)
+            {
+                item.Formation = _formationBusinessService.GetById(item.FormationId);
             }
 
             return View(inscrit);
