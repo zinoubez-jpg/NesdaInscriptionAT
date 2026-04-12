@@ -793,7 +793,7 @@ namespace Anade.Khadamat.Web.Controllers
             }
 
             var inscri = _inscriptionBusinessService.GetSingle(
-                x => x.Email == email && x.EmailVerificationToken == null,
+                x => x.Email == email && x.EmailVerificationToken == token,
                 _inscriptionBusinessService.GetDefaultLoadProperties());
 
             if (inscri == null)
@@ -830,6 +830,15 @@ namespace Anade.Khadamat.Web.Controllers
             var verified = await _emailVerificationService.VerifyEmailAsync(email, token);
 
             if (!verified)
+            {
+                return View("EmailVerificationFailed");
+            }
+
+            inscri = _inscriptionBusinessService.GetSingle(
+                x => x.Email == email && x.EmailVerificationToken == null,
+                _inscriptionBusinessService.GetDefaultLoadProperties());
+
+            if (inscri == null)
             {
                 return View("EmailVerificationFailed");
             }
