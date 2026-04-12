@@ -1019,6 +1019,20 @@ namespace Anade.Khadamat.Web.Controllers
                         CentreDeveloppementEntrepreneuriat cdeEle = _centreDeveloppementEntrepreneuriatBusinessService
                             .GetById(model.CentreDeveloppementEntrepreneuriatId);
 
+                        if (cdeEle == null)
+                        {
+                            _logger.LogError("CentreDeveloppementEntrepreneuriat avec ID {CdeId} est introuvable pour l'inscription {Email}",
+                                model.CentreDeveloppementEntrepreneuriatId, model.Email);
+
+                            apiBusinessResult = new ApiBusinessResult(false);
+                            apiBusinessResult.Messages.Add(new MessageResult
+                            {
+                                Message = "Centre de développement entrepreneurial non trouvé",
+                                MessageType = MessageType.Error
+                            });
+                            return apiBusinessResult;
+                        }
+
                         // Log avant AddInscription
                         _logger.LogInformation("Appel de AddInscription pour l'associé - Promoteur: {CodePromoteur}, CDE: {CdeId}",
                             entity.CODE_P, model.CentreDeveloppementEntrepreneuriatId);
@@ -1169,6 +1183,20 @@ namespace Anade.Khadamat.Web.Controllers
 
                         CentreDeveloppementEntrepreneuriat cdeEle = _centreDeveloppementEntrepreneuriatBusinessService
                             .GetById(inscri.CentreDeveloppementEntrepreneuriatId);
+
+                        if (cdeEle == null)
+                        {
+                            _logger.LogError("CentreDeveloppementEntrepreneuriat avec ID {CdeId} est introuvable pour l'inscription {Email}",
+                                inscri.CentreDeveloppementEntrepreneuriatId, inscri.Email);
+
+                            apiBusinessResult = new ApiBusinessResult(false);
+                            apiBusinessResult.Messages.Add(new MessageResult
+                            {
+                                Message = "Centre de développement entrepreneurial non trouvé",
+                                MessageType = MessageType.Error
+                            });
+                            return apiBusinessResult;
+                        }
 
                         // Log avant AddInscription
                         _logger.LogInformation("Appel de AddInscription pour l'associé - Promoteur: {CodePromoteur}, CDE: {CdeId}",
