@@ -648,4 +648,114 @@
             }, true);
         });
     </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Fonction pour gérer la sélection du CDE en ligne
+            function handleCDEEnLigne() {
+                var selectedTypeCDE = $("#TypeCDE").val();
+                var typeCDEText = $("#TypeCDE option:selected").text();
+
+                // Vérifier si le type sélectionné est "CDE en Ligne" (code = '06')
+                // On vérifie par le texte ou par la valeur
+                if (selectedTypeCDE === '6' || typeCDEText === 'تكوين عن بعد') {
+                    // Désactiver et figer le champ wilayaCDE
+                    $("#wilayaCDE").prop('disabled', true);
+                    $("#wilayaCDE").val(''); // Vider la valeur
+
+                    // Désactiver le champ designationCDE et lui donner la valeur 16601
+                    $("#designationCDE").prop('disabled', true);
+                    $("#designationCDE").val('1');
+
+                    // Optionnel: ajouter un message d'information
+                    if ($("#cdeEnLigneInfo").length === 0) {
+                        $("#designationCDE").after('<div id="cdeEnLigneInfo" class="text-info small mt-1">' +
+                            'تم التحديد التلقائي لمركز التكوين عن بُعد</div>');
+                    }
+                } else {
+                    // Réactiver les champs si ce n'est pas CDE en Ligne
+                    if ($("#wilayaCDE").prop('disabled')) {
+                        $("#wilayaCDE").prop('disabled', false);
+                        $("#designationCDE").prop('disabled', false);
+                        $("#cdeEnLigneInfo").remove();
+
+                        // Recharger les centres normalement
+                        var wilayaId = $("#wilayaCDE").val();
+                        var typeId = selectedTypeCDE;
+                        if (wilayaId && typeId) {
+                            loadCentres(wilayaId, typeId, null);
+                        }
+                    }
+                }
+            }
+
+            // Sauvegarder la fonction loadCentres originale
+            var originalLoadCentres = window.loadCentres;
+
+            // Redéfinir la fonction loadCentres pour gérer le cas spécial
+            window.loadCentres = function (wilayaId, typeId, selectedValue) {
+                // Si c'est CDE en Ligne, ne rien charger et garder la valeur 1
+                if (typeId === '6' || $("#TypeCDE option:selected").text() === 'تكوين عن بعد') {
+                    $("#designationCDE").val('1').prop('disabled', true);
+                    return;
+                }
+
+                // Comportement normal pour les autres types
+                if (wilayaId && typeId) {
+                    $.getJSON("/Inscription/GetCentreDeveloppementEntrepreneuriatList", {
+                        WilayaId: wilayaId,
+                        TypeCDEId: typeId,
+                        selectedId: selectedValue
+                    }, function (data) {
+                        var options = "<option value=''>إختيار مركز تطوير المقاولاتية</option>";
+                        $.each(data, function (i, item) {
+                            var selected = item.selected ? 'selected' : '';
+                            options += '<option value="' + item.value + '" ' + selected + '>' + item.text + '</option>';
+                        });
+                        $("#designationCDE").html(options).prop("disabled", false);
+                    });
+                } else {
+                    $("#designationCDE").html("<option value=''>إختيار مركز تطوير المقاولاتية</option>")
+                        .prop("disabled", true);
+                }
+            };
+
+            // Écouter le changement sur TypeCDE
+            $("#TypeCDE").change(function () {
+                handleCDEEnLigne();
+
+                var wilayaId = $("#wilayaCDE").val();
+                var typeId = $(this).val();
+                var typeText = $("#TypeCDE option:selected").text();
+
+                // Si ce n'est pas CDE en Ligne et que wilaya et type sont valides, charger les centres
+                if (typeId !== '6' && typeText !== 'تكوين عن بعد' && wilayaId && typeId) {
+                    loadCentres(wilayaId, typeId, null);
+                }
+            });
+
+            // Écouter le changement sur wilayaCDE (seulement si ce n'est pas désactivé)
+            $("#wilayaCDE").change(function () {
+                // Vérifier si le champ n'est pas désactivé
+                if (!$(this).prop('disabled')) {
+                    var wilayaId = $(this).val();
+                    var typeId = $("#TypeCDE").val();
+                    var typeText = $("#TypeCDE option:selected").text();
+
+                    if (wilayaId && typeId && typeId !== '6' && typeText !== 'تكوين عن بعد') {
+                        loadCentres(wilayaId, typeId, null);
+                    }
+                }
+            });
+
+            // Vérifier la valeur initiale au chargement de la page
+            var initialTypeCDE = $("#TypeCDE").val();
+            var initialTypeText = $("#TypeCDE option:selected").text();
+            if (initialTypeCDE === '6' || initialTypeText === 'تكوين عن بعد') {
+                $("#designationCDE").val('1').prop('disabled', true);
+                $("#wilayaCDE").prop('disabled', true);
+                $("#wilayaCDE").val('');
+            }
+        });
+    </script>
 }

@@ -471,6 +471,11 @@ namespace Anade.Khadamat.Web.Controllers
 
                 if (ModelState.IsValid)
                 {
+                    if (model.TypeCentreDeveloppementEntrepreneuriatId == 6)
+                    {
+                        var CentreDeveloppementEntrepreneuriat = _centreDeveloppementEntrepreneuriatBusinessService.GetSingle(x => x.TypeCentreDeveloppementEntrepreneuriatId == CentreDeveloppementEntrepreneuriatId.CDEenligne);
+                        model.CentreDeveloppementEntrepreneuriatId = CentreDeveloppementEntrepreneuriat.Id;
+                    }
 
                     if (string.IsNullOrEmpty(model.NIN) || model.NIN.Length != 18 || !model.NIN.All(char.IsDigit))
                     {

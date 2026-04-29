@@ -58,5 +58,6 @@
    public static class CentreDeveloppementEntrepreneuriatId
     {
         public const int NonDefini = 1;
+        public const int CDEenligne = 6;
     }
 } 
