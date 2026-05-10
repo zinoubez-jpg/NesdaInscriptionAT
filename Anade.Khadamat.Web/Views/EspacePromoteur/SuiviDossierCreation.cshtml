@@ -1,0 +1,151 @@
+﻿@model Anade.Khadamat.Domain.InscriptionSuiviCreation
+@{ Layout = "_LayoutEspacePromoteur"; }
+
+@section head{
+    <style>
+        .badge {
+            font-family: 'Noto Kufi Arabic';
+            font-size: 14px;
+        }
+
+        #cd-timeline {
+            display: none;
+        }
+    </style>
+    <link href="~/AccountTemplette/timeLine.css" rel="stylesheet" />
+}
+
+<div class="container-fluid">
+    <div class="col-sm-12 box-col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>متابعة مسار الملف عبر الإنترنت - إنشاء جديد</h4>
+                <br />
+                <p class="f-m-light mt-1">
+                    كجزء من التطوير، سيتم دمج وظيفة جديدة تمكن صاحب المشروع من متابعة طلبه بشكل مباشر عبر الإنترنت،
+                    مع إشعارات فورية تطلعّه على آخر التطورات في مراحل المعالجة.
+                </p>
+            </div>
+
+            <div class="card-body">
+                <div class="timeline-container">
+                    <div class="timeline" style="direction:ltr;">
+                        <div class="progress-line">
+                            <div class="progress-line-filled"></div>
+                        </div>
+
+                        <div class="step-container">
+                            <div class="step completed"><span class="step-icon">01</span></div>
+                            <div class="step-title">التسجيل الإلكتروني</div>
+                        </div>
+
+                        <div class="step-container">
+                            <div class="step @(Model.Validee ? "completed" : (Model.DateValidation != DateTime.Parse("01/01/0001") ? "active" : ""))">
+                                <span class="step-icon">02</span>
+                            </div>
+                            <div class="step-title">مراجعة المستندات</div>
+                        </div>
+
+                        <div class="step-container">
+                            <div class="step @(Model.EvaluationProjets != null && Model.EvaluationProjets.Any() ?
+                                (Model.EvaluationProjets.Last().IsAdmis ? "completed" : "active") : "")">
+                                <span class="step-icon">03</span>
+                            </div>
+                            <div class="step-title">تقييم المشروع</div>
+                        </div>
+
+                        <div class="step-container">
+                            <div class="step @(Model.SessionFormations != null && Model.SessionFormations.Any(x => x.IsFormee) ? "completed" : "")">
+                                <span class="step-icon">04</span>
+                            </div>
+                            <div class="step-title">التكوين</div>
+                        </div>
+
+                        <div class="step-container">
+                            <div class="step @(Model.CSVFs != null && Model.CSVFs.Any(x => x.IsValide) ? "completed" : "")">
+                                <span class="step-icon">05</span>
+                            </div>
+                            <div class="step-title">(CSVF)اللجنة</div>
+                        </div>
+
+                        <div class="step-container">
+                            <div class="step">
+                                <span class="step-icon">06</span>
+                            </div>
+                            <div class="step-title">إصدار شهادة</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="afficherTimeline()" class="btn btn-outline-primary" type="button">
+                    إظهار المزيد
+                </button>
+
+                <section class="cd-container" id="cd-timeline">
+                    <div class="cd-timeline-block">
+                        <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
+                        <div class="cd-timeline-content">
+                            <div class="timeline-wrapper">
+                                <div class="badge bg-primary">التسجيل</div>
+                            </div>
+                            <h5 class="f-w-500 m-0">لقد تمت عملية التسجيل بنجاح.</h5>
+                            <span class="cd-date">@Model.DateInscription.ToShortDateString()</span>
+                        </div>
+                    </div>
+
+                    @if (Model.DateValidation == DateTime.Parse("01/01/0001"))
+                    {
+                        <div class="cd-timeline-block">
+                            <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
+                            <div class="cd-timeline-content">
+                                <div class="timeline-wrapper">
+                                    <div class="badge bg-warning">التحقق من الملف</div>
+                                </div>
+                                <h5 class="f-w-500 m-0">مراجعة المستندات المرفقة والتأكد من صحتها.</h5>
+                                <span class="cd-date">ملفك في هده المرحلة</span>
+                            </div>
+                        </div>
+                    }
+                    else if ((Model.DateValidation != DateTime.Parse("01/01/0001")))
+                    {
+                        <div class="cd-timeline-block">
+                            <div class="cd-timeline-img cd-picture bg-primary"><i class="icofont icofont-document-search"></i></div>
+                            <div class="cd-timeline-content">
+                                <div class="timeline-wrapper">
+                                    <div class="badge bg-primary">التحقق من الملف</div>
+                                </div>
+                                <h5 class="f-w-500 m-0">لقد تم مراجعة المستندات المرفقة.</h5>
+                                <span class="cd-date">@Model.DateValidation.ToShortDateString()</span>
+                            </div>
+                        </div>
+                        @if (Model.EvaluationProjets.LastOrDefault() == null)
+                        {
+
+                        }
+                        else if (Model.EvaluationProjets.Last().DateEvaluation != DateTime.Parse("01/01/0001"))
+                        {
+
+                        }
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function afficherTimeline() {
+            let section = document.getElementById("cd-timeline");
+            let btn = document.querySelector("button[onclick='afficherTimeline()']");
+
+            if (section.style.display === "none" || section.style.display === "") {
+                section.style.display = "block";
+                btn.textContent = "إخفاء";
+            } else {
+                section.style.display = "none";
+                btn.textContent = "إظهار المزيد";
+            }
+        }
+    </script>
+}

@@ -30,6 +30,13 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly UserStructureService _userStructureService;
         private readonly TypeUserServices _typeUserServices;
         private readonly StructureService _structureService;
+
+        private readonly PromoteurInscriptionBusinesService _promoteurInscriptionBusinessService;
+        private readonly Detail_DossierInscriptionBusinesService _detail_DossierInscriptionBusinessService;
+        private readonly AssociesInscriptionBusinesService _associesInscriptionBusinessService;
+
+        protected readonly CompteAuthentificationBusinesService _compteAuthentificationBusinesService;
+
         public EspacePromoteurController(InscriptionBusinessService inscriptionBusinessService,
                                           UserManager<User> userManager,
                                           RoleManager<Role> roleManager,
@@ -42,7 +49,11 @@ namespace Anade.Khadamat.Web.Controllers
                                           ReferentielBusinessService<Genre, int> genreBusinessService,
                                           ReferentielBusinessService<SituationFamiliale, int> situationFamilialeBusinessService,
                                           ReferentielBusinessService<NiveauInstruction, int> niveauInstructionBusinessService,
-                                          ReferentielBusinessService<Formation, int> formationBusinessService
+                                          ReferentielBusinessService<Formation, int> formationBusinessService,
+                                          PromoteurInscriptionBusinesService promoteurInscriptionBusinessService,
+                                          Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService,
+                                          AssociesInscriptionBusinesService associesInscriptionBusinessService,
+                                          CompteAuthentificationBusinesService compteAuthentificationBusinesService
                                          )
         {
             _inscriptionBusinessService = inscriptionBusinessService;
@@ -58,7 +69,10 @@ namespace Anade.Khadamat.Web.Controllers
             _userService = userService;
             _userStructureService = userStructureService;
             _structureService = structureService;
-
+            _promoteurInscriptionBusinessService = promoteurInscriptionBusinessService;
+            _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
+            _associesInscriptionBusinessService = associesInscriptionBusinessService;
+            _compteAuthentificationBusinesService = compteAuthentificationBusinesService;
         }
         public IActionResult DetailsPromoteur()
         {
@@ -134,7 +148,27 @@ namespace Anade.Khadamat.Web.Controllers
             inscrit.CommuneResidence.Wilaya = wilayaRes;
             inscrit.CommuneSiegeSocial.Wilaya = wilayaSS;
 
-            return View(inscrit);
+
+            if (inscrit.TypeInscriptionId == TypesInscriptionId.Extension)
+            {
+                return View("SuiviDossier", inscrit);
+            }
+            else
+            {
+                var inscriptionSuiviCreation = new InscriptionSuiviCreation(inscrit);
+
+                var p = _promoteurInscriptionBusinessService.GetByNIN(inscriptionSuiviCreation.NIN);
+                var c = _compteAuthentificationBusinesService.GetByUserName(inscriptionSuiviCreation.Email);
+
+                if (c.Date_Validation != null)
+                {
+                    inscriptionSuiviCreation.DateValidation = (DateTime)c.Date_Validation;
+                }
+
+
+
+                return View("SuiviDossierCreation", inscriptionSuiviCreation);
+            }
         }
 
         public IActionResult ATFormation()
