@@ -60,6 +60,10 @@ namespace Anade.Khadamat.Data_Suivi
         public virtual DbSet<Suivi_RemboursementPNR> REMB_PNR { get; set; }
         public virtual DbSet<Suivi_Version> Version { get; set; }
 
+        public virtual DbSet<Suivi_Accepte_CSVF> Accepte_CSVF { get; set; }
+        public virtual DbSet<Suivi_Evaluation> Evaluation { get; set; }
+        public virtual DbSet<Suivi_Finance> Finance { get; set; }
+        public virtual DbSet<Suivi_Formation> Formation { get; set; }
 
     }
 }

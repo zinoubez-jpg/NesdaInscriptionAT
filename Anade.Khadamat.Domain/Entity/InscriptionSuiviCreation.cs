@@ -123,6 +123,28 @@ namespace Anade.Khadamat.Domain
         public int ActiviteId { get; set; }
         public string PasswordHashInit { get; set; }
 
+
+
+
+        [DataType(DataType.Date)]
+        public DateTime Date_csvf { get; set; }
+
+        public string ScoreTotal { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime Date_Finance { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime DateDebutSessionFormation { get; set; }
+
+
+
+
+
+
+
+
+
         public virtual ICollection<SessionFormationDetails> SessionFormations { get; set; }
         public virtual ICollection<EvaluationProjet> EvaluationProjets { get; set; }
         public virtual ICollection<CSVF> CSVFs { get; set; }
@@ -143,7 +165,6 @@ namespace Anade.Khadamat.Domain
         public virtual ICollection<Document> Documents { get; set; }
 
 
-        // Dans InscriptionSuiviCreation.cs
         public InscriptionSuiviCreation(Inscription inscription)
         {
             this.Id = inscription.Id;

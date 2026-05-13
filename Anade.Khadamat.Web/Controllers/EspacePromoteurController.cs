@@ -36,7 +36,11 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly AssociesInscriptionBusinesService _associesInscriptionBusinessService;
 
         protected readonly CompteAuthentificationBusinesService _compteAuthentificationBusinesService;
-
+        protected readonly Identifiant_SIAuthentificationBusinesService _identifiant_SIAuthentificationBusinesService;
+        protected readonly Suivi_Accepte_CSVFBusinesService _suivi_Accepte_CSVFBusinesService;
+        protected readonly Suivi_EvaluationBusinesService _suivi_EvaluationBusinesService;
+        protected readonly Suivi_FinanceBusinesService _suivi_FinanceBusinesService;
+        protected readonly Suivi_FormationBusinesService _suivi_FormationBusinesService;
         public EspacePromoteurController(InscriptionBusinessService inscriptionBusinessService,
                                           UserManager<User> userManager,
                                           RoleManager<Role> roleManager,
@@ -53,7 +57,12 @@ namespace Anade.Khadamat.Web.Controllers
                                           PromoteurInscriptionBusinesService promoteurInscriptionBusinessService,
                                           Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService,
                                           AssociesInscriptionBusinesService associesInscriptionBusinessService,
-                                          CompteAuthentificationBusinesService compteAuthentificationBusinesService
+                                          CompteAuthentificationBusinesService compteAuthentificationBusinesService,
+                                          Identifiant_SIAuthentificationBusinesService identifiant_SIAuthentificationBusinesService,
+                                          Suivi_Accepte_CSVFBusinesService suivi_Accepte_CSVFBusinesService,
+                                          Suivi_EvaluationBusinesService suivi_EvaluationBusinesService,
+                                          Suivi_FinanceBusinesService suivi_FinanceBusinesService,
+                                          Suivi_FormationBusinesService suivi_FormationBusinesService
                                          )
         {
             _inscriptionBusinessService = inscriptionBusinessService;
@@ -73,6 +82,11 @@ namespace Anade.Khadamat.Web.Controllers
             _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
             _associesInscriptionBusinessService = associesInscriptionBusinessService;
             _compteAuthentificationBusinesService = compteAuthentificationBusinesService;
+            _identifiant_SIAuthentificationBusinesService = identifiant_SIAuthentificationBusinesService;
+            _suivi_Accepte_CSVFBusinesService = suivi_Accepte_CSVFBusinesService;
+            _suivi_EvaluationBusinesService = suivi_EvaluationBusinesService;
+            _suivi_FinanceBusinesService = suivi_FinanceBusinesService;
+            _suivi_FormationBusinesService = suivi_FormationBusinesService;
         }
         public IActionResult DetailsPromoteur()
         {
@@ -159,6 +173,7 @@ namespace Anade.Khadamat.Web.Controllers
 
                 var p = _promoteurInscriptionBusinessService.GetByNIN(inscriptionSuiviCreation.NIN);
                 var c = _compteAuthentificationBusinesService.GetByUserName(inscriptionSuiviCreation.Email);
+                var i = _identifiant_SIAuthentificationBusinesService.GetSingle(x => x.Authentification_CompteId == c.Id);
 
                 if (c.Date_Validation != null)
                 {
@@ -166,6 +181,19 @@ namespace Anade.Khadamat.Web.Controllers
                 }
 
 
+                var csvf = _suivi_Accepte_CSVFBusinesService.GetSingle(x => x.Num_Doss == i.Num_SI);
+                var eval = _suivi_EvaluationBusinesService.GetSingle(x => x.PromoteurId == i.Num_SI);
+                var finc = _suivi_FinanceBusinesService.GetSingle(x => x.Num_Doss == i.Num_SI);
+
+                var form = _suivi_FormationBusinesService.GetAllFiltered(x => x.NIN == p.NIN)
+                                                         .OrderByDescending(x => x.DateDebutSessionFormation)
+                                                         .FirstOrDefault();
+
+                
+                inscriptionSuiviCreation.Date_csvf = csvf.Date_csvf;
+                inscriptionSuiviCreation.ScoreTotal = eval.ScoreTotal.ToString();
+                inscriptionSuiviCreation.Date_Finance = finc.Date_Finance;
+                inscriptionSuiviCreation.DateDebutSessionFormation = form.DateDebutSessionFormation;
 
                 return View("SuiviDossierCreation", inscriptionSuiviCreation);
             }
