@@ -24,7 +24,7 @@ namespace Anade.Khadamat.Business
 
         protected override void OnAdding(Inscription entity)
         {
-            double age = DateTime.Now.Subtract(entity.DateNaissance).TotalDays / 365;
+            double age = DateTime.Now.Subtract(entity.DateNaissance).TotalDays / 365.25;
 
             if (_repository.Count(x =>
                                   x.Validee == true &&
@@ -43,7 +43,7 @@ namespace Anade.Khadamat.Business
 
         protected override void OnUpdating(Inscription entity)
         {
-            double age = DateTime.Now.Subtract(entity.DateNaissance).TotalDays / 365;
+            double age = DateTime.Now.Subtract(entity.DateNaissance).TotalDays / 365.25;
 
 
             if (_repository.Count(x =>
