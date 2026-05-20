@@ -129,7 +129,12 @@ namespace Anade.Khadamat.Domain
         [DataType(DataType.Date)]
         public DateTime Date_csvf { get; set; }
 
+        public bool? Admis { get; set; }
         public string ScoreTotal { get; set; }
+        public int ScoreTotalInt { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime DateEvaluation { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime Date_Finance { get; set; }

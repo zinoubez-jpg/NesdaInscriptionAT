@@ -14,6 +14,8 @@ namespace Anade.Khadamat.Domain
 
         public int Id { get; set; }
         public string PromoteurId { get; set; }
+        public string Deliberation { get; set; }
+        public DateTime DateEvaluation { get; set; }
         public int ScoreTotal { get; set; }
 
     }

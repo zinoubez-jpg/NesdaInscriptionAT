@@ -182,18 +182,95 @@ namespace Anade.Khadamat.Web.Controllers
 
 
                 var csvf = _suivi_Accepte_CSVFBusinesService.GetSingle(x => x.Num_Doss == i.Num_SI);
-                var eval = _suivi_EvaluationBusinesService.GetSingle(x => x.PromoteurId == i.Num_SI);
+
+                var evalAdmis = _suivi_EvaluationBusinesService.GetAllFiltered(x => x.PromoteurId == i.Num_SI && x.Deliberation == "Admis (e)")
+                                                               .OrderByDescending(x => x.DateEvaluation)
+                                                               .FirstOrDefault();
+                var evalNonAdmis = _suivi_EvaluationBusinesService.GetAllFiltered(x => x.PromoteurId == i.Num_SI && x.Deliberation == "Non Admis (e)")
+                                                                  .OrderByDescending(x => x.DateEvaluation)
+                                                                  .FirstOrDefault();
+
                 var finc = _suivi_FinanceBusinesService.GetSingle(x => x.Num_Doss == i.Num_SI);
 
                 var form = _suivi_FormationBusinesService.GetAllFiltered(x => x.NIN == p.NIN)
                                                          .OrderByDescending(x => x.DateDebutSessionFormation)
                                                          .FirstOrDefault();
 
-                
-                inscriptionSuiviCreation.Date_csvf = csvf.Date_csvf;
-                inscriptionSuiviCreation.ScoreTotal = eval.ScoreTotal.ToString();
-                inscriptionSuiviCreation.Date_Finance = finc.Date_Finance;
-                inscriptionSuiviCreation.DateDebutSessionFormation = form.DateDebutSessionFormation;
+                // test
+                /////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////
+                ///
+
+                //inscriptionSuiviCreation.DateValidation = c.Date_Creation;
+
+
+                //evalAdmis = _suivi_EvaluationBusinesService.GetAllFiltered(x => x.PromoteurId == "01040008924" && x.Deliberation == "Admis (e)")
+                //                                               .OrderByDescending(x => x.DateEvaluation)
+                //                                               .FirstOrDefault();
+                //evalNonAdmis = _suivi_EvaluationBusinesService.GetAllFiltered(x => x.PromoteurId == "01040008924" && x.Deliberation == "Non Admis (e)")
+                //                                                  .OrderByDescending(x => x.DateEvaluation)
+                //                                                  .FirstOrDefault();
+
+                //csvf = _suivi_Accepte_CSVFBusinesService.GetSingle(x => x.Num_Doss == "01040008924");
+
+                //finc = _suivi_FinanceBusinesService.GetSingle(x => x.Num_Doss == "02010029828");
+
+                //form = _suivi_FormationBusinesService.GetAllFiltered(x => x.NIN == "109970751013150001")
+                //                                         .OrderByDescending(x => x.DateDebutSessionFormation)
+                //                                         .FirstOrDefault();
+
+                /////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////
+                ///
+                /// fin test
+
+
+
+                if (csvf != null)
+                {
+                    inscriptionSuiviCreation.Date_csvf = csvf.Date_csvf;
+                }
+
+                if (evalAdmis == null && evalNonAdmis == null)
+                {
+                    inscriptionSuiviCreation.ScoreTotal = "NonEval";
+                    inscriptionSuiviCreation.ScoreTotalInt = 0;
+                    inscriptionSuiviCreation.Admis = null;
+                }
+                else
+                {
+                    if (evalAdmis != null)
+                    {
+                        inscriptionSuiviCreation.ScoreTotal = evalAdmis.ScoreTotal.ToString();
+                        inscriptionSuiviCreation.ScoreTotalInt = evalAdmis.ScoreTotal;
+                        inscriptionSuiviCreation.DateEvaluation = evalAdmis.DateEvaluation;
+                        inscriptionSuiviCreation.Admis = true;
+                    }
+                    else
+                    {
+                        if (evalNonAdmis != null)
+                        {
+                            inscriptionSuiviCreation.ScoreTotal = evalAdmis.ScoreTotal.ToString();
+                            inscriptionSuiviCreation.ScoreTotalInt = evalAdmis.ScoreTotal;
+                            inscriptionSuiviCreation.Admis = false;
+                        }
+                        else
+                        {
+                            inscriptionSuiviCreation.ScoreTotal = "Erreur";
+                            inscriptionSuiviCreation.ScoreTotalInt = 0;
+                            inscriptionSuiviCreation.Admis = null;
+                        }
+                    }
+                }
+
+                if (finc != null)
+                {
+                    inscriptionSuiviCreation.Date_Finance = finc.Date_Finance;
+                }
+                if (form != null)
+                {
+                    inscriptionSuiviCreation.DateDebutSessionFormation = form.DateDebutSessionFormation;
+                }
 
                 return View("SuiviDossierCreation", inscriptionSuiviCreation);
             }

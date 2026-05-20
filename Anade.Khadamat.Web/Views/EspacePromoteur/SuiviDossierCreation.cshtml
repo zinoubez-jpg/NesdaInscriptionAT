@@ -15,6 +15,7 @@
     <link href="~/AccountTemplette/timeLine.css" rel="stylesheet" />
 }
 
+
 <div class="container-fluid">
     <div class="col-sm-12 box-col-12">
         <div class="card">
@@ -40,39 +41,25 @@
                         </div>
 
                         <div class="step-container">
-                            <div class="step @(Model.Validee ? "completed" : (Model.DateValidation != DateTime.Parse("01/01/0001") ? "active" : ""))">
-                                <span class="step-icon">02</span>
-                            </div>
+                            <div class="step completed"><span class="step-icon">02</span></div>
                             <div class="step-title">مراجعة المستندات</div>
                         </div>
 
                         <div class="step-container">
-                            <div class="step @(Model.EvaluationProjets != null && Model.EvaluationProjets.Any() ?
-                                (Model.EvaluationProjets.Last().IsAdmis ? "completed" : "active") : "")">
-                                <span class="step-icon">03</span>
-                            </div>
-                            <div class="step-title">تقييم المشروع</div>
+                            <div class="step active"><span class="step-icon">03</span></div>
+                            <div class="step-title">تقييم المشروع </div>
                         </div>
 
                         <div class="step-container">
-                            <div class="step @(Model.SessionFormations != null && Model.SessionFormations.Any(x => x.IsFormee) ? "completed" : "")">
-                                <span class="step-icon">04</span>
-                            </div>
-                            <div class="step-title">التكوين</div>
-                        </div>
+                            <div class="step"><span class="step-icon">04</span></div>
 
-                        <div class="step-container">
-                            <div class="step @(Model.CSVFs != null && Model.CSVFs.Any(x => x.IsValide) ? "completed" : "")">
-                                <span class="step-icon">05</span>
-                            </div>
                             <div class="step-title">(CSVF)اللجنة</div>
                         </div>
 
                         <div class="step-container">
-                            <div class="step">
-                                <span class="step-icon">06</span>
-                            </div>
-                            <div class="step-title">إصدار شهادة</div>
+                            <div class="step"><span class="step-icon">05</span></div>
+
+                            <div class="step-title">إصدار شهادة </div>
                         </div>
                     </div>
                 </div>
@@ -95,36 +82,125 @@
 
                     @if (Model.DateValidation == DateTime.Parse("01/01/0001"))
                     {
-                        <div class="cd-timeline-block">
+                        <div class="cd-timeline-block etape" data-value="2">
                             <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
                             <div class="cd-timeline-content">
                                 <div class="timeline-wrapper">
                                     <div class="badge bg-warning">التحقق من الملف</div>
                                 </div>
                                 <h5 class="f-w-500 m-0">مراجعة المستندات المرفقة والتأكد من صحتها.</h5>
+                                <br />
+                                <audio controls="">
+                                    <source src="~/AccountTemplette/assets/audio/2.ogg" type="audio/ogg">
+                                </audio>
                                 <span class="cd-date">ملفك في هده المرحلة</span>
                             </div>
                         </div>
                     }
                     else if ((Model.DateValidation != DateTime.Parse("01/01/0001")))
                     {
-                        <div class="cd-timeline-block">
+                        <div class="cd-timeline-block etape" data-value="3">
                             <div class="cd-timeline-img cd-picture bg-primary"><i class="icofont icofont-document-search"></i></div>
                             <div class="cd-timeline-content">
                                 <div class="timeline-wrapper">
                                     <div class="badge bg-primary">التحقق من الملف</div>
                                 </div>
                                 <h5 class="f-w-500 m-0">لقد تم مراجعة المستندات المرفقة.</h5>
+                                <br />
+                                <audio controls="">
+                                    <source src="~/AccountTemplette/assets/audio/3.ogg" type="audio/ogg">
+                                </audio>
                                 <span class="cd-date">@Model.DateValidation.ToShortDateString()</span>
                             </div>
                         </div>
-                        @if (Model.EvaluationProjets.LastOrDefault() == null)
-                        {
 
+                        @if (Model.Admis == null)
+                        {
+                            <div class="cd-timeline-block">
+                                <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
+                                <div class="cd-timeline-content">
+                                    <div class="timeline-wrapper">
+                                        <div class="badge bg-warning">مرحلة تقييم المشروع</div>
+                                    </div>
+                                    <h5 class="f-w-500 m-0">سيتم تقييم مشروعك في الأيام القادمة ، وسيتم التواصل معك عبر الهاتف والبريد الإلكتروني لإعلامك بموعد التقييم .</h5>
+                                    <br />
+                                    <audio controls="">
+                                        <source src="~/AccountTemplette/assets/audio/6.ogg" type="audio/ogg">
+                                    </audio>
+                                    <span class="cd-date">ملفك في هده المرحلة</span>
+                                </div>
+                            </div>
                         }
-                        else if (Model.EvaluationProjets.Last().DateEvaluation != DateTime.Parse("01/01/0001"))
+                        else if (Model.Admis == false)
                         {
+                            <div class="cd-timeline-block etape" data-value="3">
+                                <div class="cd-timeline-img cd-picture bg-danger"><i class="icon-close"></i></div>
+                                <div class="cd-timeline-content">
+                                    <div class="timeline-wrapper">
+                                        <div class="badge bg-danger">مرحلة تقييم المشروع</div>
+                                    </div>
+                                    <h5 class="f-w-500 m-0">لقد ثم تقييم مشروعك ، نعتدر لعدم إجتيازك هده المرحلة  .</h5>
+                                    <h5 class="f-w-500 m-0"> نتيجة التقيم = @Model.ScoreTotal.</h5>
 
+                                    <span class="cd-date">@Model.ScoreTotal</span>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="cd-timeline-block etape" data-value="4">
+                                <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
+                                <div class="cd-timeline-content">
+                                    <div class="timeline-wrapper">
+                                        <div class="badge bg-primary">مرحلة تقييم المشروع</div>
+                                    </div>
+                                    <h5 class="f-w-500 m-0">لقد ثم تقييم مشروعك ، تهانينا لقد إجتزت هده المرحلة بنجاح .</h5>
+                                    <h5 class="f-w-500 m-0"> نتيجة التقيم = @Model.ScoreTotal.</h5>
+
+                                    <span class="cd-date">@Model.DateEvaluation.ToShortDateString()</span>
+                                </div>
+                            </div>
+
+                            @if (Model.Date_csvf == DateTime.Parse("01/01/0001"))
+                            {
+                                <div class="cd-timeline-block">
+                                    <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
+                                    <div class="cd-timeline-content">
+                                        <div class="timeline-wrapper">
+                                            <div class="badge bg-warning">مرحلة تقديم المشروع إلى اللجنة</div>
+                                        </div>
+                                        <h5 class="f-w-500 m-0">سيتم تقديم مشروعك في الأيام القادمة إلى اللجنة ، وسيتم التواصل معك عبر الهاتف والبريد الإلكتروني لإعلامك بموعد الدورة  .</h5>
+
+                                        <span class="cd-date">ملفك في هده المرحلة</span>
+                                    </div>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="cd-timeline-block etape" data-value="4">
+                                    <div class="cd-timeline-img cd-picture bg-primary"><i class="icon-pencil-alt"></i></div>
+                                    <div class="cd-timeline-content">
+                                        <div class="timeline-wrapper">
+                                            <div class="badge bg-primary">مرحلة تقديم المشروع إلى اللجنة</div>
+                                        </div>
+                                        <h5 class="f-w-500 m-0">لقد ثم تقديم مشروعك إلى اللجنة ، تهانينا لقد إجتزت هده المرحلة بنجاح .</h5>
+
+                                        <span class="cd-date">@Model.Date_csvf.ToShortDateString()</span>
+                                    </div>
+                                </div>
+                                <div class="cd-timeline-block etape" data-value="5">
+                                    <div class="cd-timeline-img cd-picture bg-warning"><i class="icon-pin-alt"></i></div>
+                                    <div class="cd-timeline-content">
+                                        <div class="timeline-wrapper">
+                                            <div class="badge bg-warning">مرحلة تحرير شهادة التأهيل</div>
+                                        </div>
+                                        <h5 class="f-w-500 m-0"> نحيطكم علمًا بأن شهادة التأهيل الخاصة بمشروعكم قيد الإنجاز. يُرجى التفضل  لاستلامها في أقرب وقت ممكن. .</h5>
+
+                                        <span class="cd-date">ملفك في هده المرحلة</span>
+                                    </div>
+                                </div>
+                            }
                         }
                     }
                 </section>
@@ -133,19 +209,54 @@
     </div>
 </div>
 
+
 @section scripts{
+
+    <script>
+
+        // Récupérer tous les éléments avec la classe "etape"
+        let etapes = document.querySelectorAll(".etape");
+        let derniereEtape = etapes[etapes.length - 1];
+        let valeurEtape = derniereEtape.getAttribute("data-value");
+
+        let currentStep = Number(valeurEtape);
+
+        const totalSteps = 5;
+
+        function updateProgress() {
+            const steps = document.querySelectorAll('.step');
+            const progressLine = document.querySelector('.progress-line-filled');
+            const progressPercentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
+
+            progressLine.style.width = `${progressPercentage}%`;
+
+            steps.forEach((step, index) => {
+                const stepNumber = index + 1;
+                step.classList.remove('completed', 'active');
+
+                if (stepNumber < currentStep) {
+                    step.classList.add('completed');
+                } else if (stepNumber === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+        }
+        // Initialize progress
+        updateProgress();
+    </script>
     <script>
         function afficherTimeline() {
             let section = document.getElementById("cd-timeline");
             let btn = document.querySelector("button[onclick='afficherTimeline()']");
 
             if (section.style.display === "none" || section.style.display === "") {
-                section.style.display = "block";
+                section.style.display = "block"; // Afficher la section
                 btn.textContent = "إخفاء";
             } else {
-                section.style.display = "none";
+                section.style.display = "none"; // Cacher la section
                 btn.textContent = "إظهار المزيد";
             }
         }
+
     </script>
 }
