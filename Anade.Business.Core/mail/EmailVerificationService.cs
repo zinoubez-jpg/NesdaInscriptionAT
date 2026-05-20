@@ -12,14 +12,12 @@ namespace Anade.Business.Core
     {
         private readonly IEmailService _emailService;
         private readonly KhadamtDbContext _khadamtDbContext;
-        private readonly AuthentificationDbContext _authentificationDbContext;
+
         public EmailVerificationService(IEmailService emailService
-                                      , KhadamtDbContext khadamtDbContext
-                                      , AuthentificationDbContext authentificationDbContext)
+                                      , KhadamtDbContext khadamtDbContext)
         {
             _emailService = emailService;
             _khadamtDbContext = khadamtDbContext;
-            _authentificationDbContext = authentificationDbContext;
         }
 
         public async Task SendVerificationEmailAsync(string email, string token)
@@ -226,14 +224,6 @@ namespace Anade.Business.Core
             inscrit.EmailVerificationTokenExpiry = null;
 
             await _khadamtDbContext.SaveChangesAsync();
-
-            var compteAuthentification = _authentificationDbContext.Compte.FirstOrDefault(c => c.Pseudo==email);
-
-            if(compteAuthentification != null)
-            {
-                compteAuthentification.Authentification_EtatId = 1;
-                await _authentificationDbContext.SaveChangesAsync();
-            }
 
             return true;
         }

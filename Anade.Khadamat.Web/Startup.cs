@@ -84,6 +84,11 @@ namespace Anade.Khadamat.Web
 
             // pour utiliser les compte dans l'inscription en ligne.
             services.AddTransient<PromoteurSuiviBusinesService>();
+            services.AddTransient<Suivi_Accepte_CSVFBusinesService>();
+            services.AddTransient<Suivi_EvaluationBusinesService>();
+            services.AddTransient<Suivi_FinanceBusinesService>();
+            services.AddTransient<Suivi_FormationBusinesService>();
+
 
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<ILoadProperties<SessionFormationDetails, int>, LoadProperties<SessionFormationDetails, int>>();

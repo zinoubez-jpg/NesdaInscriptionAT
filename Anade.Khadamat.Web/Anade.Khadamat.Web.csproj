@@ -48,6 +48,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ProtectedFiles\CNIFolder\" />
+    <Folder Include="ProtectedFiles\DiplomeCDEFolder\" />
+    <Folder Include="ProtectedFiles\DiplomeFolder\" />
     <Folder Include="wwwroot\CNIFolder\" />
     <Folder Include="wwwroot\DiplomeFolder\" />
     <Folder Include="wwwroot\DiplomeCDEFolder\" />    
@@ -740,6 +743,6 @@
     </None>
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

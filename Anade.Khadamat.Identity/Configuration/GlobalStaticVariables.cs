@@ -55,4 +55,9 @@
         public const int Associe = 1;
         public const int Gérant = 2;
     }
-}
+   public static class CentreDeveloppementEntrepreneuriatId
+    {
+        public const int NonDefini = 1;
+        public const int CDEenligne = 6;
+    }
+} 

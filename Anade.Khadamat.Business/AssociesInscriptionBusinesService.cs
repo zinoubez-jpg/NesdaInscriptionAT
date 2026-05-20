@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using Anade.Domain.Core.ValueTypeExtensions;
 using System.Linq;
-using Microsoft.Extensions.Logging; // Ajoutez cette ligne en haut
+using Microsoft.Extensions.Logging;
 
 namespace Anade.Khadamat.Business
 {
@@ -41,7 +41,7 @@ namespace Anade.Khadamat.Business
             , Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService
             , Identifiant_SIAuthentificationBusinesService identifiant_SIAuthentificationBusinesService
             , PromoteurInscriptionBusinesService promoteurInscriptionBusinessService
-            , ILogger<AssociesInscriptionBusinesService> logger // Ajoutez ce paramètre
+            , ILogger<AssociesInscriptionBusinesService> logger
             ) : base(unitOfWork)
         {
             _compteAuthentificationBusinesService = compteAuthentificationBusinesService;
@@ -62,8 +62,9 @@ namespace Anade.Khadamat.Business
         public override Expression<Func<Inscription_Associes, object>>[] GetDefaultLoadProperties()
         {
             Expression<Func<Inscription_Associes, object>> loadCategorie = x => x.Inscription_Categorie;
+            Expression<Func<Inscription_Associes, object>> loadPromoteur = x => x.Inscription_Promoteur;
 
-            return new Expression<Func<Inscription_Associes, object>>[] { loadCategorie };
+            return new Expression<Func<Inscription_Associes, object>>[] { loadCategorie, loadPromoteur };
         }
 
         protected override void OnAdding(Inscription_Associes entity)
@@ -114,13 +115,16 @@ namespace Anade.Khadamat.Business
                     }
                     else
                     {
-                        var ListCode_P = GetAllFiltered(o => o.Inscription_Promoteur.DDN_P.Year == entity.Inscription_Promoteur.DDN_P.Year && o.Inscription_Promoteur.CommuneId == entity.Inscription_Promoteur.CommuneId && (o.Inscription_Promoteur.NUM_ACT_P == Num_Acte_Avec_Zéro || o.Inscription_Promoteur.NUM_ACT_P == Num_Acte_Sans_Zéro));
+                        var ListCode_P = GetAllFiltered(o => o.Inscription_Promoteur.DDN_P.Year == entity.Inscription_Promoteur.DDN_P.Year
+                                                          && o.Inscription_Promoteur.CommuneId == entity.Inscription_Promoteur.CommuneId
+                                                          && (o.Inscription_Promoteur.NUM_ACT_P == Num_Acte_Avec_Zéro || o.Inscription_Promoteur.NUM_ACT_P == Num_Acte_Sans_Zéro), GetDefaultLoadProperties());
 
                         if (ListCode_P.Count == 0)
                             code_promoteur += "0";
                         else
                         {
                             List<int> sequences = new List<int>();
+
                             foreach (var item in ListCode_P)
                             {
                                 sequences.Add(int.Parse(item.Inscription_Promoteur.CODE_P.Last().ToString()));
@@ -215,6 +219,7 @@ namespace Anade.Khadamat.Business
                 entityCompte.Mot_De_Passe = entity.Mot_Passe_ToSHA;
             }
 
+            entityCompte.Authentification_EtatId = 1;
             entityCompte.Si_Inscription = true;
 
             //entityCompteCDE.Authentification_CompteId = entityCompte.Id;
@@ -519,5 +524,6 @@ namespace Anade.Khadamat.Business
             else
                 return BusinessResult.Failure;
         }
+
     }
 }
