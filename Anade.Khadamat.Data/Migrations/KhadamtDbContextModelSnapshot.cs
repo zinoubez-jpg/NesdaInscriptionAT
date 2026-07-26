@@ -447,6 +447,9 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Property<bool>("IsEmailVerified")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsPhoneValidated")
+                        .HasColumnType("bit");
+
                     b.Property<string>("MotifAnnulation")
                         .HasColumnType("nvarchar(max)");
 
@@ -480,6 +483,13 @@ namespace Anade.Khadamat.Data.Migrations
 
                     b.Property<string>("NumeroSiejeV3")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtpCode")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("OtpExpiresAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHashInit")
                         .HasColumnType("nvarchar(max)");
@@ -646,6 +656,79 @@ namespace Anade.Khadamat.Data.Migrations
                     b.ToTable("SituationFamiliales");
                 });
 
+            modelBuilder.Entity("Anade.Khadamat.Domain.SmsSent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateEnvoi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateReponse")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("InscriptionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("NumTelephone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("ReponseApi")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("StatutEnvoiSmsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeSmsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InscriptionId");
+
+                    b.HasIndex("StatutEnvoiSmsId");
+
+                    b.HasIndex("TypeSmsId");
+
+                    b.ToTable("SmsSents");
+                });
+
+            modelBuilder.Entity("Anade.Khadamat.Domain.StatutEnvoiSms", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("DesignationAr")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("DesignationFr")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StatutsEnvoiSms");
+                });
+
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeCentreDeveloppementEntrepreneuriat", b =>
                 {
                     b.Property<int>("Id")
@@ -748,6 +831,32 @@ namespace Anade.Khadamat.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TypesInscription");
+                });
+
+            modelBuilder.Entity("Anade.Khadamat.Domain.TypeSms", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("DesignationAr")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("DesignationFr")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypesSms");
                 });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.Wilaya", b =>
@@ -972,6 +1081,31 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Navigation("Inscription");
                 });
 
+            modelBuilder.Entity("Anade.Khadamat.Domain.SmsSent", b =>
+                {
+                    b.HasOne("Anade.Khadamat.Domain.Inscription", "Inscription")
+                        .WithMany("SmsSents")
+                        .HasForeignKey("InscriptionId");
+
+                    b.HasOne("Anade.Khadamat.Domain.StatutEnvoiSms", "StatutEnvoiSms")
+                        .WithMany("SmsSents")
+                        .HasForeignKey("StatutEnvoiSmsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Anade.Khadamat.Domain.TypeSms", "TypeSms")
+                        .WithMany("SmsSents")
+                        .HasForeignKey("TypeSmsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Inscription");
+
+                    b.Navigation("StatutEnvoiSms");
+
+                    b.Navigation("TypeSms");
+                });
+
             modelBuilder.Entity("Anade.Khadamat.Domain.Activite", b =>
                 {
                     b.Navigation("Inscriptions");
@@ -1015,6 +1149,8 @@ namespace Anade.Khadamat.Data.Migrations
                     b.Navigation("EvaluationProjets");
 
                     b.Navigation("SessionFormations");
+
+                    b.Navigation("SmsSents");
                 });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.NiveauInstruction", b =>
@@ -1025,6 +1161,11 @@ namespace Anade.Khadamat.Data.Migrations
             modelBuilder.Entity("Anade.Khadamat.Domain.SituationFamiliale", b =>
                 {
                     b.Navigation("Inscriptions");
+                });
+
+            modelBuilder.Entity("Anade.Khadamat.Domain.StatutEnvoiSms", b =>
+                {
+                    b.Navigation("SmsSents");
                 });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeCentreDeveloppementEntrepreneuriat", b =>
@@ -1045,6 +1186,11 @@ namespace Anade.Khadamat.Data.Migrations
             modelBuilder.Entity("Anade.Khadamat.Domain.TypeInscription", b =>
                 {
                     b.Navigation("Inscriptions");
+                });
+
+            modelBuilder.Entity("Anade.Khadamat.Domain.TypeSms", b =>
+                {
+                    b.Navigation("SmsSents");
                 });
 
             modelBuilder.Entity("Anade.Khadamat.Domain.Wilaya", b =>

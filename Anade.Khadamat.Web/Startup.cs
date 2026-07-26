@@ -100,6 +100,13 @@ namespace Anade.Khadamat.Web
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IEmailVerificationService, EmailVerificationService>();
+
+            services.Configure<Anade.Khadamat.Business.Sms.SmsSettings>(Configuration.GetSection("SmsSettings"));
+            services.Configure<Anade.Khadamat.Business.Sms.OtpSettings>(Configuration.GetSection("OtpSettings"));
+            services.AddHttpClient<Anade.Khadamat.Business.Sms.ISmsService, Anade.Khadamat.Business.Sms.SmsProPlusService>();
+            services.AddTransient<SmsSentBusinessService>();
+            services.AddTransient<PhoneOtpService>();
+
             services.AddHttpClient();
             services.AddScoped<IRecaptchaService, RecaptchaService>();
 

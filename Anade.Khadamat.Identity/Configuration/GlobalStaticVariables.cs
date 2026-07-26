@@ -60,4 +60,14 @@
         public const int NonDefini = 1;
         public const int CDEenligne = 6;
     }
+    public static class TypeSmsId
+    {
+        public const int OTP = 1;
+    }
+    public static class StatutEnvoiSmsId
+    {
+        public const int ATT = 1;
+        public const int OK = 2;
+        public const int ERR = 3;
+    }
 } 

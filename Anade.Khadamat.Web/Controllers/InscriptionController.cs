@@ -1,5 +1,6 @@
 ﻿using Anade.Business.Core;
 using Anade.Khadamat.Business;
+using Anade.Khadamat.Business.Sms;
 using Anade.Khadamat.Data;
 using Anade.Khadamat.Domain;
 using Anade.Khadamat.Identity;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -62,6 +64,8 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly Detail_DossierInscriptionBusinesService _detail_DossierInscriptionBusinessService;
         private readonly AssociesInscriptionBusinesService _associesInscriptionBusinessService;
         private readonly Inscription_CategorieBusinesService _inscription_CategorieBusinesService;
+        private readonly PhoneOtpService _phoneOtpService;
+        private readonly OtpSettings _otpSettings;
 
         public InscriptionController(
                                       ReferentielBusinessService<Commune, int> communeBusinessService,
@@ -96,7 +100,9 @@ namespace Anade.Khadamat.Web.Controllers
                                       PromoteurInscriptionBusinesService promoteurInscriptionBusinessService,
                                       Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService,
                                       AssociesInscriptionBusinesService associesInscriptionBusinessService,
-                                      Inscription_CategorieBusinesService inscription_CategorieBusinesService
+                                      Inscription_CategorieBusinesService inscription_CategorieBusinesService,
+                                      PhoneOtpService phoneOtpService,
+                                      IOptions<OtpSettings> otpSettings
                                    )
         {
             _communeBusinessService = communeBusinessService;
@@ -132,6 +138,8 @@ namespace Anade.Khadamat.Web.Controllers
             _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
             _associesInscriptionBusinessService = associesInscriptionBusinessService;
             _inscription_CategorieBusinesService = inscription_CategorieBusinesService;
+            _phoneOtpService = phoneOtpService;
+            _otpSettings = otpSettings.Value;
         }
 
         public IActionResult Index()
@@ -252,6 +260,22 @@ namespace Anade.Khadamat.Web.Controllers
                         bR.Messages.Add(msgR);
                         TempData["Message"] = bR.ToBootstrapAlerts();
 
+                        return View(model);
+                    }
+                    // To probably remove later
+                    var phoneNormalizedExt = model.NumTelephone?.Replace(" ", "");
+                    if (!string.IsNullOrEmpty(phoneNormalizedExt)
+                        && _context.Inscriptions.Any(u => u.NumTelephone == phoneNormalizedExt && u.IsPhoneValidated))
+                    {
+                        ModelState.AddModelError("NumTelephone", "رقم الهاتف الذي أدخلته مرتبط بحساب موجود. يرجى استخدام رقم آخر");
+                        InitializeListViewBags(model);
+                        var bR = new BusinessResult();
+                        bR.Messages.Add(new MessageResult
+                        {
+                            Message = "رقم الهاتف الذي أدخلته مرتبط بحساب موجود. يرجى استخدام رقم آخر",
+                            MessageType = MessageType.Error
+                        });
+                        TempData["Message"] = bR.ToBootstrapAlerts();
                         return View(model);
                     }
 
@@ -416,7 +440,9 @@ namespace Anade.Khadamat.Web.Controllers
                           NewInscription.EmailVerificationToken
                          );
 
-                        return RedirectToAction(nameof(SuccesInscription));
+                        await _phoneOtpService.GenerateAndSendOtpAsync(NewInscription);
+
+                        return RedirectToAction(nameof(VerifyPhone), new { id = NewInscription.Id });
                     }
                     TempData["Message"] = businessResult.ToBootstrapAlerts();
                     InitializeListViewBags(model);
@@ -573,6 +599,22 @@ namespace Anade.Khadamat.Web.Controllers
                         bR.Messages.Add(msgR);
                         TempData["Message"] = bR.ToBootstrapAlerts();
 
+                        return View(model);
+                    }
+
+                    var phoneNormalizedCre = model.NumTelephone?.Replace(" ", "");
+                    if (!string.IsNullOrEmpty(phoneNormalizedCre)
+                        && _context.Inscriptions.Any(u => u.NumTelephone == phoneNormalizedCre && u.IsPhoneValidated))
+                    {
+                        ModelState.AddModelError("NumTelephone", "رقم الهاتف الذي أدخلته مرتبط بحساب موجود. يرجى استخدام رقم آخر");
+                        InitializeListViewBags(model);
+                        var bRPhone = new BusinessResult();
+                        bRPhone.Messages.Add(new MessageResult
+                        {
+                            Message = "رقم الهاتف الذي أدخلته مرتبط بحساب موجود. يرجى استخدام رقم آخر",
+                            MessageType = MessageType.Error
+                        });
+                        TempData["Message"] = bRPhone.ToBootstrapAlerts();
                         return View(model);
                     }
 
@@ -754,7 +796,9 @@ namespace Anade.Khadamat.Web.Controllers
                     {
                         _ = _emailVerificationService.SendVerificationEmailAsync(NewInscription.Email, NewInscription.EmailVerificationToken);
 
-                        return RedirectToAction(nameof(SuccesInscription));
+                        await _phoneOtpService.GenerateAndSendOtpAsync(NewInscription);
+
+                        return RedirectToAction(nameof(VerifyPhone), new { id = NewInscription.Id });
                     }
 
                     TempData["Message"] = businessResult.ToBootstrapAlerts();
@@ -781,6 +825,74 @@ namespace Anade.Khadamat.Web.Controllers
 
             InitializeListViewBags(model);
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult VerifyPhone(int id)
+        {
+            var inscription = _inscriptionBusinessService.GetById(id);
+            if (inscription == null)
+                return NotFound();
+
+            if (inscription.IsPhoneValidated)
+                return RedirectToAction(nameof(SuccesInscription));
+
+            var model = new VerifyPhoneOtpVM
+            {
+                InscriptionId = inscription.Id,
+                MaskedPhone = PhoneOtpService.MaskPhone(inscription.NumTelephone),
+                ValidityMinutes = _otpSettings.ValidityMinutes > 0 ? _otpSettings.ValidityMinutes : 2
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult VerifyPhone(VerifyPhoneOtpVM model)
+        {
+            var inscription = _inscriptionBusinessService.GetById(model.InscriptionId);
+            if (inscription == null)
+                return NotFound();
+
+            model.MaskedPhone = PhoneOtpService.MaskPhone(inscription.NumTelephone);
+            model.ValidityMinutes = _otpSettings.ValidityMinutes > 0 ? _otpSettings.ValidityMinutes : 2;
+
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var businessResult = _phoneOtpService.VerifyOtp(model.InscriptionId, model.OtpCode);
+            if (businessResult.Succeeded)
+            {
+                TempData["Message"] = businessResult.ToBootstrapAlerts();
+                return RedirectToAction(nameof(PhoneVerificationSuccess));
+            }
+
+            ViewData["Message"] = businessResult.ToBootstrapAlerts();
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ResendPhoneOtp()
+        {
+            return View(new ResendPhoneOtpVM());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResendPhoneOtp(ResendPhoneOtpVM model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var businessResult = await _phoneOtpService.ResendOtpAsync(model.NumTelephone);
+            TempData["Message"] = businessResult.ToBootstrapAlerts();
+            return RedirectToAction(nameof(ResendPhoneOtp));
+        }
+
+        [HttpGet]
+        public IActionResult PhoneVerificationSuccess()
+        {
+            return View();
         }
 
         [HttpGet]

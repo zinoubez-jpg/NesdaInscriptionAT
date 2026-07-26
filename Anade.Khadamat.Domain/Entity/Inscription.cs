@@ -10,6 +10,7 @@ namespace Anade.Khadamat.Domain
         public Inscription()
         {
             this.Documents = new HashSet<Document>();
+            this.SmsSents = new HashSet<SmsSent>();
         }
 
         [Display(Name = "Id")]
@@ -113,6 +114,11 @@ namespace Anade.Khadamat.Domain
         public string EmailVerificationToken { get; set; }
         public DateTime? EmailVerificationTokenExpiry { get; set; }
 
+        [StringLength(10, ErrorMessage = "StringLengthMessage")]
+        public string OtpCode { get; set; }
+        public DateTime? OtpExpiresAt { get; set; }
+        public bool IsPhoneValidated { get; set; }
+
         [Required(ErrorMessage = "يرجى التحقق من الكابتشا")]
         [Display(Name = "ReCaptcha")]
         public string RecaptchaResponse { get; set; }
@@ -139,5 +145,6 @@ namespace Anade.Khadamat.Domain
         public int CentreDeveloppementEntrepreneuriatId { get; set; }
         public virtual CentreDeveloppementEntrepreneuriat CentreDeveloppementEntrepreneuriat { get; set; }
         public virtual ICollection<Document> Documents { get; set; }
+        public virtual ICollection<SmsSent> SmsSents { get; set; }
     }
 }
