@@ -10,16 +10,16 @@
                 <div class="row align-items-center clearfix">
                     <div class="container">
                         <partial name="_Message" />
-                        @if (ViewData["Message"] != null)
+                        @* @if (ViewData["Message"] != null)
                         {
                             @Html.Raw(ViewData["Message"])
-                        }
+                        } *@
                     </div>
 
                     <div class="image-column col-lg-4">
                         <div class="about-image">
                             <div class="about-inner-image">
-                                <img src="~/TempletteCDE PF/images/success.png" alt="OTP" />
+                                <img src="~/TempletteCDE PF/images/PhoneValidation.png" alt="OTP" />
                             </div>
                         </div>
                     </div>
@@ -30,36 +30,67 @@
                                 <br />
                                 <h2>التحقق من <span>رقم الهاتف</span></h2>
                             </div>
-                            <div class="text">
-                                <p>
-                                    تم إرسال رمز التحقق عبر رسالة قصيرة إلى الرقم
-                                    <strong>@Model.MaskedPhone</strong>.
-                                    الرمز صالح لمدة <strong>@Model.ValidityMinutes</strong> دقيقة.
-                                </p>
-                                <p style="color:#7b241c;font-size:14px">
-                                    يرجى أيضاً التحقق من بريدك الإلكتروني لتفعيل الحساب عبر الرابط المرسل.
-                                </p>
-                            </div>
 
-                            <form asp-action="VerifyPhone" method="post" class="mt-4">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" asp-for="InscriptionId" />
-                                <input type="hidden" asp-for="MaskedPhone" />
-                                <input type="hidden" asp-for="ValidityMinutes" />
-
-                                <div class="form-group mb-3">
-                                    <label asp-for="OtpCode" class="form-label"></label>
-                                    <input asp-for="OtpCode" class="form-control" autocomplete="one-time-code" inputmode="numeric" maxlength="10" placeholder="******" />
-                                    <span asp-validation-for="OtpCode" class="text-danger"></span>
+                            @if (!Model.OtpStep)
+                            {
+                                <div class="text">
+                                    <p>
+                                        أدخل رقم الهاتف الذي سجّلت به. إذا كان بريدك الإلكتروني مفعّلاً والرقم غير مفعّل بعد،
+                                        سيصلك رمز التحقق عبر رسالة قصيرة (SMS).
+                                    </p>
+                                    <p style="color:#7b241c;font-size:14px">
+                                        يجب التحقق من البريد الإلكتروني أولاً قبل التمكن من تفعيل الهاتف.
+                                    </p>
                                 </div>
 
-                                <button type="submit" class="theme-btn btn-style-one">تأكيد الرمز</button>
-                            </form>
+                                <form asp-action="RequestPhoneOtp" method="post" class="mt-2" id="sendOtpForm">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" asp-for="ValidityMinutes" />
+                                    <div class="form-group mb-3">
+                                        <label asp-for="NumTelephone" class="form-label"></label>
+                                        <input asp-for="NumTelephone" class="form-control" placeholder="0X XX XX XX XX" maxlength="15" />
+                                        <span asp-validation-for="NumTelephone" class="text-danger"></span>
+                                    </div>
+                                    <button type="submit" class="theme-btn btn-style-one" id="sendOtpBtn"><span class="txt">إرسال رمز التحقق</span></button>
+                                </form>
+                            }
+                            else
+                            {
+                                <div class="text">
+                                    <p>
+                                        تم إرسال رمز التحقق (إن كان الرقم مؤهلاً للتفعيل) إلى
+                                        <strong dir="ltr"">@(Model.MaskedPhone ?? "****")</strong>.
+                                        الرمز صالح لمدة <strong>@Model.ValidityMinutes</strong> دقيقة.
+                                    </p>
+                                </div>
 
-                            <p class="mt-4">
-                                لم يصلك الرمز؟
-                                <a asp-action="ResendPhoneOtp">إعادة إرسال رمز SMS</a>
-                            </p>
+                                <form asp-action="ConfirmPhoneOtp" method="post" class="mt-4">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" asp-for="NumTelephone" />
+                                    <input type="hidden" asp-for="MaskedPhone" />
+                                    <input type="hidden" asp-for="ValidityMinutes" />
+                                    <input type="hidden" asp-for="OtpStep" />
+
+                                    <div class="form-group mb-3">
+                                        <label asp-for="OtpCode" class="form-label"></label>
+                                        <input asp-for="OtpCode" class="form-control" autocomplete="one-time-code" inputmode="numeric" maxlength="10" placeholder="******" />
+                                        <span asp-validation-for="OtpCode" class="text-danger"></span>
+                                    </div>
+
+                                    <button type="submit" class="theme-btn btn-style-one"><span class="txt">تأكيد الرمز وإنشاء الحساب</span></button>
+                                </form>
+
+                                <form asp-action="RequestPhoneOtp" method="post" class="mt-3">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" asp-for="NumTelephone" />
+                                    <input type="hidden" asp-for="ValidityMinutes" />
+                                    <button type="submit" class="theme-btn btn-style-two"><span class="txt">إعادة إرسال الرمز</span></button>
+                                </form>
+
+                                <p class="mt-3">
+                                    <a asp-action="VerifyPhone">التحقق من رقم اخر</a>
+                                </p>
+                            }
                         </div>
                     </div>
                 </div>
@@ -70,4 +101,18 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var form = document.getElementById('sendOtpForm');
+            var btn = document.getElementById('sendOtpBtn');
+            if (!form || !btn) return;
+
+            form.addEventListener('submit', function () {
+                if ($(form).valid()) {
+                    btn.disabled = true;
+                    btn.querySelector('.txt').textContent = 'جاري الإرسال...';
+                }
+            });
+        });
+    </script>
 }

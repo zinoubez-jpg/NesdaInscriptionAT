@@ -440,9 +440,7 @@ namespace Anade.Khadamat.Web.Controllers
                           NewInscription.EmailVerificationToken
                          );
 
-                        await _phoneOtpService.GenerateAndSendOtpAsync(NewInscription);
-
-                        return RedirectToAction(nameof(VerifyPhone), new { id = NewInscription.Id });
+                        return RedirectToAction(nameof(SuccesInscription));
                     }
                     TempData["Message"] = businessResult.ToBootstrapAlerts();
                     InitializeListViewBags(model);
@@ -602,21 +600,7 @@ namespace Anade.Khadamat.Web.Controllers
                         return View(model);
                     }
 
-                    var phoneNormalizedCre = model.NumTelephone?.Replace(" ", "");
-                    if (!string.IsNullOrEmpty(phoneNormalizedCre)
-                        && _context.Inscriptions.Any(u => u.NumTelephone == phoneNormalizedCre && u.IsPhoneValidated))
-                    {
-                        ModelState.AddModelError("NumTelephone", "رقم الهاتف الذي أدخلته مرتبط بحساب موجود. يرجى استخدام رقم آخر");
-                        InitializeListViewBags(model);
-                        var bRPhone = new BusinessResult();
-                        bRPhone.Messages.Add(new MessageResult
-                        {
-                            Message = "رقم الهاتف الذي أدخلته مرتبط بحساب موجود. يرجى استخدام رقم آخر",
-                            MessageType = MessageType.Error
-                        });
-                        TempData["Message"] = bRPhone.ToBootstrapAlerts();
-                        return View(model);
-                    }
+
 
                     if (model.CopieCNIPdf.Length > 2048576)
                     {
@@ -796,9 +780,7 @@ namespace Anade.Khadamat.Web.Controllers
                     {
                         _ = _emailVerificationService.SendVerificationEmailAsync(NewInscription.Email, NewInscription.EmailVerificationToken);
 
-                        await _phoneOtpService.GenerateAndSendOtpAsync(NewInscription);
-
-                        return RedirectToAction(nameof(VerifyPhone), new { id = NewInscription.Id });
+                        return RedirectToAction(nameof(SuccesInscription));
                     }
 
                     TempData["Message"] = businessResult.ToBootstrapAlerts();
@@ -828,65 +810,107 @@ namespace Anade.Khadamat.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult VerifyPhone(int id)
+        public IActionResult VerifyPhone()
         {
-            var inscription = _inscriptionBusinessService.GetById(id);
-            if (inscription == null)
-                return NotFound();
-
-            if (inscription.IsPhoneValidated)
-                return RedirectToAction(nameof(SuccesInscription));
-
-            var model = new VerifyPhoneOtpVM
+            return View(new VerifyPhoneOtpVM
             {
-                InscriptionId = inscription.Id,
-                MaskedPhone = PhoneOtpService.MaskPhone(inscription.NumTelephone),
                 ValidityMinutes = _otpSettings.ValidityMinutes > 0 ? _otpSettings.ValidityMinutes : 2
-            };
-            return View(model);
+            });
         }
 
+        /// <summary>
+        /// Step 1: user enters registered phone → request OTP (generic message always).
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult VerifyPhone(VerifyPhoneOtpVM model)
+        public async Task<IActionResult> RequestPhoneOtp(VerifyPhoneOtpVM model)
         {
-            var inscription = _inscriptionBusinessService.GetById(model.InscriptionId);
-            if (inscription == null)
-                return NotFound();
-
-            model.MaskedPhone = PhoneOtpService.MaskPhone(inscription.NumTelephone);
             model.ValidityMinutes = _otpSettings.ValidityMinutes > 0 ? _otpSettings.ValidityMinutes : 2;
+            model.OtpCode = null;
 
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var businessResult = _phoneOtpService.VerifyOtp(model.InscriptionId, model.OtpCode);
-            if (businessResult.Succeeded)
+            ModelState.Remove(nameof(VerifyPhoneOtpVM.OtpCode));
+            if (string.IsNullOrWhiteSpace(model.NumTelephone)
+                || !System.Text.RegularExpressions.Regex.IsMatch(model.NumTelephone, @"^0\s?[567].*$"))
             {
-                TempData["Message"] = businessResult.ToBootstrapAlerts();
-                return RedirectToAction(nameof(PhoneVerificationSuccess));
+                ModelState.AddModelError(nameof(model.NumTelephone), "يرجى التحقق من رقم الهاتف الذي أدخلته");
+                model.OtpStep = false;
+                return View(nameof(VerifyPhone), model);
             }
 
-            ViewData["Message"] = businessResult.ToBootstrapAlerts();
-            return View(model);
+            var businessResult = await _phoneOtpService.RequestOtpByPhoneAsync(model.NumTelephone);
+            TempData["Message"] = businessResult.ToBootstrapAlerts();
+
+            model.OtpStep = true;
+            model.MaskedPhone = PhoneOtpService.MaskPhone(model.NumTelephone);
+            return View(nameof(VerifyPhone), model);
         }
 
-        [HttpGet]
-        public IActionResult ResendPhoneOtp()
-        {
-            return View(new ResendPhoneOtpVM());
-        }
-
+        /// <summary>
+        /// Step 2: verify OTP by phone, then create Identity account (only if email + phone verified).
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResendPhoneOtp(ResendPhoneOtpVM model)
+        public async Task<IActionResult> ConfirmPhoneOtp(VerifyPhoneOtpVM model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            model.ValidityMinutes = _otpSettings.ValidityMinutes > 0 ? _otpSettings.ValidityMinutes : 2;
+            model.OtpStep = true;
+            model.MaskedPhone = PhoneOtpService.MaskPhone(model.NumTelephone);
 
-            var businessResult = await _phoneOtpService.ResendOtpAsync(model.NumTelephone);
-            TempData["Message"] = businessResult.ToBootstrapAlerts();
-            return RedirectToAction(nameof(ResendPhoneOtp));
+            if (string.IsNullOrWhiteSpace(model.OtpCode))
+            {
+                ModelState.AddModelError(nameof(model.OtpCode), "يرجى إدخال الرمز الذي وصلك عبر رسالة قصيرة (SMS).");
+                return View(nameof(VerifyPhone), model);
+            }
+
+            var verifyResult = _phoneOtpService.VerifyOtpByPhone(model.NumTelephone, model.OtpCode);
+            if (!verifyResult.Succeeded)
+            {
+                ViewData["Message"] = verifyResult.ToBootstrapAlerts();
+                return View(nameof(VerifyPhone), model);
+            }
+
+            var inscri = _phoneOtpService.GetVerifiedInscriptionByPhone(model.NumTelephone);
+            if (inscri == null
+                || !inscri.IsEmailVerified
+                || !inscri.IsPhoneValidated)
+            {
+                var fail = new BusinessResult(false);
+                fail.Messages.Add(new MessageResult
+                {
+                    Message = "لم تكتمل عملية التحقق. يرجى تأكيد بريدك الإلكتروني أولاً، ثم رقم هاتفك.",
+                    MessageType = MessageType.Error
+                });
+                ViewData["Message"] = fail.ToBootstrapAlerts();
+                return View(nameof(VerifyPhone), model);
+            }
+
+            inscri = _inscriptionBusinessService.GetById(inscri.Id, _inscriptionBusinessService.GetDefaultLoadProperties());
+            if (inscri == null)
+                return View("EmailVerificationFailed");
+
+            if (_userService.Count(u => u.Email == inscri.Email) > 0)
+            {
+                return View("EmailVerificationFailedExistEmail");
+            }
+
+            var accountCreated = await CreateAccountAfterPhoneVerificationAsync(inscri);
+            if (!accountCreated)
+            {
+                return View("EmailVerificationFailed"); 
+            }
+
+            TempData["Message"] = new BusinessResult(true)
+            {
+                Messages =
+                {
+                    new MessageResult
+                    {
+                        Message = "تم تأكيد رقم هاتفك وإنشاء حسابك بنجاح.",
+                        MessageType = MessageType.Success
+                    }
+                }
+            }.ToBootstrapAlerts();
+            return View("PhoneVerificationSuccess");
         }
 
         [HttpGet]
@@ -906,7 +930,6 @@ namespace Anade.Khadamat.Web.Controllers
             if (_userService.Count(u => u.Email == email) > 0)
             {
                 return View("EmailVerificationFailedExistEmail");
-
             }
 
             var inscri = _inscriptionBusinessService.GetSingle(
@@ -918,70 +941,62 @@ namespace Anade.Khadamat.Web.Controllers
                 return View("EmailVerificationFailed");
             }
 
+            var verified = await _emailVerificationService.VerifyEmailAsync(email, token);
+            if (!verified)
+            {
+                return View("EmailVerificationFailed");
+            }
+
+            inscri = _inscriptionBusinessService.GetSingle(
+                x => x.Email == email && x.IsEmailVerified,
+                _inscriptionBusinessService.GetDefaultLoadProperties());
+
+            if (inscri == null)
+            {
+                return View("EmailVerificationFailed");
+            }
+
+            // SMS only after email is confirmed — avoid wasting SMS on fake/wrong emails.
+            await _phoneOtpService.GenerateAndSendOtpAsync(inscri);
+            await  _phoneOtpService.SendPhoneVerificationEmailAsync(inscri.Email);
+
+            return View("EmailVerificationSuccess", inscri);
+        }
+
+        private async Task<bool> CreateAccountAfterPhoneVerificationAsync(Inscription inscri)
+        {
+            if (inscri == null || !inscri.IsEmailVerified || !inscri.IsPhoneValidated)
+                return false;
+
             var userNew = new User
             {
                 UserName = inscri.Email,
                 Email = inscri.Email,
+                Prenom = inscri.PrenomFr,
+                Nom = inscri.NomFr,
+                PhoneNumber = inscri.NumTelephone,
+                PhoneNumberConfirmed = true,
                 DateCreation = DateTime.Now,
                 TypeUserId = 2,
                 EmailConfirmed = true
             };
 
             var result = await _userManager.CreateAsync(userNew, inscri.PasswordHashInit);
-
             if (!result.Succeeded)
-            {
-                return View("EmailVerificationFailed");
-            }
+                return false;
 
             if (inscri.TypeInscriptionId == TypesInscriptionId.Création)
             {
-                var resCreationPromoteurAuthentification = CreationPromoteurAuthentification(inscri);
-
-                if (resCreationPromoteurAuthentification == false)
+                var OldAccStatus= CreationPromoteurAuthentification(inscri);
+                if (!OldAccStatus)
                 {
-                    return View("EmailVerificationFailed");
+                    return false;
                 }
 
-                var verified = await _emailVerificationService.VerifyEmailAsync(email, token);
-
-                if (!verified)
-                {
-                    return View("EmailVerificationFailed");
-                }
-
-                inscri = _inscriptionBusinessService.GetSingle(
-                    x => x.Email == email && x.EmailVerificationToken == null,
-                    _inscriptionBusinessService.GetDefaultLoadProperties());
-
-                if (inscri == null)
-                {
-                    return View("EmailVerificationFailed");
-                }
-
-                return View("EmailVerificationSuccess");
-            }
-            else
-            {
-                var verified = await _emailVerificationService.VerifyEmailAsync(email, token);
-
-                if (!verified)
-                {
-                    return View("EmailVerificationFailed");
-                }
-
-                inscri = _inscriptionBusinessService.GetSingle(
-                    x => x.Email == email && x.EmailVerificationToken == null,
-                    _inscriptionBusinessService.GetDefaultLoadProperties());
-
-                if (inscri == null)
-                {
-                    return View("EmailVerificationFailed");
-                }
-
-                return View("EmailVerificationSuccess");
             }
 
+            await _phoneOtpService.SendAccountCreatedEmailAsync(inscri.Email);
+            return true;
         }
 
         private bool CreationPromoteurAuthentification(Inscription inscri)
@@ -1084,6 +1099,7 @@ namespace Anade.Khadamat.Web.Controllers
 
             return View();
         }
+
 
         // Dans CreateInscriptionPromoteurCreation méthode, ajoutez la journalisation :
         public ApiBusinessResult CreateInscriptionPromoteurCreation(Inscription_Promoteur entity, CreateInscriptionVM model)

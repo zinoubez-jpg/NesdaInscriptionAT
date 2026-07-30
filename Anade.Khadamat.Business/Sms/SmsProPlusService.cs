@@ -59,7 +59,7 @@ namespace Anade.Khadamat.Business.Sms
 
                 var isSuccess = response.IsSuccessStatusCode
                     && !string.IsNullOrWhiteSpace(body)
-                    && body.IndexOf("ERR", StringComparison.OrdinalIgnoreCase) < 0;
+                    && body.IndexOf("\"status\":\"OK\"", StringComparison.OrdinalIgnoreCase) >= 0;
 
                 if (isSuccess)
                 {

@@ -1,6 +1,8 @@
 ﻿@using Anade.Khadamat.Domain
 @model Inscription
-@{ ViewData["Title"] = "Inscription réussie"; }
+@{
+    ViewData["Title"] = "Inscription réussie";
+}
 
 
 <div class="page-wrapper">
@@ -27,7 +29,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Content Column -->
                     <div class="content-column col-lg-8 col-md-12 col-sm-12 mb-0">
                         <div class="about-column">
@@ -39,7 +41,10 @@
                             </div>
                             <div class="text">
                                 <p style="color: #7b241c; font-size:14px">سيتم إرسال رسالة تأكيد إلى عنوان البريد الإلكتروني الذي قدمته. يرجى النقر على الرابط المرفق لإتمام عملية التسجيل.</p>
-                                <p style="color: #7b241c; font-size:14px">كما تم إرسال رمز التحقق عبر رسالة قصيرة (SMS) إلى رقم هاتفك. يرجى إدخال الرمز في صفحة التحقق.</p>
+                                <p style="color: #7b241c; font-size:14px">بعد تأكيد البريد الإلكتروني، ستتلقى رمز تحقق عبر SMS لتأكيد رقم هاتفك وإنشاء حسابك.</p>
+                                <p class="mt-3">
+                                    <a asp-controller="Inscription" asp-action="VerifyPhone" class="theme-btn btn-style-one"><span class="txt">صفحة التحقق من رقم الهاتف</span></a>
+                                </p>
                             </div>
 
                         </div>

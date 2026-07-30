@@ -146,7 +146,7 @@ namespace Anade.Khadamat.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            // Middleware pour supprimer l’en-tête X-Powered-By
+            // Middleware pour supprimer lï¿½en-tï¿½te X-Powered-By
             app.Use(async (context, next) =>
             {
                 context.Response.OnStarting(() =>
