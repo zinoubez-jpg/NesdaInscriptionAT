@@ -356,7 +356,7 @@ namespace Anade.Khadamat.Business
 
         private static string BuildOtpMessage(string otp, int validityMinutes)
         {
-            return $"ناسدا: رمز التحقق الخاص بك هو {otp}. صالح لمدة {validityMinutes} دقيقة. لا تشاركه مع أحد.";
+            return $"رمز التحقق الخاص بك هو {otp}. صالح لمدة {validityMinutes} دقيقة. لا تشاركه مع أحد.";
         }
 
         private static string GenerateOtpCode(int length)
