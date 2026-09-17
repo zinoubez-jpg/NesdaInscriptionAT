@@ -4,6 +4,11 @@ namespace Anade.Khadamat.Web.Models
 {
     public class VerifyPhoneOtpVM
     {
+        [Display(Name = "البريد الإلكتروني")]
+        [Required(ErrorMessage = "يرجى إدخال البريد الإلكتروني.")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "الرجاء إدخال عنوان بريد إلكتروني صحيح.")]
+        public string Email { get; set; }
+
         [Display(Name = "رقم الهاتف")]
         [Required(ErrorMessage = "يرجى إدخال رقم الهاتف.")]
         [RegularExpression(@"^0\s?[567].*$", ErrorMessage = "يرجى التحقق من رقم الهاتف الذي أدخلته")]
@@ -21,5 +26,6 @@ namespace Anade.Khadamat.Web.Models
 
         public string MaskedPhone { get; set; }
         public int ValidityMinutes { get; set; }
+        public int RemainingSeconds { get; set; }
     }
 }

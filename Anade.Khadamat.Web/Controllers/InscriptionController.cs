@@ -1,4 +1,4 @@
-﻿using Anade.Business.Core;
+using Anade.Business.Core;
 using Anade.Khadamat.Business;
 using Anade.Khadamat.Business.Sms;
 using Anade.Khadamat.Data;
@@ -810,16 +810,17 @@ namespace Anade.Khadamat.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult VerifyPhone()
+        public IActionResult VerifyPhone(string email = null)
         {
             return View(new VerifyPhoneOtpVM
             {
+                Email = email?.Trim(),
                 ValidityMinutes = _otpSettings.ValidityMinutes > 0 ? _otpSettings.ValidityMinutes : 2
             });
         }
 
         /// <summary>
-        /// Step 1: user enters registered phone → request OTP (generic message always).
+        /// Step 1: user enters registered email and phone → request OTP.
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -829,24 +830,46 @@ namespace Anade.Khadamat.Web.Controllers
             model.OtpCode = null;
 
             ModelState.Remove(nameof(VerifyPhoneOtpVM.OtpCode));
+
+            if (string.IsNullOrWhiteSpace(model.Email))
+            {
+                ModelState.AddModelError(nameof(model.Email), "يرجى إدخال البريد الإلكتروني.");
+            }
+
             if (string.IsNullOrWhiteSpace(model.NumTelephone)
                 || !System.Text.RegularExpressions.Regex.IsMatch(model.NumTelephone, @"^0\s?[567].*$"))
             {
                 ModelState.AddModelError(nameof(model.NumTelephone), "يرجى التحقق من رقم الهاتف الذي أدخلته");
+            }
+
+            if (!ModelState.IsValid)
+            {
                 model.OtpStep = false;
                 return View(nameof(VerifyPhone), model);
             }
 
-            var businessResult = await _phoneOtpService.RequestOtpByPhoneAsync(model.NumTelephone);
-            TempData["Message"] = businessResult.ToBootstrapAlerts();
+            var businessResult = await _phoneOtpService.RequestOtpAsync(model.Email, model.NumTelephone);
+            if (!businessResult.Succeeded)
+            {
+                model.OtpStep = false;
+                ViewData["Message"] = businessResult.ToBootstrapAlerts();
+                return View(nameof(VerifyPhone), model);
+            }
 
+            TempData["Message"] = businessResult.ToBootstrapAlerts();
             model.OtpStep = true;
             model.MaskedPhone = PhoneOtpService.MaskPhone(model.NumTelephone);
+            model.RemainingSeconds = _phoneOtpService.GetRemainingSeconds(model.Email, model.NumTelephone);
+            if (model.RemainingSeconds <= 0)
+            {
+                model.RemainingSeconds = model.ValidityMinutes * 60;
+            }
+
             return View(nameof(VerifyPhone), model);
         }
 
         /// <summary>
-        /// Step 2: verify OTP by phone, then create Identity account (only if email + phone verified).
+        /// Step 2: verify OTP by email and phone, then create Identity account (only if email + phone verified).
         /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -855,6 +878,7 @@ namespace Anade.Khadamat.Web.Controllers
             model.ValidityMinutes = _otpSettings.ValidityMinutes > 0 ? _otpSettings.ValidityMinutes : 2;
             model.OtpStep = true;
             model.MaskedPhone = PhoneOtpService.MaskPhone(model.NumTelephone);
+            model.RemainingSeconds = _phoneOtpService.GetRemainingSeconds(model.Email, model.NumTelephone);
 
             if (string.IsNullOrWhiteSpace(model.OtpCode))
             {
@@ -862,14 +886,15 @@ namespace Anade.Khadamat.Web.Controllers
                 return View(nameof(VerifyPhone), model);
             }
 
-            var verifyResult = _phoneOtpService.VerifyOtpByPhone(model.NumTelephone, model.OtpCode);
+            var verifyResult = _phoneOtpService.VerifyOtp(model.Email, model.NumTelephone, model.OtpCode);
             if (!verifyResult.Succeeded)
             {
+                model.RemainingSeconds = _phoneOtpService.GetRemainingSeconds(model.Email, model.NumTelephone);
                 ViewData["Message"] = verifyResult.ToBootstrapAlerts();
                 return View(nameof(VerifyPhone), model);
             }
 
-            var inscri = _phoneOtpService.GetVerifiedInscriptionByPhone(model.NumTelephone);
+            var inscri = _phoneOtpService.GetVerifiedInscription(model.Email, model.NumTelephone);
             if (inscri == null
                 || !inscri.IsEmailVerified
                 || !inscri.IsPhoneValidated)

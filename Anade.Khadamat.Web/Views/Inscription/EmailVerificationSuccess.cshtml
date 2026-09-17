@@ -1,4 +1,4 @@
-﻿@using Anade.Khadamat.Domain
+@using Anade.Khadamat.Domain
 @model Inscription
 @{
     ViewData["Title"] = "تم التحقق من البريد الإلكتروني";
@@ -33,7 +33,7 @@
                                 </p> *@
                             </div>
                             <div class="btn-box mt-4">
-                                <a asp-controller="Inscription" asp-action="VerifyPhone" class="theme-btn btn-style-one">
+                                <a asp-controller="Inscription" asp-action="VerifyPhone" asp-route-email="@Model.Email" class="theme-btn btn-style-one">
                                     <span class="txt">التحقق من رقم الهاتف الآن</span>
                                 </a>
                             </div>

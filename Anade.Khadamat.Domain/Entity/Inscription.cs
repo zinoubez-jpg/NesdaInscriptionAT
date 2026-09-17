@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Anade.Khadamat.Domain
-{
+ {
     public partial class Inscription : IEntity<int>
     {
         public Inscription()
@@ -12,7 +12,7 @@ namespace Anade.Khadamat.Domain
             this.Documents = new HashSet<Document>();
             this.SmsSents = new HashSet<SmsSent>();
         }
-
+         
         [Display(Name = "Id")]
         [Required(ErrorMessage = "يجب ملء هذا الحقل")]
         public int Id { get; set; }

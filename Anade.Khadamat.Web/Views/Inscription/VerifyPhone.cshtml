@@ -35,61 +35,132 @@
                             {
                                 <div class="text">
                                     <p>
-                                        أدخل رقم الهاتف الذي سجّلت به. إذا كان بريدك الإلكتروني مفعّلاً والرقم غير مفعّل بعد،
-                                        سيصلك رمز التحقق عبر رسالة قصيرة (SMS).
+                                        أدخل بريدك الإلكتروني ورقم الهاتف الذي سجّلت به. إذا كان بريدك الإلكتروني مؤكداً،
+                                        سيصلك رمز التحقق عبر رسالة قصيرة (SMS) لتأكيد الهاتف وإنشاء الحساب.
                                     </p>
                                     <p style="color:#7b241c;font-size:14px">
                                         يجب التحقق من البريد الإلكتروني أولاً قبل التمكن من تفعيل الهاتف.
                                     </p>
                                 </div>
 
-                                <form asp-action="RequestPhoneOtp" method="post" class="mt-2" id="sendOtpForm">
+                                <form asp-action="RequestPhoneOtp" method="post" class="mt-3" id="requestOtpForm">
                                     @Html.AntiForgeryToken()
                                     <input type="hidden" asp-for="ValidityMinutes" />
+
                                     <div class="form-group mb-3">
-                                        <label asp-for="NumTelephone" class="form-label"></label>
-                                        <input asp-for="NumTelephone" class="form-control" placeholder="0X XX XX XX XX" maxlength="15" />
+                                        <label asp-for="Email" class="form-label fw-bold"></label>
+                                        <input asp-for="Email" class="form-control text-start" dir="ltr" placeholder="exemple@domaine.com" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label asp-for="NumTelephone" class="form-label fw-bold"></label>
+                                        <input asp-for="NumTelephone" class="form-control text-start" dir="ltr" placeholder="0X XX XX XX XX" maxlength="15" />
                                         <span asp-validation-for="NumTelephone" class="text-danger"></span>
                                     </div>
-                                    <button type="submit" class="theme-btn btn-style-one" id="sendOtpBtn"><span class="txt">إرسال رمز التحقق</span></button>
+
+                                    <div class="form-group mt-4">
+                                        <button type="submit" class="theme-btn btn-style-one" id="sendOtpBtn">
+                                            <span class="txt">إرسال رمز التحقق</span>
+                                        </button>
+                                    </div>
                                 </form>
                             }
                             else
                             {
                                 <div class="text">
-                                    <p>
-                                        تم إرسال رمز التحقق (إن كان الرقم مؤهلاً للتفعيل) إلى
-                                        <strong dir="ltr"">@(Model.MaskedPhone ?? "****")</strong>.
-                                        الرمز صالح لمدة <strong>@Model.ValidityMinutes</strong> دقيقة.
+                                    <div class="alert alert-light border p-3 mb-3" style="border-radius: 8px; background-color: #f9fbfd;">
+                                        <div class="mb-1">
+                                            <i class="fa fa-envelope text-primary ms-1"></i>
+                                            <strong>البريد الإلكتروني:</strong>
+                                            <span dir="ltr" class="text-secondary fw-bold">@Model.Email</span>
+                                        </div>
+                                        <div>
+                                            <i class="fa fa-phone text-success ms-1"></i>
+                                            <strong>رقم الهاتف:</strong>
+                                            <span dir="ltr" class="text-secondary fw-bold">@(Model.MaskedPhone ?? "****")</span>
+                                        </div>
+                                    </div>
+                                    <p class="mb-2">
+                                        تم إرسال رمز التحقق إلى رقم هاتفك. الرمز صالح لمدة <strong>@Model.ValidityMinutes</strong> دقيقة.
                                     </p>
                                 </div>
 
-                                <form asp-action="ConfirmPhoneOtp" method="post" class="mt-4">
+                                <!-- Countdown Timer Display -->
+                                <div class="timer-card my-3 p-3 text-center" style="background: #f0f7ff; border: 1px dashed #3a7bd5; border-radius: 10px;">
+                                    <div class="timer-label mb-1" style="font-size: 14px; color: #555;">
+                                        <i class="fa fa-clock-o ms-1 text-primary"></i> تنتهي صلاحية الرمز خلال:
+                                    </div>
+                                    <div id="countdownTimer" style="font-size: 28px; font-weight: 700; color: #3a7bd5; font-family: monospace; letter-spacing: 2px;">
+                                        @if (Model.RemainingSeconds <= 0)
+                                        {
+                                            <span class="text-danger" style="font-size: 20px;"><i class="fa fa-exclamation-triangle ms-1"></i>انتهت صلاحية الرمز</span>
+                                        }
+                                        else
+                                        {
+                                            @:--:--
+                                        }
+                                    </div>
+                                    <small id="timerNotice" class="@(Model.RemainingSeconds <= 0 ? "text-danger fw-bold" : "text-muted")">
+                                        @(Model.RemainingSeconds <= 0 ? "انتهت صلاحية الرمز، يرجى طلب رمز جديد بالضغط على الزر أدناه." : "لا تشارك الرمز مع أي شخص آخر.")
+                                    </small>
+                                </div>
+
+                                <form asp-action="ConfirmPhoneOtp" method="post" class="mt-4" id="confirmOtpForm">
                                     @Html.AntiForgeryToken()
+                                    <input type="hidden" asp-for="Email" />
                                     <input type="hidden" asp-for="NumTelephone" />
                                     <input type="hidden" asp-for="MaskedPhone" />
                                     <input type="hidden" asp-for="ValidityMinutes" />
                                     <input type="hidden" asp-for="OtpStep" />
 
                                     <div class="form-group mb-3">
-                                        <label asp-for="OtpCode" class="form-label"></label>
-                                        <input asp-for="OtpCode" class="form-control" autocomplete="one-time-code" inputmode="numeric" maxlength="10" placeholder="******" />
+                                        <label asp-for="OtpCode" class="form-label fw-bold"></label>
+                                        <input asp-for="OtpCode"
+                                               class="form-control text-center fs-4 fw-bold"
+                                               autocomplete="one-time-code"
+                                               inputmode="numeric"
+                                               maxlength="10"
+                                               placeholder="******"
+                                               dir="ltr"
+                                               autofocus
+                                               style="letter-spacing: 4px;" />
                                         <span asp-validation-for="OtpCode" class="text-danger"></span>
                                     </div>
 
-                                    <button type="submit" class="theme-btn btn-style-one"><span class="txt">تأكيد الرمز وإنشاء الحساب</span></button>
+                                    <div class="form-group mt-3">
+                                        <button type="submit" class="theme-btn btn-style-one w-100" id="confirmOtpBtn">
+                                            <span class="txt">تأكيد الرمز وإنشاء الحساب</span>
+                                        </button>
+                                    </div>
                                 </form>
 
-                                <form asp-action="RequestPhoneOtp" method="post" class="mt-3">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" asp-for="NumTelephone" />
-                                    <input type="hidden" asp-for="ValidityMinutes" />
-                                    <button type="submit" class="theme-btn btn-style-two"><span class="txt">إعادة إرسال الرمز</span></button>
-                                </form>
+                                <div class="resend-wrapper mt-3">
+                                    <form asp-action="RequestPhoneOtp" method="post" id="resendOtpForm">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" asp-for="Email" />
+                                        <input type="hidden" asp-for="NumTelephone" />
+                                        <input type="hidden" asp-for="ValidityMinutes" />
+                                        @if (Model.RemainingSeconds <= 0)
+                                        {
+                                            <button type="submit" class="theme-btn btn-style-one w-100" id="resendOtpBtn">
+                                                <span class="txt" id="resendBtnText">إعادة إرسال رمز التحقق</span>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="theme-btn btn-style-two w-100" id="resendOtpBtn" disabled>
+                                                <span class="txt" id="resendBtnText">إعادة إرسال الرمز (--:--)</span>
+                                            </button>
+                                        }
+                                    </form>
+                                </div>
 
-                                <p class="mt-3">
-                                    <a asp-action="VerifyPhone">التحقق من رقم اخر</a>
-                                </p>
+                                <div class="text-center mt-3">
+                                    <a asp-action="VerifyPhone" asp-route-email="@Model.Email" class="text-decoration-underline" style="color: #666; font-size: 14px;">
+                                        <i class="fa fa-arrow-right ms-1"></i> التحقق من رقم آخر أو تعديل البيانات
+                                    </a>
+                                </div>
                             }
                         </div>
                     </div>
@@ -103,16 +174,101 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var form = document.getElementById('sendOtpForm');
-            var btn = document.getElementById('sendOtpBtn');
-            if (!form || !btn) return;
+            // Step 1: Request OTP Form
+            var reqForm = document.getElementById('requestOtpForm');
+            var sendBtn = document.getElementById('sendOtpBtn');
+            if (reqForm && sendBtn) {
+                reqForm.addEventListener('submit', function () {
+                    if ($(reqForm).valid()) {
+                        sendBtn.disabled = true;
+                        var txt = sendBtn.querySelector('.txt');
+                        if (txt) txt.textContent = 'جاري الإرسال...';
+                    }
+                });
+            }
 
-            form.addEventListener('submit', function () {
-                if ($(form).valid()) {
-                    btn.disabled = true;
-                    btn.querySelector('.txt').textContent = 'جاري الإرسال...';
+            // Step 2: Confirm OTP Form
+            var confirmForm = document.getElementById('confirmOtpForm');
+            var confirmBtn = document.getElementById('confirmOtpBtn');
+            if (confirmForm && confirmBtn) {
+                confirmForm.addEventListener('submit', function () {
+                    if ($(confirmForm).valid()) {
+                        confirmBtn.disabled = true;
+                        var txt = confirmBtn.querySelector('.txt');
+                        if (txt) txt.textContent = 'جاري التحقق وإنشاء الحساب...';
+                    }
+                });
+            }
+
+            // Step 2: Countdown Timer & Resend Button Control
+            var countdownElem = document.getElementById('countdownTimer');
+            var resendBtn = document.getElementById('resendOtpBtn');
+            var resendBtnText = document.getElementById('resendBtnText');
+            var resendForm = document.getElementById('resendOtpForm');
+            var timerNotice = document.getElementById('timerNotice');
+
+            if (countdownElem && resendBtn && resendBtnText) {
+                var remaining = parseInt('@Model.RemainingSeconds', 10);
+                if (isNaN(remaining)) {
+                    remaining = 0;
                 }
-            });
+
+                function formatTime(totalSeconds) {
+                    var m = Math.floor(totalSeconds / 60);
+                    var s = totalSeconds % 60;
+                    return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+                }
+
+                function setExpiredState() {
+                    countdownElem.innerHTML = '<span class="text-danger" style="font-size: 20px;"><i class="fa fa-exclamation-triangle ms-1"></i>انتهت صلاحية الرمز</span>';
+                    if (timerNotice) {
+                        timerNotice.textContent = 'انتهت صلاحية الرمز، يرجى طلب رمز جديد بالضغط على الزر أدناه.';
+                        timerNotice.className = 'text-danger fw-bold';
+                    }
+                    resendBtn.disabled = false;
+                    resendBtnText.textContent = 'إعادة إرسال رمز التحقق';
+                    resendBtn.classList.remove('btn-style-two');
+                    resendBtn.classList.add('btn-style-one');
+                }
+
+                function updateDisplay(seconds) {
+                    var formatted = formatTime(seconds);
+                    countdownElem.textContent = formatted;
+                    resendBtnText.textContent = 'إعادة إرسال الرمز (' + formatted + ')';
+                }
+
+                if (remaining <= 0) {
+                    // The code is ALREADY expired: do NOT start any countdown timer!
+                    setExpiredState();
+                } else {
+                    // The code is ACTIVE: start countdown and disable resend button
+                    resendBtn.disabled = true;
+                    resendBtn.classList.remove('btn-style-one');
+                    resendBtn.classList.add('btn-style-two');
+                    updateDisplay(remaining);
+
+                    var timer = setInterval(function () {
+                        remaining--;
+                        if (remaining > 0) {
+                            updateDisplay(remaining);
+                        } else {
+                            clearInterval(timer);
+                            setExpiredState();
+                        }
+                    }, 1000);
+                }
+
+                if (resendForm) {
+                    resendForm.addEventListener('submit', function (e) {
+                        if (resendBtn.disabled) {
+                            e.preventDefault();
+                            return false;
+                        }
+                        resendBtn.disabled = true;
+                        resendBtnText.textContent = 'جاري إرسال رمز جديد...';
+                    });
+                }
+            }
         });
     </script>
 }

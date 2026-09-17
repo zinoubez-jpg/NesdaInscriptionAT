@@ -61,9 +61,144 @@ namespace Anade.Khadamat.Business
         }
 
         /// <summary>
-        /// Public entry (VerifyPhone / Resend): always returns a generic message.
-        /// Sends only if phone matches an email-verified, not-yet-validated inscription
-        /// and there is no active (non-expired) OTP.
+        /// Public entry (VerifyPhone / Resend): requires both email and phone.
+        /// Sends only if email + phone matches an email-verified, not-yet-validated inscription.
+        /// If an active OTP is still valid, it informs the user without wasting an extra SMS.
+        /// </summary>
+        public async Task<BusinessResult> RequestOtpAsync(string email, string phone)
+        {
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(phone))
+                return Fail("يرجى إدخال البريد الإلكتروني ورقم الهاتف.");
+
+            var target = FindEligibleInscription(email, phone);
+            if (target == null)
+            {
+                var any = FindAnyInscription(email, phone);
+                if (any != null)
+                {
+                    if (!any.IsEmailVerified)
+                        return Fail("يجب تأكيد بريدك الإلكتروني أولاً بالضغط على الرابط المرسل إلى بريدك قبل تفعيل الهاتف.");
+                    if (any.IsPhoneValidated)
+                        return Fail("تم تفعيل هذا الحساب ورقم الهاتف مسبقاً. يمكنك تسجيل الدخول مباشرة.");
+                }
+                return Fail("لم نتمكن من العثور على تسجيل مطابق للبريد الإلكتروني ورقم الهاتف المدخلين.");
+            }
+
+            if (HasActiveOtp(target))
+            {
+                var activeResult = new BusinessResult(true);
+                activeResult.Messages.Add(new MessageResult
+                {
+                    Message = "رمز التحقق لا يزال صالحاً، يرجى إدخال الرمز الذي وصلك عبر رسالة قصيرة (SMS).",
+                    MessageType = MessageType.Success
+                });
+                return activeResult;
+            }
+
+            return await SendOtpInternalAsync(target);
+        }
+
+        public BusinessResult VerifyOtp(string email, string phone, string code)
+        {
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(code))
+                return Fail("يرجى إدخال جميع بيانات التحقق.");
+
+            var inscription = FindEligibleInscription(email, phone);
+            if (inscription == null)
+            {
+                var any = FindAnyInscription(email, phone);
+                if (any != null && any.IsPhoneValidated)
+                    return Fail("تم تأكيد رقم الهاتف مسبقاً.");
+                return Fail("لم يتم العثور على طلب تسجيل مؤهل للتفعيل بالبيانات المدخلة.");
+            }
+
+            if (string.IsNullOrEmpty(inscription.OtpCode) || !inscription.OtpExpiresAt.HasValue)
+                return Fail("لا يوجد رمز نشط. يرجى طلب رمز جديد.");
+
+            if (DateTime.UtcNow > inscription.OtpExpiresAt.Value)
+                return Fail("انتهت صلاحية الرمز. يرجى طلب رمز جديد.");
+
+            if (!string.Equals(inscription.OtpCode.Trim(), code.Trim(), StringComparison.Ordinal))
+                return Fail("الرمز الذي أدخلته غير صحيح.");
+
+            var inscriptionRepo = _unitOfWork.GetRepository<Inscription, int>();
+            inscription.IsPhoneValidated = true;
+            inscription.OtpCode = null;
+            inscription.OtpExpiresAt = null;
+            inscriptionRepo.Update(inscription);
+
+            if (_unitOfWork.SaveChanges() == 0)
+                return Fail("تعذّر تأكيد رقم الهاتف.");
+
+            return BusinessResult.Success;
+        }
+
+        public Inscription GetVerifiedInscription(string email, string phone)
+        {
+            var normalizedPhone = NormalizeStoredPhone(phone);
+            var normalizedEmail = email?.Trim().ToLowerInvariant();
+            if (string.IsNullOrEmpty(normalizedPhone) || string.IsNullOrEmpty(normalizedEmail))
+                return null;
+
+            var inscriptionRepo = _unitOfWork.GetRepository<Inscription, int>();
+            var candidates = inscriptionRepo.GetAllFiltered(x =>
+                (x.Email == email.Trim() || x.Email.ToLower() == normalizedEmail) &&
+                (x.NumTelephone == normalizedPhone || x.NumTelephone == phone.Replace(" ", "")) &&
+                x.IsEmailVerified &&
+                x.IsPhoneValidated);
+
+            return candidates
+                .OrderByDescending(x => x.DateInscription)
+                .FirstOrDefault();
+        }
+
+        public int GetRemainingSeconds(string email, string phone)
+        {
+            var target = FindEligibleInscription(email, phone);
+            if (target != null && target.OtpExpiresAt.HasValue && target.OtpExpiresAt.Value > DateTime.UtcNow)
+            {
+                return (int)Math.Max(0, Math.Ceiling((target.OtpExpiresAt.Value - DateTime.UtcNow).TotalSeconds));
+            }
+            return 0;
+        }
+
+        public Inscription FindEligibleInscription(string email, string phone)
+        {
+            var normalizedPhone = NormalizeStoredPhone(phone);
+            var normalizedEmail = email?.Trim().ToLowerInvariant();
+            if (string.IsNullOrEmpty(normalizedPhone) || string.IsNullOrEmpty(normalizedEmail))
+                return null;
+
+            var inscriptionRepo = _unitOfWork.GetRepository<Inscription, int>();
+            var candidates = inscriptionRepo.GetAllFiltered(x =>
+                (x.Email == email.Trim() || x.Email.ToLower() == normalizedEmail) &&
+                (x.NumTelephone == normalizedPhone || x.NumTelephone == phone.Replace(" ", "")));
+
+            return candidates
+                .Where(x => x.IsEmailVerified && !x.IsPhoneValidated)
+                .OrderByDescending(x => x.DateInscription)
+                .FirstOrDefault();
+        }
+
+        public Inscription FindAnyInscription(string email, string phone)
+        {
+            var normalizedPhone = NormalizeStoredPhone(phone);
+            var normalizedEmail = email?.Trim().ToLowerInvariant();
+            if (string.IsNullOrEmpty(normalizedPhone) || string.IsNullOrEmpty(normalizedEmail))
+                return null;
+
+            var inscriptionRepo = _unitOfWork.GetRepository<Inscription, int>();
+            var candidates = inscriptionRepo.GetAllFiltered(x =>
+                (x.Email == email.Trim() || x.Email.ToLower() == normalizedEmail) &&
+                (x.NumTelephone == normalizedPhone || x.NumTelephone == phone.Replace(" ", "")));
+
+            return candidates
+                .OrderByDescending(x => x.DateInscription)
+                .FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Legacy helper for phone-only lookup (backward compatibility).
         /// </summary>
         public async Task<BusinessResult> RequestOtpByPhoneAsync(string phone)
         {
@@ -187,7 +322,13 @@ namespace Anade.Khadamat.Business
                 return Fail("فشل إرسال الرسالة القصيرة. يمكنك إعادة الطلب بعد انتهاء صلاحية الرمز الحالي.");
             }
 
-            return BusinessResult.Success;
+            var successResult = new BusinessResult(true);
+            successResult.Messages.Add(new MessageResult
+            {
+                Message = $"تم إرسال رمز التحقق إلى رقم هاتفك {MaskPhone(inscription.NumTelephone)} بنجاح.",
+                MessageType = MessageType.Success
+            });
+            return successResult;
         }
 
         private Inscription FindEligibleInscriptionByPhone(string phone)
@@ -262,7 +403,7 @@ namespace Anade.Khadamat.Business
 
         public async Task SendPhoneVerificationEmailAsync(string email)
         {
-            var phoneVerificationLink = "https://myproject.nesda.dz/Inscription/VerifyPhone";
+            var phoneVerificationLink = $"https://myproject.nesda.dz/Inscription/VerifyPhone?email={Uri.EscapeDataString(email ?? "")}";
 
             var emailBody = $@"
       <!DOCTYPE html>
