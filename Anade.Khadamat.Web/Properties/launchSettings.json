@@ -4,14 +4,14 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production" //Development  Production
+        "ASPNETCORE_ENVIRONMENT": "Development" //Development  Production
       }
     },
     "Anade.Khadamat.Web": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production" //Development  Production
+        "ASPNETCORE_ENVIRONMENT": "Development" //Development  Production
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5002"
@@ -21,7 +21,7 @@
       "launchBrowser": true,
       "launchUrl": "http://localhost:5002",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production", //Development  Production
+        "ASPNETCORE_ENVIRONMENT": "Development", //Development  Production
         "ASPNETCORE_URLS": "http://localhost:5002"
       },
       "distributionName": ""
