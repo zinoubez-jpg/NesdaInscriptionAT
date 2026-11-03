@@ -35,12 +35,6 @@ namespace Anade.Khadamat.Web.Controllers
         private readonly Detail_DossierInscriptionBusinesService _detail_DossierInscriptionBusinessService;
         private readonly AssociesInscriptionBusinesService _associesInscriptionBusinessService;
 
-        protected readonly CompteAuthentificationBusinesService _compteAuthentificationBusinesService;
-        protected readonly Identifiant_SIAuthentificationBusinesService _identifiant_SIAuthentificationBusinesService;
-        protected readonly Suivi_Accepte_CSVFBusinesService _suivi_Accepte_CSVFBusinesService;
-        protected readonly Suivi_EvaluationBusinesService _suivi_EvaluationBusinesService;
-        protected readonly Suivi_FinanceBusinesService _suivi_FinanceBusinesService;
-        protected readonly Suivi_FormationBusinesService _suivi_FormationBusinesService;
         public EspacePromoteurController(InscriptionBusinessService inscriptionBusinessService,
                                           UserManager<User> userManager,
                                           RoleManager<Role> roleManager,
@@ -56,13 +50,7 @@ namespace Anade.Khadamat.Web.Controllers
                                           ReferentielBusinessService<Formation, int> formationBusinessService,
                                           PromoteurInscriptionBusinesService promoteurInscriptionBusinessService,
                                           Detail_DossierInscriptionBusinesService detail_DossierInscriptionBusinessService,
-                                          AssociesInscriptionBusinesService associesInscriptionBusinessService,
-                                          CompteAuthentificationBusinesService compteAuthentificationBusinesService,
-                                          Identifiant_SIAuthentificationBusinesService identifiant_SIAuthentificationBusinesService,
-                                          Suivi_Accepte_CSVFBusinesService suivi_Accepte_CSVFBusinesService,
-                                          Suivi_EvaluationBusinesService suivi_EvaluationBusinesService,
-                                          Suivi_FinanceBusinesService suivi_FinanceBusinesService,
-                                          Suivi_FormationBusinesService suivi_FormationBusinesService
+                                          AssociesInscriptionBusinesService associesInscriptionBusinessService
                                          )
         {
             _inscriptionBusinessService = inscriptionBusinessService;
@@ -81,12 +69,6 @@ namespace Anade.Khadamat.Web.Controllers
             _promoteurInscriptionBusinessService = promoteurInscriptionBusinessService;
             _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
             _associesInscriptionBusinessService = associesInscriptionBusinessService;
-            _compteAuthentificationBusinesService = compteAuthentificationBusinesService;
-            _identifiant_SIAuthentificationBusinesService = identifiant_SIAuthentificationBusinesService;
-            _suivi_Accepte_CSVFBusinesService = suivi_Accepte_CSVFBusinesService;
-            _suivi_EvaluationBusinesService = suivi_EvaluationBusinesService;
-            _suivi_FinanceBusinesService = suivi_FinanceBusinesService;
-            _suivi_FormationBusinesService = suivi_FormationBusinesService;
         }
         public IActionResult DetailsPromoteur()
         {
@@ -162,118 +144,7 @@ namespace Anade.Khadamat.Web.Controllers
             inscrit.CommuneResidence.Wilaya = wilayaRes;
             inscrit.CommuneSiegeSocial.Wilaya = wilayaSS;
 
-
-            if (inscrit.TypeInscriptionId == TypesInscriptionId.Extension)
-            {
-                return View("SuiviDossier", inscrit);
-            }
-            else
-            {
-                var inscriptionSuiviCreation = new InscriptionSuiviCreation(inscrit);
-
-                var p = _promoteurInscriptionBusinessService.GetByNIN(inscriptionSuiviCreation.NIN);
-                var c = _compteAuthentificationBusinesService.GetByUserName(inscriptionSuiviCreation.Email);
-                var i = _identifiant_SIAuthentificationBusinesService.GetSingle(x => x.Authentification_CompteId == c.Id);
-
-                if (c.Date_Validation != null)
-                {
-                    inscriptionSuiviCreation.DateValidation = (DateTime)c.Date_Validation;
-                }
-
-
-                var csvf = _suivi_Accepte_CSVFBusinesService.GetSingle(x => x.Num_Doss == i.Num_SI);
-
-                var evalAdmis = _suivi_EvaluationBusinesService.GetAllFiltered(x => x.PromoteurId == i.Num_SI && x.Deliberation == "Admis (e)")
-                                                               .OrderByDescending(x => x.DateEvaluation)
-                                                               .FirstOrDefault();
-                var evalNonAdmis = _suivi_EvaluationBusinesService.GetAllFiltered(x => x.PromoteurId == i.Num_SI && x.Deliberation == "Non Admis (e)")
-                                                                  .OrderByDescending(x => x.DateEvaluation)
-                                                                  .FirstOrDefault();
-
-                var finc = _suivi_FinanceBusinesService.GetSingle(x => x.Num_Doss == i.Num_SI);
-
-                var form = _suivi_FormationBusinesService.GetAllFiltered(x => x.NIN == p.NIN)
-                                                         .OrderByDescending(x => x.DateDebutSessionFormation)
-                                                         .FirstOrDefault();
-
-                // test
-                /////////////////////////////////////////////////////////
-                ////////////////////////////////////////////////////////
-                ///
-
-                //inscriptionSuiviCreation.DateValidation = c.Date_Creation;
-
-
-                //evalAdmis = _suivi_EvaluationBusinesService.GetAllFiltered(x => x.PromoteurId == "01040008924" && x.Deliberation == "Admis (e)")
-                //                                               .OrderByDescending(x => x.DateEvaluation)
-                //                                               .FirstOrDefault();
-                //evalNonAdmis = _suivi_EvaluationBusinesService.GetAllFiltered(x => x.PromoteurId == "01040008924" && x.Deliberation == "Non Admis (e)")
-                //                                                  .OrderByDescending(x => x.DateEvaluation)
-                //                                                  .FirstOrDefault();
-
-                //csvf = _suivi_Accepte_CSVFBusinesService.GetSingle(x => x.Num_Doss == "01040008924");
-
-                //finc = _suivi_FinanceBusinesService.GetSingle(x => x.Num_Doss == "02010029828");
-
-                //form = _suivi_FormationBusinesService.GetAllFiltered(x => x.NIN == "109970751013150001")
-                //                                         .OrderByDescending(x => x.DateDebutSessionFormation)
-                //                                         .FirstOrDefault();
-
-                /////////////////////////////////////////////////////////
-                ////////////////////////////////////////////////////////
-                ///
-                /// fin test
-
-
-
-                if (csvf != null)
-                {
-                    inscriptionSuiviCreation.Date_csvf = csvf.Date_csvf;
-                }
-
-                if (evalAdmis == null && evalNonAdmis == null)
-                {
-                    inscriptionSuiviCreation.ScoreTotal = "NonEval";
-                    inscriptionSuiviCreation.ScoreTotalInt = 0;
-                    inscriptionSuiviCreation.Admis = null;
-                }
-                else
-                {
-                    if (evalAdmis != null)
-                    {
-                        inscriptionSuiviCreation.ScoreTotal = evalAdmis.ScoreTotal.ToString();
-                        inscriptionSuiviCreation.ScoreTotalInt = evalAdmis.ScoreTotal;
-                        inscriptionSuiviCreation.DateEvaluation = evalAdmis.DateEvaluation;
-                        inscriptionSuiviCreation.Admis = true;
-                    }
-                    else
-                    {
-                        if (evalNonAdmis != null)
-                        {
-                            inscriptionSuiviCreation.ScoreTotal = evalAdmis.ScoreTotal.ToString();
-                            inscriptionSuiviCreation.ScoreTotalInt = evalAdmis.ScoreTotal;
-                            inscriptionSuiviCreation.Admis = false;
-                        }
-                        else
-                        {
-                            inscriptionSuiviCreation.ScoreTotal = "Erreur";
-                            inscriptionSuiviCreation.ScoreTotalInt = 0;
-                            inscriptionSuiviCreation.Admis = null;
-                        }
-                    }
-                }
-
-                if (finc != null)
-                {
-                    inscriptionSuiviCreation.Date_Finance = finc.Date_Finance;
-                }
-                if (form != null)
-                {
-                    inscriptionSuiviCreation.DateDebutSessionFormation = form.DateDebutSessionFormation;
-                }
-
-                return View("SuiviDossierCreation", inscriptionSuiviCreation);
-            }
+            return View("SuiviDossier", inscrit);
         }
 
         public IActionResult ATFormation()
@@ -305,18 +176,5 @@ namespace Anade.Khadamat.Web.Controllers
 
             return View(inscrit);
         }
-        //public IActionResult SimulBPlan()
-        //{
-
-
-        //    return View();
-        //}
-        //public IActionResult SimulVAN()
-        //{
-
-
-        //    return View();
-        //}
-
     }
 }

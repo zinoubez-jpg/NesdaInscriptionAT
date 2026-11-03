@@ -1010,15 +1010,14 @@ namespace Anade.Khadamat.Web.Controllers
             if (!result.Succeeded)
                 return false;
 
-            if (inscri.TypeInscriptionId == TypesInscriptionId.Création)
-            {
-                var OldAccStatus= CreationPromoteurAuthentification(inscri);
-                if (!OldAccStatus)
-                {
-                    return false;
-                }
-
-            }
+            //if (inscri.TypeInscriptionId == TypesInscriptionId.Création)
+            //{
+            //    var OldAccStatus= CreationPromoteurAuthentification(inscri);
+            //    if (!OldAccStatus)
+            //    {
+            //        return false;
+            //    }
+            //}
 
             await _phoneOtpService.SendAccountCreatedEmailAsync(inscri.Email);
             return true;
