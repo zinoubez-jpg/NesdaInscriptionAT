@@ -1,4 +1,6 @@
-﻿@model Anade.Khadamat.Domain.Inscription
+﻿@using Anade.Khadamat.Domain
+@using System.Linq
+@model Anade.Khadamat.Domain.Inscription
 @{ Layout = "_LayoutEspacePromoteur"; }
 
 <style>
@@ -23,6 +25,24 @@
 <br />
 <div class="container-fluid">
     <div class="edit-profile">
+
+        @* ✅ Messages de succès / erreur *@
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa fa-check-circle"></i> @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fa fa-exclamation-triangle"></i> @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
         <div class="row equal-height">
             <div class="col-xl-4">
                 <div class="card">
@@ -113,18 +133,10 @@
                                 </div>
                             </div>
 
-
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label class="form-label">نوع النشاط</label>
                                     <input class="form-control" type="text" readonly placeholder="@Model.Activite.DesignationAr">
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label class="form-label">عنوان المقر الإجتماعي</label>
-                                    <input class="form-control" type="text" readonly placeholder="@Model.AddresseArSeigeSocial / @Model.CommuneSiegeSocial.DesignationAr / @Model.CommuneSiegeSocial.Wilaya.DesignationAr">
                                 </div>
                             </div>
 
@@ -133,6 +145,88 @@
 
                 </form>
 
+                <div class="card">
+                    <div class="card-header">
+                        <h4>معلومات المقر الإجتماعي</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+
+                            @if (!Model.Validee)
+                            {
+                                <form asp-controller="EspacePromoteur" asp-action="UpdateSiegeSocial" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="Id" value="@Model.Id" />
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <label class="form-label">عنوان المقر الإجتماعي</label>
+                                            <input class="form-control" name="AddresseArSeigeSocial"
+                                                   value="@Model.AddresseArSeigeSocial" />
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <label asp-for="WilayaSeigeSocialId">الولاية<span style="color:red;">*</span></label>
+                                            <select asp-for="WilayaSeigeSocialId" asp-items="@ViewBag.WilayaSeigeSocialId as SelectList" class="form-control select2" id="wilayaSS" required>
+                                                <option value="">إختيار الولاية </option>
+                                            </select>
+                                            <span asp-validation-for="WilayaSeigeSocialId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-3">
+                                            <label asp-for="CommuneSeigeSocialId">البلدية<span style="color:red;">*</span> </label>
+                                            <select asp-for="CommuneSeigeSocialId"
+                                                    asp-items="@ViewBag.CommuneSeigeSocialId as SelectList"
+                                                    class="form-control select2"
+                                                    id="communeSS" required>
+                                                <option value="">إختيار البلدية</option>
+                                            </select>
+                                            <span asp-validation-for="CommuneSeigeSocialId" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="card-header">
+                                            <h4 style="color: #C70039;">ملاحظة هامة</h4>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-8">
+                                            <div class="mb-3">
+                                                <p style="color: #006666; margin-right: 20px">يمكنك تعديل بيانات المقر الإجتماعي من أجل تغيير الفرع المحلي الذي تم تحويل ملفك إليه.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="mb-3">
+                                                <button type="submit" class="btn btn-primary">إرسال</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            }
+                            else
+                            {
+                                <div class="col-md-5">
+                                    <div class="mb-3">
+                                        <label class="form-label">عنوان المقر الإجتماعي</label>
+                                        <input class="form-control" readonly placeholder="@Model.AddresseArSeigeSocial">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">البلدية</label>
+                                        <input class="form-control" type="text" readonly placeholder="@Model.CommuneSiegeSocial.DesignationAr">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">الولاية</label>
+                                        <input class="form-control" type="text" readonly placeholder="@Model.CommuneSiegeSocial.Wilaya.DesignationAr">
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
 
                 <div class="card">
                     <div class="card-header">
@@ -184,6 +278,24 @@
 
 @section scripts{
     <script>
+        $(document).ready(function () {
+            $("#communeSS").prop("disabled", false);
+            $("#wilayaSS").change(function () {
+                var wilayaSSId = $(this).val();
+                var url = "/Inscription/GetCommuneList";
 
+                if (wilayaSSId) {
+                    $.getJSON(url, { WilayaId: wilayaSSId }, function (data) {
+                        var item = "<option value=''>إختيار بلدية الإقامة</option>";
+                        $.each(data, function (i, city) {
+                            item += '<option value="' + city.value + '">' + city.text + '</option>'
+                        });
+                        $("#communeSS").html(item).prop("disabled", false);
+                    });
+                } else {
+                    $("#communeSS").html("<option value=''>إختيار بلدية الإقامة</option>").prop("disabled", true);
+                }
+            });
+        });
     </script>
 }

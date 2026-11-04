@@ -12,7 +12,6 @@ namespace Anade.Khadamat.Business
         private readonly IOptions<PromoteurEligibiliteSettings> _promoteurEligibiliteSettings;
         private readonly IOptions<PromoteurEligibiliteSettingsCreation> _promoteurEligibiliteSettingsCreation;
 
-
         public InscriptionBusinessService(IUnitOfWork unitOfWork, IOptions<PromoteurEligibiliteSettings> promoteurEligibiliteSettings
             , IOptions<PromoteurEligibiliteSettingsCreation> promoteurEligibiliteSettingsCreation) : base(unitOfWork)
         {
@@ -20,7 +19,6 @@ namespace Anade.Khadamat.Business
             _promoteurEligibiliteSettingsCreation = promoteurEligibiliteSettingsCreation;
 
         }
-
 
         protected override void OnAdding(Inscription entity)
         {
@@ -60,9 +58,6 @@ namespace Anade.Khadamat.Business
             base.OnUpdating(entity);
         }
 
-
-
-
         public override Expression<Func<Inscription, object>>[] GetDefaultLoadProperties()
         {
             Expression<Func<Inscription, object>> loadCommuneRes = x => x.CommuneResidence;
@@ -78,8 +73,11 @@ namespace Anade.Khadamat.Business
             Expression<Func<Inscription, object>> loadActivite = x => x.Activite;
             Expression<Func<Inscription, object>> loadCategorie = x => x.Categorie;
 
+            Expression<Func<Inscription, object>> loadWilayaRes = x => x.CommuneResidence.Wilaya;
+            Expression<Func<Inscription, object>> loadWilayaNais = x => x.CommuneNaissance.Wilaya;
+            Expression<Func<Inscription, object>> loadWilayaSS = x => x.CommuneSiegeSocial.Wilaya;
 
-            return new Expression<Func<Inscription, object>>[] { loadCommuneRes, loadCommuneNais, loadCommuneSS, loadGenre, loadSituationFamiliale, loadTypeInscription , loadSessionFormations, loadFiches , loadCSVF, loadTypeFinancement , loadActivite, loadCategorie };
+            return new Expression<Func<Inscription, object>>[] { loadCommuneRes, loadCommuneNais, loadCommuneSS, loadGenre, loadSituationFamiliale, loadTypeInscription , loadSessionFormations, loadFiches , loadCSVF, loadTypeFinancement , loadActivite, loadCategorie, loadWilayaRes, loadWilayaNais, loadWilayaSS };
         }
     }
 }
