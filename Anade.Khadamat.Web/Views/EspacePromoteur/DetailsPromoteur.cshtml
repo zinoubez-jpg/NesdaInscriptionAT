@@ -29,7 +29,7 @@
         @* ✅ Messages de succès / erreur *@
         @if (TempData["Success"] != null)
         {
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert" id="alertSuccess">
                 <i class="fa fa-check-circle"></i> @TempData["Success"]
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -37,7 +37,7 @@
 
         @if (TempData["Error"] != null)
         {
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alertError">
                 <i class="fa fa-exclamation-triangle"></i> @TempData["Error"]
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -327,6 +327,22 @@
                 }, 30000);
             });
 
+            // ✅ Fermeture automatique des alertes TempData après 3 secondes
+            function autoCloseAlert(alertId, delay) {
+                var $alert = $("#" + alertId);
+                if ($alert.length) {
+                    setTimeout(function () {
+                        // Utiliser la méthode Bootstrap pour fermer proprement l'alerte
+                        // (déclenche l'animation fade + supprime l'élément)
+                        var bsAlert = bootstrap.Alert.getOrCreateInstance($alert[0]);
+                        bsAlert.close();
+                    }, delay);
+                }
+            }
+
+            // Fermer les alertes après 3 secondes (3000 ms)
+            autoCloseAlert("alertSuccess", 3000);
+            autoCloseAlert("alertError", 3000);
         });
     </script>
 }
