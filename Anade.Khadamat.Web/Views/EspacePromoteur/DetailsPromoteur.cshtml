@@ -154,7 +154,7 @@
 
                             @if (!Model.Validee)
                             {
-                                <form asp-controller="EspacePromoteur" asp-action="UpdateSiegeSocial" method="post">
+                                <form asp-controller="EspacePromoteur" asp-action="UpdateSiegeSocial" method="post" id="formSiegeSocial">
                                     @Html.AntiForgeryToken()
                                     <input type="hidden" name="Id" value="@Model.Id" />
 
@@ -196,7 +196,10 @@
 
                                         <div class="col-sm-6 col-md-4">
                                             <div class="mb-3">
-                                                <button type="submit" class="btn btn-primary">إرسال</button>
+                                                <button type="submit" class="btn btn-primary" id="btnSubmitSiegeSocial">
+                                                    <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true" id="spinnerSiegeSocial"></span>
+                                                    <span id="textBtnSiegeSocial">إرسال</span>
+                                                </button>
                                             </div>
                                         </div>
 
@@ -296,6 +299,34 @@
                     $("#communeSS").html("<option value=''>إختيار بلدية الإقامة</option>").prop("disabled", true);
                 }
             });
+
+            // ✅ Gestion du bouton submit pour le formulaire SiegeSocial
+            $("#formSiegeSocial").on("submit", function (e) {
+                var $form = $(this);
+
+                // Vérification de la validation côté client (si activée)
+                if ($form.data("valid") === false) {
+                    return false;
+                }
+
+                // Désactiver le bouton et afficher le spinner
+                var $btn = $("#btnSubmitSiegeSocial");
+                $btn.prop("disabled", true);
+                $("#spinnerSiegeSocial").removeClass("d-none");
+                $("#textBtnSiegeSocial").text("جاري الإرسال...");
+
+                // Réactiver le bouton après un certain temps (en cas de problème)
+                // ou compter sur la réponse du serveur pour recharger la page
+                setTimeout(function () {
+                    // Sécurité : réactiver après 30 secondes max
+                    if ($btn.prop("disabled")) {
+                        $btn.prop("disabled", false);
+                        $("#spinnerSiegeSocial").addClass("d-none");
+                        $("#textBtnSiegeSocial").text("إرسال");
+                    }
+                }, 30000);
+            });
+
         });
     </script>
 }

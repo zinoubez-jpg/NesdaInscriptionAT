@@ -81,87 +81,19 @@ namespace Anade.Khadamat.Web.Controllers
             _detail_DossierInscriptionBusinessService = detail_DossierInscriptionBusinessService;
             _associesInscriptionBusinessService = associesInscriptionBusinessService;
         }
-        public IActionResult DetailsPromoteur1()
-        {
-            var user = _userService.GetUserEagerLoadedAsync(User).Result;
 
-            // Remplacer GetSingle par GetMany + FirstOrDefault
-            var inscriptions = _inscriptionBusinessService.GetAllFiltered(x => x.Email == user.Email, _inscriptionBusinessService.GetDefaultLoadProperties());
-            var inscrit = inscriptions.FirstOrDefault();
-
-            // Loguer les doublons
-            if (inscriptions.Count() > 1)
-            {
-                // Utilisez votre logger ici
-                Console.WriteLine($"ATTENTION: Email {user.Email} a {inscriptions.Count} inscriptions");
-            }
-
-            if (inscrit == null)
-            {
-                return NotFound("Inscription non trouvée ou email non vérifié.");
-            }
-
-            if (inscrit.Annulee)
-            {
-                return Content("Votre inscription est annulée.");
-            }
-
-            InitializeListViewBags(inscrit);
-
-            ViewBag.Wilayas = _wilayaBusinessService.GetAll();
-            ViewBag.Communes = _communeBusinessService.GetAll();
-
-            foreach (var item in inscrit.SessionFormations)
-            {
-                item.Formation = _formationBusinessService.GetById(item.FormationId);
-            }
-
-            return View(inscrit);
-        }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult UpdateSiegeSocial1(int Id, string AddresseArSeigeSocial, int CommuneSiegeSocialId)
-        {
-            var user = _userService.GetUserEagerLoadedAsync(User).Result;
-
-            var inscriptions = _inscriptionBusinessService
-                .GetAllFiltered(x => x.Email == user.Email && x.Id == Id,
-                                _inscriptionBusinessService.GetDefaultLoadProperties());
-
-            var inscrit = inscriptions.FirstOrDefault();
-
-            if (inscrit == null) return NotFound();
-            if (inscrit.Annulee) return Content("Votre inscription est annulée.");
-            if (inscrit.Validee) return Content("Inscription déjà validée, modification impossible.");
-
-            inscrit.AddresseArSeigeSocial = AddresseArSeigeSocial;
-            inscrit.CommuneSeigeSocialId = CommuneSiegeSocialId;
-
-            _inscriptionBusinessService.Update(inscrit);
-
-            TempData["Success"] = "تم تحديث بيانات المقر الإجتماعي بنجاح.";
-            return RedirectToAction(nameof(DetailsPromoteur));
-        }
-        
         public IActionResult DetailsPromoteur()
         {
             var user = _userService.GetUserEagerLoadedAsync(User).Result;
 
-            var inscriptions = _inscriptionBusinessService
-                .GetAllFiltered(x => x.Email == user.Email,
-                                _inscriptionBusinessService.GetDefaultLoadProperties());
+            var inscriptions = _inscriptionBusinessService.GetAllFiltered(x => x.Email == user.Email, _inscriptionBusinessService.GetDefaultLoadProperties());
             var inscrit = inscriptions.FirstOrDefault();
 
             if (inscrit == null) return NotFound();
-            if (inscrit.Annulee) return Content("Votre inscription est annulée.");
-            if (inscrit.Validee) return Content("Inscription déjà validée, modification impossible.");
 
-            // Charger UNE SEULE fois les référentiels
             var wilayas = _wilayaBusinessService.GetAll();
             var communes = _communeBusinessService.GetAll();
 
-            // Construire les SelectList à partir de ces instances
             ViewBag.WilayaSeigeSocialId = new SelectList(wilayas, nameof(Wilaya.Id), nameof(Wilaya.DisplayNameAr));
             ViewBag.CommuneSeigeSocialId = new SelectList(
                 inscrit.WilayaSeigeSocialId > 0
@@ -170,8 +102,6 @@ namespace Anade.Khadamat.Web.Controllers
                 nameof(Commune.Id), nameof(Commune.DesignationAr),
                 inscrit.CommuneSeigeSocialId);
 
-            // NE PAS recharger les Formation via GetById (elles sont dans le graphe déjà)
-            // ... ou charger en une seule fois via GetAll()
             var formations = _formationBusinessService.GetAll().ToDictionary(f => f.Id);
 
             foreach (var item in inscrit.SessionFormations)
@@ -181,44 +111,6 @@ namespace Anade.Khadamat.Web.Controllers
             }
 
             return View(inscrit);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult UpdateSiegeSocial2(int Id, string AddresseArSeigeSocial, int CommuneSeigeSocialId)
-        {
-            var user = _userService.GetUserEagerLoadedAsync(User).Result;
-
-            // Charger SANS tracking et SANS navigation (juste l'entité)
-            var inscrit = _inscriptionBusinessService
-                .GetSingle(x => x.Email == user.Email && x.Id == Id); // SANS navigationProperties
-
-            if (inscrit == null) return NotFound();
-            if (inscrit.Annulee) return Content("Votre inscription est annulée.");
-            if (inscrit.Validee) return Content("Inscription déjà validée, modification impossible.");
-
-            inscrit.AddresseArSeigeSocial = AddresseArSeigeSocial;
-            inscrit.CommuneSeigeSocialId = CommuneSeigeSocialId;
-
-            Antenne antenne;
-            Agence agence;
-
-            var communeSS = _communeBusinessService.GetById(CommuneSeigeSocialId, _communeBusinessService.GetDefaultLoadProperties());
-            var circonscription = _circonscriptionBusinessService.GetSingle(x => x.CodeCommune == communeSS.Code);
-            antenne = _antenneBusinessService.GetSingle(x => x.Code == circonscription.CodeAntenne);
-            agence = _agenceBusinessService.GetById(antenne.AgenceId);
-
-
-            inscrit.AntenneId = antenne.Id;
-            inscrit.Anntenne = antenne.Code;
-            inscrit.Agence = agence.Code;
-            inscrit.WilayaSeigeSocialId = communeSS.WilayaId;
-
-            // Mise à jour ciblée sans graphe
-            _inscriptionBusinessService.Update(inscrit);
-            // => Update() doit attacher une entité sans navigation
-            TempData["Success"] = "تم تحديث بيانات المقر الإجتماعي بنجاح.";
-            return RedirectToAction(nameof(DetailsPromoteur));
         }
 
         [HttpPost]
@@ -365,7 +257,6 @@ namespace Anade.Khadamat.Web.Controllers
             ViewBag.CommuneSeigeSocialId = new SelectList(communes, nameof(Commune.Id), nameof(Commune.DesignationAr));
             ViewBag.WilayaSeigeSocialId = new SelectList(wilayas, nameof(Wilaya.Id), nameof(Wilaya.DisplayNameAr));
 
-            // Pour chaque dropdown de commune, créer la liste appropriée
             if (model != null)
             {
                 // Communes pour la wilaya du siège social
